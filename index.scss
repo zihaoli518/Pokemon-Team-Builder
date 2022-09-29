@@ -1,0 +1,82 @@
+@font-face {
+  font-family: UnknownFont;
+  src: url('./fonts/unown-font/Unown-OVEwA.ttf') format('truetype');
+}
+
+// @font-face {
+//   font-family: Classic;
+//   src: url('./fonts/PokemonClassic.ttf') format('truetype');
+// }
+
+
+
+.body {
+  font-family: UnknownFont;
+}
+
+h1 {
+  font-family: Classic;
+}
+
+.top {
+  text-align: center;
+}
+
+.pokemon-search {
+  height: 80px;
+}
+
+.pokemon-search form {
+  height: 80%;
+}
+
+.pokemon-search input {
+  height: 50%;
+  width: 200px;
+  margin-right: 30px;
+}
+
+.pokemon-search button {
+  height: 30px;
+  width: 80px;
+}
+
+
+// current pokemon 
+.current-pokemon {
+  width: 40%;  
+  background-color: rgb(241, 241, 196);
+  border-radius: 1rem;
+
+  position: relative;
+  margin-left: 30%;
+}
+
+.current-pokemon h3 {
+  text-align: center;
+  font-size: 25px;
+}
+
+.current-pokemon-flexbox {
+  display: flex;
+  justify-content: center;
+}
+
+.current-pokemon-flexbox img {
+  min-height: 200px;
+  min-width: 200px;
+  max-height: 250px;
+  min-height: 250px;
+}
+
+.current-pokemon-flexbox .info {
+ max-width: 200px;
+}
+
+.inner {
+  display: flex;
+}
+.inner li {
+  line-height: 0px;
+}
+
