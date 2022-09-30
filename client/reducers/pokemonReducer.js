@@ -31,9 +31,9 @@ const pokemonReducer = (state = initialState, action) => {
         newCurrentPokemon[key] = action.payload[key]
       }
       // check if competitive stats not found 
-      if (Object.keys(newCurrentPokemon.moves)[0]!==undefined) {
-        newCurrentPokemon.competitiveStatus = false;
-      } else newCurrentPokemon.competitiveStatus = true;
+      if (Object.keys(newCurrentPokemon.moves)[0]===undefined) {
+        newCurrentPokemon.competetiveStatus = false;
+      } else newCurrentPokemon.competetiveStatus = true;
 
       // console.log('first reducer ', newCurrentPokemon)
       return {

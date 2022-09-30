@@ -36,8 +36,9 @@ const PokemonSearch = props => {
       .then((response) => response.json())
       .then((data) => {
         console.log('first fetch ', data);
-        if (Object.keys(data.moves)[0]!==undefined) props.addPokemon(data);
-        else alert('No competitive stats found! Current version of the app only supports gen8 OU tier... sorry');
+        // if (Object.keys(data.moves)[0]!==undefined) 
+        props.addPokemon(data);
+        // else alert('No competitive stats found! Current version of the app only supports gen8 OU tier... sorry');
         if (data.error === 404) {
           alert('Pokemon not found! Please check your spelling and try again :)')
         }})
@@ -74,7 +75,7 @@ const PokemonSearch = props => {
       <div className='pokemon-search'>
         <form onSubmit={eventHandler}>
           <input type="text" id='pokemon-name' />
-          <button type='submit'>Search</button>
+          <button type='submit'> <span> Search</span> </button>
         </form>
       </div>
     )
