@@ -64,7 +64,7 @@ class App extends Component {
         </div>
         <div className='teams'>
           {this.props.teamStatus ?
-            [<TeamDisplay key={'green'} team={'green'} actualTeam={this.props.yourTeam}/>, <TeamDisplay key={'red'} team={'red'} actualTeam={this.props.enemyTeam}/>] : 
+            [<TeamDisplay key={'green'} team={'green'} />, <TeamDisplay key={'red'} team={'red'} />] : 
             null
           }
         </div>

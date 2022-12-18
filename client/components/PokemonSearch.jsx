@@ -30,9 +30,18 @@ const PokemonSearch = props => {
     e.preventDefault();
     const input = document.getElementById('pokemon-name');
     const pokemon = input.value;
-    const heroku = 'https://obscure-dawn-47563.herokuapp.com/';
+    // const heroku = 'https://obscure-dawn-47563.herokuapp.com/';
+    // ^ heroku is no longer free :(
+
     // fetching from smogon usage
-    fetch(heroku + 'https://smogon-usage-stats.herokuapp.com/gen8ou/' + pokemon)
+    fetch('/fetchSmogon', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Accept: 'application/json, text/plain',
+      },
+      body: JSON.stringify({pokemon: pokemon}),
+    })
       .then((response) => response.json())
       .then((data) => {
         console.log('first fetch ', data);
@@ -42,17 +51,6 @@ const PokemonSearch = props => {
         if (data.error === 404) {
           alert('Pokemon not found! Please check your spelling and try again :)')
         }})
-      //   // fetching from pokeAPI
-      //   fetch(heroku + 'https://pokeapi.co/api/v2/pokemon/' + pokemon.toLowerCase())
-      //     .then((response) => response.json())
-      //     .then((data) => {
-      //       console.log('second fetch ',data);
-      //       props.updatePokemon(data);
-      //       if (data.error === 404) {
-      //         alert('Pokemon not found! Please check your spelling and try again :)')
-      //       }
-      //     })
-      // })
       .catch((error) => {
         alert('Pokemon not found! Current version of the app only supports gen8 OU tier... sorry')
         console.log('error inside PokemonSearch: ', error)

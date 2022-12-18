@@ -35,10 +35,18 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
               },
             },
           ]
-        }
+        }, 
+        {
+          test: /\.(png|jpe?g|gif)$/i,
+          use: [
+            {
+              loader: 'file-loader',
+            },
+          ],
+        },
       ],
     },
-
+    
     devServer: {
       host: "localhost",
       port: 8080,

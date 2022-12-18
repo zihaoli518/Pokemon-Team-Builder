@@ -16,6 +16,7 @@ import { BrowserRouter } from 'react-router-dom';
 
 // importing App component 
 import App from './client/App.jsx';
+import background from './background.jpeg'
 
 // importing redux depedencies 
 import store from './client/store.js';
@@ -25,7 +26,10 @@ import { Provider } from 'react-redux';
 render(
   <Provider store={store}>
     <BrowserRouter>
-      <App />
+      <div className='background' style={{ 
+       backgroundImage: `url(${background})` }}> 
+        <App />
+      </div>
     </BrowserRouter>
   </Provider>,
   document.getElementById("app")

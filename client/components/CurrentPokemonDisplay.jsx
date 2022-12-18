@@ -12,14 +12,14 @@
 // importing dependencies 
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import PokemonSprite from './PokemonSprite.jsx';
 
 // importing files 
 import * as actions from '../actions/actions';
+import PokemonSprite from './PokemonSprite.jsx';
 
 
 
-// currentPokemon contains all data. mvoeSet contains all moves(object)
+// currentPokemon contains all data. moveSet contains all moves(object)
 const mapStateToProps = state => ({
   currentPokemon : state.pokemon.currentPokemon,
   moveSet : state.pokemon.currentPokemon.moves,
