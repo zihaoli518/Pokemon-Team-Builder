@@ -23,6 +23,11 @@ app.get('/', (req, res) => {
   return res.status(200).sendFile(path.join(__dirname, '../index.html'));
 });
 
+app.post('/api/fetchPokeAPI', fetchMiddlewares.fetchSmogon, (req, res) => {
+  console.log('/fetch-smogon complete')
+  return res.status(200).send(res.locals.data)
+})
+
 app.post('/api/fetch-smogon', fetchMiddlewares.fetchSmogon, (req, res) => {
   console.log('/fetch-smogon complete')
   return res.status(200).send(res.locals.data)
