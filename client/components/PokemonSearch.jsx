@@ -34,7 +34,7 @@ const PokemonSearch = props => {
     // ^ heroku is no longer free :(
 
     // fetching from smogon usage
-    fetch('/fetchSmogon', {
+    fetch('/api/fetch-smogon', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -44,7 +44,7 @@ const PokemonSearch = props => {
     })
       .then((response) => response.json())
       .then((data) => {
-        console.log('first fetch ', data);
+        console.log('smogon fetch data: ', data);
         // if (Object.keys(data.moves)[0]!==undefined) 
         props.addPokemon(data);
         // else alert('No competitive stats found! Current version of the app only supports gen8 OU tier... sorry');
@@ -57,16 +57,16 @@ const PokemonSearch = props => {
       });
 
 
-    // fetching from pokeAPI
-    fetch(heroku + 'https://pokeapi.co/api/v2/pokemon/' + pokemon.toLowerCase())
-      .then((response) => response.json())
-      .then((data) => {
-        console.log('second fetch ',data);
-        props.updatePokemon(data);
-        if (data.error === 404) {
-          alert('Pokemon not found! Please check your spelling and try again :)')
-        }
-      })
+    // // fetching from pokeAPI
+    // fetch(heroku + 'https://pokeapi.co/api/v2/pokemon/' + pokemon.toLowerCase())
+    //   .then((response) => response.json())
+    //   .then((data) => {
+    //     console.log('second fetch ',data);
+    //     props.updatePokemon(data);
+    //     if (data.error === 404) {
+    //       alert('Pokemon not found! Please check your spelling and try again :)')
+    //     }
+    //   })
   }
 
     return (
