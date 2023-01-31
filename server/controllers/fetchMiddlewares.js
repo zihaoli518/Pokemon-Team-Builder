@@ -32,12 +32,13 @@ fetchMiddlewares.fetchSmogon = (req, res, next) => {
       // console.log(typeof(data), data)
       const root = parse.parse(data)
       // console.log(typeof(root), root)
-      const abilitiesTable = (root.querySelector('#abilities'));
-      const abilitiesObj = abilitiesTable.childNodes[1]
-
-      resultObject['moveSet'] = {
-        abilitiesTable.childNodes 
+      const abilitiesTable = (root.querySelector('#abilities')).parentNode.childNodes[2];
+      console.log(abilitiesTable)
+      resultObject['moveSet'] = {};
+      for (let i=0; i<abilitiesTable.length; i++) {
+        resultObject.moveSet[abilitiesTable[i].childrenNodes[0].childNodes[0].innerHTML] = abilitiesTable[i].childrenNodes[1].innerHTML
       }
+
       res.locals.data = resultObject;
       return next();
     })
