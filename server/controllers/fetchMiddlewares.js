@@ -23,12 +23,14 @@ fetchMiddlewares.fetchSmogon = (req, res, next) => {
 
   const pokemonName = req.body.pokemon
   fetch('https://www.porydex.com/stats/2022-09/gen-8-ou/1695/pokemon/' + pokemonName.toLowerCase())
-    // .then(res => res.text())
+    .then(res => res.text())
     // .then(text => console.log(text))
     // .then(data => data.json())
     .then(data => {
-      console.log(typeof(data), typeof(parse))
+      // console.log(typeof(data), data)
       const root = parse.parse(data)
+      // console.log(typeof(root), root)
+      console.log(root.querySelector('#abilities'))
       res.locals.data = data;
       return next();
     })
