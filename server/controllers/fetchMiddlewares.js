@@ -33,7 +33,7 @@ fetchMiddlewares.fetchSmogon = (req, res, next) => {
       const root = parse.parse(data)
       // console.log(typeof(root), root)
       const abilitiesTable = (root.querySelector('#abilities')).parentNode.childNodes[2];
-      console.log(abilitiesTable)
+      console.log(abilitiesTable.innerHTML, typeof(abilitiesTableß))
       resultObject['moveSet'] = {};
       for (let i=0; i<abilitiesTable.length; i++) {
         resultObject.moveSet[abilitiesTable[i].childrenNodes[0].childNodes[0].innerHTML] = abilitiesTable[i].childrenNodes[1].innerHTML
