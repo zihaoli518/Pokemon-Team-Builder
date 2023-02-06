@@ -1,5 +1,6 @@
 const fetch = require('node-fetch');
 const parse = require('node-html-parser');
+const cheerio = require('cheerio')
 
 const fetchMiddlewares = {}; 
 
@@ -30,9 +31,9 @@ fetchMiddlewares.fetchSmogon = (req, res, next) => {
       // empty object to store all needed parsed data
       const resultObject = {};
       // console.log(typeof(data), data)
-      const root = parse.parse(data)
-      // console.log(typeof(root), root)
-      const abilitiesTable = (root.querySelector('#abilities')).parentNode.childNodes[2];
+      const dom = cheerio.load(data)
+      console.log(dom)
+      const abilitiesTable = (dom.querySelector('#abilities'))
       console.log(abilitiesTable.innerHTML, typeof(abilitiesTableß))
       resultObject['moveSet'] = {};
       for (let i=0; i<abilitiesTable.length; i++) {
