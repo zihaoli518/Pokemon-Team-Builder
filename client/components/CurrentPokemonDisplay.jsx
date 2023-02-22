@@ -41,40 +41,40 @@ class CurrentPokemonDisplay extends Component {
     super(props);
   }
 
-  // getTypes() {
-  //   console.log('inside getTypes(): ', this.props.currentPokemon.types)
-  //   if (this.props.currentPokemon.types.length=1) console.log('length is 1'); return [this.props.currentPokemon.types[0], ' '];
-  //   return this.props.currentPokemon.types
+  getTypes() {
+    console.log('inside getTypes(): ', this.props.currentPokemon.types)
+    if (this.props.currentPokemon.types.length=1) console.log('length is 1'); return [this.props.currentPokemon.types[0], ' '];
+    return this.props.currentPokemon.types
+  }
+
+  // get the top 2 most common abilities - currently unavailable 
+  // getAbilities() {
+  //   let abilityMap = {};
+  //   for (let i = 0; i < 2; i++) {
+  //     // break in case pokemon only has 1 ability
+  //     if (Object.keys(this.props.abilities)[i] === undefined) {
+  //       break;
+  //     }
+  //     let currentAbility = Object.keys(this.props.abilities)[i];
+  //     let currentPercentage =
+  //       this.props.abilities[Object.keys(this.props.abilities)[i]];
+  //     abilityMap[i] = [currentAbility, currentPercentage];
+  //   }
+  //   // console.log(abilityMap)
+  //   return abilityMap;
   // }
 
-  // get the top 2 most common abilities
-  getAbilities() {
-    let abilityMap = {};
-    for (let i = 0; i < 2; i++) {
-      // break in case pokemon only has 1 ability
-      if (Object.keys(this.props.abilities)[i] === undefined) {
-        break;
-      }
-      let currentAbility = Object.keys(this.props.abilities)[i];
-      let currentPercentage =
-        this.props.abilities[Object.keys(this.props.abilities)[i]];
-      abilityMap[i] = [currentAbility, currentPercentage];
-    }
-    // console.log(abilityMap)
-    return abilityMap;
-  }
-
-  // get the top 4 most used moves for current pokemon
-  getMoveSet() {
-    let moveSetMap = {};
-    for (let i = 0; i < 4; i++) {
-      let currentMove = Object.keys(this.props.moveSet)[i];
-      let currentPercentage =
-        this.props.moveSet[Object.keys(this.props.moveSet)[i]];
-      moveSetMap[i] = [currentMove, currentPercentage];
-    }
-    return moveSetMap;
-  }
+  // get the top 4 most used moves for current pokemon - currently unavailable 
+  // getMoveSet() {
+  //   let moveSetMap = {};
+  //   for (let i = 0; i < 4; i++) {
+  //     let currentMove = Object.keys(this.props.moveSet)[i];
+  //     let currentPercentage =
+  //       this.props.moveSet[Object.keys(this.props.moveSet)[i]];
+  //     moveSetMap[i] = [currentMove, currentPercentage];
+  //   }
+  //   return moveSetMap;
+  // }
 
   addToTeam(pokemon, team) {
     // e.preventDefault();
