@@ -45,20 +45,27 @@ const pokemonReducer = (state = initialState, action) => {
 
     // expecting data from pokeAPI fetch
     case types.ADD_POKEMON_POKEAPI: 
-      const copy = state.currentPokemon;
+      console.log('inside reducer! ')
+      console.log(action.payload)
+      const copy = {...state.currentPokemon};
+      copy['pokemon'] = action.payload.pokemon
+      const pokemonData = action.payload.pokemonData
+      // initiate re-render by changing state
+      copy.isActive = true;
+      // fill in types 
       copy.types = [];
-      for (let i=0; i<action.payload.types.length; i++) {
-        copy.types.push(action.payload.types[i].type.name)
+      for (let i=0; i<pokemonData.types.length; i++) {
+        copy.types.push(pokemonData.types[i].type.name)
       }
       // organizing stats 
       copy.stats = {};
-      copy.stats.hp = action.payload.stats[0].base_stat;
-      copy.stats.attack = action.payload.stats[1].base_stat;
-      copy.stats.defense = action.payload.stats[2].base_stat;
-      copy.stats.specialA = action.payload.stats[3].base_stat;
-      copy.stats.specialD = action.payload.stats[4].base_stat;
-      copy.stats.speed = action.payload.stats[5].base_stat;
-      // console.log('second reducer', copy)
+      copy.stats.hp = pokemonData.stats[0].base_stat;
+      copy.stats.attack = pokemonData.stats[1].base_stat;
+      copy.stats.defense = pokemonData.stats[2].base_stat;
+      copy.stats.specialA = pokemonData.stats[3].base_stat;
+      copy.stats.specialD = pokemonData.stats[4].base_stat;
+      copy.stats.speed = pokemonData.stats[5].base_stat;
+      console.log('ADD_POKEMON_POKEAPI ', copy)
       return {
         ...state, 
         currentPokemon: copy

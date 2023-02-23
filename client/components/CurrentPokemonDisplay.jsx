@@ -20,14 +20,18 @@ import PokemonSprite from './PokemonSprite.jsx';
 
 
 // currentPokemon contains all data. moveSet contains all moves(object)
-const mapStateToProps = state => ({
-  currentPokemon : state.pokemon.currentPokemon,
-  moveSet : state.pokemon.currentPokemon.moves,
-  abilities: state.pokemon.currentPokemon.abilities,
-  competetiveStatus : state.pokemon.currentPokemon.competetiveStatus,
-  yourTeam : state.pokemon.yourTeam,
-  enemyTeam: state.pokemon.enemyTeam
-})
+const mapStateToProps = state => {
+  console.log('mapState');
+  console.log(state.pokemon.currentPokemon);
+  return {
+    currentPokemon : state.pokemon.currentPokemon,
+    moveSet : state.pokemon.currentPokemon.moves,
+    abilities: state.pokemon.currentPokemon.abilities,
+    competetiveStatus : state.pokemon.currentPokemon.competetiveStatus,
+    yourTeam : state.pokemon.yourTeam,
+    enemyTeam: state.pokemon.enemyTeam
+  }
+}
 
 const mapDispatchToProps = dispatch => ({
   // create functions that will dispatch action creators
@@ -39,6 +43,7 @@ const mapDispatchToProps = dispatch => ({
 class CurrentPokemonDisplay extends Component {
   constructor(props) {
     super(props);
+    this.state = props
   }
 
   getTypes() {
@@ -93,10 +98,9 @@ class CurrentPokemonDisplay extends Component {
     // {console.log(this.props.currentPokemon)}
     // {console.log(this.props.currentPokemon.pokemon)}
     return (
-      <div className="current-pokemon">
-        {/* <h4>{JSON.stringify(this.props.currentPokemon)}</h4> */}
+      <div key={this.props.currentPokemon} className="current-pokemon">
         <div className="top-flexbox">
-          <h3>{this.props.currentPokemon.pokemon}</h3>
+          <h3> {this.state.currentPokemon.pokemon} </h3>
           <div className="types">
             <h4 className="type" id={this.props.currentPokemon.types[0]}>{this.props.currentPokemon.types[0]}</h4>
             <h4 className="type" id={this.props.currentPokemon.types[1]}>{this.props.currentPokemon.types[1]}</h4>

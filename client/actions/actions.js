@@ -17,10 +17,18 @@ export const addPokemon = pokemon => ({
   payload: pokemon
 })
 
-export const updatePokemonPokeAPI = pokemon => ({
+export const updatePokemonPokeAPI = (pokemon, pokemonData) => ({
   type: types.ADD_POKEMON_POKEAPI,
-  payload: pokemon 
+  payload: {
+    pokemon: pokemon,
+    pokemonData: pokemonData
+  }
 })
+
+// export const updatePokemonName = pokemon => ({
+//   type: types.UPDATE_CURRENT_POKEMON_NAME,
+//   payload: pokemon
+// })
 
 export const updateGif = url => ({
   type: types.UPDATE_GIF,

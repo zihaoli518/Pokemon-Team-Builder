@@ -20,7 +20,8 @@ import * as actions from '../actions/actions';
 const mapDispatchToProps = dispatch => ({
   // create functions that will dispatch action creators
   addPokemon : (pokemon) => dispatch(actions.addPokemon(pokemon)),
-  updatePokemon: (pokemon) => dispatch(actions.updatePokemonPokeAPI(pokemon))
+  updatePokemon: (pokemon, pokemonData) => dispatch(actions.updatePokemonPokeAPI(pokemon, pokemonData)),
+  // updatePokemonName: (pokemon) => dispatch(actions.updatePokemonName(pokemon))
 });
 
 
@@ -67,10 +68,10 @@ const PokemonSearch = props => {
       body: JSON.stringify({pokemon: pokemon})
     })
       .then((response) => response.json())
-      .then((data) => {
-        console.log('second fetch ',data);
-        props.updatePokemon(data);
-        if (data.error === 404) {
+      .then((pokemonData) => {
+        console.log('fetchPokeAPI ', pokemonData);
+        props.updatePokemon(pokemon, pokemonData);
+        if (pokemonData.error === 404) {
           alert('Pokemon not found! Please check your spelling and try again :)')
         }
       })

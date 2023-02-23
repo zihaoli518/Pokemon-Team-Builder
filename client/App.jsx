@@ -56,12 +56,12 @@ class App extends Component {
             null
           }
         </div>
-        <div className='current-pokemon-more-info'>
+        {/* <div className='current-pokemon-more-info'>
           {this.props.start && Object.keys(this.props.currentPokemon.teammates)[0]!==undefined ?
             <MoreInfo /> : 
             null
           }
-        </div>
+        </div> */}
         <div className='teams'>
           {this.props.teamStatus ?
             [<TeamDisplay key={'green'} team={'green'} />, <TeamDisplay key={'red'} team={'red'} />] : 
