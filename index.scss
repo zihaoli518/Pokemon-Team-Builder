@@ -1,0 +1,471 @@
+// @font-face {
+//   font-family: UnknownFont;
+//   src: url("./fonts/unown-font/Unown-OVEwA.ttf") format("truetype");
+// }
+
+@import url("https://fonts.googleapis.com/css2?family=Permanent+Marker&display=swap"); //'Permanent Marker', cursive;
+@import url("https://fonts.googleapis.com/css2?family=Shadows+Into+Light&display=swap"); //Shadows Into Light', cursive;
+@import url("https://fonts.googleapis.com/css2?family=Indie+Flower&display=swap"); // font-family: 'Indie Flower', cursive;
+@import url("https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@300;400;500;600&display=swap"); //font-family: 'Chakra Petch', sans-serif;
+@import url("https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600&display=swap"); //font-family: 'Orbitron', sans-serif;
+
+body {
+  background-color: rgb(203, 197, 197);
+  background-image: url('https://lh3.googleusercontent.com/iC5rKNivUaFEznEEGWMGEtu2QlUltPAzF7lG4Q63fYEWNZ_EkFGBPdyyW4xwTbwKXLYODiGNNZpdpR7lkb9ba86BmUERRNVqZR7P4JARZcpTJDph96-jcNPjAaPB39ZTeK1GoKepiMH65hwnmPopcibYvxQUzfo1xeFbF5JfWyQbdfZ44rDEzezD-iwLIJ0fUlxxzA7wi4DQcnBmNZkwOlZH5iaISUkjrFv-xzxv1dqrqq2bsQRKN3IAE6-nYLKaooFvVJ7QuoPUEEMO4K2kHoJ5VBZdBbFXkPmCLitmBk3MOMYH-CA1icVBnTji7QOtsoODlLI0VpAh8nH-qRIriWJ7GMbwvxn3fHExUxgZ7TdlUYz5vY4YmqwK6qmFZiDhpQHZFD06LKWgVSSndicDqt7PROyyTit9Xm1PdfMfKNLS1l4qB_hsBOPp-XdodMrBqIaLANIVLtxq5dDfQtm5h-1zHjwynjxwb8E_PE-vkqZ63G5HMarBQ1khr6kaC7HLuwA1NO-DxX-g6V7qvSadcyCwL_C3rk_DM5aOk-JGbLW2MljgBplY84n2ds5j41HWmjww5PbkA6dD6Vy9gmktlG9cokcPoxPGksh_9jVADAuRBJ5xK5IagjJVOWLR5jzYrgMRZkz0qIl362gFXeksDgqFJGr0xJjJs1uypydzwW_fWKegY2w8Fo_BVPtDENb6D9hLsX0D0CYCsvwIsLIwJuAaXOhNkQzrG1rF1OmQ64ha6-lo7o6-y5ez_Yu6CybZ1tNrJ4XgF-n--V2_KvA7d1DI9FHuH5YlFSPNNXi2ratqaf3IdN4bXHz1z86Cr7aRpm95GQGvVhLZvuKdnw5wH1M9fBC98TXFN9AlTgrINVzENVSRz64fFPgVchmU-tT2znDSVgggLHt9XbnLNnLa47f_DqnFoS9abPAMR7WdAiAPCvcjzQkaG4jsVPnNPelmDvPNPoU_uzw=w1920-h1200-no?authuser=0');
+// }
+  // background-image: './background.jpeg';
+}
+
+#app {
+  width: 103%;
+  height: 1000px;
+  margin-top: -20px;
+  margin-left: -5px;
+}
+
+.background {
+  height: 100%;
+  width: 100%;
+}
+
+// TYPES OF POKEMON 
+.type {
+  font-size: 25px;
+  width: 75px;
+  height: 32px;
+  text-align: center;
+  margin: 0 auto;
+  border-radius: 0.4rem;
+}
+
+#bug {
+  background-color: rgb(164, 174, 63);
+}
+#dark {
+  background-color: rgb(84, 69, 58);
+}
+#dragon {
+  background-color: rgb(98, 63, 238);
+}
+#electric {
+  background-color: rgb(240, 204, 79);
+}
+#fairy {
+  background-color: rgb(231, 128, 249);
+}
+#fighting {
+  background-color: rgb(170, 58, 47);
+}
+#fire {
+  background-color: rgb(220, 125, 57);
+}
+#flying {
+  background-color: #A98FF3;
+}
+#ghost {
+  background-color: #735797;
+}
+#grass {
+  background-color: #7AC74C;
+}
+#ground {
+  background-color: #E2BF65;
+}
+#ice {
+  background-color: #96D9D6;
+}
+#noraml {
+  background-color: #A8A77A;
+}
+#poison {
+  background-color: #A33EA1;
+}
+#psychic {
+  background-color: #F95587;
+}
+#rock {
+  background-color: #B6A136;
+}
+#steel {
+  background-color: #B7B7CE;
+}
+#water {
+  background-color: #6390F0;
+}
+
+
+
+
+
+h1 {
+  font-family: "Permanent Marker", cursive;
+  font-weight: 100;
+}
+
+.top {
+  text-align: center;
+}
+
+.pokemon-search {
+  height: 80px;
+}
+
+.pokemon-search form {
+  height: 80%;
+}
+
+.pokemon-search input {
+  height: 50%;
+  width: 200px;
+  margin-right: 30px;
+  border-radius: 0.3rem;
+  background-color: #b6ccfc;
+}
+
+.pokemon-search button {
+  height: 30px;
+  width: 80px;
+
+  font-family: "Shadows Into Light", cursive;
+  font-size: 20px;
+  font-weight: 700;
+  color:#54480d;
+
+  position: relative;
+  top: 5px;
+}
+
+.pokemon-search span {
+  position: relative;
+  top: -5px;
+}
+
+.pokemon-search button:hover {
+  box-shadow: 5px 5px 5px -5px rgba(85, 167, 255, 0.88);
+}
+
+input[type="text"]
+{
+    font-size:20px;
+    font-family: "Indie Flower", cursive;
+}
+
+// current pokemon
+.current-pokemon {
+  font-family: "Indie Flower", cursive;
+  font-weight: 500;
+  width: 50%;
+  background-image: linear-gradient(
+    105deg,
+  hsl(63deg 65% 88%) 0%,
+  hsl(95deg 66% 88%) 10%,
+  hsl(136deg 69% 87%) 21%,
+  hsl(161deg 75% 82%) 33%,
+  hsl(177deg 76% 77%) 43%,
+  hsl(188deg 95% 76%) 54%,
+  hsl(177deg 75% 76%) 64%,
+  hsl(162deg 73% 81%) 74%,
+  hsl(138deg 65% 85%) 83%,
+  hsl(97deg 60% 86%) 92%,
+  hsl(65deg 58% 85%) 100%
+  );
+  border-radius: 1rem;
+  box-shadow: 12px 10px 30px -10px rgba(92, 11, 11, 0.88);
+
+  position: relative;
+  margin-left: 26%;
+}
+
+.current-pokemon h3 {
+  text-align: center;
+  margin-bottom: 10px;
+}
+
+
+
+// top-flexbox
+.current-pokemon .top-flexbox {
+  display: flex;
+  justify-content: center;
+  margin-bottom: -5px;
+  margin-left: 70px;
+}
+
+.current-pokemon .top-flexbox h3 {
+  font-size: 50px;
+  margin-top: 10px;
+}
+
+.current-pokemon .top-flexbox .types {
+  display: flex;
+  justify-content: center;
+  margin-left: 15px;
+  margin-top: 25px;
+}
+
+.current-pokemon .top-flexbox .types h4 {
+  font-size: 22px;
+  margin-top: 5px;
+  margin: 5px;
+}
+
+.top-flexbox .option-buttons {
+  flex: 0.1;
+  display: flex;
+  flex-direction: column;
+}
+
+.top-flexbox .option-buttons button {
+  height: 30px;
+  width: 120px;
+  font-size: 11px;
+  font-weight: 400;
+  font-family: 'Chakra Petch', sans-serif;
+  margin-right: -150px;
+  margin-top: 5px;
+  background-color: rgb(208, 206, 206);
+  color: rgb(60, 60, 60);
+}
+
+
+
+// main flexbox
+.current-pokemon-flexbox {
+  display: flex;
+  justify-content: center;
+}
+
+.current-pokemon-flexbox img {
+  height: 270px;
+  width: 280px;
+  margin-left: 10px;
+  transition: ease-in-out;
+  transition: 1s;
+}
+
+.current-pokemon-flexbox img:hover {
+  transform: scale(1.4);
+}
+
+// left
+.current-pokemon-flexbox .info {
+  margin-top: -20px;
+  width: 250px;
+  margin-left: -10px;
+  margin-right: 15px;
+}
+
+.outter h5 {
+  font-size: 20px;
+  font-family: "Orbitron", sans-serif;
+  text-align: center;
+}
+
+.outter span {
+  font-family: "Chakra Petch", sans-serif;
+  font-size: 15px;
+}
+
+.outter h4 {
+  font-size: 20px;
+  font-family: "Orbitron", sans-serif;
+}
+
+.inner {
+  margin-top: -10px;
+  margin-bottom: -10px;
+  margin-left: -30px;
+  list-style-type: none;
+
+  font-family: "Chakra Petch", sans-serif;
+  font-weight: 300;
+}
+
+#inner-1 {
+  display: flex;
+}
+
+.inner .row-1 {
+  display: flex;
+  justify-content: left;
+}
+
+.inner .row-2 {
+  display: flex;
+  justify-content: lett;
+}
+
+.inner li {
+  margin: 5px;
+  margin-left: 30px;
+}
+
+.inner h6 {
+  font-size: 15px;
+  margin-top: -10px;
+  margin-bottom: -10px;
+}
+
+.inner p {
+  font-size: 13px;
+}
+
+// stats
+.stats {
+  width: 220px;
+  margin-left: 25px;
+  margin-top: -20px;
+}
+
+.stats h5 {
+  font-size: 25px;
+  font-family: "Orbitron", sans-serif;
+}
+
+.stats ul {
+  list-style: none;
+  margin-top: -10px;
+  margin-bottom: 50px;
+  margin-left: -20px;
+}
+
+.stats li {
+  font-size: 22px;
+}
+
+
+
+
+.more-info-container {
+  width: 70%;
+  margin-left: 15%;
+}
+
+.more-info {
+  display: flex;
+  justify-content: center;
+  background-image: linear-gradient(
+  180deg,
+  hsl(346deg 86% 72%) 0%,
+  hsl(329deg 70% 69%) 4%,
+  hsl(303deg 45% 66%) 10%,
+  hsl(264deg 57% 70%) 22%,
+  hsl(228deg 71% 70%) 62%,
+  hsl(207deg 80% 57%) 81%,
+  hsl(209deg 75% 58%) 89%,
+  hsl(210deg 70% 59%) 94%,
+  hsl(212deg 66% 59%) 97%,
+  hsl(213deg 61% 60%) 99%,
+  hsl(215deg 56% 60%) 100%
+);
+  box-shadow: 12px 10px 30px -10px rgba(42, 5, 98, 0.88);
+  margin-top: 20px;
+  border-radius: 1rem;
+
+}
+
+.more-info h4 {
+  font-size: 20px;
+  font-family: "Orbitron", sans-serif;
+
+}
+
+.more-info h5 {
+  font-size: 13px;
+  font-family: "Orbitron", sans-serif;
+  margin-bottom: -10px;
+
+}
+// teammates
+.common-teammates {
+  width: 400px;
+  text-align: center;
+  margin-left: -100;
+  margin-right: 100px;
+}
+
+.common-teammates-inner {
+  display: flex;
+  justify-content: center;
+  margin-top: -35px;
+  font-family: "Chakra Petch", sans-serif;
+  font-size: 15px;
+}
+
+.common-teammates-inner div {
+  margin-left: 20px;
+}
+
+.more-info img {
+  margin-left: 10px;
+  transition: ease-in-out;
+  transition: 1s;
+}
+
+.more-info img:hover {
+  transform: scale(1.5);
+}
+
+// counters
+.common-counters {
+  width: 400px;
+  text-align: center;
+  margin-right: -50px;
+  margin-left: 100px;
+}
+
+.common-counters-inner {
+  display: flex;
+  justify-content: center;
+  margin-top: -35px;
+  font-family: "Chakra Petch", sans-serif;
+  font-size: 15px;
+}
+
+.common-counters-inner div {
+  margin-right: 30px;
+}
+
+
+
+
+
+
+
+
+// TEAMS 
+.teams {
+  margin-top: 60px;
+  display: flex;
+  justify-content: center;
+}
+
+.green {
+  margin-right: 45px;
+  width: 40%;
+  height: 200px;
+  background-color: rgb(164, 241, 164);
+  border-radius: 1rem;
+}
+
+.green h4 {
+  margin-top: 5px;
+  font-size: 20px;
+  text-align: center;
+  font-family: 'Permanent Marker', cursive;
+}
+
+.red {
+  margin-left: 45px;
+  width: 40%;
+  height: 200px;
+  background-color: rgb(220, 121, 116);
+  border-radius: 1rem;
+}
+
+.red h4 {
+  margin-top: 5px;
+  font-size: 20px;
+  text-align: center;
+  font-family: 'Permanent Marker', cursive;
+}

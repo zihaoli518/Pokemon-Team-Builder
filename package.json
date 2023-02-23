@@ -1,0 +1,55 @@
+{
+  "name": "solo-project-pokemon-battle-prep-",
+  "version": "1.0.0",
+  "description": "",
+  "main": "webpack.config.js",
+  "scripts": {
+    "start": "nodemon server/server.js",
+    "build": "webpack",
+    "dev": "concurrently \"NODE_ENV=development webpack-dev-server --hot --progress --color\" \"nodemon ./server/server.js\""
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/zihaoli518/Solo-Project-Pokemon-Battle-Prep-.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/zihaoli518/Solo-Project-Pokemon-Battle-Prep-/issues"
+  },
+  "homepage": "https://github.com/zihaoli518/Solo-Project-Pokemon-Battle-Prep-#readme",
+  "devDependencies": {
+    "@babel/core": "^7.13.10",
+    "@babel/preset-env": "^7.13.10",
+    "@babel/preset-react": "^7.12.13",
+    "babel-loader": "^8.2.2",
+    "css-loader": "^5.1.2",
+    "file-loader": "^6.2.0",
+    "html-webpack-plugin": "^5.5.0",
+    "nodemon": "^2.0.7",
+    "redux-devtools-extension": "^2.13.9",
+    "sass": "^1.55.0",
+    "sass-loader": "^13.0.2",
+    "style-loader": "^3.3.1",
+    "webpack": "^5.64.0",
+    "webpack-cli": "^4.9.1",
+    "webpack-dev-server": "^4.5.0",
+    "webpack-hot-middleware": "^2.24.3"
+  },
+  "dependencies": {
+    "cheerio": "^1.0.0-rc.12",
+    "concurrently": "^7.4.0",
+    "express": "^4.18.1",
+    "file-loader": "^6.2.0",
+    "node-fetch": "^2.3.0",
+    "node-html-parser": "^6.1.4",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-redux": "^7.2.2",
+    "react-router": "^6.4.0",
+    "react-router-dom": "^6.4.0",
+    "redux": "^4.0.5",
+    "ttf-loader": "^1.0.0"
+  }
+}
