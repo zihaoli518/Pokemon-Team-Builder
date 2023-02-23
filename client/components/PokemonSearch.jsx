@@ -33,40 +33,47 @@ const PokemonSearch = props => {
     // const heroku = 'https://obscure-dawn-47563.herokuapp.com/';
     // ^ heroku is no longer free :(
 
-    // fetching from smogon usage
-    fetch('/api/fetch-smogon', {
+    // fetching from smogon usage - feature currently suspended - data not updated 
+    // fetch('/api/fetch-smogon', {
+    //   method: 'POST',
+    //   headers: {
+    //     'Content-Type': 'application/json',
+    //     Accept: 'application/json, text/plain',
+    //   },
+    //   body: JSON.stringify({pokemon: pokemon}),
+    // })
+    //   .then((response) => response.json())
+    //   .then((data) => {
+    //     console.log('smogon fetch data: ', data);
+    //     // if (Object.keys(data.moves)[0]!==undefined) 
+    //     props.addPokemon(data);
+    //     // else alert('No competitive stats found! Current version of the app only supports gen8 OU tier... sorry');
+    //     if (data.error === 404) {
+    //       alert('Pokemon not found! Please check your spelling and try again :)')
+    //     }})
+    //   .catch((error) => {
+    //     alert('Pokemon not found! Current version of the app only supports gen8 OU tier... sorry')
+    //     console.log('error inside PokemonSearch: ', error)
+    //   });
+
+
+    // fetching from pokeAPI
+    fetch('/api/fetchPokeAPI', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
         Accept: 'application/json, text/plain',
       },
-      body: JSON.stringify({pokemon: pokemon}),
+      body: JSON.stringify({pokemon: pokemon})
     })
       .then((response) => response.json())
       .then((data) => {
-        console.log('smogon fetch data: ', data);
-        // if (Object.keys(data.moves)[0]!==undefined) 
-        props.addPokemon(data);
-        // else alert('No competitive stats found! Current version of the app only supports gen8 OU tier... sorry');
+        console.log('second fetch ',data);
+        props.updatePokemon(data);
         if (data.error === 404) {
           alert('Pokemon not found! Please check your spelling and try again :)')
-        }})
-      .catch((error) => {
-        alert('Pokemon not found! Current version of the app only supports gen8 OU tier... sorry')
-        console.log('error inside PokemonSearch: ', error)
-      });
-
-
-    // // fetching from pokeAPI
-    // fetch(heroku + 'https://pokeapi.co/api/v2/pokemon/' + pokemon.toLowerCase())
-    //   .then((response) => response.json())
-    //   .then((data) => {
-    //     console.log('second fetch ',data);
-    //     props.updatePokemon(data);
-    //     if (data.error === 404) {
-    //       alert('Pokemon not found! Please check your spelling and try again :)')
-    //     }
-    //   })
+        }
+      })
   }
 
     return (
@@ -77,7 +84,6 @@ const PokemonSearch = props => {
         </form>
       </div>
     )
-
 }
 
 export default connect(null, mapDispatchToProps)(PokemonSearch);

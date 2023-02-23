@@ -12,6 +12,8 @@ app.use(express.json());
 // poing, 
 // express.static(path.join(__dirname, '../build')));
 
+console.log('inside server.js')
+
 // taking care of CORS
 app.use((req, res, next) => {
   res.header('Access-Control-Allow-Origin', '*');
@@ -23,15 +25,15 @@ app.get('/', (req, res) => {
   return res.status(200).sendFile(path.join(__dirname, '../index.html'));
 });
 
-app.post('/api/fetchPokeAPI', fetchMiddlewares.fetchSmogon, (req, res) => {
-  console.log('/fetch-smogon complete')
+app.post('/api/fetchPokeAPI', fetchMiddlewares.fetchPokeAPI, (req, res) => {
+  console.log('/fetch-pokeAPI complete')
   return res.status(200).send(res.locals.data)
 })
 
-app.post('/api/fetch-smogon', fetchMiddlewares.fetchSmogon, (req, res) => {
-  console.log('/fetch-smogon complete')
-  return res.status(200).send(res.locals.data)
-})
+// app.post('/api/fetch-smogon', fetchMiddlewares.fetchSmogon, (req, res) => {
+//   console.log('/fetch-smogon complete')
+//   return res.status(200).send(res.locals.data)
+// })
 
 app.listen(PORT); 
 

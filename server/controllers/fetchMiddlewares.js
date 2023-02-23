@@ -11,6 +11,7 @@ fetchMiddlewares.fetchPokeAPI = (req, res, next) => {
   fetch('https://pokeapi.co/api/v2/pokemon/' + pokemonName.toLowerCase())
     .then(data => data.json())
     .then(data => {
+      console.log(data)
       res.locals.data = data;
       return next();
     })
