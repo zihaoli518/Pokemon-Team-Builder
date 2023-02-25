@@ -36,8 +36,6 @@ class App extends Component {
   constructor(props) {
     super(props);
 
-    // this.state = {
-    // }
 
   }
 
@@ -47,7 +45,7 @@ class App extends Component {
     return (
       <div className='main'>
         <div className='top'>
-          <h1>Prepare For Your Next Pokémon Battle!</h1>
+          <h1>POKEMON TEAM BUILDER</h1>
           <PokemonSearch />
         </div>
         <div className='current-pokemon-display'>

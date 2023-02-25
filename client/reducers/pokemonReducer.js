@@ -45,8 +45,8 @@ const pokemonReducer = (state = initialState, action) => {
 
     // expecting data from pokeAPI fetch
     case types.ADD_POKEMON_POKEAPI: 
-      console.log('inside reducer! ')
-      console.log(action.payload)
+      // console.log('inside reducer! ')
+      // console.log(action.payload)
       const copy = {...state.currentPokemon};
       copy['pokemon'] = action.payload.pokemon
       const pokemonData = action.payload.pokemonData
@@ -81,7 +81,7 @@ const pokemonReducer = (state = initialState, action) => {
 
     // add pokemon to your team 
     case types.ADD_POKEMON_TO_YOUR_TEAM :
-      const yourNewTeam = state.yourTeam;
+      const yourNewTeam = {...state.yourTeam};
       const currentNameY = state.currentPokemon.pokemon;
       let newObjY = {};
       newObjY[currentNameY] = state.currentPokemon
@@ -92,8 +92,8 @@ const pokemonReducer = (state = initialState, action) => {
         teamStatus: true
       }
       // add pokemon to enemy team 
-      case types.ADD_POKEMON_TO_YOUR_TEAM :
-        const enemyNewTeam = state.enemyTeam;
+      case types.ADD_POKEMON_TO_ENEMY_TEAM :
+        const enemyNewTeam = {...state.enemyTeam};
         const currentNameE = state.currentPokemon.pokemon;
         let newObjE = {};
         newObjE[currentNameE] = state.currentPokemon

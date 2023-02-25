@@ -54,22 +54,22 @@ class TeamDisplay extends Component {
             className="pokemon-class-small"
           />)
     }
-    return [title, teamToBeDisplayed]
+    return {title: title, teamToBeDisplayed: teamToBeDisplayed}
   }
 
   render() {
     if (this.team==="green") {
       return (
         <div className="green">
-          <h4>{this.populateTeam()[0]}</h4>
-          {this.populateTeam()[1]}
+          <h4>{this.populateTeam()['title']}</h4>
+          {this.populateTeam()['teamToBeDisplayed']}
         </div>
       );
     } else {
       return (
         <div className="red">
-          <h4>{this.populateTeam()[0]}</h4>
-          {this.populateTeam()[1]}
+          <h4>{this.populateTeam()['title']}</h4>
+          {this.populateTeam()['teamToBeDisplayed']}
         </div>
       );
     }
