@@ -19,6 +19,7 @@ import PokemonSearch from './components/PokemonSearch.jsx'
 import CurrentPokemonDisplay from './components/CurrentPokemonDisplay.jsx'
 import TeamDisplay from './components/TeamDisplay.jsx';
 import MoreInfo from './components/MoreInfo.jsx';
+import ShowChartButton from './components/ShowChartButton';
 
 import '../index.scss';
 
@@ -63,6 +64,12 @@ class App extends Component {
         <div className='teams'>
           {this.props.teamStatus ?
             [<TeamDisplay key={'green'} team={'green'} />, <TeamDisplay key={'red'} team={'red'} />] : 
+            null
+          }
+        </div>
+        <div className='show-chart-button-container'>
+          {this.props.showChartOption ?
+            <ShowChartButton/> :
             null
           }
         </div>
