@@ -98,33 +98,73 @@ const pokemonReducer = (state = initialState, action) => {
     // add pokemon to your team 
     case types.ADD_POKEMON_TO_YOUR_TEAM :
       const yourNewTeam = {...state.yourTeam};
-      const currentPokemonY = {...state.currentPokemon}
+      const currentPokemonY = {...state.currentPokemon};
+
+      if (yourNewTeam.size>=6) return;
 
       yourNewTeam.size++;
-      yourNewTeam['mon' + yourNewTeam.size.toString()] = currentPokemonY;
+      // adding new pokemon to the first available spot 
+      for (let i=1; i<=6; i++) {
+        let currentMonString = 'mon' + i.toString();
+        if (!(yourNewTeam[currentMonString])) {
+          yourNewTeam[currentMonString] = currentPokemonY;
+          break;
+        }
+      }
 
       return {
         ... state,
         yourTeam: yourNewTeam,
         teamStatus: true
       }
+
       // add pokemon to enemy team 
       case types.ADD_POKEMON_TO_ENEMY_TEAM :
-        const enemyNewTeam = {...state.yourTeam};
-        const currentPokemonE = {...state.currentPokemon}
+        console.log('REDUCER:     ADD_POKEMON_TO_ENEMY_TEAM')
+        const enemyNewTeam = {...state.enemyTeam};
+        const currentPokemonE = {...state.currentPokemon};
+
+        if (enemyNewTeam.size>=6) return;
         
         enemyNewTeam.size++;
-        enemyNewTeam['mon' + enemyNewTeam.size.toString()] = currentPokemonE;
+        // adding new pokemon to the first available spot 
+        for (let i=1; i<=6; i++) {
+          let currentMonString = 'mon' + i.toString();
+            if (!(enemyNewTeam[currentMonString])) {
+              enemyNewTeam[currentMonString] = currentPokemonE;
+              break;
+          }
+        }
+        console.log(enemyNewTeam)
         return {
           ... state,
           enemyTeam: enemyNewTeam,
           teamStatus: true
         }
         
-      // remove pokemon from your team 
+      // select pokemon -> and make it the current display pokemon 
+      case types.SELECT_TEAM_MEMBER : 
+        const copyOfCurrentPokemon = {...state.currentPokemon};
+        return {
+          ... state,
+          currentPokemon: action.payload
+        }
 
-      // remove pokemon from enemy team 
+      // remove pokemon from team 
+      case types.REMOVE_TEAM_MEMBER : 
+        console.log('inside remove team member ')
+        const team = action.payload.team;
+        const mon = action.payload.mon; 
+        const CopyOfTeam = {...state[team]}
+        console.log(team, mon)
+        console.log(CopyOfTeam)
+        CopyOfTeam[mon] = null;
+        CopyOfTeam.size--;
 
+        const returnState = {...state};
+        returnState[team] = CopyOfTeam;
+        console.log(returnState)
+        return returnState;
 
     default: {
       return state

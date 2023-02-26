@@ -13,6 +13,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PokemonSprite from './PokemonSprite.jsx';
+import TeamMember from './TeamMember.jsx';
 
 const mapStateToProps = state => ({
   currentPokemon : state.pokemon.currentPokemon,
@@ -31,45 +32,58 @@ class TeamDisplay extends Component {
 
   populateTeam(team) {
     {console.log('inside populateTeam')}
-    {console.log('color for team: ', this.props.team)}
-    // {console.log(this.props.actualTeam)}
-    let whichTeam;
+    {console.log('color for team: ', this.color)}
+
+    let selectedTeam;
+    let selectedTeamName;
     let title;
+
     if (this.props.team === 'green') {
-      whichTeam = this.props.yourTeam;
+      selectedTeam = this.props.yourTeam;
+      selectedTeamName = 'yourTeam';
       title = 'Your Team'
     } else {
-      whichTeam = this.props.enemyTeam
+      selectedTeam = this.props.enemyTeam
+      selectedTeamName = 'enemyTeam';
       title = 'Enemy Team'
     }
 
-    console.log(whichTeam)
+    // console.log(selectedTeam)
 
     const teamToBeDisplayed = [];
-    for (let i=0; i<whichTeam.length; i++) {
-      teamToBeDisplayed.push(
-          <PokemonSprite
-            key={i}
-            pokemon={Object.keys(whichTeam[i])[0]}
-            className="pokemon-class-small"
-          />)
+    for (let i=1; i<=6; i++) {
+      let selectedMon = 'mon' + i.toString();
+      console.log('inside TeamDisplay for loop: ')
+      console.log(selectedTeam, selectedMon);
+      if (selectedTeam[selectedMon]) {
+        teamToBeDisplayed.push(
+            <TeamMember
+              key={i}
+              selectedTeamName={selectedTeamName}
+              selectedTeam={selectedTeam}
+              selectedMon={selectedMon}
+              pokemonData={selectedTeam[selectedMon]}
+              pokemonName={selectedTeam[selectedMon]['pokemon']}
+            />)
+      }
     }
+    console.log('END of populateTeam() ', {title: title, teamToBeDisplayed: teamToBeDisplayed})
     return {title: title, teamToBeDisplayed: teamToBeDisplayed}
   }
 
   render() {
-    if (this.team==="green") {
+    if (this.props.team==="green") {
       return (
         <div className="green">
-          <h4>{this.populateTeam()['title']}</h4>
-          {this.populateTeam()['teamToBeDisplayed']}
+          <h4>{this.populateTeam('green')['title']}</h4>
+          {this.populateTeam('green')['teamToBeDisplayed']}
         </div>
       );
     } else {
       return (
         <div className="red">
-          <h4>{this.populateTeam()['title']}</h4>
-          {this.populateTeam()['teamToBeDisplayed']}
+          <h4>{this.populateTeam('red')['title']}</h4>
+          {this.populateTeam('red')['teamToBeDisplayed']}
         </div>
       );
     }

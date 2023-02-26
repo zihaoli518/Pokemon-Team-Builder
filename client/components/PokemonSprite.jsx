@@ -20,7 +20,7 @@ const mapDispatchToProps = dispatch => ({
 });
 
 const PokemonSprite = props => {
-  console.log(props)
+  // console.log(props)
   const url = 'https://play.pokemonshowdown.com/sprites/xyani/' + props.pokemon.toLowerCase() + '.gif'
 
   return (

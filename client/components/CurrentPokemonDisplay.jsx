@@ -43,7 +43,6 @@ const mapDispatchToProps = dispatch => ({
 class CurrentPokemonDisplay extends Component {
   constructor(props) {
     super(props);
-    this.state = props
   }
 
   getTypes() {
@@ -100,14 +99,14 @@ class CurrentPokemonDisplay extends Component {
     return (
       <div key={this.props.currentPokemon} className="current-pokemon">
         <div className="top-flexbox">
-          <h3> {this.state.currentPokemon.pokemon} </h3>
+          <h3 id={this.props.currentPokemon.pokemon}> {this.props.currentPokemon.pokemon} </h3>
           <div className="types">
             <h4 className="type" id={this.props.currentPokemon.types[0]}>{this.props.currentPokemon.types[0]}</h4>
             <h4 className="type" id={this.props.currentPokemon.types[1]}>{this.props.currentPokemon.types[1]}</h4>
           </div>
           <div className="option-buttons">
-            <button onClick={()=>{this.addToTeam(this.props.currentPokemon, 'friendly');console.log('onclick fired',this.props.yourTeam)}}>Add to your team</button>
-            <button onClick={()=>{this.addToTeam(this.props.currentPokemon, 'enemy')}}>Add to enemy team</button>
+            <button onClick={()=>{this.addToTeam(this.props.currentPokemon, 'friendly');console.log('onclick fired GREEN',this.props.yourTeam)}}>Add to your team</button>
+            <button onClick={()=>{this.addToTeam(this.props.currentPokemon, 'enemy');console.log('onclick fired RED',this.props.enemyTeam)}}>Add to enemy team</button>
           </div>
         </div>
         <div className="current-pokemon-flexbox">
@@ -152,9 +151,10 @@ class CurrentPokemonDisplay extends Component {
                   </ul>
                 </div>
               ) : (
-                alert(
-                  "No competitive stats found! Current version of the app only supports gen8 OU tier... sorry"
-                )
+                // alert(
+                //   "No competitive stats found! Current version of the app only supports gen8 OU tier... sorry"
+                // )
+                null
               )}
             </div>
           </div>
