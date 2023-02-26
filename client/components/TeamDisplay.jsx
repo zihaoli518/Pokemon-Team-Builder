@@ -76,14 +76,18 @@ class TeamDisplay extends Component {
       return (
         <div className="green">
           <h4>{this.populateTeam('green')['title']}</h4>
-          {this.populateTeam('green')['teamToBeDisplayed']}
+          <div className='team-members'>
+            {this.populateTeam('green')['teamToBeDisplayed']}
+          </div>
         </div>
       );
     } else {
       return (
         <div className="red">
           <h4>{this.populateTeam('red')['title']}</h4>
-          {this.populateTeam('red')['teamToBeDisplayed']}
+          <div className='team-members'>
+            {this.populateTeam('red')['teamToBeDisplayed']}
+          </div>
         </div>
       );
     }

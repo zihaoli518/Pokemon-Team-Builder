@@ -29,13 +29,12 @@ const TeamMember = props => {
 
   return (
     <div className="team-member" id={props.selectedTeamName + '_' + props.selectedMon}>
-      <div onClick={()=>{props.selectTeamMember(props.pokemonData)}}>
         <PokemonSprite
           pokemon={props.pokemonName}
-          className="pokemon-class-small" 
+          className={"pokemon-sprite-class-small"}
+          onClick={()=>{props.selectTeamMember(props.pokemonData)}}
         />
-      </div>
-      <h3 onClick={()=>props.removeTeamMember(props.selectedTeamName, props.selectedMon)}>X</h3>
+      <img className="remove-button" onClick={()=>props.removeTeamMember(props.selectedTeamName, props.selectedMon)} src='https://cdn-icons-png.flaticon.com/512/66/66847.png' ></img>
     </div>
   );
 }
