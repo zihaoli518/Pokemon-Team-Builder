@@ -15,8 +15,24 @@ import * as types from '../constants/actionTypes';
 
 const initialState = {
   currentPokemon: {isActive: false},
-  yourTeam: [],
-  enemyTeam: [],
+  yourTeam: {
+    size: 0,
+    mon1: null,
+    mon2: null,
+    mon3: null,
+    mon4: null,
+    mon5: null,
+    mon6: null
+  },
+  enemyTeam: {
+    size: 0,
+    mon1: null,
+    mon2: null,
+    mon3: null,
+    mon4: null,
+    mon5: null,
+    mon6: null
+  },
   teamStatus: false,
 }
 
@@ -82,10 +98,11 @@ const pokemonReducer = (state = initialState, action) => {
     // add pokemon to your team 
     case types.ADD_POKEMON_TO_YOUR_TEAM :
       const yourNewTeam = {...state.yourTeam};
-      const currentNameY = state.currentPokemon.pokemon;
-      let newObjY = {};
-      newObjY[currentNameY] = state.currentPokemon
-      yourNewTeam.push(newObjY)
+      const currentPokemonY = {...state.currentPokemon}
+
+      yourNewTeam.size++;
+      yourNewTeam['mon' + yourNewTeam.size.toString()] = currentPokemonY;
+
       return {
         ... state,
         yourTeam: yourNewTeam,
@@ -93,11 +110,11 @@ const pokemonReducer = (state = initialState, action) => {
       }
       // add pokemon to enemy team 
       case types.ADD_POKEMON_TO_ENEMY_TEAM :
-        const enemyNewTeam = {...state.enemyTeam};
-        const currentNameE = state.currentPokemon.pokemon;
-        let newObjE = {};
-        newObjE[currentNameE] = state.currentPokemon
-        enemyNewTeam.push(newObjE)
+        const enemyNewTeam = {...state.yourTeam};
+        const currentPokemonE = {...state.currentPokemon}
+        
+        enemyNewTeam.size++;
+        enemyNewTeam['mon' + enemyNewTeam.size.toString()] = currentPokemonE;
         return {
           ... state,
           enemyTeam: enemyNewTeam,
