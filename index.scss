@@ -17,7 +17,7 @@ body {
 }
 
 #app {
-  width: 103%;
+  width: 100%;
   height: 1000px;
   margin-top: -20px;
   margin-left: -5px;
@@ -26,6 +26,7 @@ body {
 .background {
   height: 100%;
   width: 100%;
+  margin-left: 5px;
 }
 
 // TYPES OF POKEMON 
@@ -473,7 +474,7 @@ input[type="text"]
 .team-members {
   display: flex;
   flex-direction: row;
-  margin-left: 10px;
+  margin-left: 25px;
 }
 
 .team-member {
@@ -492,10 +493,13 @@ input[type="text"]
 }
 
 .pokemon-sprite-class-small {
-  min-height: 70px;
-  min-width: 70px;
-  max-height: 110px;
-  max-width: 110px;
+  // min-height: 70px;
+  // min-width: 70px;
+  // max-height: 110px;
+  // max-width: 110px;
+  height: 100px; 
+  width: 100px;
+
 
   top: 50%;
 

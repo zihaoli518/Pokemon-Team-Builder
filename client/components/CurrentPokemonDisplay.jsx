@@ -36,7 +36,7 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => ({
   // create functions that will dispatch action creators
   addPokemonToYourTeam : (pokemonObj) => dispatch(actions.addPokemonToYourTeam(pokemonObj)),
-  addPokemonToEnemeyTeam: (pokemonObj) => dispatch(actions.addPokemonToEnemeyTeam(pokemonObj))
+  addPokemonToEnemeyTeam: (pokemonObj) => dispatch(actions.addPokemonToEnemyTeam(pokemonObj))
 });
 
 

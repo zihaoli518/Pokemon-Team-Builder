@@ -31,8 +31,8 @@ class TeamDisplay extends Component {
   }
 
   populateTeam(team) {
-    {console.log('inside populateTeam')}
-    {console.log('color for team: ', this.color)}
+    // {console.log('inside populateTeam')}
+    // {console.log('color for team: ', this.color)}
 
     let selectedTeam;
     let selectedTeamName;
@@ -53,8 +53,8 @@ class TeamDisplay extends Component {
     const teamToBeDisplayed = [];
     for (let i=1; i<=6; i++) {
       let selectedMon = 'mon' + i.toString();
-      console.log('inside TeamDisplay for loop: ')
-      console.log(selectedTeam, selectedMon);
+      // console.log('inside TeamDisplay for loop: ')
+      // console.log(selectedTeam, selectedMon);
       if (selectedTeam[selectedMon]) {
         teamToBeDisplayed.push(
             <TeamMember

@@ -19,7 +19,7 @@ import PokemonSearch from './components/PokemonSearch.jsx'
 import CurrentPokemonDisplay from './components/CurrentPokemonDisplay.jsx'
 import TeamDisplay from './components/TeamDisplay.jsx';
 import MoreInfo from './components/MoreInfo.jsx';
-import ShowChartButton from './components/ShowChartButton';
+import ShowChartButton from './components/ShowChartButton.jsx';
 
 import '../index.scss';
 

@@ -40,7 +40,7 @@ export const addPokemonToYourTeam = (pokemonObj) => ({
   payload: pokemonObj,
 });
 
-export const addPokemonToEnemeyTeam = (pokemonObj) => ({
+export const addPokemonToEnemyTeam = (pokemonObj) => ({
   type: types.ADD_POKEMON_TO_ENEMY_TEAM,
   payload: pokemonObj,
 });

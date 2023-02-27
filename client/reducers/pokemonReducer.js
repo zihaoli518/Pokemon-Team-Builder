@@ -12,6 +12,7 @@
 
 // importing action types
 import * as types from '../constants/actionTypes'; 
+import reOrder from './reorder.js'
 
 const initialState = {
   currentPokemon: {isActive: false},
@@ -34,6 +35,8 @@ const initialState = {
     mon6: null
   },
   teamStatus: false,
+  showChartOption: false,
+  showChart: false,
 }
 
 const pokemonReducer = (state = initialState, action) => {
@@ -161,8 +164,10 @@ const pokemonReducer = (state = initialState, action) => {
         CopyOfTeam[mon] = null;
         CopyOfTeam.size--;
 
+        const shuffledTeam = reOrder(CopyOfTeam);
+
         const returnState = {...state};
-        returnState[team] = CopyOfTeam;
+        returnState[team] = shuffledTeam;
         console.log(returnState)
         return returnState;
 
