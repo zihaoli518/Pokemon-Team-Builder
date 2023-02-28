@@ -16,13 +16,12 @@ import { connect } from 'react-redux';
 // importing files 
 import * as actions from '../actions/actions';
 import PokemonSprite from './PokemonSprite.jsx';
+import StatChart from './StatChart.jsx';
 
 
 
 // currentPokemon contains all data. moveSet contains all moves(object)
 const mapStateToProps = state => {
-  console.log('mapState');
-  console.log(state.pokemon.currentPokemon);
   return {
     currentPokemon : state.pokemon.currentPokemon,
     moveSet : state.pokemon.currentPokemon.moves,
@@ -158,6 +157,9 @@ class CurrentPokemonDisplay extends Component {
               )}
             </div>
           </div>
+
+
+          <StatChart name={this.props.currentPokemon.pokemon} pokemonStats={this.props.currentPokemon.stats}/>
 
           <PokemonSprite
             pokemon={this.props.currentPokemon.pokemon}
