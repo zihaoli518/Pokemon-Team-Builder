@@ -15,7 +15,7 @@ import { Chart } from 'chart.js/auto';
 import { connect } from 'react-redux';
 
 // global constant for maximum number of the spectrum 
-const maxStat = 140; 
+const maxStat = 150; 
 
 const mapStateToProps = state => {
   return {
@@ -25,7 +25,9 @@ const mapStateToProps = state => {
 
  // helper function for generating color based on value 
  function stat2color(perc, maxStat) {
-   perc = perc/(maxStat/100)
+   if (perc>maxStat) perc = 100;
+   else perc = perc/(maxStat/100);
+
    var r,g,b = 0;
    if (perc < 50) {
      r = 255;
@@ -39,39 +41,55 @@ const mapStateToProps = state => {
  }
 
 // configurations for chart.js  
-const labels = ['HP', 'Atack', 'Defense', 'Sp. Atk.', 'Sp. Def', 'Speed'];
+let labels = ['HP', 'Atack', 'Defense', 'Sp. Atk.', 'Sp. Def', 'Speed'];
 const data = {
   labels: labels,
   datasets: [
     {
-      label: '',
       data: [],
-      backgroundColor: [
-        color,
-        color,
-        color,
-        color,
-        color,
-        color
-      ]
+      backgroundColor: [],
+      barThickness: 25
     }
   ]
 };
 
 const config = {
-  type: 'bar',
+  type: "bar",
   data: data,
   options: {
+    indexAxis: "y",
+    maintainAspectRatio: false,
     responsive: true,
     plugins: {
-      legend: {
-        position: 'top',
-      },
       title: {
         display: true,
-        text: 'BASE STATS'
-      }
-    }
+        text: "BASE STATS",
+      },
+      legend: {
+        display: false,
+      },
+    },
+    scales: {
+      x: {
+        grid: {
+          display: false,
+        },
+        max: maxStat,
+        ticks: {
+          display: false,
+        },
+        display: false,
+      },
+      y: {
+        grid: {
+          display: false,
+        },
+        scaleLabel: {
+          display: false,
+        },
+
+      },
+    },
   },
 };
 
@@ -83,17 +101,25 @@ const StatChart = props => {
 
   const populateData = () => {
     const newStats = [];
+    const newLabels = [];
+    let labelsCounter = 0;
     for (let key in props.currentPokemon.stats) {
       newStats.push(props.currentPokemon.stats[key]);
+      newLabels.push(labels[labelsCounter] + ' ' + props.currentPokemon.stats[key].toString());
+      labelsCounter++;
     }
     data.datasets[0].data = newStats;
+    data.labels = newLabels;
     // generating color for each stat 
     const newColors = [];
     for (let i=0; i<newStats.length; i++) {
       newColors.push(stat2color(newStats[i], maxStat));
     }
-    console.log('newColors ', newColors)
+    console.log('newLables ', labels)
     data.datasets[0].backgroundColor = newColors;
+    // generating labels 
+    for (let i=0; i<labels.length; i++) {
+    }
   }
 
 

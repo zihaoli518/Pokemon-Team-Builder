@@ -156,20 +156,21 @@ input[type="text"]
   font-family: "Indie Flower", cursive;
   font-weight: 500;
   width: 50%;
-  background-image: linear-gradient(
-    105deg,
-  hsl(63deg 65% 88%) 0%,
-  hsl(95deg 66% 88%) 10%,
-  hsl(136deg 69% 87%) 21%,
-  hsl(161deg 75% 82%) 33%,
-  hsl(177deg 76% 77%) 43%,
-  hsl(188deg 95% 76%) 54%,
-  hsl(177deg 75% 76%) 64%,
-  hsl(162deg 73% 81%) 74%,
-  hsl(138deg 65% 85%) 83%,
-  hsl(97deg 60% 86%) 92%,
-  hsl(65deg 58% 85%) 100%
-  );
+  // background-image: linear-gradient(
+  //   105deg,
+  // hsl(63deg 65% 88%) 0%,
+  // hsl(95deg 66% 88%) 10%,
+  // hsl(136deg 69% 87%) 21%,
+  // hsl(161deg 75% 82%) 33%,
+  // hsl(177deg 76% 77%) 43%,
+  // hsl(188deg 95% 76%) 54%,
+  // hsl(177deg 75% 76%) 64%,
+  // hsl(162deg 73% 81%) 74%,
+  // hsl(138deg 65% 85%) 83%,
+  // hsl(97deg 60% 86%) 92%,
+  // hsl(65deg 58% 85%) 100%
+  // );
+  background-color: rgb(215, 215, 215);
   border-radius: 1rem;
   box-shadow: 12px 10px 30px -10px rgba(92, 11, 11, 0.88);
 
@@ -249,8 +250,14 @@ input[type="text"]
 }
 
 .stat-chart {
-  height: 300px;
-  width: 300px;
+  height: 100%;
+  width: 400px;
+  margin-top: 0;
+}
+
+#myChart {
+  height: 300px !important;
+  width: 100%;
 }
 
 // left
@@ -450,7 +457,7 @@ input[type="text"]
   margin-right: 45px;
   width: 45%;
   height: 200px;
-  background-color: rgb(164, 241, 164);
+  background-color: rgb(164, 241, 164, 50%);
   border-radius: 1rem;
 }
 
