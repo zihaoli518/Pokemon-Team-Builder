@@ -1,7 +1,8 @@
-// @font-face {
-//   font-family: UnknownFont;
-//   src: url("./fonts/unown-font/Unown-OVEwA.ttf") format("truetype");
-// }
+$color1: #c1c297;
+$color2: #d1c9af;
+$color3: #284368;
+$color4: #4d789f;
+$color5: #badcd8;
 
 @import url("https://fonts.googleapis.com/css2?family=Permanent+Marker&display=swap"); //'Permanent Marker', cursive;
 @import url("https://fonts.googleapis.com/css2?family=Shadows+Into+Light&display=swap"); //Shadows Into Light', cursive;
@@ -10,7 +11,7 @@
 @import url("https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600&display=swap"); //font-family: 'Orbitron', sans-serif;
 
 body {
-  background-color: rgb(203, 197, 197);
+  background-color: $color5;
   background-image: url('https://lh3.googleusercontent.com/iC5rKNivUaFEznEEGWMGEtu2QlUltPAzF7lG4Q63fYEWNZ_EkFGBPdyyW4xwTbwKXLYODiGNNZpdpR7lkb9ba86BmUERRNVqZR7P4JARZcpTJDph96-jcNPjAaPB39ZTeK1GoKepiMH65hwnmPopcibYvxQUzfo1xeFbF5JfWyQbdfZ44rDEzezD-iwLIJ0fUlxxzA7wi4DQcnBmNZkwOlZH5iaISUkjrFv-xzxv1dqrqq2bsQRKN3IAE6-nYLKaooFvVJ7QuoPUEEMO4K2kHoJ5VBZdBbFXkPmCLitmBk3MOMYH-CA1icVBnTji7QOtsoODlLI0VpAh8nH-qRIriWJ7GMbwvxn3fHExUxgZ7TdlUYz5vY4YmqwK6qmFZiDhpQHZFD06LKWgVSSndicDqt7PROyyTit9Xm1PdfMfKNLS1l4qB_hsBOPp-XdodMrBqIaLANIVLtxq5dDfQtm5h-1zHjwynjxwb8E_PE-vkqZ63G5HMarBQ1khr6kaC7HLuwA1NO-DxX-g6V7qvSadcyCwL_C3rk_DM5aOk-JGbLW2MljgBplY84n2ds5j41HWmjww5PbkA6dD6Vy9gmktlG9cokcPoxPGksh_9jVADAuRBJ5xK5IagjJVOWLR5jzYrgMRZkz0qIl362gFXeksDgqFJGr0xJjJs1uypydzwW_fWKegY2w8Fo_BVPtDENb6D9hLsX0D0CYCsvwIsLIwJuAaXOhNkQzrG1rF1OmQ64ha6-lo7o6-y5ez_Yu6CybZ1tNrJ4XgF-n--V2_KvA7d1DI9FHuH5YlFSPNNXi2ratqaf3IdN4bXHz1z86Cr7aRpm95GQGvVhLZvuKdnw5wH1M9fBC98TXFN9AlTgrINVzENVSRz64fFPgVchmU-tT2znDSVgggLHt9XbnLNnLa47f_DqnFoS9abPAMR7WdAiAPCvcjzQkaG4jsVPnNPelmDvPNPoU_uzw=w1920-h1200-no?authuser=0');
 // }
   // background-image: './background.jpeg';
@@ -120,7 +121,7 @@ h1 {
   width: 200px;
   margin-right: 30px;
   border-radius: 0.3rem;
-  background-color: #b6ccfc;
+  background-color: $color4 !important;
 }
 
 .pokemon-search button {
@@ -130,7 +131,7 @@ h1 {
   font-family: "Shadows Into Light", cursive;
   font-size: 20px;
   font-weight: 700;
-  color:#54480d;
+  background-color:$color3;
 
   position: relative;
   top: 5px;
@@ -170,7 +171,7 @@ input[type="text"]
   // hsl(97deg 60% 86%) 92%,
   // hsl(65deg 58% 85%) 100%
   // );
-  background-color: rgb(215, 215, 215);
+  background-color: $color5;
   border-radius: 1rem;
   box-shadow: 12px 10px 30px -10px rgba(92, 11, 11, 0.88);
 
@@ -183,6 +184,16 @@ input[type="text"]
   margin-bottom: 10px;
 }
 
+// animation 
+@keyframes rollout {
+  0% { transform: translateY(-100px); }
+  100% { transform: none; }
+}
+
+.current-pokemon img {
+  animation: rollout 2s;
+}
+
 
 
 // top-flexbox
@@ -190,7 +201,7 @@ input[type="text"]
   display: flex;
   justify-content: center;
   margin-bottom: -5px;
-  margin-left: 70px;
+  margin-left: 0px;
 }
 
 .current-pokemon .top-flexbox h3 {
@@ -215,18 +226,26 @@ input[type="text"]
   flex: 0.1;
   display: flex;
   flex-direction: column;
+  position: absolute;
+  right: 140px;
+  top: -3px;
 }
 
 .top-flexbox .option-buttons button {
   height: 30px;
-  width: 120px;
-  font-size: 11px;
+  width: 140px;
+  font-size: 12px;
   font-weight: 400;
   font-family: 'Chakra Petch', sans-serif;
   margin-right: -150px;
-  margin-top: 5px;
-  background-color: rgb(208, 206, 206);
-  color: rgb(60, 60, 60);
+  margin-top: 2px;
+  border-radius: 0.5rem;
+  background-color: $color4;
+  color: $color1;
+}
+
+.current-pokemon-spacer {
+  flex: 0.25;
 }
 
 
@@ -235,6 +254,7 @@ input[type="text"]
 .current-pokemon-flexbox {
   display: flex;
   justify-content: center;
+  margin-left: -30px;
 }
 
 .current-pokemon-flexbox img {
@@ -252,7 +272,7 @@ input[type="text"]
 .stat-chart {
   height: 100%;
   width: 400px;
-  margin-top: 0;
+  margin-top: 20px;
 }
 
 #myChart {
@@ -472,7 +492,7 @@ input[type="text"]
   margin-left: 45px;
   width: 45%;
   height: 200px;
-  background-color: rgb(220, 121, 116);
+  background-color: rgb(220, 121, 116, 50%);
   border-radius: 1rem;
 }
 

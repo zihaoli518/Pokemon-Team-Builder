@@ -103,6 +103,7 @@ class CurrentPokemonDisplay extends Component {
             <h4 className="type" id={this.props.currentPokemon.types[0]}>{this.props.currentPokemon.types[0]}</h4>
             <h4 className="type" id={this.props.currentPokemon.types[1]}>{this.props.currentPokemon.types[1]}</h4>
           </div>
+          <div className="current-pokemon-spacer" ></div>
           <div className="option-buttons">
             <button onClick={()=>{this.addToTeam(this.props.currentPokemon, 'friendly');console.log('onclick fired GREEN',this.props.yourTeam)}}>Add to your team</button>
             <button onClick={()=>{this.addToTeam(this.props.currentPokemon, 'enemy');console.log('onclick fired RED',this.props.enemyTeam)}}>Add to enemy team</button>
@@ -157,29 +158,15 @@ class CurrentPokemonDisplay extends Component {
               )}
             </div>
           </div>
-
-
-          <StatChart name={this.props.currentPokemon.pokemon} pokemonStats={this.props.currentPokemon.stats}/>
-
+          
           <PokemonSprite
             pokemon={this.props.currentPokemon.pokemon}
             className="pokemon-class"
           />
 
           <div className="stats">
-            <h5>Base Stats</h5>
-            <ul>
-              <li>HP: {this.props.currentPokemon.stats.hp}</li>
-              <li>Attack: {this.props.currentPokemon.stats.attack}</li>
-              <li>Defense: {this.props.currentPokemon.stats.defense}</li>
-              <li>
-                Special Attack: {this.props.currentPokemon.stats.specialA}
-              </li>
-              <li>
-                Special Defense: {this.props.currentPokemon.stats.specialD}
-              </li>
-              <li>Speed: {this.props.currentPokemon.stats.speed}</li>
-            </ul>
+            {/* <h5>Base Stats</h5> */}
+            <StatChart name={this.props.currentPokemon.pokemon} pokemonStats={this.props.currentPokemon.stats}/>
           </div>
         </div>
         <div>{/* counters and weakness */}</div>

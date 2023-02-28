@@ -64,10 +64,17 @@ const config = {
       title: {
         display: true,
         text: "BASE STATS",
+        color: "black",
+        font: {
+          size: 18
+        }
       },
       legend: {
         display: false,
       },
+      label: {
+        color: "black"
+      }
     },
     scales: {
       x: {
