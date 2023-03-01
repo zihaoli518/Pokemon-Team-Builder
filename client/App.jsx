@@ -22,6 +22,7 @@ import MoreInfo from './components/MoreInfo.jsx';
 import ShowChartButton from './components/ShowChartButton.jsx';
 
 import '../index.scss';
+import MatchupChart from './components/MatchupChart.jsx';
 
 
 const mapStateToProps = state => ({
@@ -29,7 +30,8 @@ const mapStateToProps = state => ({
   start : state.pokemon.currentPokemon.isActive,
   teamStatus: state.pokemon.teamStatus,
   yourTeam: state.pokemon.yourTeam,
-  enemyTeam: state.pokemon.enemyTeam 
+  enemyTeam: state.pokemon.enemyTeam,
+  showTypingChart: state.pokemon.showTypingChart
 }) 
 
 
@@ -70,6 +72,12 @@ class App extends Component {
         <div className='show-chart-button-container'>
           {this.props.teamStatus ?
             <ShowChartButton/> :
+            null
+          }
+        </div>
+        <div className='matchup-chart-container'>
+          {this.props.showTypingChart ?
+            <MatchupChart/> :
             null
           }
         </div>

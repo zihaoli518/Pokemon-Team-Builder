@@ -14,6 +14,8 @@ import React, { useState, useEffect } from 'react';
 import { Chart } from 'chart.js/auto';
 import { connect } from 'react-redux';
 
+import { getTypeWeaknesses } from 'poke-types';
+
 // global constant for maximum/minimum number as parameters for the color scale function  
 const maxStat = 150; 
 const minStat = 40;
@@ -126,7 +128,6 @@ const StatChart = props => {
     for (let i=0; i<newStats.length; i++) {
       newColors.push(stat2color(newStats[i]));
     }
-    console.log('newLables ', newColors)
     data.datasets[0].backgroundColor = newColors;
     // generating labels 
     for (let i=0; i<labels.length; i++) {

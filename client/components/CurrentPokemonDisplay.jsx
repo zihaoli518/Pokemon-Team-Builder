@@ -166,7 +166,7 @@ class CurrentPokemonDisplay extends Component {
 
           <div className="stats">
             {/* <h5>Base Stats</h5> */}
-            <StatChart name={this.props.currentPokemon.pokemon} pokemonStats={this.props.currentPokemon.stats}/>
+            <StatChart name={this.props.currentPokemon.pokemon} pokemonStats={this.props.currentPokemon.stats} currentPokemon={this.props.currentPokemon}/>
           </div>
         </div>
         <div>{/* counters and weakness */}</div>

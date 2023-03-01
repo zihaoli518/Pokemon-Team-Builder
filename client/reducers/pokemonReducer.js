@@ -12,14 +12,17 @@
 
 // importing action types
 import * as types from '../constants/actionTypes'; 
+
 import reOrder from './reorder.js'
+import { getTypeWeaknesses } from 'poke-types';
 
 const initialState = {
   currentPokemon: {
     isActive: false,
     pokemon: null,
     types: [],
-    stats: {}
+    stats: {},
+    weakness: {},
   },
   yourTeam: {
     size: 0,
@@ -90,6 +93,11 @@ const pokemonReducer = (state = initialState, action) => {
       copy.stats.specialD = pokemonData.stats[4].base_stat;
       copy.stats.speed = pokemonData.stats[5].base_stat;
       console.log('ADD_POKEMON_POKEAPI ', copy)
+
+      // populating weakness object
+      if (copy.types.length===1) getTypeWeaknesses(copy.types[0]);
+      else getTypeWeaknesses(copy.types[0], copy.types[1]);
+
       return {
         ...state, 
         currentPokemon: copy
