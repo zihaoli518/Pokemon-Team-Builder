@@ -76,7 +76,7 @@ body {
 #ice {
   background-color: #96D9D6;
 }
-#noraml {
+#normal {
   background-color: #A8A77A;
 }
 #poison {
@@ -551,4 +551,95 @@ input[type="text"]
   justify-content: center;
   margin-top: 5px;
   height: 30px;
+}
+
+
+
+
+// match up chart 
+.matchup-chart-container{
+  background-color: color4 !important;
+  display: flex;
+  justify-content: center;
+  margin-left: 20px;
+}
+
+.matchup-chart {
+  background-color: $color4;
+  width: 70%;
+  padding-left: 2.1%;
+}
+
+.row-outter {
+  display: flex;
+  margin-left: -10%;
+}
+
+.row-outter-legends {
+  margin-left: -4%;
+}
+
+.row-inner {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+
+.chart-legends {
+  width: 80%;
+  margin-left: 20px;
+  text-align: center;
+
+  font-family: "Indie Flower", cursive;
+  font-weight: 700;
+  font-size: 1rem;
+}
+
+.box {
+  margin-left: 2.3%;
+  margin-right: 2.3%;
+
+  display: flex;
+  justify-content: center;
+
+  border: rgb(39, 39, 39);
+  border-width: 0.5;
+  border-style: solid;
+
+  padding-left: 1rem;
+  margin-left: 0;
+  margin-right: 0;
+
+  width: 80%;
+  text-align: center;
+
+  font-family: "Indie Flower", cursive;
+  font-weight: 700;
+  font-size: 1rem;
+}
+
+.weakness-025 {
+  background-color: rgb(60, 156, 60);
+}
+
+.weakness-05 {
+  background-color: rgb(159, 247, 159);
+}
+
+.weakness-0 {
+  background-color: #1f1f1f;
+  color: white;
+}
+
+.weakness-2 {
+  background-color: rgb(243, 91, 91);
+}
+
+.weakness-4 {
+  background-color: rgb(127, 0, 0);
+}
+
+.chart-sprite {
+  height: 80px;
+  width: 80px;
 }

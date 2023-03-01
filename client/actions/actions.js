@@ -57,5 +57,5 @@ export const selectTeamMember = (pokemonObj) => ({
 
 export const showTypingChart = () => ({
   type: types.SHOW_TYPING_CHART,
-  payload: pokemonObj,
+  payload: null,
 });

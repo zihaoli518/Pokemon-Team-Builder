@@ -95,8 +95,8 @@ const pokemonReducer = (state = initialState, action) => {
       console.log('ADD_POKEMON_POKEAPI ', copy)
 
       // populating weakness object
-      if (copy.types.length===1) getTypeWeaknesses(copy.types[0]);
-      else getTypeWeaknesses(copy.types[0], copy.types[1]);
+      if (copy.types.length===1) copy.weakness = getTypeWeaknesses(copy.types[0]);
+      else copy.weakness = getTypeWeaknesses(copy.types[0], copy.types[1]);
 
       return {
         ...state, 

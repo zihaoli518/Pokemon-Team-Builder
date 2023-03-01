@@ -21,18 +21,24 @@ import { connect } from 'react-redux';
 
 const Box = props => {
   // generate text based on weakness
-  const generateText = weakness => {
+  const generateText = () => {
     switch (props.pokemon.weakness[props.column]) {
-      case 0:
-        return '0'
+      case 1:
+        return ' '
+      default: 
+        return props.pokemon.weakness[props.column]
     }
   }
   // add class according to weakness 
+  console.log('in box ', props.pokemon, props.column)
 
+  let value = generateText();
+
+  let className = 'weakness-' + props.pokemon.weakness[props.column].toString().replace('.', '');
 
   return (
-    <div className={'box ' + 'weakness-' + props.pokemon.weakness[props.column]}>
-      <h3>{props.pokemon.weakness[props.column]}</h3>
+    <div className={'box ' + className}>
+      <h3>{value}</h3>
     </div>
   )
 }
