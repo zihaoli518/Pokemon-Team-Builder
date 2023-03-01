@@ -15,17 +15,27 @@ import { connect } from 'react-redux';
 
 import * as actions from '../actions/actions';
 
+const mapStateToProps = state => {
+  return {
+    teamStatus: state.pokemon.teamStatus,
+    showTypingChart: state.pokemon.showTypingChart,
+  }
+}
 
 const mapDispatchToProps = dispatch => ({
   // create functions that will dispatch action creators
-  // showChart : () => dispatch(actions.showChart()),
+  showTypingChart : () => dispatch(actions.showTypingChart()),
 });
 
 const ShowChartButton = props => {
 
 
   return (
-    <button onClick={props.showChart}>SHOW CHART</button>
+    <div className='button-area'>
+
+        <button onClick={props.showTypingChart}>SHOW TYPING MATCHUP CHART</button> 
+
+    </div>
   );
 }
 

@@ -186,12 +186,12 @@ input[type="text"]
 
 // animation 
 @keyframes rollout {
-  0% { transform: translateY(-100px); }
+  0% { transform: scale(0.3); }
   100% { transform: none; }
 }
 
 .current-pokemon img {
-  animation: rollout 2s;
+  animation: rollout 1.5s;
 }
 
 
@@ -542,4 +542,13 @@ input[type="text"]
   transform: scale(1.3);
   transition: ease-in-out;
   transition: 0.5s;
+}
+
+
+// show typing chart button 
+.show-chart-button-container {
+  display: flex;
+  justify-content: center;
+  margin-top: 5px;
+  height: 30px;
 }

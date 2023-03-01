@@ -96,7 +96,7 @@ class CurrentPokemonDisplay extends Component {
     // {console.log(this.props.currentPokemon)}
     // {console.log(this.props.currentPokemon.pokemon)}
     return (
-      <div key={this.props.currentPokemon} className="current-pokemon">
+      <div key={this.props.currentPokemon.pokemon} className="current-pokemon">
         <div className="top-flexbox">
           <h3 id={this.props.currentPokemon.pokemon}> {this.props.currentPokemon.pokemon} </h3>
           <div className="types">

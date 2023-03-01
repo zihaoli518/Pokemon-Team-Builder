@@ -14,8 +14,9 @@ import React, { useState, useEffect } from 'react';
 import { Chart } from 'chart.js/auto';
 import { connect } from 'react-redux';
 
-// global constant for maximum number of the spectrum 
+// global constant for maximum/minimum number as parameters for the color scale function  
 const maxStat = 150; 
+const minStat = 40;
 
 const mapStateToProps = state => {
   return {
@@ -24,21 +25,24 @@ const mapStateToProps = state => {
  }
 
  // helper function for generating color based on value 
- function stat2color(perc, maxStat) {
-   if (perc>maxStat) perc = 100;
-   else perc = perc/(maxStat/100);
+function stat2color(stat, max = maxStat, min = minStat) {
+  // perc ranges from 0-100 and is responsible for the color scale 
+  let perc;
+  if (stat > max) perc = 100;
+  else if (stat < min) perc = 0;
+  else perc = (stat / (max / 100));
 
-   var r,g,b = 0;
-   if (perc < 50) {
-     r = 255;
-     g = Math.round(5.1 * perc);
-   } else {
-     g = 255;
-     r = Math.round(510 - 5.1 * perc);
-   }
-   var h = r * 0x10000 + g * 0x100 + b * 0x1;
-   return "#" + ("000000" + h.toString(16)).slice(-6);
- }
+  var r,g,b = 0;
+  if (perc < 50) {
+    r = 255;
+    g = Math.round(5.1 * perc);
+  } else {
+    g = 255;
+    r = Math.round(510 - 5.1 * perc);
+  }
+  var h = r * 0x10000 + g * 0x100 + b * 0x1;
+  return "#" + ("000000" + h.toString(16)).slice(-6);
+}
 
 // configurations for chart.js  
 let labels = ['HP', 'Atack', 'Defense', 'Sp. Atk.', 'Sp. Def', 'Speed'];
@@ -120,9 +124,9 @@ const StatChart = props => {
     // generating color for each stat 
     const newColors = [];
     for (let i=0; i<newStats.length; i++) {
-      newColors.push(stat2color(newStats[i], maxStat));
+      newColors.push(stat2color(newStats[i]));
     }
-    console.log('newLables ', labels)
+    console.log('newLables ', newColors)
     data.datasets[0].backgroundColor = newColors;
     // generating labels 
     for (let i=0; i<labels.length; i++) {

@@ -68,7 +68,7 @@ class App extends Component {
           }
         </div>
         <div className='show-chart-button-container'>
-          {this.props.showChartOption ?
+          {this.props.teamStatus ?
             <ShowChartButton/> :
             null
           }

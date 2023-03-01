@@ -15,7 +15,12 @@ import * as types from '../constants/actionTypes';
 import reOrder from './reorder.js'
 
 const initialState = {
-  currentPokemon: {isActive: false},
+  currentPokemon: {
+    isActive: false,
+    pokemon: null,
+    types: [],
+    stats: {}
+  },
   yourTeam: {
     size: 0,
     mon1: null,
@@ -36,7 +41,7 @@ const initialState = {
   },
   teamStatus: false,
   showChartOption: false,
-  showChart: false,
+  showTypingChart: false,
 }
 
 const pokemonReducer = (state = initialState, action) => {
@@ -170,6 +175,13 @@ const pokemonReducer = (state = initialState, action) => {
         returnState[team] = shuffledTeam;
         console.log(returnState)
         return returnState;
+
+      case types.SHOW_TYPING_CHART :
+
+        return {
+          ...state,
+          showTypingChart: true
+        }
 
     default: {
       return state
