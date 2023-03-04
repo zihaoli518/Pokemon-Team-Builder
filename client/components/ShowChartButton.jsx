@@ -31,7 +31,7 @@ const ShowChartButton = props => {
 
 
   return (
-    <div className='button-area'>
+    <div className='show-chart-button-area'>
 
         <button onClick={props.showTypingChart}>SHOW TYPING MATCHUP CHART</button> 
 

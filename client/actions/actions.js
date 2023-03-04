@@ -59,3 +59,8 @@ export const showTypingChart = () => ({
   type: types.SHOW_TYPING_CHART,
   payload: null,
 });
+
+export const switchTeams = (yourTeam, enemeyTeam) => ({
+  type: types.SWITCH_TEAMS,
+  payload: {yourTeam: yourTeam, enemeyTeam: enemeyTeam},
+});

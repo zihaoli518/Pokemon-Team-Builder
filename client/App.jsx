@@ -18,6 +18,7 @@ import { connect } from 'react-redux';
 import PokemonSearch from './components/PokemonSearch.jsx'
 import CurrentPokemonDisplay from './components/CurrentPokemonDisplay.jsx'
 import TeamDisplay from './components/TeamDisplay.jsx';
+import SwitchTeams  from './components/SwitchTeams.jsx';
 import MoreInfo from './components/MoreInfo.jsx';
 import ShowChartButton from './components/ShowChartButton.jsx';
 
@@ -35,13 +36,13 @@ const mapStateToProps = state => ({
 }) 
 
 
+
 class App extends Component {
   constructor(props) {
     super(props);
 
 
   }
-
 
 
   render() {
@@ -65,7 +66,7 @@ class App extends Component {
         </div> */}
         <div className='teams'>
           {this.props.teamStatus ?
-            [<TeamDisplay key={'green'} team={'green'} />, <TeamDisplay key={'red'} team={'red'} />] : 
+            [<TeamDisplay key={'green'} team={'green'} />, <SwitchTeams />, <TeamDisplay key={'red'} team={'red'} />] : 
             null
           }
         </div>

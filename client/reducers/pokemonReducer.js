@@ -184,11 +184,19 @@ const pokemonReducer = (state = initialState, action) => {
         console.log(returnState)
         return returnState;
 
-      case types.SHOW_TYPING_CHART :
-
+      case types.SHOW_TYPING_CHART:
         return {
           ...state,
           showTypingChart: true
+        }
+
+      case types.SWITCH_TEAMS:
+        
+
+        return {
+          ...state,
+          yourTeam: action.payload.enemeyTeam,
+          enemyTeam: action.payload.yourTeam
         }
 
     default: {
