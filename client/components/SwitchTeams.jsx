@@ -33,7 +33,7 @@ const SwitchTeams = props => {
   return (
     <div className='switch-teams-button-container'>
 
-        <button onClick={()=>{props.switchTeams(props.yourTeam, props.enemyTeam)}}>SwitchTeams</button> 
+        <img onClick={()=>{props.switchTeams(props.yourTeam, props.enemyTeam)}} src='https://cdn-icons-png.flaticon.com/512/258/258488.png' />
 
     </div>
   );

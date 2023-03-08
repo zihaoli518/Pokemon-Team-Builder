@@ -27,7 +27,7 @@ const PokemonSprite = props => {
   let onClick = null;
   if (props.className) className = props.className;
   if (props.onClick) onClick = props.onClick;
-
+  console.log(url)
   return (
     <img onClick={onClick} className={className} src={url} />
   )
