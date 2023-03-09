@@ -24,6 +24,16 @@ fetchMiddlewares.fetchWeakness = (req, res, next) => {
   
 }
 
+fetchMiddlewares.testForNewerSprites = (req, res, next) => {
+  console.log('inside middleware testForNewerSprites')
+  fetch(req.body.url)
+    .then((data) => {
+      console.log("inside testForNewerSprites BACK");
+      console.log(typeof(data));
+      res.locals.url = data; 
+    });
+}
+
 // not up to date with gen 9 
 
 // fetchMiddlewares.fetchSmogon = (req, res, next) => {

@@ -12,6 +12,7 @@
 // importing dependencies 
 import React from 'react';
 import { connect } from 'react-redux';
+import fetch from 'node-fetch';
 
 
 const mapDispatchToProps = dispatch => ({
@@ -21,13 +22,32 @@ const mapDispatchToProps = dispatch => ({
 
 const PokemonSprite = props => {
   // console.log(props)
-  const url = 'https://play.pokemonshowdown.com/sprites/xyani/' + props.pokemon.toLowerCase() + '.gif'
+  let url = 'https://play.pokemonshowdown.com/sprites/xyani/' + props.pokemon.toLowerCase() + '.gif'
 
   let className = '';
   let onClick = null;
   if (props.className) className = props.className;
   if (props.onClick) onClick = props.onClick;
   console.log(url)
+
+  fetch('/api/testForNewerSprites', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      Accept: 'application/json, text/plain',
+    },
+    body: JSON.stringify({url: url})
+  })
+    // .then((response) => response.json())
+    .then((updatedUrl) => {
+      console.log('testForNewerSprites FRONT ', updatedUrl);
+      url = updatedUrl;
+      if (updatedUrl.error === 404) {
+        alert('ERROR in testForNewerSprites FRONT ')
+      }
+    })
+
+
   return (
     <img onClick={onClick} className={className} src={url} />
   )

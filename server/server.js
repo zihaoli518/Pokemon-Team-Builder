@@ -30,6 +30,11 @@ app.post('/api/fetchPokeAPI', fetchMiddlewares.fetchPokeAPI, (req, res) => {
   return res.status(200).send(res.locals.data)
 })
 
+app.post('/api/testForNewerSprites', fetchMiddlewares.testForNewerSprites, (req, res) => {
+  console.log('/testForNewerSprites complete')
+  return res.status(200).send(res.locals.url)
+})
+
 // app.post('/api/fetch-smogon', fetchMiddlewares.fetchSmogon, (req, res) => {
 //   console.log('/fetch-smogon complete')
 //   return res.status(200).send(res.locals.data)
