@@ -36,13 +36,13 @@ const PokemonSprite = props => {
       'Content-Type': 'application/json',
       Accept: 'application/json, text/plain',
     },
-    body: JSON.stringify({url: url})
+    body: JSON.stringify({url: url, pokemon:props.pokemon.toLowerCase()})
   })
-    // .then((response) => response.json())
-    .then((updatedUrl) => {
-      console.log('testForNewerSprites FRONT ', updatedUrl);
-      url = updatedUrl;
-      if (updatedUrl.error === 404) {
+    .then((response) => response.json())
+    .then((updatedUrlObject) => {
+      console.log('testForNewerSprites FRONT ', updatedUrlObject);
+      url = updatedUrlObject.url;
+      if (updatedUrlObject.error === 404) {
         alert('ERROR in testForNewerSprites FRONT ')
       }
     })

@@ -11,7 +11,6 @@ fetchMiddlewares.fetchPokeAPI = (req, res, next) => {
   fetch('https://pokeapi.co/api/v2/pokemon/' + pokemonName.toLowerCase())
     .then(data => data.json())
     .then(data => {
-      console.log(data)
       res.locals.data = data;
       return next();
     })
@@ -26,12 +25,25 @@ fetchMiddlewares.fetchWeakness = (req, res, next) => {
 
 fetchMiddlewares.testForNewerSprites = (req, res, next) => {
   console.log('inside middleware testForNewerSprites')
-  fetch(req.body.url)
+  let url = req.body.url;
+  fetch(url)
     .then((data) => {
       console.log("inside testForNewerSprites BACK");
-      console.log(typeof(data));
-      res.locals.url = data; 
-    });
+      console.log((data));
+      console.log(data.status)
+      if (data.status===200) {
+        res.locals.url = url; 
+        console.log(res.locals.url)
+        return next();
+      }
+      // if gif from another source is needed
+      res.locals.url = `https://img.pokemondb.net/sprites/legends-arceus/normal/${req.body.pokemon}.png`;
+      return next()
+
+    })
+    .catch(error => {
+      return next(error)
+    })
 }
 
 // not up to date with gen 9 

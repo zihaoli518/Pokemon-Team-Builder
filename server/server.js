@@ -32,7 +32,7 @@ app.post('/api/fetchPokeAPI', fetchMiddlewares.fetchPokeAPI, (req, res) => {
 
 app.post('/api/testForNewerSprites', fetchMiddlewares.testForNewerSprites, (req, res) => {
   console.log('/testForNewerSprites complete')
-  return res.status(200).send(res.locals.url)
+  return res.status(200).send({url: res.locals.url})
 })
 
 // app.post('/api/fetch-smogon', fetchMiddlewares.fetchSmogon, (req, res) => {
