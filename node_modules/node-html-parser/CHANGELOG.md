@@ -2,6 +2,8 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [6.1.5](https://github.com/taoqf/node-fast-html-parser/compare/v6.1.4...v6.1.5) (2023-02-21)
+
 ### [6.1.4](https://github.com/taoqf/node-fast-html-parser/compare/v6.1.3...v6.1.4) (2022-11-15)
 
 

@@ -10,7 +10,7 @@
  */
 
 // importing dependencies 
-import React from 'react';
+import React, {useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import fetch from 'node-fetch';
 
@@ -21,8 +21,9 @@ const mapDispatchToProps = dispatch => ({
 });
 
 const PokemonSprite = props => {
-  // console.log(props)
-  let url = 'https://play.pokemonshowdown.com/sprites/xyani/' + props.pokemon.toLowerCase() + '.gif'
+  console.log('inside PokemonSprite')
+  const [url, setUrl] = useState('https://play.pokemonshowdown.com/sprites/xyani/' + props.pokemon.toLowerCase() + '.gif')
+  // setUrl('https://play.pokemonshowdown.com/sprites/xyani/' + props.pokemon.toLowerCase() + '.gif');
 
   let className = '';
   let onClick = null;
@@ -41,7 +42,7 @@ const PokemonSprite = props => {
     .then((response) => response.json())
     .then((updatedUrlObject) => {
       console.log('testForNewerSprites FRONT ', updatedUrlObject);
-      url = updatedUrlObject.url;
+      setUrl(updatedUrlObject.url);
       if (updatedUrlObject.error === 404) {
         alert('ERROR in testForNewerSprites FRONT ')
       }

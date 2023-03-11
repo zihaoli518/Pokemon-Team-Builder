@@ -1,6 +1,5 @@
 const fetch = require('node-fetch');
 const parse = require('node-html-parser');
-const cheerio = require('cheerio')
 
 const fetchMiddlewares = {}; 
 
@@ -25,6 +24,22 @@ fetchMiddlewares.fetchWeakness = (req, res, next) => {
 
 fetchMiddlewares.testForNewerSprites = (req, res, next) => {
   console.log('inside middleware testForNewerSprites')
+  console.log(req.body.url)
+
+  // input: string, output: boolean, updated url if false 
+  function checkGif (url, pokemon) {
+    console.log('inside checkGif')
+    fetch(url)
+      .then((data) => {
+        console.log('inside checkGif fetch, ', data.status)
+        if (data.status === 200) return url;
+        return `https://img.pokemondb.net/artwork/large/${pokemon}.jpg`
+      })
+      .catch(error => {
+        return next(error)
+      })
+  }
+
   let url = req.body.url;
   fetch(url)
     .then((data) => {
@@ -37,9 +52,11 @@ fetchMiddlewares.testForNewerSprites = (req, res, next) => {
         return next();
       }
       // if gif from another source is needed
-      res.locals.url = `https://img.pokemondb.net/sprites/legends-arceus/normal/${req.body.pokemon}.png`;
+      let newUrl = checkGif(`https://img.pokemondb.net/sprites/legends-arceus/normal/${req.body.pokemon}.png`, req.body.pokemon)
+      console.log('newUrl: ', newUrl)
+      res.locals.url = newUrl;
       return next()
-
+      
     })
     .catch(error => {
       return next(error)
