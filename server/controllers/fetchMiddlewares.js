@@ -27,13 +27,18 @@ fetchMiddlewares.testForNewerSprites = (req, res, next) => {
   console.log(req.body.url)
 
   // input: string, output: boolean, updated url if false 
-  function checkGif (url, pokemon) {
+  async function checkGif (url, pokemon) {
     console.log('inside checkGif')
     fetch(url)
       .then((data) => {
         console.log('inside checkGif fetch, ', data.status)
-        if (data.status === 200) return url;
-        return `https://img.pokemondb.net/artwork/large/${pokemon}.jpg`
+        if (data.status === 200) {
+          res.locals.url = url;
+          return next();
+        } else {
+          res.locals.url = `https://img.pokemondb.net/artwork/large/${pokemon}.jpg`;
+          return next();
+        } 
       })
       .catch(error => {
         return next(error)
@@ -52,11 +57,9 @@ fetchMiddlewares.testForNewerSprites = (req, res, next) => {
         return next();
       }
       // if gif from another source is needed
-      let newUrl = checkGif(`https://img.pokemondb.net/sprites/legends-arceus/normal/${req.body.pokemon}.png`, req.body.pokemon)
-      console.log('newUrl: ', newUrl)
-      res.locals.url = newUrl;
-      return next()
-      
+      checkGif(`https://img.pokemondb.net/sprites/legends-arceus/normal/${req.body.pokemon}.png`, req.body.pokemon)
+      // console.log('newUrl: ', newUrl)
+      // res.locals.url = newUrl; 
     })
     .catch(error => {
       return next(error)
