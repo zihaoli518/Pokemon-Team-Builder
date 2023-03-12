@@ -15,6 +15,7 @@ import { Switch, Route } from 'react-router-dom';
 import { connect } from 'react-redux';
 
 // importing components 
+import TopNavBar from './components/TopNavBar.jsx';
 import PokemonSearch from './components/PokemonSearch.jsx'
 import CurrentPokemonDisplay from './components/CurrentPokemonDisplay.jsx'
 import TeamDisplay from './components/TeamDisplay.jsx';
@@ -48,6 +49,7 @@ class App extends Component {
   render() {
     return (
       <div className='main'>
+        <TopNavBar />
         <div className='top'>
           <h1>POKEMON TEAM BUILDER</h1>
           <PokemonSearch />

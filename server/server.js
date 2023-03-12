@@ -5,7 +5,7 @@ const path = require('path');
 const PORT = 3000; 
 
 const fetchMiddlewares = require('./controllers/fetchMiddlewares.js')
-const databaseMiddlewares = require('./controllers/databaseMiddlewares.js')
+const userMiddlewares = require('./controllers/userMiddlewares.js')
 
 app.use(express.json());
 

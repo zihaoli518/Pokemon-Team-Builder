@@ -97,6 +97,32 @@ body {
 
 
 
+.top-nav-bar {
+  height: 40px;
+  width: 100%;
+  display: flex;
+  justify-content: right;
+}
+
+.signup-modal {
+  height: 100px;
+  width: 100px;
+  background-color: grey;
+  position: absolute;
+  left: 50%;
+  top: 20%;
+}
+
+.display-block {
+  display: block;
+}
+
+.display-none {
+  display: none;
+}
+
+
+
 
 
 h1 {
