@@ -36,7 +36,7 @@ fetchMiddlewares.testForNewerSprites = (req, res, next) => {
           res.locals.url = url;
           return next();
         } else {
-          res.locals.url = `https://img.pokemondb.net/artwork/large/${pokemon}.jpg`;
+          res.locals.url = `https://img.pokemondb.net/sprites/scarlet-violet/normal/${pokemon}.png`;
           return next();
         } 
       })

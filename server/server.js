@@ -5,12 +5,9 @@ const path = require('path');
 const PORT = 3000; 
 
 const fetchMiddlewares = require('./controllers/fetchMiddlewares.js')
+const databaseMiddlewares = require('./controllers/databaseMiddlewares.js')
 
 app.use(express.json());
-// // statically serve everything in the build folder on the route '/build'
-// app.use('/build', 
-// poing, 
-// express.static(path.join(__dirname, '../build')));
 
 console.log('inside server.js')
 
@@ -20,10 +17,16 @@ app.use((req, res, next) => {
   next();
 });
 
+app.use('/static', 
+express.static(path.join(__dirname, '../assets')));
+
 // serve index.html on the route '/'
 app.get('/', (req, res) => {
   return res.status(200).sendFile(path.join(__dirname, '../index.html'));
 });
+
+// // statically serve everything in the build folder on the route '/build'
+// serve static content 
 
 app.post('/api/fetchPokeAPI', fetchMiddlewares.fetchPokeAPI, (req, res) => {
   console.log('/fetch-pokeAPI complete')

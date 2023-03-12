@@ -20,37 +20,66 @@ const mapDispatchToProps = dispatch => ({
   updateGif : (url) => dispatch(actions.updateGif(url)),
 });
 
+
 const PokemonSprite = props => {
+  const [url, setUrl] = useState('/static/loading.gif')
   console.log('inside PokemonSprite')
-  const [url, setUrl] = useState('https://play.pokemonshowdown.com/sprites/xyani/' + props.pokemon.toLowerCase() + '.gif')
-  // setUrl('https://play.pokemonshowdown.com/sprites/xyani/' + props.pokemon.toLowerCase() + '.gif');
+  const [initialRender, setInitialRender] = useState(true)
+
 
   let className = '';
   let onClick = null;
+
   if (props.className) className = props.className;
   if (props.onClick) onClick = props.onClick;
-  console.log(url)
+  const animatedUrl = ('https://play.pokemonshowdown.com/sprites/xyani/' + props.pokemon.toLowerCase() + '.gif');
 
-  fetch('/api/testForNewerSprites', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-      Accept: 'application/json, text/plain',
-    },
-    body: JSON.stringify({url: url, pokemon:props.pokemon.toLowerCase()})
-  })
-    .then((response) => response.json())
-    .then((updatedUrlObject) => {
-      console.log('testForNewerSprites FRONT ', updatedUrlObject);
-      setUrl(updatedUrlObject.url);
-      if (updatedUrlObject.error === 404) {
-        alert('ERROR in testForNewerSprites FRONT ')
+
+  useEffect(() => {
+    console.log('in useEffect')
+    let isCancelled = false;
+    // check if url is cached -> avoid requests 
+    const cacheObj = JSON.parse(localStorage.getItem('pokemon-team-builder-cache'))
+    if (cacheObj.hasOwnProperty(props.pokemon.toLowerCase())) {
+      let cachedUrl = cacheObj[props.pokemon.toLowerCase()]['url'];
+      console.log('cached!!!')
+      setUrl(cachedUrl);
+      isCancelled = true;
+    }
+    if (!isCancelled) {
+      fetch('/api/testForNewerSprites', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Accept: 'application/json, text/plain',
+        },
+        body: JSON.stringify({url: animatedUrl, pokemon:props.pokemon.toLowerCase()})
+      })
+        .then((response) => response.json())
+        .then((updatedUrlObject) => {
+          console.log('testForNewerSprites FRONT ', updatedUrlObject);
+          setUrl(updatedUrlObject.url);
+
+          if (localStorage.getItem('pokemon-team-builder-cache')) {
+            const localStorageObj = JSON.parse(localStorage.getItem('pokemon-team-builder-cache'));
+            const copyOfLocalStorage = {...localStorageObj};
+            copyOfLocalStorage[props.pokemon.toLowerCase()] = {url: updatedUrlObject.url};
+            localStorage.setItem('pokemon-team-builder-cache', JSON.stringify(copyOfLocalStorage))
+          } else {
+            localStorage.setItem('pokemon-team-builder-cache', '{}')
+          }
+          if (updatedUrlObject.error === 404) {
+            alert('ERROR in testForNewerSprites FRONT ')
+          }
+        })
       }
-    })
-
+    return () => {
+      isCancelled = true;
+    }
+  }, []);
 
   return (
-    <img onClick={onClick} className={className} src={url} />
+      <img onClick={onClick} className={className} src={url} />
   )
 }
 

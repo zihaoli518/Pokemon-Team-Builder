@@ -30,7 +30,8 @@ const PokemonSearch = props => {
   const eventHandler = e => {
     e.preventDefault();
     const input = document.getElementById('pokemon-name');
-    const pokemon = input.value;
+    let pokemon = input.value;
+    pokemon = pokemon.trim();
     // const heroku = 'https://obscure-dawn-47563.herokuapp.com/';
     // ^ heroku is no longer free :(
 

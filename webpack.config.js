@@ -65,6 +65,10 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
           target: "http://localhost:3000",
           secure: false,
         },
+        "/static": {
+          target: "http://localhost:3000",
+          secure: false,
+        },
         "/assets": {
           target: "http://localhost:3000",
           secure: false,

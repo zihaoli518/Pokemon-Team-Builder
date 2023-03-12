@@ -39,7 +39,7 @@ const MatchupChart = (props) => {
       console.log('inside populateChart ', currentMon)
       if (!currentMon) break;
       chart.push(
-        <Row id={'row' +i} pokemon={currentMon} />
+        <Row id={'row' + i} pokemon={currentMon} />
       )
     }
   };
