@@ -95,6 +95,15 @@ body {
   background-color: #6390F0;
 }
 
+.main {
+  z-index: 3;
+}
+.inactive {
+  pointer-events: none; // pointer-events not supported below IE11
+  opacity: 50%;
+
+}
+
 
 
 .top-nav-bar {
@@ -104,13 +113,37 @@ body {
   justify-content: right;
 }
 
-.signup-modal {
-  height: 100px;
+.top-nav-bar  button{
+  height: 50px;
   width: 100px;
-  background-color: grey;
-  position: absolute;
-  left: 50%;
+  font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+  font-size: 20px;
+  background-color: $color2;
+  border-radius: 0.3rem;
+}
+
+.modal {
+  height: 40%;
+  width: 30%;
+  border-radius: 0.3rem;
+
+  position: fixed;
+  left: 35%;
   top: 20%;
+  background: lighten(grey, 4%);
+  
+  z-index: 99;
+
+  pointer-events:all !important; // pointer-events not supported below IE11
+  opacity: 90% !important;
+}
+
+.login-modal {
+
+}
+
+.signup-modal {
+
 }
 
 .display-block {
@@ -147,7 +180,7 @@ h1 {
   width: 200px;
   margin-right: 30px;
   border-radius: 0.3rem;
-  background-color: $color4 !important;
+  background-color: lighten($color3, 50%) !important;
 }
 
 .pokemon-search button {
@@ -678,7 +711,7 @@ input[type="text"]
   width: 80px;
 }
 
-#app > div > div > div.teams > div.switch-teams-button-container > img {
+.switch-teams-button-container img {
   height: 50px;
   width: 50px;
 }

@@ -22,8 +22,8 @@ const mapDispatchToProps = dispatch => ({
 
 
 const PokemonSprite = props => {
+  // console.log('inside PokemonSprite')
   const [url, setUrl] = useState('/static/loading.gif')
-  console.log('inside PokemonSprite')
   const [initialRender, setInitialRender] = useState(true)
 
 
@@ -36,13 +36,11 @@ const PokemonSprite = props => {
 
 
   useEffect(() => {
-    console.log('in useEffect')
     let isCancelled = false;
     // check if url is cached -> avoid requests 
     const cacheObj = JSON.parse(localStorage.getItem('pokemon-team-builder-cache'))
     if (cacheObj.hasOwnProperty(props.pokemon.toLowerCase())) {
       let cachedUrl = cacheObj[props.pokemon.toLowerCase()]['url'];
-      console.log('cached!!!')
       setUrl(cachedUrl);
       isCancelled = true;
     }

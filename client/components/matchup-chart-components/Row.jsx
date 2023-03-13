@@ -27,7 +27,7 @@ const Row = (props) => {
   let row = [];
   let sprite =[];
   const populateRow = (pokemon) => {
-    console.log('in populate row ', row, props.pokemon, props.pokemon.pokemon);
+    // console.log('in populate row ', row, props.pokemon, props.pokemon.pokemon);
     sprite = [<PokemonSprite className='chart-sprite' pokemon={props.pokemon.pokemon}/> ];
     sprite.push()
 

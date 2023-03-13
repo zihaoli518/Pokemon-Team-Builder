@@ -25,30 +25,36 @@ const mapStateToProps = state => {
 }
 
 const mapDispatchToProps = dispatch => ({
-  showTypingChart : () => dispatch(actions.showTypingChart()),
+  toggleMainDivState : (str) => dispatch(actions.toggleMainDivState(str)),
 });
 
 
 const TopNavBar = props => {
 
   const [showLoginModal, setShowLoginModal] = useState(false);
-  const [showSignupModal, setshowSignupModal] = useState(false);
+  const [showSignupModal, setShowSignupModal] = useState(false);
 
   const toggleShowLoginModal = () => {
-    setShowLoginModal(!showLoginModal)
+    setShowLoginModal(!showLoginModal);
+    setShowSignupModal(false);
+    const currentState = document.getElementById('main-div');
+    console.log('inside toggleShowLoginModal, ', currentState.className)
+    props.toggleMainDivState(currentState.className);
   }
 
   const toggleShowSignupModal = () => {
-    setshowSignupModal(!showSignupModal)
+    setShowSignupModal(!showSignupModal);
+    setShowLoginModal(false);
   }
+
 
   return (
     <div className='top-nav-bar'>
 
         <button onClick={toggleShowLoginModal}>login</button> 
         <button onClick={toggleShowSignupModal}>signup</button> 
-        <SignupModal show={showSignupModal}/>
-        <LoginModal show={showLoginModal}/>
+        <LoginModal show={showLoginModal} toggle={toggleShowLoginModal} />
+        <SignupModal show={showSignupModal} toggle={setShowSignupModal}/>
     </div>
   );
 }

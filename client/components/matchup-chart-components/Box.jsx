@@ -30,7 +30,7 @@ const Box = props => {
     }
   }
   // add class according to weakness 
-  console.log('in box ', props.pokemon, props.column)
+  // console.log('in box ', props.pokemon, props.column)
 
   let value = generateText();
 

@@ -33,7 +33,8 @@ const mapStateToProps = state => ({
   teamStatus: state.pokemon.teamStatus,
   yourTeam: state.pokemon.yourTeam,
   enemyTeam: state.pokemon.enemyTeam,
-  showTypingChart: state.pokemon.showTypingChart
+  showTypingChart: state.pokemon.showTypingChart,
+  mainDivClassName: state.loginFunctions.mainDivClassName
 }) 
 
 
@@ -48,44 +49,40 @@ class App extends Component {
 
   render() {
     return (
-      <div className='main'>
+      <div>
         <TopNavBar />
-        <div className='top'>
-          <h1>POKEMON TEAM BUILDER</h1>
-          <PokemonSearch />
-        </div>
-        <div className='current-pokemon-display'>
-          {this.props.start ?
-            <CurrentPokemonDisplay /> : 
-            null
-          }
-        </div>
-        {/* <div className='current-pokemon-more-info'>
+        <div className={this.props.mainDivClassName} id={"main-div"}>
+          <div className="top">
+            <h1>POKEMON TEAM BUILDER</h1>
+            <PokemonSearch />
+          </div>
+          <div className="current-pokemon-display">
+            {this.props.start ? <CurrentPokemonDisplay /> : null}
+          </div>
+          {/* <div className='current-pokemon-more-info'>
           {this.props.start && Object.keys(this.props.currentPokemon.teammates)[0]!==undefined ?
             <MoreInfo /> : 
             null
           }
         </div> */}
-        <div className='teams'>
-          {this.props.teamStatus ?
-            [<TeamDisplay key={'green'} team={'green'} />, <SwitchTeams />, <TeamDisplay key={'red'} team={'red'} />] : 
-            null
-          }
-        </div>
-        <div className='show-chart-button-container'>
-          {this.props.teamStatus ?
-            <ShowChartButton/> :
-            null
-          }
-        </div>
-        <div className='matchup-chart-container'>
-          {this.props.showTypingChart ?
-            <MatchupChart/> :
-            null
-          }
+          <div className="teams">
+            {this.props.teamStatus
+              ? [
+                  <TeamDisplay key={"green"} team={"green"} />,
+                  <SwitchTeams />,
+                  <TeamDisplay key={"red"} team={"red"} />,
+                ]
+              : null}
+          </div>
+          <div className="show-chart-button-container">
+            {this.props.teamStatus ? <ShowChartButton /> : null}
+          </div>
+          <div className="matchup-chart-container">
+            {this.props.showTypingChart ? <MatchupChart /> : null}
+          </div>
         </div>
       </div>
-    )
+    );
   }
 }
 

@@ -32,7 +32,10 @@ const SignupModal = props => {
 
   return (
     <div className={showModalClassName}>
-      <h2>SIGNUP</h2>
+      <div className='signup-modal'>
+
+        <h2>SIGNUP</h2>
+      </div>
 
 
     </div>

@@ -64,3 +64,8 @@ export const switchTeams = (yourTeam, enemeyTeam) => ({
   type: types.SWITCH_TEAMS,
   payload: {yourTeam: yourTeam, enemeyTeam: enemeyTeam},
 });
+
+export const toggleMainDivState = (string) => ({
+  type: types.TOGGLE_MAIN_DIV_STATE,
+  payload: {string: string},
+});

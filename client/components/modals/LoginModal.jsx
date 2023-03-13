@@ -32,8 +32,14 @@ const LoginModal = props => {
 
   return (
     <div className={showModalClassName}>
-      <h2>LOGIN</h2>
-
+      <div className='login-modal'>
+        <h2>LOGIN</h2>
+        <h3>username:</h3>
+        <input type="text" />
+        <h3>password:</h3>
+        <input type="text" />
+        <button onClick={() => {props.toggle(false)}}>Close</button>
+      </div>
 
     </div>
   );
