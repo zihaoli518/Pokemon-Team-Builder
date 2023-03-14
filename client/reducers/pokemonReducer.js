@@ -92,7 +92,7 @@ const pokemonReducer = (state = initialState, action) => {
       copy.stats.specialA = pokemonData.stats[3].base_stat;
       copy.stats.specialD = pokemonData.stats[4].base_stat;
       copy.stats.speed = pokemonData.stats[5].base_stat;
-      console.log('ADD_POKEMON_POKEAPI ', copy)
+      // console.log('ADD_POKEMON_POKEAPI ', copy)
 
       // populating weakness object
       if (copy.types.length===1) copy.weakness = getTypeWeaknesses(copy.types[0]);
@@ -127,12 +127,6 @@ const pokemonReducer = (state = initialState, action) => {
           break;
         }
       }
-      console.log('inside add pokemon to your team reducer, ', {
-        ... state,
-        yourTeam: yourNewTeam,
-        teamStatus: true
-      }
-)
 
       return {
         ... state,
@@ -142,7 +136,7 @@ const pokemonReducer = (state = initialState, action) => {
 
       // add pokemon to enemy team 
       case types.ADD_POKEMON_TO_ENEMY_TEAM :
-        console.log('REDUCER:     ADD_POKEMON_TO_ENEMY_TEAM')
+
         const enemyNewTeam = {...state.enemyTeam};
         const currentPokemonE = action.payload;
 
@@ -157,7 +151,7 @@ const pokemonReducer = (state = initialState, action) => {
               break;
           }
         }
-        console.log(enemyNewTeam)
+
         return {
           ... state,
           enemyTeam: enemyNewTeam,
@@ -174,12 +168,11 @@ const pokemonReducer = (state = initialState, action) => {
 
       // remove pokemon from team 
       case types.REMOVE_TEAM_MEMBER : 
-        console.log('inside remove team member ')
+
         const team = action.payload.team;
         const mon = action.payload.mon; 
         const CopyOfTeam = {...state[team]}
-        console.log(team, mon)
-        console.log(CopyOfTeam)
+
         CopyOfTeam[mon] = null;
         CopyOfTeam.size--;
 
@@ -187,7 +180,7 @@ const pokemonReducer = (state = initialState, action) => {
 
         const returnState = {...state};
         returnState[team] = shuffledTeam;
-        console.log(returnState)
+
         return returnState;
 
       case types.SHOW_TYPING_CHART:
