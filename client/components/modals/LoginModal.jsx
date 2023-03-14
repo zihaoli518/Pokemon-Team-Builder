@@ -30,16 +30,27 @@ const LoginModal = props => {
 
   const showModalClassName = props.show ? "modal display-block" : "modal display-none";
 
+  const submitHandler = (e) => {
+    e.preventDefault();
+    const username = document.getElementById('username').value;
+    const password = document.getElementById('password').value;
+  }
+
   return (
-    <div className={showModalClassName}>
-      <div className='login-modal'>
+    <div className={showModalClassName} onSubmit={() => {submitHandler()}}>
+      <form className='login-modal'>
         <h2>LOGIN</h2>
-        <h3>username:</h3>
-        <input type="text" />
-        <h3>password:</h3>
-        <input type="text" />
-        <button onClick={() => {props.toggle(false)}}>Close</button>
-      </div>
+        <div className="username-div">
+            <label>username: </label>        
+            <input type="text" name="username" placeholder="" id="username" required></input>
+        </div>
+        <div className="password-div">
+            <label>password</label>      
+            <input type="text" name="password" placeholder="" id="password" required></input>
+        </div>
+        <input type="submit" id="login-button" value="Log in" />
+        <button onClick={() => {props.toggle(false)}}>close</button>
+      </form>
 
     </div>
   );
