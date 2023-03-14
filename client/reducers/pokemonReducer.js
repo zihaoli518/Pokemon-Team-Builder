@@ -114,7 +114,7 @@ const pokemonReducer = (state = initialState, action) => {
     // add pokemon to your team 
     case types.ADD_POKEMON_TO_YOUR_TEAM :
       const yourNewTeam = {...state.yourTeam};
-      const currentPokemonY = {...state.currentPokemon};
+      const currentPokemonY = action.payload;
 
       if (yourNewTeam.size>=6) return;
 
@@ -127,6 +127,12 @@ const pokemonReducer = (state = initialState, action) => {
           break;
         }
       }
+      console.log('inside add pokemon to your team reducer, ', {
+        ... state,
+        yourTeam: yourNewTeam,
+        teamStatus: true
+      }
+)
 
       return {
         ... state,
@@ -138,7 +144,7 @@ const pokemonReducer = (state = initialState, action) => {
       case types.ADD_POKEMON_TO_ENEMY_TEAM :
         console.log('REDUCER:     ADD_POKEMON_TO_ENEMY_TEAM')
         const enemyNewTeam = {...state.enemyTeam};
-        const currentPokemonE = {...state.currentPokemon};
+        const currentPokemonE = action.payload;
 
         if (enemyNewTeam.size>=6) return;
         

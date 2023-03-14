@@ -44,10 +44,15 @@ class CurrentPokemonDisplay extends Component {
     super(props);
   }
 
-  getTypes() {
-    console.log('inside getTypes(): ', this.props.currentPokemon.types)
-    if (this.props.currentPokemon.types.length=1) console.log('length is 1'); return [this.props.currentPokemon.types[0], ' '];
-    return this.props.currentPokemon.types
+  // getTypes() {
+  //   console.log('inside getTypes(): ', this.props.currentPokemon.types)
+  //   if (this.props.currentPokemon.types.length=1) console.log('length is 1'); return [this.props.currentPokemon.types[0], ' '];
+  //   return this.props.currentPokemon.types
+  // }
+
+  componentWillUpdate = () => {
+    console.log('inside componentWillUpdate - CurrentPokemonDisplay')
+    console.log(this.props.yourTeam)
   }
 
   // get the top 2 most common abilities - currently unavailable 
@@ -105,8 +110,8 @@ class CurrentPokemonDisplay extends Component {
           </div>
           <div className="current-pokemon-spacer" ></div>
           <div className="option-buttons">
-            <button onClick={()=>{this.addToTeam(this.props.currentPokemon, 'friendly');console.log('onclick fired GREEN',this.props.yourTeam)}}>Add to your team</button>
-            <button onClick={()=>{this.addToTeam(this.props.currentPokemon, 'enemy');console.log('onclick fired RED',this.props.enemyTeam)}}>Add to enemy team</button>
+            <button onClick={()=>{this.addToTeam(this.props.currentPokemon, 'friendly');console.log('onclick fired GREEN')}}>Add to your team</button>
+            <button onClick={()=>{this.addToTeam(this.props.currentPokemon, 'enemy');console.log('onclick fired RED')}}>Add to enemy team</button>
           </div>
         </div>
         <div className="current-pokemon-flexbox">
