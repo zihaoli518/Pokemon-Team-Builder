@@ -45,7 +45,7 @@ const types = ['bug', 'dark', 'dragon', 'electric', 'fairy', 'fighting', 'fire',
 class CurrentPokemonDisplay extends Component {
   constructor(props) {
     super(props);
-    this.state = {weaknesses: [], resistances:[]}
+    this.state = {pokemon: this.props.currentPokemon, weaknesses: [], resistances:[]}
   }
 
   // getTypes() {
@@ -58,10 +58,16 @@ class CurrentPokemonDisplay extends Component {
     this.generateWeakness();
   }
 
-  componentWillUpdate = () => {
+  componentDidUpdate = (prevState) => {
     console.log('inside componentWillUpdate - CurrentPokemonDisplay')
     console.log(this.props.yourTeam)
-    this.generateWeakness();
+    if (prevState.currentPokemon !== this.state.pokemon) {
+      console.log('UPDATE NEEDED')
+      console.log(prevState.currentPokemon, this.state.pokemon)
+      this.generateWeakness();
+
+    }
+    // this.forceUpdate();
   }
 
   // get the top 2 most common abilities - currently unavailable 
@@ -96,7 +102,6 @@ class CurrentPokemonDisplay extends Component {
     const newWeaknessArray = [];
     const newResistanceArray = [];
     for (let type of types) {
-      console.log('start of for loop, ', type, this.props.currentPokemon.weakness[type])
       switch (this.props.currentPokemon.weakness[type]) {
         case 0:
           newResistanceArray.push(
@@ -127,11 +132,11 @@ class CurrentPokemonDisplay extends Component {
         default:
           break;
       }
-      console.log('end of for loop', newWeaknessArray, newResistanceArray)
     }
-    console.log('end of generateWeakness()',{weaknesses: newWeaknessArray, resistances:newResistanceArray})
-    this.setState({weaknesses: newWeaknessArray, resistances:newResistanceArray})
-
+    // console.log('end of generateWeakness()',{weaknesses: newWeaknessArray, resistances:newResistanceArray})
+    this.setState((state) => {
+      return {weaknesses: newWeaknessArray, resistances:newResistanceArray}
+    })
   }
 
 
@@ -148,7 +153,7 @@ class CurrentPokemonDisplay extends Component {
   render() {
     // if (this.props.currentPokemon.pokemon!==undefined) {
     {
-      console.log("inside current pokemon display");
+      console.log("inside current pokemon display", this.props.currentPokemon.pokemon);
     }
     // {console.log(this.props.currentPokemon)}
     // {console.log(this.props.currentPokemon.pokemon)}
@@ -162,8 +167,8 @@ class CurrentPokemonDisplay extends Component {
           </div>
           <div className="current-pokemon-spacer" ></div>
           <div className="option-buttons">
-            <button className='add-to-your-team' onClick={()=>{this.addToTeam(this.props.currentPokemon, 'friendly');console.log('onclick fired GREEN')}}>Add to team </button>
-            <button className='add-to-enemy-team' onClick={()=>{this.addToTeam(this.props.currentPokemon, 'enemy');console.log('onclick fired RED')}}>Add to enemy team</button>
+            <button className='add-to-your-team' onClick={()=>{this.addToTeam(this.props.currentPokemon, 'friendly');console.log('onclick fired GREEN')}}>Add</button>
+            <button className='add-to-enemy-team' onClick={()=>{this.addToTeam(this.props.currentPokemon, 'enemy');console.log('onclick fired RED')}}>Add</button>
           </div>
         </div>
         <div className="current-pokemon-flexbox">
