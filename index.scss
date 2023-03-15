@@ -4,6 +4,9 @@ $color3: #284368;
 $color4: #4d789f;
 $color5: #badcd8;
 
+$friendlyTeamColor: rgb(164, 241, 164);
+$enemyTeamColor: rgb(220, 121, 116);
+
 @import url("https://fonts.googleapis.com/css2?family=Permanent+Marker&display=swap"); //'Permanent Marker', cursive;
 @import url("https://fonts.googleapis.com/css2?family=Shadows+Into+Light&display=swap"); //Shadows Into Light', cursive;
 @import url("https://fonts.googleapis.com/css2?family=Indie+Flower&display=swap"); // font-family: 'Indie Flower', cursive;
@@ -95,14 +98,18 @@ body {
   background-color: #6390F0;
 }
 
-.main {
+#main-div {
+  position:relative;
   z-index: 3;
+  margin-top: -2.5%;
 }
+
 .inactive {
   pointer-events: none; // pointer-events not supported below IE11
   opacity: 50%;
 
 }
+
 
 
 
@@ -167,12 +174,18 @@ h1 {
   text-align: center;
 }
 
+.top h1 {
+  color: $color3;
+  font-size: 2rem;
+}
+
 .pokemon-search {
   height: 80px;
 }
 
 .pokemon-search form {
   height: 80%;
+  margin-top: -15px;
 }
 
 .pokemon-search input {
@@ -190,7 +203,8 @@ h1 {
   font-family: "Shadows Into Light", cursive;
   font-size: 20px;
   font-weight: 700;
-  background-color:$color3;
+  color: $color3;
+  background-color:$color2;
 
   position: relative;
   top: 5px;
@@ -215,7 +229,7 @@ input[type="text"]
 .current-pokemon {
   font-family: "Indie Flower", cursive;
   font-weight: 500;
-  width: 50%;
+  width: 35%;
   // background-image: linear-gradient(
   //   105deg,
   // hsl(63deg 65% 88%) 0%,
@@ -235,7 +249,7 @@ input[type="text"]
   box-shadow: 12px 10px 30px -10px rgba(92, 11, 11, 0.88);
 
   position: relative;
-  margin-left: 26%;
+  margin-left: 5%;
 }
 
 .current-pokemon h3 {
@@ -260,11 +274,11 @@ input[type="text"]
   display: flex;
   justify-content: center;
   margin-bottom: -5px;
-  margin-left: 0px;
+  margin-left: -35px;
 }
 
 .current-pokemon .top-flexbox h3 {
-  font-size: 50px;
+  font-size: 45px;
   margin-top: 10px;
 }
 
@@ -272,7 +286,7 @@ input[type="text"]
   display: flex;
   justify-content: center;
   margin-left: 15px;
-  margin-top: 25px;
+  margin-top: 20px;
 }
 
 .current-pokemon .top-flexbox .types h4 {
@@ -303,6 +317,14 @@ input[type="text"]
   color: $color1;
 }
 
+.option-buttons .add-to-your-team {
+  color: $friendlyTeamColor !important
+}
+
+.option-buttons .add-to-enemy-team {
+  color: $enemyTeamColor !important
+}
+
 .current-pokemon-spacer {
   flex: 0.25;
 }
@@ -313,12 +335,12 @@ input[type="text"]
 .current-pokemon-flexbox {
   display: flex;
   justify-content: center;
-  margin-left: -30px;
+  margin-left: -60px;
 }
 
 .current-pokemon-flexbox img {
-  height: 270px;
-  width: 280px;
+  height: 200px;
+  width: 190px;
   margin-left: 10px;
   transition: ease-in-out;
   transition: 1s;
@@ -330,12 +352,12 @@ input[type="text"]
 
 .stat-chart {
   height: 100%;
-  width: 400px;
+  width: 150%;
   margin-top: 20px;
 }
 
 #myChart {
-  height: 300px !important;
+  height: 270px !important;
   width: 100%;
 }
 
@@ -424,6 +446,53 @@ input[type="text"]
 .stats li {
   font-size: 22px;
 }
+
+
+
+
+
+.current-pokemon-weakness-summary {
+  margin-left: 5px;
+}
+
+.current-pokemon-weakness-summary h5 {
+  font-size: 16px;
+  margin-top: -10px;
+}
+
+.current-pokemon-weakness-summary .weaknesses {
+  display: flex;
+  justify-content: left;
+  height: 35px
+}
+.current-pokemon-weakness-summary .weaknesses-inner {
+  display: flex;
+  justify-content: left;
+  height: 100%;
+}
+
+.current-pokemon-weakness-summary .type {
+  width: 50px;
+  height: 25px;
+  margin-left: 4px;
+}
+
+.current-pokemon-weakness-summary .resistance-immune {
+  color: white;
+  font-weight: 900;
+}
+
+.current-pokemon-weakness-summary .resistance-x4 {
+  font-weight: 500;
+}
+
+.current-pokemon-weakness-summary .weakness-x4 {
+  font-weight: 500;
+}
+
+
+
+
 
 
 
@@ -527,40 +596,47 @@ input[type="text"]
 
 // TEAMS 
 .teams {
-  margin-top: 60px;
+  margin-top: 40px;
   display: flex;
   justify-content: center;
+}
+
+.teams h4 {
+  margin-top: 5px;
+  margin-bottom: 7px;
+  font-size: 20px;
+  text-align: center;
+  font-family: 'Permanent Marker', cursive;
+}
+
+.switch-teams-button-container {
+  
+}
+
+.switch-teams-button-container img {
+  position: relative;
+  top: 30%;
+  height: 50px;
+  width: 50px;
 }
 
 .green {
   margin-right: 45px;
   width: 45%;
-  height: 200px;
-  background-color: rgb(164, 241, 164, 50%);
+  height: 160px;
+  background-color: rgba($friendlyTeamColor, 0.5);
   border-radius: 1rem;
 }
 
-.green h4 {
-  margin-top: 5px;
-  font-size: 20px;
-  text-align: center;
-  font-family: 'Permanent Marker', cursive;
-}
 
 .red {
   margin-left: 45px;
   width: 45%;
-  height: 200px;
-  background-color: rgb(220, 121, 116, 50%);
+  height: 160px;
+  background-color: rgba($enemyTeamColor, 0.5);
   border-radius: 1rem;
 }
 
-.red h4 {
-  margin-top: 5px;
-  font-size: 20px;
-  text-align: center;
-  font-family: 'Permanent Marker', cursive;
-}
 
 .team-members {
   display: flex;
@@ -711,7 +787,3 @@ input[type="text"]
   width: 80px;
 }
 
-.switch-teams-button-container img {
-  height: 50px;
-  width: 50px;
-}

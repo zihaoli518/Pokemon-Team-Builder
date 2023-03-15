@@ -38,10 +38,14 @@ const mapDispatchToProps = dispatch => ({
   addPokemonToEnemeyTeam: (pokemonObj) => dispatch(actions.addPokemonToEnemyTeam(pokemonObj))
 });
 
+const types = ['bug', 'dark', 'dragon', 'electric', 'fairy', 'fighting', 'fire', 'flying', 'ghost', 'grass', 'ground', 'ice', 'normal', 'poison', 'psychic', 'rock', 'steel', 'water']
+
+
 
 class CurrentPokemonDisplay extends Component {
   constructor(props) {
     super(props);
+    this.state = {weaknesses: [], resistances:[]}
   }
 
   // getTypes() {
@@ -50,9 +54,14 @@ class CurrentPokemonDisplay extends Component {
   //   return this.props.currentPokemon.types
   // }
 
+  componentWillMount = () => {
+    this.generateWeakness();
+  }
+
   componentWillUpdate = () => {
     console.log('inside componentWillUpdate - CurrentPokemonDisplay')
     console.log(this.props.yourTeam)
+    this.generateWeakness();
   }
 
   // get the top 2 most common abilities - currently unavailable 
@@ -83,6 +92,49 @@ class CurrentPokemonDisplay extends Component {
   //   }
   //   return moveSetMap;
   // }
+  generateWeakness() {
+    const newWeaknessArray = [];
+    const newResistanceArray = [];
+    for (let type of types) {
+      console.log('start of for loop, ', type, this.props.currentPokemon.weakness[type])
+      switch (this.props.currentPokemon.weakness[type]) {
+        case 0:
+          newResistanceArray.push(
+            <h5 className={`type resistance-immune`} id={type}>{type}</h5>
+          )
+          break;
+        case 0.25: 
+          newResistanceArray.push(
+            <h5 className={`type resistance-x4`} id={type}>{type}</h5>
+          )
+          break;
+        case 0.5: 
+          newResistanceArray.push(
+            <h5 className={`type resistance-x2`} id={type}>{type}</h5>
+          )
+          break;
+        case 2: 
+          newWeaknessArray.push(
+            <h5 className={`type weakness-x2`} id={type}>{type}</h5>
+          )
+          break;
+        case 4: 
+          newWeaknessArray.push(
+            <h5 className={`type weakness-x4`} id={type}>{type}</h5>
+          )
+          break;
+
+        default:
+          break;
+      }
+      console.log('end of for loop', newWeaknessArray, newResistanceArray)
+    }
+    console.log('end of generateWeakness()',{weaknesses: newWeaknessArray, resistances:newResistanceArray})
+    this.setState({weaknesses: newWeaknessArray, resistances:newResistanceArray})
+
+  }
+
+
 
   addToTeam(pokemon, team) {
     // e.preventDefault();
@@ -110,8 +162,8 @@ class CurrentPokemonDisplay extends Component {
           </div>
           <div className="current-pokemon-spacer" ></div>
           <div className="option-buttons">
-            <button onClick={()=>{this.addToTeam(this.props.currentPokemon, 'friendly');console.log('onclick fired GREEN')}}>Add to your team</button>
-            <button onClick={()=>{this.addToTeam(this.props.currentPokemon, 'enemy');console.log('onclick fired RED')}}>Add to enemy team</button>
+            <button className='add-to-your-team' onClick={()=>{this.addToTeam(this.props.currentPokemon, 'friendly');console.log('onclick fired GREEN')}}>Add to team </button>
+            <button className='add-to-enemy-team' onClick={()=>{this.addToTeam(this.props.currentPokemon, 'enemy');console.log('onclick fired RED')}}>Add to enemy team</button>
           </div>
         </div>
         <div className="current-pokemon-flexbox">
@@ -172,6 +224,20 @@ class CurrentPokemonDisplay extends Component {
           <div className="stats">
             {/* <h5>Base Stats</h5> */}
             <StatChart name={this.props.currentPokemon.pokemon} pokemonStats={this.props.currentPokemon.stats} currentPokemon={this.props.currentPokemon}/>
+          </div>
+        </div>
+        <div className='current-pokemon-weakness-summary'> 
+          <div className='weaknesses'>
+              <h5>weakness: </h5>
+              <div className='weaknesses-inner'>
+                {this.state.weaknesses}
+              </div>
+          </div>
+          <div className='weaknesses'>
+              <h5>resistance: </h5>
+              <div className='weaknesses-inner'>
+                {this.state.resistances}
+              </div>
           </div>
         </div>
         <div>{/* counters and weakness */}</div>

@@ -22,7 +22,7 @@ const mapDispatchToProps = dispatch => ({
 
 
 const PokemonSprite = props => {
-  console.log('inside PokemonSprite, props:', props)
+  // console.log('inside PokemonSprite, props:', props)
   const [url, setUrl] = useState('/static/loading.gif')
   const [initialRender, setInitialRender] = useState(true)
 

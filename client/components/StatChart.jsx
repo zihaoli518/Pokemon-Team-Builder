@@ -17,7 +17,7 @@ import { connect } from 'react-redux';
 import { getTypeWeaknesses } from 'poke-types';
 
 // global constant for maximum/minimum number as parameters for the color scale function  
-const maxStat = 150; 
+const maxStat = 165; 
 const minStat = 40;
 
 const mapStateToProps = state => {
@@ -54,7 +54,8 @@ const data = {
     {
       data: [],
       backgroundColor: [],
-      barThickness: 25
+      barPercentage: 1,
+      categoryPercentage: 0.6
     }
   ]
 };
@@ -68,7 +69,7 @@ const config = {
     responsive: true,
     plugins: {
       title: {
-        display: true,
+        display: false,
         text: "BASE STATS",
         color: "black",
         font: {
