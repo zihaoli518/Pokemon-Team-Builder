@@ -12,6 +12,7 @@ $enemyTeamColor: rgb(220, 121, 116);
 @import url("https://fonts.googleapis.com/css2?family=Indie+Flower&display=swap"); // font-family: 'Indie Flower', cursive;
 @import url("https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@300;400;500;600&display=swap"); //font-family: 'Chakra Petch', sans-serif;
 @import url("https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600&display=swap"); //font-family: 'Orbitron', sans-serif;
+@import url('https://fonts.googleapis.com/css2?family=Inconsolata:wght@200;300;400;500;700&display=swap');
 
 body {
   background-color: $color5;
@@ -229,7 +230,7 @@ input[type="text"]
 .current-pokemon {
   font-family: "Indie Flower", cursive;
   font-weight: 500;
-  width: 35%;
+  width: 37%;
   // background-image: linear-gradient(
   //   105deg,
   // hsl(63deg 65% 88%) 0%,
@@ -249,7 +250,7 @@ input[type="text"]
   box-shadow: 12px 10px 30px -10px rgba(92, 11, 11, 0.88);
 
   position: relative;
-  margin-left: 5%;
+  margin-left: 2%;
 }
 
 .current-pokemon h3 {
@@ -453,11 +454,19 @@ input[type="text"]
 
 .current-pokemon-weakness-summary {
   margin-left: 5px;
+  margin-top: -20px;
+}
+
+.current-pokemon-weakness-summary h4 {
+  font-size: 17px;
+  margin-top: -10px;
 }
 
 .current-pokemon-weakness-summary h5 {
+  font-family: 'Inconsolata';
   font-size: 15px;
   margin-top: -10px;
+  font-weight: 300;
 }
 
 .current-pokemon-weakness-summary .weaknesses {
@@ -472,22 +481,25 @@ input[type="text"]
 }
 
 .current-pokemon-weakness-summary .type {
-  width: 50px;
   height: 25px;
+  min-width: fit-content;
+  max-width: 50px;
+  line-height: 25px;
   margin-left: 4px;
+  opacity: 70%;
 }
 
 .current-pokemon-weakness-summary .resistance-immune {
   color: white;
-  font-weight: 900;
+  font-weight: 700;
 }
 
 .current-pokemon-weakness-summary .resistance-x4 {
-  font-weight: 500;
+  font-weight: 700;
 }
 
 .current-pokemon-weakness-summary .weakness-x4 {
-  font-weight: 500;
+  font-weight: 700;
 }
 
 

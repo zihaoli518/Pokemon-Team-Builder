@@ -28,10 +28,10 @@ const TeamDisplay= (props) => {
 
   const [teamState, setTeamState] = useState({color: props.team, selectedTeam: {}, selectedTeamName: '', title: '', teamToBeDisplayed:[]})
   useEffect(() => {
-    console.log('inside useEffect')
-    console.log(props.yourTeam)
+    console.log('inside useEffect ', teamState.color)
+    console.log(teamState.selectedTeam)
     populateTeam(teamState.color)
-    console.log(props.yourTeam)
+    console.log(teamState.selectedTeam)
   }, [props.yourTeam, props.enemyTeam])
 
   const populateTeam = team => {
@@ -60,7 +60,7 @@ const TeamDisplay= (props) => {
       if (teamState.selectedTeam[selectedMon]) {
         newTeamToBeDisplayed.push(
             <TeamMember
-              key={i}
+              key={selectedMon+teamState.selectedTeam[selectedMon]['pokemon']}
               selectedTeamName={teamState.selectedTeamName}
               selectedTeam={teamState.selectedTeam}
               selectedMon={selectedMon}
@@ -68,10 +68,10 @@ const TeamDisplay= (props) => {
               pokemonName={teamState.selectedTeam[selectedMon]['pokemon']}
             />)
       };
-      // updating state
-      setTeamState({...teamState, teamToBeDisplayed: [newTeamToBeDisplayed]});
     }
-    // console.log('END of populateTeam() ', {title: title, teamToBeDisplayed: teamToBeDisplayed})
+    // updating state
+    setTeamState({...teamState, teamToBeDisplayed: [newTeamToBeDisplayed]});
+    console.log('END of populateTeam() ', newTeamToBeDisplayed)
   }
 
 

@@ -45,7 +45,7 @@ const types = ['bug', 'dark', 'dragon', 'electric', 'fairy', 'fighting', 'fire',
 class CurrentPokemonDisplay extends Component {
   constructor(props) {
     super(props);
-    this.state = {pokemon: this.props.currentPokemon, weaknesses: [], resistances:[]}
+    this.state = {pokemon: this.props.currentPokemon, immunities: [], weaknesses: [], resistances:[]}
   }
 
   // getTypes() {
@@ -55,19 +55,15 @@ class CurrentPokemonDisplay extends Component {
   // }
 
   componentWillMount = () => {
-    this.generateWeakness();
+    this.generateWeakness(this.props.currentPokemon.pokemon);
   }
 
   componentDidUpdate = (prevState) => {
-    console.log('inside componentWillUpdate - CurrentPokemonDisplay')
-    console.log(this.props.yourTeam)
-    if (prevState.currentPokemon !== this.state.pokemon) {
-      console.log('UPDATE NEEDED')
-      console.log(prevState.currentPokemon, this.state.pokemon)
+    // console.log('inside componentWillUpdate - CurrentPokemonDisplay')
+    // console.log(prevState.currentPokemon, this.props.currentPokemon, this.state)
+    if (prevState.currentPokemon.pokemon !== this.props.currentPokemon.pokemon) {
       this.generateWeakness();
-
     }
-    // this.forceUpdate();
   }
 
   // get the top 2 most common abilities - currently unavailable 
@@ -98,34 +94,37 @@ class CurrentPokemonDisplay extends Component {
   //   }
   //   return moveSetMap;
   // }
-  generateWeakness() {
+  generateWeakness(pokemon) {
+    console.log('inside generateWeakness')
+    const newImmunitiesArray = [];
     const newWeaknessArray = [];
     const newResistanceArray = [];
     for (let type of types) {
+      // console.log(type, this.props.currentPokemon.weakness[type])
       switch (this.props.currentPokemon.weakness[type]) {
         case 0:
-          newResistanceArray.push(
-            <h5 className={`type resistance-immune`} id={type}>{type}</h5>
+          newImmunitiesArray.push(
+            <h5 key={type} className={`type resistance-immune`} id={type}>{type}</h5>
           )
           break;
         case 0.25: 
-          newResistanceArray.push(
-            <h5 className={`type resistance-x4`} id={type}>{type}</h5>
+          newResistanceArray.unshift(
+            <h5 key={type} className={`type resistance-x4`} id={type}>{type}</h5>
           )
           break;
         case 0.5: 
           newResistanceArray.push(
-            <h5 className={`type resistance-x2`} id={type}>{type}</h5>
+            <h5 key={type} className={`type resistance-x2`} id={type}>{type}</h5>
           )
           break;
         case 2: 
           newWeaknessArray.push(
-            <h5 className={`type weakness-x2`} id={type}>{type}</h5>
+            <h5 key={type} className={`type weakness-x2`} id={type}>{type}</h5>
           )
           break;
         case 4: 
-          newWeaknessArray.push(
-            <h5 className={`type weakness-x4`} id={type}>{type}</h5>
+          newWeaknessArray.unshift(
+            <h5 key={type} className={`type weakness-x4`} id={type}>{type}</h5>
           )
           break;
 
@@ -133,9 +132,9 @@ class CurrentPokemonDisplay extends Component {
           break;
       }
     }
-    // console.log('end of generateWeakness()',{weaknesses: newWeaknessArray, resistances:newResistanceArray})
+    // console.log('end of generateWeakness()',{immunities: newImmunitiesArray, weaknesses: newWeaknessArray, resistances:newResistanceArray})
     this.setState((state) => {
-      return {weaknesses: newWeaknessArray, resistances:newResistanceArray}
+      return {pokemon: pokemon,immunities: newImmunitiesArray, weaknesses: newWeaknessArray, resistances:newResistanceArray}
     })
   }
 
@@ -232,14 +231,20 @@ class CurrentPokemonDisplay extends Component {
           </div>
         </div>
         <div className='current-pokemon-weakness-summary'> 
+        <div className='weaknesses'>
+              <h4>immunity : </h4>
+              <div className='weaknesses-inner'>
+                {this.state.immunities}
+              </div>
+          </div>
           <div className='weaknesses'>
-              <h5>weakness: </h5>
+              <h4>weakness : </h4>
               <div className='weaknesses-inner'>
                 {this.state.weaknesses}
               </div>
           </div>
           <div className='weaknesses'>
-              <h5>resistance: </h5>
+              <h4>resistance : </h4>
               <div className='weaknesses-inner'>
                 {this.state.resistances}
               </div>

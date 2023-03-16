@@ -24,7 +24,7 @@ const mapDispatchToProps = dispatch => ({
 });
 
 const TeamMember = props => {
-
+  console.log('inside <TeamMember/>', props.pokemonName)
   return (
     <div className="team-member" id={props.selectedTeamName + '_' + props.selectedMon}>
         <PokemonSprite
