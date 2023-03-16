@@ -38,6 +38,7 @@ const PokemonSprite = props => {
   useEffect(() => {
     let isCancelled = false;
     // check if url is cached -> avoid requests 
+    if (!localStorage.getItem('pokemon-team-builder-cache')) localStorage.setItem('pokemon-team-builder-cache', '{}')
     const cacheObj = JSON.parse(localStorage.getItem('pokemon-team-builder-cache'))
     if (cacheObj.hasOwnProperty(props.pokemon.toLowerCase())) {
       let cachedUrl = cacheObj[props.pokemon.toLowerCase()]['url'];

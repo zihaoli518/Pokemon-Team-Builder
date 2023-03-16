@@ -301,14 +301,14 @@ input[type="text"]
   display: flex;
   flex-direction: column;
   position: absolute;
-  right: 140px;
+  right: 100px;
   top: -3px;
 }
 
 .top-flexbox .option-buttons button {
   height: 30px;
-  width: 140px;
-  font-size: 12px;
+  width: 100px;
+  font-size: 15px;
   font-weight: 400;
   font-family: 'Chakra Petch', sans-serif;
   margin-right: -150px;
@@ -318,12 +318,26 @@ input[type="text"]
   color: $color1;
 }
 
+.top-flexbox .option-buttons button:hover{
+  background-color: #e6e6e6;
+  transition: 0.5s;
+  border: 2.3px solid black;
+  cursor: pointer;
+  font-weight: 900;
+}
+
 .option-buttons .add-to-your-team {
   color: $friendlyTeamColor !important
+}
+.option-buttons .add-to-your-team:hover {
+  color: darken($friendlyTeamColor, 40%) !important;
 }
 
 .option-buttons .add-to-enemy-team {
   color: $enemyTeamColor !important
+}
+.option-buttons .add-to-enemy-team:hover {
+  color: darken($enemyTeamColor,40%) !important;
 }
 
 .current-pokemon-spacer {
@@ -690,6 +704,22 @@ input[type="text"]
   transition: ease-in-out;
   transition: 0.5s;
 }
+
+.team-member-container .types-colors {
+  display: flex;
+  justify-content: center;
+}
+
+.team-member-container .types-colors-inner {
+  width: 20px;
+  height: 5px;
+  margin: 2px;
+}
+
+
+
+
+
 
 
 // show typing chart button 

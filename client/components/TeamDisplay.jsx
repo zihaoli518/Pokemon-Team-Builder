@@ -27,11 +27,9 @@ const mapStateToProps = (state) => {
 const TeamDisplay= (props) => {
 
   const [teamState, setTeamState] = useState({color: props.team, selectedTeam: {}, selectedTeamName: '', title: '', teamToBeDisplayed:[]})
+  
   useEffect(() => {
-    console.log('inside useEffect ', teamState.color)
-    console.log(teamState.selectedTeam)
     populateTeam(teamState.color)
-    console.log(teamState.selectedTeam)
   }, [props.yourTeam, props.enemyTeam])
 
   const populateTeam = team => {
@@ -71,7 +69,7 @@ const TeamDisplay= (props) => {
     }
     // updating state
     setTeamState({...teamState, teamToBeDisplayed: [newTeamToBeDisplayed]});
-    console.log('END of populateTeam() ', newTeamToBeDisplayed)
+    // console.log('END of populateTeam() ', newTeamToBeDisplayed)
   }
 
 

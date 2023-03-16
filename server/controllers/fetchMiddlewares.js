@@ -23,8 +23,8 @@ fetchMiddlewares.fetchWeakness = (req, res, next) => {
 }
 
 fetchMiddlewares.testForNewerSprites = (req, res, next) => {
-  console.log('inside middleware testForNewerSprites')
-  console.log(req.body.url)
+  // console.log('inside middleware testForNewerSprites')
+  // console.log(req.body.url)
 
   // input: string, output: boolean, updated url if false 
   async function checkGif (url, pokemon) {
@@ -48,16 +48,20 @@ fetchMiddlewares.testForNewerSprites = (req, res, next) => {
   let url = req.body.url;
   fetch(url)
     .then((data) => {
-      console.log("inside testForNewerSprites BACK");
-      console.log((data));
-      console.log(data.status)
+      // console.log("inside testForNewerSprites BACK");
+      // console.log((data));
+      // console.log(data.status)
       if (data.status===200) {
         res.locals.url = url; 
         console.log(res.locals.url)
         return next();
       }
       // if gif from another source is needed
-      checkGif(`https://img.pokemondb.net/sprites/legends-arceus/normal/${req.body.pokemon}.png`, req.body.pokemon)
+        // reformating hisuian pokemon
+      let pokemonName = req.body.pokemon;
+      if (pokemonName.slice(pokemonName.length-5, pokemonName.length)==='hisui') pokemonName += 'an';
+
+      checkGif(`https://img.pokemondb.net/sprites/legends-arceus/normal/${pokemonName}.png`, pokemonName)
       // console.log('newUrl: ', newUrl)
       // res.locals.url = newUrl; 
     })

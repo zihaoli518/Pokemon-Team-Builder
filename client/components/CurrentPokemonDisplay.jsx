@@ -95,7 +95,6 @@ class CurrentPokemonDisplay extends Component {
   //   return moveSetMap;
   // }
   generateWeakness(pokemon) {
-    console.log('inside generateWeakness')
     const newImmunitiesArray = [];
     const newWeaknessArray = [];
     const newResistanceArray = [];
