@@ -40,22 +40,22 @@ const TopNavBar = props => {
   const toggleShowLoginModal = () => {
     setShowLoginModal(!showLoginModal);
     const currentState = document.getElementById('main-div').className;
+    console.log('inside toggleShowLoginModal, ', currentState)
     if (showSignupModal) {
       setShowSignupModal(false);
       return;
     }
-    console.log('inside toggleShowLoginModal, ', currentState)
     props.toggleMainDivState(currentState);
   }
 
   const toggleShowSignupModal = () => {
     setShowSignupModal(!showSignupModal);
     const currentState = document.getElementById('main-div').className;
+    console.log('inside toggleShowSignupModal, ', currentState)
     if (showLoginModal) {
       setShowLoginModal(false);
       return;
     }
-    console.log('inside toggleShowLoginModal, ', currentState)
     props.toggleMainDivState(currentState);
   }
 
@@ -68,7 +68,7 @@ const TopNavBar = props => {
 
       </div>
         <LoginModal show={showLoginModal} toggle={toggleShowLoginModal} />
-        <SignupModal show={showSignupModal} toggle={setShowSignupModal}/>
+        <SignupModal show={showSignupModal} toggle={toggleShowSignupModal}/>
     </div>
   );
 }

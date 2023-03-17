@@ -70,6 +70,7 @@ const SignupModal = props => {
 
   const closeModal = (e) => {
     console.log('in closeModal')
+    console.log(props)
     props.toggle(false); 
     setShowUsernameAlert(false);
     setShowPasswordAlert(false);
