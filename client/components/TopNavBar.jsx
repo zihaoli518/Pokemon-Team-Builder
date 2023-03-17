@@ -18,11 +18,14 @@ import * as actions from '../actions/actions';
 import SignupModal from './modals/SignupModal.jsx';
 import LoginModal from './modals/LoginModal.jsx';
 
+
 const mapStateToProps = state => {
   return {
-    
+    isLoggedIn: state.loginFunctions. isLoggedIn,
+    username: state.loginFunctions.username
   }
 }
+
 
 const mapDispatchToProps = dispatch => ({
   toggleMainDivState : (str) => dispatch(actions.toggleMainDivState(str)),
@@ -36,23 +39,34 @@ const TopNavBar = props => {
 
   const toggleShowLoginModal = () => {
     setShowLoginModal(!showLoginModal);
-    setShowSignupModal(false);
-    const currentState = document.getElementById('main-div');
-    console.log('inside toggleShowLoginModal, ', currentState.className)
-    props.toggleMainDivState(currentState.className);
+    const currentState = document.getElementById('main-div').className;
+    if (showSignupModal) {
+      setShowSignupModal(false);
+      return;
+    }
+    console.log('inside toggleShowLoginModal, ', currentState)
+    props.toggleMainDivState(currentState);
   }
 
   const toggleShowSignupModal = () => {
     setShowSignupModal(!showSignupModal);
-    setShowLoginModal(false);
+    const currentState = document.getElementById('main-div').className;
+    if (showLoginModal) {
+      setShowLoginModal(false);
+      return;
+    }
+    console.log('inside toggleShowLoginModal, ', currentState)
+    props.toggleMainDivState(currentState);
   }
 
 
   return (
     <div className='top-nav-bar'>
+      <div className='top-nav-bar-buttons'>
+        <button onClick={() => {console.log('login clicked'); toggleShowLoginModal()}}>login</button> 
+        <button onClick={() => {console.log('sign up clicekd'); toggleShowSignupModal()}}>signup</button> 
 
-        <button onClick={toggleShowLoginModal}>login</button> 
-        <button onClick={toggleShowSignupModal}>signup</button> 
+      </div>
         <LoginModal show={showLoginModal} toggle={toggleShowLoginModal} />
         <SignupModal show={showSignupModal} toggle={setShowSignupModal}/>
     </div>

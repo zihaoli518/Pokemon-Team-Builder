@@ -15,7 +15,9 @@ import * as types from '../constants/actionTypes';
 
 
 const initialState = {
-  mainDivClassName: 'main'
+  mainDivClassName: 'main',
+  isLoggedIn: false, 
+  username: null
 }
 
 const loginFunctionsReducer = (state = initialState, action) => {

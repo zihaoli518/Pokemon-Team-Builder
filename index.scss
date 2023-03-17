@@ -99,6 +99,8 @@ body {
   background-color: #6390F0;
 }
 
+
+
 #main-div {
   position:relative;
   z-index: 3;
@@ -119,6 +121,9 @@ body {
   width: 100%;
   display: flex;
   justify-content: right;
+
+  position: relative;
+  z-index: 10;
 }
 
 .top-nav-bar  button{
@@ -130,9 +135,20 @@ body {
   border-radius: 0.3rem;
 }
 
+.display-block {
+  display: block;
+}
+
+.display-none {
+  display: none;
+}
+
+
 .modal {
-  height: 40%;
+  height: 32%;
   width: 30%;
+  min-height: 270px;
+  min-width: 385px;
   border-radius: 0.3rem;
 
   position: fixed;
@@ -144,23 +160,81 @@ body {
 
   pointer-events:all !important; // pointer-events not supported below IE11
   opacity: 90% !important;
+
+  font-family: "Indie Flower";
 }
 
-.login-modal {
-
+.modal h2 {
+  font-size: 3rem;
+  margin: 0;
+  margin-bottom: 5%;
 }
 
-.signup-modal {
-
+.modal-form {
+  text-align: center;
+  font-size: 1.5rem;
+  min-width: 80%;
 }
 
-.display-block {
-  display: block;
+.modal-form label {
+  margin-right: 3%;
 }
 
-.display-none {
-  display: none;
+.modal-form .username-div {
+  margin-bottom: 3%;
+  margin-left: -13%;
+  margin-top: 2%;
 }
+
+.modal-form .password-div  {
+  margin-left: -13%;
+  margin-bottom: 4%;
+}
+
+.modal-form .password-div label {
+  margin-right: 4.5%;
+}
+
+#login-button {
+  position: absolute;
+  bottom: 8%;
+  right: 37%;
+
+  height: 50px;
+  width: 130px;
+  font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+  font-size: 25px;
+  background-color: $color2;
+  border-radius: 0.3rem;
+}
+
+.modal .close-button {
+  position: absolute;
+  bottom: 85%;
+  left: 82%;
+
+  height: 15%;
+  width: 18%;
+
+  background-color: rgb(78, 77, 80);
+  color: $color2;
+
+  font-size: 1.4rem;
+}
+
+// error messages 
+.modal h4 {   
+  margin: 0;
+  margin-top: -4%;
+  margin-bottom: -1.5%;
+
+  color: rgb(220, 15, 15);
+  font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+  font-weight: 400;
+  font-size: 1rem;
+} 
+
+
 
 
 
@@ -201,14 +275,18 @@ h1 {
   height: 30px;
   width: 80px;
 
-  font-family: "Shadows Into Light", cursive;
+  font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+
   font-size: 20px;
-  font-weight: 700;
+  font-weight: 500;
   color: $color3;
   background-color:$color2;
 
   position: relative;
   top: 5px;
+
+  line-height: 30px;
+  border-radius: 0.3rem;
 }
 
 .pokemon-search span {
@@ -323,7 +401,7 @@ input[type="text"]
   transition: 0.5s;
   border: 2.3px solid black;
   cursor: pointer;
-  font-weight: 900;
+  font-weight: 90 0;
 }
 
 .option-buttons .add-to-your-team {

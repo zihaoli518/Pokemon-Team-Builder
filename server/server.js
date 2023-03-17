@@ -43,5 +43,10 @@ app.post('/api/testForNewerSprites', fetchMiddlewares.testForNewerSprites, (req,
 //   return res.status(200).send(res.locals.data)
 // })
 
+app.post('/api/signup', userMiddlewares.signUp, (req, res) => {
+  console.log('/api/signup complete')
+  return res.status(200).send(res.locals.data)
+})
+
 app.listen(PORT); 
 
