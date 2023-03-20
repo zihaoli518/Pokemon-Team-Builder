@@ -35,6 +35,15 @@ const loginFunctionsReducer = (state = initialState, action) => {
         mainDivClassName: newmainDivClassName
       }
 
+      case types.CHANGE_USER_STATE: 
+      console.log('inside CHANGE_USER_STATE ', action)
+
+        return {
+          ...state,
+          isLoggedIn: true,
+          username: action.payload.username
+        }
+
     default: {
       return state
     }

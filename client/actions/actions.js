@@ -69,3 +69,8 @@ export const toggleMainDivState = (string) => ({
   type: types.TOGGLE_MAIN_DIV_STATE,
   payload: {string: string},
 });
+
+export const changeUserState = (username) => ({
+  type: types.CHANGE_USER_STATE,
+  payload: {username: username},
+});

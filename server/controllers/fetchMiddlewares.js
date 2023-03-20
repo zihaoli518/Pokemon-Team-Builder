@@ -28,7 +28,7 @@ fetchMiddlewares.testForNewerSprites = (req, res, next) => {
 
   // input: string, output: boolean, updated url if false 
   async function checkGif (url, pokemon) {
-    console.log('inside checkGif')
+    // console.log('inside checkGif')
     fetch(url)
       .then((data) => {
         console.log('inside checkGif fetch, ', data.status)

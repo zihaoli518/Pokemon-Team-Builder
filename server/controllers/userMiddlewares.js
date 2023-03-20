@@ -1,6 +1,12 @@
+const path = require('path');
+require('dotenv').config({path: path.resolve(__dirname+'../../../.env')});
+
+
 const db = require('../dbModel.js');
 const bcrypt = require('bcrypt');
 const saltFactor = 10;
+const jwt = require('jsonwebtoken')
+
 const userMiddlewares = {};
 
 userMiddlewares.signUp = (req, res, next) => {
@@ -28,10 +34,11 @@ userMiddlewares.signUp = (req, res, next) => {
 };
 
 userMiddlewares.logIn = (req, res, next) => {
+  console.log('inside middleware logIn, ', req.body)
   const { username } = req.body;
-  const query = 'SELECT password FROM users WHERE username = $1';
+  const query = `SELECT password FROM Users WHERE username = '${username}'`;
   // query database to see if that username exists
-  db.query(query, [username])
+  db.query(query)
     .then(dbResponse => {
       if (dbResponse.rows[0] === undefined) {
         // if nothing is found, return 401 status
@@ -48,8 +55,18 @@ userMiddlewares.logIn = (req, res, next) => {
             });
           }
           if (result) {
-            //if passwords match send back username
-            res.locals.username = username;
+            //if passwords MATCH
+            console.log('inside MATCH', process.env.JWT_SECRET)
+            const token = jwt.sign({ username: username }, process.env.JWT_SECRET, {
+              expiresIn: process.env.JWT_EXPIRES_IN,  });
+
+            res.locals.data = {
+              status: 'success',
+              token,
+              username: username
+            };
+
+            res.cookie('PokemonTeamBuilder', token, { maxAge: 900000, httpOnly: true });
             return next();
           }
           else {
@@ -63,6 +80,17 @@ userMiddlewares.logIn = (req, res, next) => {
       return next(err);
     });
 };
+
+
+userMiddlewares.getUserData = (req, res, next) => {
+  console.log('inside middleware getUserData,', req.cookies);
+  const username = req.params.username;
+  const token = jwt.sign({ username: username }, process.env.JWT_SECRET, {
+    expiresIn: process.env.JWT_EXPIRES_IN,  });
+    console.log(req.cookies.PokemonTeamBuilder, token)
+  if (req.cookies.PokemonTeamBuilder===token) console.log("NICE")
+  return next()
+}
 
 module.exports = userMiddlewares;
 

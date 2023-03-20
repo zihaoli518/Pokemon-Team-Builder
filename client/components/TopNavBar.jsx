@@ -11,6 +11,8 @@
 
 // importing dependencies 
 import React, {useState} from 'react';
+import {useNavigate} from 'react-router-dom'
+
 import { connect } from 'react-redux';
 
 import * as actions from '../actions/actions';
@@ -29,6 +31,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => ({
   toggleMainDivState : (str) => dispatch(actions.toggleMainDivState(str)),
+  changeUserState : (username) => dispatch(actions.changeUserState(username)),
 });
 
 
@@ -36,6 +39,11 @@ const TopNavBar = props => {
 
   const [showLoginModal, setShowLoginModal] = useState(false);
   const [showSignupModal, setShowSignupModal] = useState(false);
+  const [redirectUser, setRedirectUser] = useState(true);
+
+  const nav = useNavigate();
+
+
 
   const toggleShowLoginModal = () => {
     setShowLoginModal(!showLoginModal);
@@ -59,18 +67,27 @@ const TopNavBar = props => {
     props.toggleMainDivState(currentState);
   }
 
+  if (props.isLoggedIn && redirectUser) {
+    console.log('props.isLoggedIn')
+    setRedirectUser(false);
+    nav("/users/" + props.username)
+  }
 
   return (
+    
     <div className='top-nav-bar'>
       <div className='top-nav-bar-buttons'>
-        <button onClick={() => {console.log('login clicked'); toggleShowLoginModal()}}>login</button> 
-        <button onClick={() => {console.log('sign up clicekd'); toggleShowSignupModal()}}>signup</button> 
-
+      {(props.isLoggedIn)? <h3>{props.username}</h3>:
+        <div>
+          <button onClick={() => {console.log('login clicked'); toggleShowLoginModal()}}>login</button> 
+          <button onClick={() => {console.log('sign up clicekd'); toggleShowSignupModal()}}>signup</button> 
+        </div>
+        }
       </div>
-        <LoginModal show={showLoginModal} toggle={toggleShowLoginModal} />
-        <SignupModal show={showSignupModal} toggle={toggleShowSignupModal}/>
+          <LoginModal show={showLoginModal} toggle={toggleShowLoginModal} changeUserState={props.changeUserState} toggleShowLoginModal={toggleShowLoginModal}/>
+          <SignupModal show={showSignupModal} toggle={toggleShowSignupModal}/>
     </div>
   );
 }
 
-export default connect(null, mapDispatchToProps)(TopNavBar);
+export default connect(mapStateToProps, mapDispatchToProps)(TopNavBar);

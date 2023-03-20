@@ -11,7 +11,9 @@
 
 // importing dependencies
 import React, { Component } from 'react';
-import { Switch, Route } from 'react-router-dom';
+import { Switch } from 'react-router-dom';
+import { Router, Route, Link, browserHistory, IndexRedirect } from 'react-router'
+
 import { connect } from 'react-redux';
 
 // importing components 
