@@ -27,6 +27,7 @@ import ShowChartButton from './components/ShowChartButton.jsx';
 
 import '../index.scss';
 import MatchupChart from './components/MatchupChart.jsx';
+import AllSavedTeams from './components/AllSavedTeams.jsx';
 
 
 const mapStateToProps = state => ({
@@ -36,7 +37,7 @@ const mapStateToProps = state => ({
   yourTeam: state.pokemon.yourTeam,
   enemyTeam: state.pokemon.enemyTeam,
   showTypingChart: state.pokemon.showTypingChart,
-  mainDivClassName: state.loginFunctions.mainDivClassName
+  mainDivClassName: state.userFunctions.mainDivClassName
 }) 
 
 
@@ -58,15 +59,12 @@ class App extends Component {
             <h1>POKEMON TEAM BUILDER</h1>
             <PokemonSearch />
           </div>
-          <div className="current-pokemon-display">
-            {this.props.start ? <CurrentPokemonDisplay /> : null}
+          <div className='main-row-container'>
+            <AllSavedTeams />
+            <div className="current-pokemon-display">
+              {this.props.start ? <CurrentPokemonDisplay /> : null}
+            </div>
           </div>
-          {/* <div className='current-pokemon-more-info'>
-          {this.props.start && Object.keys(this.props.currentPokemon.teammates)[0]!==undefined ?
-            <MoreInfo /> : 
-            null
-          }
-        </div> */}
           <div className="teams">
             {this.props.teamStatus
               ? [

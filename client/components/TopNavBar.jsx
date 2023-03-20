@@ -23,8 +23,8 @@ import LoginModal from './modals/LoginModal.jsx';
 
 const mapStateToProps = state => {
   return {
-    isLoggedIn: state.loginFunctions. isLoggedIn,
-    username: state.loginFunctions.username
+    isLoggedIn: state.userFunctions. isLoggedIn,
+    username: state.userFunctions.username
   }
 }
 
@@ -67,6 +67,11 @@ const TopNavBar = props => {
     props.toggleMainDivState(currentState);
   }
 
+  const logout = () => {
+    document.cookie = 'PokemonTeamBuilder' +'=; Path=/; Expires=Thu, 01 Jan 1970 00:00:01 GMT;';
+
+  }
+
   if (props.isLoggedIn && redirectUser) {
     console.log('props.isLoggedIn')
     setRedirectUser(false);
@@ -77,7 +82,12 @@ const TopNavBar = props => {
     
     <div className='top-nav-bar'>
       <div className='top-nav-bar-buttons'>
-      {(props.isLoggedIn)? <h3>{props.username}</h3>:
+      {(props.isLoggedIn)? 
+        <div className='after-login-username-display'> 
+          <h3>{props.username}</h3> 
+          <button onClick={() => {console.log('logout clicked'); logout()}}>log out</button> 
+        </div>
+        :
         <div>
           <button onClick={() => {console.log('login clicked'); toggleShowLoginModal()}}>login</button> 
           <button onClick={() => {console.log('sign up clicekd'); toggleShowSignupModal()}}>signup</button> 

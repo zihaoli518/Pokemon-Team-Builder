@@ -15,6 +15,9 @@ import { connect } from 'react-redux';
 import PokemonSprite from './PokemonSprite.jsx';
 import TeamMember from './TeamMember.jsx';
 
+import * as actions from '../actions/actions';
+
+
 const mapStateToProps = (state) => {
   return {
     currentPokemon: state.pokemon.currentPokemon,
@@ -22,6 +25,10 @@ const mapStateToProps = (state) => {
     enemyTeam: state.pokemon.enemyTeam,
   };
 };
+
+const mapDispatchToProps = dispatch => ({
+  saveCurrentTeam : (team) => dispatch(actions.saveCurrentTeam(team)),
+});
 
 
 const TeamDisplay= (props) => {
@@ -72,16 +79,24 @@ const TeamDisplay= (props) => {
     // console.log('END of populateTeam() ', newTeamToBeDisplayed)
   }
 
+  const saveTeam = (e) => {
+    e.preventDefault();
+    console.log('inside saveTeam(e)')
+    console.log(teamState.selectedTeam, )
+    props.saveCurrentTeam(teamState.selectedTeam)
+  }
+
 
   return (
     <div className={props.team}>
       <h4>{teamState.title}</h4>
       <div className='team-members'>
         {teamState.teamToBeDisplayed}
+        <button className='save-team-button' onClick={(e) => {saveTeam(e)}}>save</button>
       </div>
     </div>
   );
 
 }
 
-export default connect(mapStateToProps, null)(TeamDisplay)
+export default connect(mapStateToProps, mapDispatchToProps)(TeamDisplay)

@@ -20,8 +20,8 @@ import * as actions from '../../actions/actions';
 
 const mapStateToProps = state => {
   return {
-    isLoggedIn: state.loginFunctions. isLoggedIn,
-    username: state.loginFunctions.username
+    isLoggedIn: state.userFunctions. isLoggedIn,
+    username: state.userFunctions.username
   }
 }
 
@@ -75,6 +75,8 @@ const LoginModal = props => {
         console.log(data.status)
         props.changeUserState(username)
         props.toggleShowLoginModal()
+        // chage redux state
+
       })
   }
 

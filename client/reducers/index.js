@@ -14,14 +14,14 @@ import { combineReducers } from 'redux';
 
 // import all reducers here
 import pokemonReducer from './pokemonReducer';
-import loginFunctionsReducer from './loginFunctionsReducer';
+import userFunctionsReducer from './userFunctionsReducer';
 
 
 // combine reducers
 const reducers = combineReducers({
   // if we had other reducers, they would go here
   pokemon: pokemonReducer,
-  loginFunctions: loginFunctionsReducer
+  userFunctions: userFunctionsReducer
 });
 
 // make the combined reducers available for import

@@ -74,3 +74,8 @@ export const changeUserState = (username) => ({
   type: types.CHANGE_USER_STATE,
   payload: {username: username},
 });
+
+export const saveCurrentTeam = (team) => ({
+  type: types.SAVE_CURRENT_TEAM,
+  payload: {team: team},
+});
