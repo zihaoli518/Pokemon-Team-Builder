@@ -25,19 +25,14 @@ const SavedTeamMember = props => {
   // console.log('inside <TeamMember/>', props.pokemonData)
   return (
     <div className="saved-team-member-container" >
-      <div className='team-member'>
+      <div className='saved-team-member'>
         <PokemonSprite
+          key={props.key}
           pokemon={props.pokemonName}
-          className={"pokemon-sprite-class-small"}
+          className={"pokemon-sprite-saved-team"}
           onClick={()=>{props.selectTeamMember(props.pokemonData)}}
         />
       </div>
-      {/* <div className='types-colors'>
-        <div className='types-colors-inner' id={props.pokemonData.types[0]}></div>
-        {(props.pokemonData.types[1]) ? 
-          <div className='types-colors-inner' id={props.pokemonData.types[1]}></div> 
-          : null}
-      </div> */}
     </div>
   );
 }

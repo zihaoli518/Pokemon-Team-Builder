@@ -34,25 +34,34 @@ const AllSavedTeams= (props) => {
 
   
   const populateSavedTeams = () => {
+    console.log('inside populateSavedTeamds', props.savedTeams)
     const allSavedTeamsToBeDisplayed = [];
     for (let i=1; i<=Object.keys(props.savedTeams).length; i++) {
-      let currentTeam = props.savedTeams['team_'+i];
-      console.log('inside populateSavedTeams for loop: ', props.savedTeams, currentTeam)
+      let currentTeamName = 'untitled ' + i, currentTeam = null, currentTeamKey = 'team_' + i;
+
+      if (props.savedTeams[currentTeamKey]) {
+        currentTeamName = props.savedTeams[currentTeamKey]['name']
+        currentTeam = props.savedTeams[currentTeamKey];
+      }
+      // console.log('inside populateSavedTeams for loop: ', props.savedTeams, currentTeam)
       // console.log(selectedTeam, selectedMon);
       allSavedTeamsToBeDisplayed.push(
           <SavedTeam
-            key={i}
+            key={i + currentTeamKey}
+            savedTeamName={currentTeamName}
             savedTeam={currentTeam}
+            savedTeamKey={currentTeamKey}
           />)
+      if (i===Object.keys(props.savedTeams).length) break;
     }
     setAllTeams(allSavedTeamsToBeDisplayed)
   }
 
 
   return (
-    <div className='all-saved-teams'>
+    <div className='all-saved-teams-container'>
       <h4>Saved Teams</h4>
-      <div className='team-members'>
+      <div className='all-saved-teams'>
         {allTeams}
       </div>
     </div>

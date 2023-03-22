@@ -27,20 +27,23 @@ const mapStateToProps = (state) => {
 };
 
 const mapDispatchToProps = dispatch => ({
-  saveCurrentTeam : (team) => dispatch(actions.saveCurrentTeam(team)),
+  saveCurrentTeamAsNew : (teamObj) => dispatch(actions.saveCurrentTeamAsNew(teamObj)),
+  updateSavedTeam: (team) => dispatch(actions.updateSavedTeam(team))
 });
 
 
 const TeamDisplay= (props) => {
-
-  const [teamState, setTeamState] = useState({color: props.team, selectedTeam: {}, selectedTeamName: '', title: '', teamToBeDisplayed:[]})
+  
+  {console.log('inside TeamDisplay', props.yourTeam)}
+  if(!props.yourTeam) return null;
+  const [teamState, setTeamState] = useState({color: props.team, selectedTeam: {}, selectedTeamName: props.yourTeam.name, title: props.yourTeam.name, teamToBeDisplayed:[]})
   
   useEffect(() => {
     populateTeam(teamState.color)
+    // console.log('title: ', teamState.title)
   }, [props.yourTeam, props.enemyTeam])
 
   const populateTeam = team => {
-    // {console.log('inside populateTeam')}
     
     // let selectedTeam;
     // let selectedTeamName;
@@ -49,11 +52,16 @@ const TeamDisplay= (props) => {
     if (props.team === 'green') {
       teamState.selectedTeam = props.yourTeam;
       teamState.selectedTeamName = 'yourTeam';
-      teamState.title = 'Your Team'
+      teamState.title = props.yourTeam.name
     } else {
       teamState.selectedTeam = props.enemyTeam
       teamState.selectedTeamName = 'enemyTeam';
-      teamState.title = 'Enemy Team'
+      teamState.title = 'enemy team'
+    }
+
+    // seeting team name
+    if (!props.title) {
+      setTeamState({...teamState, title: 'untitled'})
     }
     
 
@@ -72,31 +80,58 @@ const TeamDisplay= (props) => {
               pokemonData={teamState.selectedTeam[selectedMon]}
               pokemonName={teamState.selectedTeam[selectedMon]['pokemon']}
             />)
-      };
+      } else {
+        newTeamToBeDisplayed.push(
+          <div className='team-member-container'></div>
+          )
+      }
     }
     // updating state
     setTeamState({...teamState, teamToBeDisplayed: [newTeamToBeDisplayed]});
     // console.log('END of populateTeam() ', newTeamToBeDisplayed)
   }
 
-  const saveTeam = (e) => {
+  const saveTeamAsNew = (e) => {
     e.preventDefault();
-    console.log('inside saveTeam(e)')
-    console.log(teamState.selectedTeam, )
-    props.saveCurrentTeam(teamState.selectedTeam)
+    let input = document.querySelector("#main-div > div.teams > div.green > h4").innerHTML;
+    if (input===undefined) input = 'untitled'
+    let payload = {name: input, team: {...teamState.selectedTeam}};
+    payload.team.name = input
+    props.saveCurrentTeamAsNew(payload)
+  }
+
+  const saveTeam = () => {
+    console.log('inside saveTeam')
+    let input = document.querySelector("#main-div > div.teams > div.green > h4").innerHTML;
+    if (input===undefined) input = 'untitled'
+    console.log(input)
+    let copy = {...teamState.selectedTeam}
+    copy.name = input
+    props.updateSavedTeam(copy)
   }
 
 
   return (
     <div className={props.team}>
-      <h4>{teamState.title}</h4>
+      <h4 contenteditable="true">{teamState.title}</h4>
       <div className='team-members'>
         {teamState.teamToBeDisplayed}
-        <button className='save-team-button' onClick={(e) => {saveTeam(e)}}>save</button>
       </div>
+      {(teamState.color==='green') ?
+        <div className='save-buttons-container'> 
+          <button className='save-team-button' onClick={(e) => {saveTeam(e)}}>save</button>
+          <button className='save-team-as-new-button' onClick={(e) => {saveTeamAsNew(e)}}>save as new</button>
+        </div>
+        :
+        null
+
+      }
+
     </div>
   );
 
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(TeamDisplay)
+
+

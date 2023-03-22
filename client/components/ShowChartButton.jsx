@@ -33,7 +33,7 @@ const ShowChartButton = props => {
   return (
     <div className='show-chart-button-area'>
 
-        <button onClick={props.showTypingChart}>SHOW MATCHUP CHART</button> 
+        <button onClick={props.showTypingChart}>show matchup chart</button> 
 
     </div>
   );

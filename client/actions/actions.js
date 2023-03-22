@@ -75,7 +75,27 @@ export const changeUserState = (username) => ({
   payload: {username: username},
 });
 
-export const saveCurrentTeam = (team) => ({
-  type: types.SAVE_CURRENT_TEAM,
+export const saveCurrentTeamAsNew = (team) => ({
+  type: types.SAVE_CURRENT_TEAM_AS_NEW,
   payload: {team: team},
+});
+
+export const updateSavedTeam = (team) => ({
+  type: types.UPDATE_SAVED_TEAM,
+  payload: {team: team},
+});
+
+export const setYourTeam = (team) => ({
+  type: types.SET_YOUR_TEAM,
+  payload: {team: team},
+});
+
+export const makeSavedTeamActive = (key, teamObj) => ({
+  type: types.MAKE_SAVED_TEAM_ACTIVE,
+  payload: {key: key, team: teamObj},
+});
+
+export const removeSavedTeam = (key) => ({
+  type: types.REMOVE_SAVED_TEAM,
+  payload: {key: key},
 });

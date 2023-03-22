@@ -13,6 +13,9 @@
 // importing action types
 import * as types from '../constants/actionTypes'; 
 
+import helpers from './helpers.js'
+
+
 
 const initialState = {
   mainDivClassName: 'main',
@@ -20,17 +23,12 @@ const initialState = {
   username: null,
   savedTeams: {
     team_1: null,
-    team_2: null,
-    team_3: null, 
-    team_4: null,
-    team_5: null, 
-    team_6: null, 
-    team_7: null, 
-    team_8: null, 
+
   }
 }
 
 const userFunctionsReducer = (state = initialState, action) => {
+  console.log('inside user reducer, action: ', action)
 
   switch (action.type) {
    
@@ -61,24 +59,62 @@ const userFunctionsReducer = (state = initialState, action) => {
       //     ...state,
       //     savedTeams: newSavedTeams
       //   }
-      case types.SAVE_CURRENT_TEAM:
-        console.log('inside SAVE_CURRENT_TEAM ', action)
-
+      case types.SAVE_CURRENT_TEAM_AS_NEW:
+        console.log('inside SAVE_CURRENT_TEAM ', action.payload)
         let newSavedTeams = {...state.savedTeams}
-        for (let i=1; i<=100; i++) {
-          let key = 'team_' + i; 
-          if (!newSavedTeams[key]) {
-            newSavedTeams[key] = action.payload.team;
-            break;
+        console.log('saved teams before: ', newSavedTeams)
+        if (newSavedTeams.team_1) console.log(newSavedTeams.team_1.name)
+
+        // for adding first team 
+        if (state.savedTeams.team_1===null) {
+          newSavedTeams.team_1 = action.payload.team.team;
+          newSavedTeams.team_1['name'] = action.payload.team.name;
+          newSavedTeams.team_1['key'] = 'team_1';
+          return {
+            ...state,
+            savedTeams: newSavedTeams
           }
         }
-        console.log(newSavedTeams)
+
+        for (let i=1; i<=Object.keys(state.savedTeams).length+1; i++) {
+          let key = 'team_' + i; 
+          if (newSavedTeams[key]) newSavedTeams[key]['key'] = key;
+          if (!newSavedTeams.hasOwnProperty(key)) {
+            newSavedTeams[key] = action.payload.team.team;
+            if(newSavedTeams['team_3']) console.log(newSavedTeams.team_1.name, newSavedTeams.team_2.name, newSavedTeams.team_3.name)
+          }
+          if (state.savedTeams.team_1===null) break;
+        }
 
         return {
           ...state,
           savedTeams: newSavedTeams
         }
+      
+        case types.REMOVE_SAVED_TEAM: 
+          console.log('inside REMOVE_SAVED_TEAM ')
+          let beforeRemovingTeam = {...state.savedTeams};
+          delete beforeRemovingTeam[action.payload.key];
+          console.log(beforeRemovingTeam)
+          beforeRemovingTeam = helpers.reOrderSavedTeams(beforeRemovingTeam)
+          console.log(beforeRemovingTeam)
+          return {
+            ...state,
+            savedTeams: beforeRemovingTeam
+          }
 
+        case types.UPDATE_SAVED_TEAM:
+          console.log('inside UPDATE_SAVED_TEAM ')
+        
+          let beforeMakingTeamActive = {...state.savedTeams};
+          console.log(beforeMakingTeamActive)
+          beforeMakingTeamActive[action.payload.team.key] = action.payload.team;
+          console.log(beforeMakingTeamActive)
+        
+        return {
+          ...state,
+          savedTeams: beforeMakingTeamActive
+        }
 
     default: {
       return state

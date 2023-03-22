@@ -70,7 +70,7 @@ app.get('/api/users/:username', userMiddlewares.getUserData, (req, res) => {
   console.log('api/users/ complete')
   return res.status(200).json({
     success:true,
-    // redirectUrl: `/api/users/${req.params.username}`
+    redirectUrl: `/api/users/${req.params.username}`
 })
 })
 

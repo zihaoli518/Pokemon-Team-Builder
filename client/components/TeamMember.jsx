@@ -24,10 +24,10 @@ const mapDispatchToProps = dispatch => ({
 });
 
 const TeamMember = props => {
-  console.log('inside <TeamMember/>', props.pokemonData)
+  // console.log('inside <TeamMember/>', props.pokemonData)
   return (
     <div className="team-member-container" id={props.selectedTeamName + '_' + props.selectedMon}>
-      <div className='team-member'>
+      <div className='team-member' id='need-team-member-hover-effect'>
         <PokemonSprite
           pokemon={props.pokemonName}
           className={"pokemon-sprite-class-small"}

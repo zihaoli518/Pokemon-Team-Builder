@@ -13,7 +13,7 @@
 // importing action types
 import * as types from '../constants/actionTypes'; 
 
-import reOrder from './reorder.js'
+import helpers from './helpers.js'
 import { getTypeWeaknesses } from 'poke-types';
 
 const initialState = {
@@ -26,6 +26,8 @@ const initialState = {
   },
   yourTeam: {
     size: 0,
+    name: 'your team',
+    key: 'team_1',
     mon1: null,
     mon2: null,
     mon3: null,
@@ -48,6 +50,9 @@ const initialState = {
 }
 
 const pokemonReducer = (state = initialState, action) => {
+
+  console.log('inside pokemon reducer, action: ', action)
+
 
   switch (action.type) {
     // expecting data from smogon fetch
@@ -172,16 +177,19 @@ const pokemonReducer = (state = initialState, action) => {
         const team = action.payload.team;
         const mon = action.payload.mon; 
         const CopyOfTeam = {...state[team]}
+        console.log('inside REMOVE_TEAM_MEMBER, ', CopyOfTeam)
 
         CopyOfTeam[mon] = null;
         CopyOfTeam.size--;
 
-        const shuffledTeam = reOrder(CopyOfTeam);
+        const shuffledTeam = helpers.reOrderTeam(CopyOfTeam);
 
         const returnState = {...state};
         returnState[team] = shuffledTeam;
+        shuffledTeam['name'] = 'untitled'
 
         return returnState;
+
 
       case types.SHOW_TYPING_CHART:
         return {
@@ -196,6 +204,23 @@ const pokemonReducer = (state = initialState, action) => {
           ...state,
           yourTeam: action.payload.enemeyTeam,
           enemyTeam: action.payload.yourTeam
+        }
+      
+      case types.SET_YOUR_TEAM: 
+
+        return {
+          ...state,
+          yourTeam: action.payload.team,
+        }
+        
+      case types.MAKE_SAVED_TEAM_ACTIVE:
+        console.log('inside MAKE_SAVED_TEAM_ACTIVE', action.payload.team)
+        const newActiveTeam = action.payload.team;
+        newActiveTeam.key = action.payload.key;
+
+        return {
+          ...state,
+          yourTeam: action.payload.team,
         }
 
     default: {

@@ -17,15 +17,29 @@ $enemyTeamColor: rgb(220, 121, 116);
 body {
   background-color: $color5;
   background-image: url('https://lh3.googleusercontent.com/iC5rKNivUaFEznEEGWMGEtu2QlUltPAzF7lG4Q63fYEWNZ_EkFGBPdyyW4xwTbwKXLYODiGNNZpdpR7lkb9ba86BmUERRNVqZR7P4JARZcpTJDph96-jcNPjAaPB39ZTeK1GoKepiMH65hwnmPopcibYvxQUzfo1xeFbF5JfWyQbdfZ44rDEzezD-iwLIJ0fUlxxzA7wi4DQcnBmNZkwOlZH5iaISUkjrFv-xzxv1dqrqq2bsQRKN3IAE6-nYLKaooFvVJ7QuoPUEEMO4K2kHoJ5VBZdBbFXkPmCLitmBk3MOMYH-CA1icVBnTji7QOtsoODlLI0VpAh8nH-qRIriWJ7GMbwvxn3fHExUxgZ7TdlUYz5vY4YmqwK6qmFZiDhpQHZFD06LKWgVSSndicDqt7PROyyTit9Xm1PdfMfKNLS1l4qB_hsBOPp-XdodMrBqIaLANIVLtxq5dDfQtm5h-1zHjwynjxwb8E_PE-vkqZ63G5HMarBQ1khr6kaC7HLuwA1NO-DxX-g6V7qvSadcyCwL_C3rk_DM5aOk-JGbLW2MljgBplY84n2ds5j41HWmjww5PbkA6dD6Vy9gmktlG9cokcPoxPGksh_9jVADAuRBJ5xK5IagjJVOWLR5jzYrgMRZkz0qIl362gFXeksDgqFJGr0xJjJs1uypydzwW_fWKegY2w8Fo_BVPtDENb6D9hLsX0D0CYCsvwIsLIwJuAaXOhNkQzrG1rF1OmQ64ha6-lo7o6-y5ez_Yu6CybZ1tNrJ4XgF-n--V2_KvA7d1DI9FHuH5YlFSPNNXi2ratqaf3IdN4bXHz1z86Cr7aRpm95GQGvVhLZvuKdnw5wH1M9fBC98TXFN9AlTgrINVzENVSRz64fFPgVchmU-tT2znDSVgggLHt9XbnLNnLa47f_DqnFoS9abPAMR7WdAiAPCvcjzQkaG4jsVPnNPelmDvPNPoU_uzw=w1920-h1200-no?authuser=0');
-// }
-  // background-image: './background.jpeg';
+
+
+  font-family: "Indie Flower", cursive;
+  height: 100%;
+  width: 100%;
 }
+
+html {
+  height: 100%;
+  width: 100%;
+}
+
 
 #app {
   width: 100%;
-  height: 1000px;
+  height: 100%;
   margin-top: -20px;
   margin-left: -5px;
+}
+
+.app-container {
+  height: 100%;
+  width: 100%;
 }
 
 .background {
@@ -33,6 +47,24 @@ body {
   width: 100%;
   margin-left: 5px;
 }
+
+
+
+
+::-webkit-scrollbar {
+  background-color: rgba(128, 128, 128, 0.531);
+  border-radius: 0.3rem;
+  width: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: rgb(151, 176, 170);
+  border-radius: 0.3rem;
+}
+
+
+
+
 
 // TYPES OF POKEMON 
 .type {
@@ -105,6 +137,9 @@ body {
   position:relative;
   z-index: 3;
   margin-top: -2.5%;
+
+  height: 100%;
+  width: 100%;
 }
 
 .inactive {
@@ -316,11 +351,178 @@ input[type="text"]
     font-family: "Indie Flower", cursive;
 }
 
+
+
+
+// main row 
+.main-row-container {
+  display: flex;
+  justify-content: left;
+  height: 55%;
+}
+
+
+
+
+
+// saved teams 
+.all-saved-teams-container {
+  background-color: rgba(112, 172, 212, 0.7);
+  border-radius: 0.5rem;
+  width: 25%;
+  height: 500px;
+  margin-left: 5%;
+  text-align: center;
+}
+
+.all-saved-teams-container h4 {
+  font-size: 25px;
+  font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+  font-weight: 500;
+
+  margin-bottom: -2px;
+  margin-top: 15px;
+  color: #132033;
+}
+
+.all-saved-teams-container h5 {
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 100%;
+  
+  position: relative;
+  bottom: 26% ;
+
+  height: 28%;
+  width: 40%;
+  background-color: rgba(75, 115, 142, 0.671);
+  border-radius: 0.3rem;
+
+  margin-bottom: 10px;
+
+}
+
+.all-saved-teams {
+  max-height: 90%;
+  min-height: 60%;
+  overflow-y:auto;
+  border-radius: 0.3rem;
+}
+
+.saved-team-member-container {
+  height: 100%;
+  width: 20%;
+}
+
+.saved-team-member {
+  height: 100%;
+  width: 100%;
+}
+
+.saved-team {
+  // max-height: 7%;
+  height: 55px;
+  width: 84%;
+  background-color: rgba(90, 137, 169, 0.642);
+  border-radius: 0.3rem;
+  margin: 0 auto;
+  margin-bottom: -3%;
+  margin-left: 2%;
+}
+
+.saved-team .team-members {
+  position: relative;
+  left: -8%;
+  bottom: 40%;
+  
+  height: 100%;
+  width: 100%;
+}
+
+.pokemon-sprite-saved-team {
+  height: 95%;
+  width: 94%;
+}
+
+.saved-team .first-add-button {
+  height: 80%;
+  width: 80%;
+}
+
+
+.edit-team-button {
+  height: 45px;
+  width: 45px;
+
+  position: relative;
+  top: -145%;
+  left: 59%;
+}
+
+.edit-team-button:hover{
+  transform: scale(1.3);
+  transition: 0.5s;
+  transition: ease-in-out;
+}
+
+// .edit-team-button:hover + .team-members {
+//   background-color: rgba(45, 86, 114, 0.792);
+//   margin-top: -0.7%;
+//   border-radius: 0.3rem;
+// }
+// .team-members:hover + .edit-team-button {
+//   height: 50px;
+// }
+
+.remove-team-button {
+  height: 25px;
+  width: 25px;
+
+  position: relative;
+  top: -164%;
+  left: 55.5%;
+}
+
+.remove-team-button:hover{
+  transform: scale(1.2);
+  transition: 0.5s;
+  transition: ease-in-out;
+}
+
+    // effects 
+.need-saved-team-hover-effect:hover{
+  background-color: rgba(45, 86, 114, 0.792);
+  margin-top: -0.7%;
+  border-radius: 0.3rem;
+}
+
+.active-saved-team {
+  background-color: rgba(64, 93, 112, 0.792);
+  border-radius: 0.3rem;
+  margin-top: -0.5%;
+  margin-right: -1.2%;
+
+}
+
+// .saved-team-member-container{
+//   pointer-events: none;
+// }
+
+
+
+
+
+
 // current pokemon
+.current-pokemon-display {
+  width: 37%;
+  margin-left: 10%;
+}
+
 .current-pokemon {
   font-family: "Indie Flower", cursive;
   font-weight: 500;
-  width: 37%;
+  width: 100%;
   // background-image: linear-gradient(
   //   105deg,
   // hsl(63deg 65% 88%) 0%,
@@ -710,19 +912,30 @@ input[type="text"]
 
 
 
-// TEAMS 
+// team display 
 .teams {
-  margin-top: 40px;
+  margin-top: 2%;
   display: flex;
   justify-content: center;
+
+  height: 18%;
+  width: 100%;
+
+  position: relative;
 }
 
 .teams h4 {
-  margin-top: 5px;
-  margin-bottom: 7px;
-  font-size: 20px;
+  margin-top: 2px;
+  margin-bottom: 1.5%;
+  font-size: 25px;
   text-align: center;
-  font-family: 'Permanent Marker', cursive;
+  font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+  font-weight: 500;
+
+  width: 40%;
+  position: relative;
+  left: 30%;
+
 }
 
 .switch-teams-button-container {
@@ -737,32 +950,56 @@ input[type="text"]
 }
 
 .green {
-  margin-right: 45px;
-  width: 45%;
-  height: 160px;
+  margin-right: 2%;
+  padding-bottom: 1%;
+
+  width: 47%;
+  height: 100%;  
   background-color: rgba($friendlyTeamColor, 0.5);
   border-radius: 1rem;
 }
 
 
 .red {
-  margin-left: 45px;
-  width: 45%;
-  height: 160px;
+  margin-left: 2%;
+  padding-bottom: 1%;
+
+  width: 47%;
+  height: 100%;
   background-color: rgba($enemyTeamColor, 0.5);
   border-radius: 1rem;
 }
 
 
+.teams .team-members {
+  display: flex;
+  flex-direction: row;
+  margin-left: 1%;
+
+  height: 100%;
+  width: 98%;
+}
+
 .team-members {
   display: flex;
   flex-direction: row;
-  margin-left: 25px;
+  margin-left: 7%;
+
+  height: 100%;
+  width: 98%;
+}
+
+.team-member-container {
+  height: 100%;
+  width: 100%;
+  min-height: 105px;
 }
 
 .team-member {
   display: flex;
   justify-content: center;
+  height: 100%;
+  width: 98%;
 
   margin: 5px;
 }
@@ -780,17 +1017,19 @@ input[type="text"]
   // min-width: 70px;
   // max-height: 110px;
   // max-width: 110px;
-  height: 100px; 
-  width: 100px;
+
+  // position: relative;
+  height: 65%; 
+  width: 100%;
 
 
-  top: 50%;
+  // top: 50%;
 
   transition: ease-in-out;
 }
 
 .pokemon-sprite-class-small:hover{
-  transform: scale(1.3);
+  transform: scale(1.1);
   transition: ease-in-out;
   transition: 0.5s;
 }
@@ -798,12 +1037,52 @@ input[type="text"]
 .team-member-container .types-colors {
   display: flex;
   justify-content: center;
+  position: relative;
+  top: -35%;
 }
 
 .team-member-container .types-colors-inner {
   width: 20px;
   height: 5px;
   margin: 2px;
+}
+
+.teams .save-buttons-container {
+  position: relative;
+  left: 60%;
+  bottom: 125%;
+  
+}
+
+.teams button {
+  height: 28px;
+  width: 80px;
+  font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+  font-size: 20px;
+  background-color: $color2;
+  border-radius: 0.3rem;
+
+}
+
+#main-div > div.teams > div.green > div.save-buttons-container > button.save-team-as-new-button {
+  width: 120px;
+  margin-left: 5%;
+}
+
+button:hover{
+  background-color: #e6e6e6;
+  transition: 0.5s;
+  border: 2.3px solid black;
+  cursor: pointer;
+  font-weight: 90 0;
+}
+
+#need-team-member-hover-effect:hover{
+  background-color: rgba(67, 126, 116, 0.658);
+  margin-top: -1.5%;
+  border-radius: 0.3rem;
+  transform: scale(1.4);
+  transition: 1s;
 }
 
 
@@ -816,14 +1095,15 @@ input[type="text"]
 .show-chart-button-container {
   display: flex;
   justify-content: center;
-  margin-top: 15px;
+  margin-top: 2%;
   margin-bottom: 15px;
-  height: 30px;
+  height: 40px;
 }
 
 .show-chart-button-area button{
-  height: 30px;
+  height: 100%;
   font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+  font-size: 23px;
   background-color: $color2;
   border-radius: 0.3rem;
 }
