@@ -23,6 +23,8 @@ const mapStateToProps = (state) => {
     currentPokemon: state.pokemon.currentPokemon,
     yourTeam: state.pokemon.yourTeam,
     enemyTeam: state.pokemon.enemyTeam,
+    username: state.userFunctions.name,
+    savedTeams: state.userFunctions.savedTeams
   };
 };
 
@@ -93,11 +95,16 @@ const TeamDisplay= (props) => {
 
   const saveTeamAsNew = (e) => {
     e.preventDefault();
+    // get edited team name from DOM
     let input = document.querySelector("#main-div > div.teams > div.green > h4").innerHTML;
     if (input===undefined) input = 'untitled'
+    // sending payload to dispatch functions
     let payload = {name: input, team: {...teamState.selectedTeam}};
-    payload.team.name = input
-    props.saveCurrentTeamAsNew(payload)
+    payload.team.name = input;
+    props.saveCurrentTeamAsNew(payload);
+    // saving the new state to database 
+    // saveTeamsToDatabase(props.savedTeams)
+
   }
 
   const saveTeam = () => {
@@ -108,6 +115,24 @@ const TeamDisplay= (props) => {
     let copy = {...teamState.selectedTeam}
     copy.name = input
     props.updateSavedTeam(copy)
+
+    // saveTeamsToDatabase(props.savedTeams)
+  }
+
+  const saveTeamsToDatabase = (savedTeams) => {
+    console.log('about to send this thing: ', {user: props.username, team: savedTeams})
+    fetch('/api/saveUserTeams', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Accept: 'application/json, text/plain',
+      },
+      body: JSON.stringify({user: props.username, team: savedTeams})
+    })
+      .then(data => {
+        console.log(data);
+        console.log('saved teams to database!')
+      })
   }
 
 

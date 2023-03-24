@@ -20,7 +20,7 @@ import * as actions from '../../actions/actions';
 
 const mapStateToProps = state => {
   return {
-    isLoggedIn: state.userFunctions. isLoggedIn,
+    isLoggedIn: state.userFunctions.isLoggedIn,
     username: state.userFunctions.username
   }
 }
@@ -49,9 +49,11 @@ const LoginModal = props => {
     })
       .then(response => response.json())
       .then((response) => {
-        console.log('inside LoginModal submitHandler, ', response.username); 
+        console.log('inside LoginModal submitHandler, ', response); 
+        props.changeUserState(response.username, response.savedTeams);
         // getUserData(response.username)
       })
+      .then(console.log(props.isLoggedIn))
   }
 
   const closeModal = (e) => {
@@ -72,9 +74,9 @@ const LoginModal = props => {
       },
     })
       .then(data => {
-        console.log(data.status)
-        props.changeUserState(username)
-        props.toggleShowLoginModal()
+        console.log(data);
+        props.changeUserState(username, data);
+        props.toggleShowLoginModal();
         // chage redux state
 
       })

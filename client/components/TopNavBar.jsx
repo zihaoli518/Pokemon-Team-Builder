@@ -10,7 +10,7 @@
  */
 
 // importing dependencies 
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {useNavigate} from 'react-router-dom'
 
 import { connect } from 'react-redux';
@@ -31,7 +31,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => ({
   toggleMainDivState : (str) => dispatch(actions.toggleMainDivState(str)),
-  changeUserState : (username) => dispatch(actions.changeUserState(username)),
+  changeUserState : (username, responseObj) => dispatch(actions.changeUserState(username, responseObj)),
 });
 
 
@@ -42,6 +42,10 @@ const TopNavBar = props => {
   const [redirectUser, setRedirectUser] = useState(true);
 
   const nav = useNavigate();
+
+  useEffect(() => {
+    checkLoggedIn();
+  }, [props.isLoggedIn])
 
 
 
@@ -72,10 +76,13 @@ const TopNavBar = props => {
 
   }
 
-  if (props.isLoggedIn && redirectUser) {
-    console.log('props.isLoggedIn')
-    setRedirectUser(false);
-    nav("/users/" + props.username)
+  const checkLoggedIn = () => {
+    if (props.isLoggedIn && redirectUser) {
+      console.log('props.isLoggedIn')
+      setRedirectUser(false);
+      nav("/users/" + props.username)
+    }
+
   }
 
   return (

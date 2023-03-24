@@ -70,9 +70,9 @@ export const toggleMainDivState = (string) => ({
   payload: {string: string},
 });
 
-export const changeUserState = (username) => ({
+export const changeUserState = (username, responseObj) => ({
   type: types.CHANGE_USER_STATE,
-  payload: {username: username},
+  payload: {username: username, responseObj: responseObj},
 });
 
 export const saveCurrentTeamAsNew = (team) => ({
@@ -99,3 +99,4 @@ export const removeSavedTeam = (key) => ({
   type: types.REMOVE_SAVED_TEAM,
   payload: {key: key},
 });
+

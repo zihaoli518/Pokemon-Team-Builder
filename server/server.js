@@ -61,7 +61,7 @@ app.post('/api/signup', userMiddlewares.signUp, (req, res) => {
 
 app.post('/api/login', userMiddlewares.logIn, (req, res) => {
   console.log('/api/login complete');
-  console.log()
+  console.log(res.locals.data)
   return res.status(200).send(res.locals.data)
 })
 
@@ -70,10 +70,16 @@ app.get('/api/users/:username', userMiddlewares.getUserData, (req, res) => {
   console.log('api/users/ complete')
   return res.status(200).json({
     success:true,
-    redirectUrl: `/api/users/${req.params.username}`
-})
+    // redirectUrl: `/api/users/${req.params.username}`
+    savedTeams: res.locals.savedTeams,
+  })
 })
 
+// save user's updated teams to database 
+app.post('/api/saveUserTeams', userMiddlewares.saveUserTeams, (req, res) => {
+  console.log('/api/saveUserTeams complete')
+  return res.status(200).send({url: res.locals.url})
+})
 
 
 app.listen(PORT); 

@@ -45,11 +45,15 @@ const userFunctionsReducer = (state = initialState, action) => {
 
       case types.CHANGE_USER_STATE: 
       console.log('inside CHANGE_USER_STATE ', action)
-
+      let SavedTeamFromDatabase = {
+        team_1: null,
+      }
+      if (action.payload.responseObj) SavedTeamFromDatabase = action.payload.responseObj.savedTeams;
         return {
           ...state,
           isLoggedIn: true,
-          username: action.payload.username
+          username: action.payload.username,
+          savedTeams: SavedTeamFromDatabase
         }
 
       // case types.LOAD_SAVED_TEAMS: 
