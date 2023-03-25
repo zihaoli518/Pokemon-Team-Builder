@@ -150,15 +150,20 @@ html {
 
 
 
-
 .top-nav-bar {
   height: 40px;
   width: 100%;
   display: flex;
   justify-content: right;
-
+  
   position: relative;
   z-index: 10;
+}
+
+.top-nav-bar-buttons {
+  width: 30%;
+  text-align: center;
+  line-height: 100%;
 }
 
 .top-nav-bar  button{
@@ -257,6 +262,16 @@ html {
   font-size: 1.4rem;
 }
 
+// loading 
+#login-loading-gif {
+  position: relative;
+  top: -55%;
+  left: 25%;
+
+  // height: 80%;
+  // width: 60%;
+}
+
 // error messages 
 .modal h4 {   
   margin: 0;
@@ -276,9 +291,21 @@ html {
   width: 100%;
 }
 
+.after-login-username-display h2{
+  height: 100%;
+  color: color3;
+  font-size: 1.3rem;
+  line-height: 100%;
+  margin-right: 3%;
+}
+
 .after-login-username-display h3{
+  height: 100%;
   margin-right: 7%;
-  
+  font-size: 1.5rem;
+  line-height: 100%;
+  color: #41746f;
+  margin-top: 3%;
 }
 
 

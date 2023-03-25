@@ -76,7 +76,7 @@ userMiddlewares.logIn = (req, res, next) => {
                   savedTeams: dbResponse.rows[0],
                 };
     
-                res.cookie('PokemonTeamBuilder', token, { maxAge: 900000, httpOnly: true });
+                res.cookie('PokemonTeamBuilder', token, { maxAge: 900000, });
                 return next();
               })
           }

@@ -100,3 +100,7 @@ export const removeSavedTeam = (key) => ({
   payload: {key: key},
 });
 
+export const toggleLoginLoading = () => ({
+  type: types.TOGGLE_LOGIN_LOADING, 
+  payload: {}
+})

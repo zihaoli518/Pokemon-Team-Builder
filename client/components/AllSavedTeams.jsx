@@ -36,7 +36,8 @@ const AllSavedTeams= (props) => {
 
   
   const populateSavedTeams = () => {
-    console.log('inside populateSavedTeamds', props.savedTeams, props.savedTeams.team_1, props.savedTeams.team_2)
+    console.log('inside populateSavedTeamds', props.savedTeams,)
+    if (!props.savedTeams) return;
     const allSavedTeamsToBeDisplayed = [];
     for (let i=1; i<=Object.keys(props.savedTeams).length; i++) {
       let currentTeamName = 'untitled ' + i, currentTeam = null, currentTeamKey = 'team_' + i;

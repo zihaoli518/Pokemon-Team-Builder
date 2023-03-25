@@ -52,7 +52,7 @@ class App extends Component {
 
   render() {
     return (
-      <div class='app-container'>
+      <div className='app-container'>
         <TopNavBar />
         <div className={this.props.mainDivClassName} id={"main-div"}>
           <div className="top">

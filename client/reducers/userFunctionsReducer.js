@@ -19,7 +19,8 @@ import helpers from './helpers.js'
 
 const initialState = {
   mainDivClassName: 'main',
-  isLoggedIn: false, 
+  isLoggedIn: false,
+  loginLoading: false,
   username: null,
   savedTeams: {
     team_1: null,
@@ -118,6 +119,16 @@ const userFunctionsReducer = (state = initialState, action) => {
         return {
           ...state,
           savedTeams: beforeMakingTeamActive
+        }
+
+        case types.TOGGLE_LOGIN_LOADING:
+          console.log('inside TOGGLE_LOGIN_LOADING ',)
+
+          const newLoginLoading = !state.loginLoading;
+          // console.log({loginLoading: newLoginLoading})
+        return {
+          ...state, 
+          loginLoading: newLoginLoading
         }
 
     default: {

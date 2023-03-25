@@ -21,13 +21,14 @@ import * as actions from '../../actions/actions';
 const mapStateToProps = state => {
   return {
     isLoggedIn: state.userFunctions.isLoggedIn,
-    username: state.userFunctions.username
+    username: state.userFunctions.username,
+    loginLoading: state.userFunctions.loginLoading,
   }
 }
 
-// const mapDispatchToProps = dispatch => ({
-//   changeUserState : () => dispatch(actions.changeUserState()),
-// });
+const mapDispatchToProps = dispatch => ({
+  toggleLoginLoading : () => dispatch(actions.toggleLoginLoading()),
+});
 
 
 const LoginModal = props => {
@@ -37,6 +38,7 @@ const LoginModal = props => {
   const submitHandler = (e) => {
     e.preventDefault();
     console.log('inside submitHandler from logging in...')
+    props.toggleLoginLoading();
     const username = document.getElementById('login-username').value;
     const password = document.getElementById('login-password').value;
     fetch('/api/login', {
@@ -51,9 +53,12 @@ const LoginModal = props => {
       .then((response) => {
         console.log('inside LoginModal submitHandler, ', response); 
         props.changeUserState(response.username, response.savedTeams);
+        props.toggleLoginLoading();
+        props.toggleShowLoginModal();
+
+        
         // getUserData(response.username)
       })
-      .then(console.log(props.isLoggedIn))
   }
 
   const closeModal = (e) => {
@@ -98,9 +103,13 @@ const LoginModal = props => {
       </form>
 
         <button className='close-button' onClick={(e) => {closeModal(e)}}>close</button>
-        <button className='test-button' onClick={(e) => {getUserData('123')}}>test</button>
+        {/* <button className='test-button' onClick={(e) => {getUserData('123')}}>test</button> */}
+        {(props.loginLoading) ?
+          <img id='login-loading-gif' src='/static/loading.gif' alt="" /> :
+          null
+        }
     </div>
   );
 }
 
-export default connect(mapStateToProps, null)(LoginModal);
+export default connect(mapStateToProps, mapDispatchToProps)(LoginModal);

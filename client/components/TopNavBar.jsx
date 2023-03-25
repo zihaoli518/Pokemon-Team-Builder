@@ -72,7 +72,11 @@ const TopNavBar = props => {
   }
 
   const logout = () => {
-    document.cookie = 'PokemonTeamBuilder' +'=; Path=/; Expires=Thu, 01 Jan 1970 00:00:01 GMT;';
+    console.log('inside logout ')
+    console.log(typeof(document.cookie))
+    document.cookie = 'PokemonTeamBuilder=; expires=Thu, 01 Jan 1970 00:00:01 GMT;';
+    nav("../../");
+    location.reload();
 
   }
 
@@ -91,6 +95,7 @@ const TopNavBar = props => {
       <div className='top-nav-bar-buttons'>
       {(props.isLoggedIn)? 
         <div className='after-login-username-display'> 
+          <h2>hello hello! </h2>
           <h3>{props.username}</h3> 
           <button onClick={() => {console.log('logout clicked'); logout()}}>log out</button> 
         </div>
