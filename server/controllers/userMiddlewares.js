@@ -14,21 +14,33 @@ userMiddlewares.signUp = (req, res, next) => {
   console.log('inside userController.signUp, username and password: ', username, password);
   bcrypt.hash(password, saltFactor, (err, hash) => {
     // save hashed password and username to database
-    const signupQuery = 'INSERT INTO users (username, password) VALUES ($1, $2)';
-    db.query(signupQuery, [username, hash])
-      .then(() => {
-        console.log('User created');
-        const querySave = `INSERT INTO UserTeams ("username", "savedTeams") VALUES ('${username}', '{}')`;
-        db.query(querySave)
-        .then(() => {
-            res.locals.data = {status: 'success'};
-            return next();
-          })
+    // const signupQuery = 'INSERT INTO users (username, password) VALUES ($1, $2)';
+    // db.query(signupQuery, [username, hash])
+    //   .then(() => {
+    //     console.log('User created');
+    //     const querySave = `INSERT INTO UserTeams ("username", "savedTeams") VALUES ('${username}', '{}')`;
+    //     db.query(querySave)
+    //     .then(() => {
+    //         res.locals.data = {status: 'success'};
+    //         return next();
+    //       })
+    //   })
+    //   .catch(error => {
+    //     console.log('Username already exists');
+    //     return next(error);
+    //   });
+    checkUserAlreadyExist(username)
+      .then(async() => {
+        await signUpUser(username, hash);
       })
-      .catch(error => {
-        console.log('Username already exists');
-        return next(error);
-      });
+      .then(async () => {
+        await initializeUserTeams();
+      })
+      .then(() => {
+        console.log(res.locals.signupData)
+        return next();
+      })
+
     
 
     //if problem hashing password return an error
@@ -36,6 +48,31 @@ userMiddlewares.signUp = (req, res, next) => {
       return next(err);
     }
   });
+
+  async function checkUserAlreadyExist(username) {
+    const checkUserQuery = `SELECT * FROM Users WHERE username = '${username}'`
+    await db.query(checkUserQuery) 
+      .then((dbResponse) => {
+        if (dbResponse.rows[0]) {
+          res.locals.signupData = {status: "username already exists"};
+          return next();
+        }
+      })
+  }
+
+  async function signUpUser(username, hash) {
+    const signupQuery = 'INSERT INTO Users (username, password) VALUES ($1, $2)';
+    await db.query(signupQuery, [username, hash])
+      .then()
+  }
+
+  async function initializeUserTeams() {
+    const querySave = `INSERT INTO UserTeams ("username", "savedTeams") VALUES ('${username}', '{}')`;
+    await db.query(querySave)
+      .then(() => {
+        res.locals.signupData = {status: 'success'};
+      }) 
+  }
 };
 
 userMiddlewares.logIn = (req, res, next) => {
@@ -45,10 +82,16 @@ userMiddlewares.logIn = (req, res, next) => {
   // query database to see if that username exists
   db.query(query)
     .then(dbResponse => {
+      if (username==='') {
+        res.locals.loginData = {status: 'please enter an username'};
+        return next();
+      }
       if (dbResponse.rows[0] === undefined) {
         // if nothing is found, return 401 status
-        return res.status(401).json({ message: 'no username found' });
-      } else {
+        res.locals.loginData = {status: 'username not found'};
+        return next();
+      } 
+      else {
         // if record is found, compare password
         const { password } = dbResponse.rows[0];
         bcrypt.compare(req.body.password, password, (err, result) => { 
@@ -69,7 +112,7 @@ userMiddlewares.logIn = (req, res, next) => {
                 const token = jwt.sign({ username: username}, process.env.JWT_SECRET, {
                   expiresIn: process.env.JWT_EXPIRES_IN,  });
     
-                res.locals.data = {
+                res.locals.loginData = {
                   status: 'success',
                   token,
                   username: username,
@@ -82,7 +125,8 @@ userMiddlewares.logIn = (req, res, next) => {
           }
           else {
             // if passwords don't match, return 401 status
-            return res.status(401).json({ message: 'incorrect password' });
+            res.locals.loginData = {status: 'incorrect password'};
+            return next();
           }
         });
       }

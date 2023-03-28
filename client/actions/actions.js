@@ -104,3 +104,9 @@ export const toggleLoginLoading = () => ({
   type: types.TOGGLE_LOGIN_LOADING, 
   payload: {}
 })
+
+export const activateCurrentTeamComponent = () => ({
+  type: types.ACTIVATE_CURRENT_TEAM_COMPONENT, 
+  payload: {}
+})
+

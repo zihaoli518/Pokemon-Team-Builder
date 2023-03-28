@@ -27,20 +27,20 @@ const mapDispatchToProps = dispatch => ({
 
 
 const SignupModal = props => {
-  const [showUsernameAlert, setShowUsernameAlert] = useState(false);
+  const [showUsernameAlert, setShowUsernameAlert] = useState({status: false, message: 'please enter an username'});
   const [showPasswordAlert, setShowPasswordAlert] = useState(false);
   const [showSuccessMessage, setShowSuccessMessage] = useState(false);
 
 
   const submitHandler = (e) => {
     e.preventDefault();
-    setShowUsernameAlert(false);
+    setShowUsernameAlert({status: false, message: 'please enter an username'});
     setShowPasswordAlert(false);
     const username = document.getElementById('signup-username').value;
     const password = document.getElementById('signup-password').value;
     console.log('inside submitHandler, ', username, password)
     if (username==='') {
-      setShowUsernameAlert(true);
+      setShowUsernameAlert({status: true, message: 'please enter an username'});
       return;
     }
     if (password==='') {
@@ -64,7 +64,9 @@ const SignupModal = props => {
           const divToBeDeleted = document.getElementById("signup-modal-form");
           divToBeDeleted.remove();
           setShowSuccessMessage(true);
-        }  
+        } else if (data.status === 'username already exists') {
+          setShowUsernameAlert({status: true, message: data.status})
+        }
       })
   }
 
@@ -83,8 +85,8 @@ const SignupModal = props => {
     <div className={showModalClassName}>
       <form className='modal-form' id='signup-modal-form' onSubmit={(e) => {submitHandler(e)}}>
         <h2>sign up</h2>
-        {showUsernameAlert ? 
-              <h4>please enter an username</h4> :
+        {showUsernameAlert.status ? 
+              <h4>{showUsernameAlert.message}</h4> :
               null
             } 
         <div className="username-div">

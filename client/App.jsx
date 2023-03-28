@@ -55,10 +55,11 @@ class App extends Component {
       <div className='app-container'>
         <TopNavBar />
         <div className={this.props.mainDivClassName} id={"main-div"}>
-          <div className="top">
-            <h1>POKEMON TEAM BUILDER</h1>
-            <PokemonSearch />
+          <div className='title-container'>
+            <h1>electabuzzed.gg</h1>
+            <img src="https://cdn.discordapp.com/emojis/933421274091360346.webp?size=96&quality=lossless" alt="" />
           </div>
+          <PokemonSearch />
           <div className='main-row-container'>
             <AllSavedTeams />
             <div className="current-pokemon-display">

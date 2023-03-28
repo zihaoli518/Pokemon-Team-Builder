@@ -211,6 +211,7 @@ const pokemonReducer = (state = initialState, action) => {
         return {
           ...state,
           yourTeam: action.payload.team,
+          teamStatus: true,
         }
         
       case types.MAKE_SAVED_TEAM_ACTIVE:

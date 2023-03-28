@@ -56,13 +56,13 @@ app.post('/api/testForNewerSprites', fetchMiddlewares.testForNewerSprites, (req,
 
 app.post('/api/signup', userMiddlewares.signUp, (req, res) => {
   console.log('/api/signup complete')
-  return res.status(200).send(res.locals.data)
+  return res.status(200).send(res.locals.signupData)
 })
 
 app.post('/api/login', userMiddlewares.logIn, (req, res) => {
   console.log('/api/login complete');
-  console.log(res.locals.data)
-  return res.status(200).send(res.locals.data)
+  console.log(res.locals.loginData)
+  return res.status(200).send(res.locals.loginData)
 })
 
 // if logged in get user data

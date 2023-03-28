@@ -22,6 +22,9 @@ body {
   font-family: "Indie Flower", cursive;
   height: 100%;
   width: 100%;
+  margin: 0;
+
+  overflow-x: hidden;
 }
 
 html {
@@ -34,7 +37,6 @@ html {
   width: 100%;
   height: 100%;
   margin-top: -20px;
-  margin-left: -5px;
 }
 
 .app-container {
@@ -45,7 +47,6 @@ html {
 .background {
   height: 100%;
   width: 100%;
-  margin-left: 5px;
 }
 
 
@@ -151,23 +152,30 @@ html {
 
 
 .top-nav-bar {
-  height: 40px;
+  height: 4.5%;
   width: 100%;
   display: flex;
   justify-content: right;
   
   position: relative;
+  top: 3%;
   z-index: 10;
 }
 
 .top-nav-bar-buttons {
   width: 30%;
+  height: 100%;
   text-align: center;
   line-height: 100%;
 }
 
+.top-nav-bar-buttons-inner {
+  height: 100%;
+  margin-right: -35%;
+}
+
 .top-nav-bar  button{
-  height: 50px;
+  height: 90%;
   width: 100px;
   font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
   font-size: 20px;
@@ -268,8 +276,8 @@ html {
   top: -55%;
   left: 25%;
 
-  // height: 80%;
-  // width: 60%;
+  height: 80%;
+  width: 60%;
 }
 
 // error messages 
@@ -289,6 +297,8 @@ html {
   display: flex;
   justify-content: center;
   width: 100%;
+  height: 100%;
+
 }
 
 .after-login-username-display h2{
@@ -297,6 +307,7 @@ html {
   font-size: 1.3rem;
   line-height: 100%;
   margin-right: 3%;
+  margin-top: 2%;
 }
 
 .after-login-username-display h3{
@@ -305,7 +316,7 @@ html {
   font-size: 1.5rem;
   line-height: 100%;
   color: #41746f;
-  margin-top: 3%;
+  margin-top: 1.5%;
 }
 
 
@@ -315,21 +326,58 @@ html {
 
 
 h1 {
-  font-family: "Permanent Marker", cursive;
+  font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
   font-weight: 100;
+  color: rgb(89, 89, 89);
 }
 
-.top {
-  text-align: center;
-}
 
-.top h1 {
+
+
+
+
+h1 {
   color: $color3;
   font-size: 2rem;
+  margin-left: 1.5%;
+  padding-top: 1.1%;
 }
 
+// title 
+.title-container {
+  display: flex;
+  justify-content: left;
+
+  background-color: rgb(206, 209, 212);
+  text-align: left;
+  height: 10%;
+  width: 101%;
+  margin-top: -3%;
+  margin-bottom: 3%;
+  margin-left: -0.5%;
+
+  box-shadow: 5px 5px 10px 0px rgba(0,0,0,0.75);
+  border-radius: 0.5rem;
+
+  vertical-align: middle;
+}
+
+.title-container img {
+  margin-top: 1.3%;
+  margin-left: 1%;
+  height: 75%;
+}
+
+
+
+
+// serach 
 .pokemon-search {
-  height: 80px;
+  position: relative;
+  left: 45%;
+  height: 8%;
+  width: 40%;
+  margin-right: -10%;
 }
 
 .pokemon-search form {
@@ -942,7 +990,7 @@ input[type="text"]
 
 // team display 
 .teams {
-  margin-top: 4%;
+  margin-top: 2.2%;
   display: flex;
   justify-content: center;
 

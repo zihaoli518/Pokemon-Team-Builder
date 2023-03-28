@@ -100,7 +100,7 @@ const TopNavBar = props => {
           <button onClick={() => {console.log('logout clicked'); logout()}}>log out</button> 
         </div>
         :
-        <div>
+        <div className='top-nav-bar-buttons-inner'>
           <button onClick={() => {console.log('login clicked'); toggleShowLoginModal()}}>login</button> 
           <button onClick={() => {console.log('sign up clicekd'); toggleShowSignupModal()}}>signup</button> 
         </div>
