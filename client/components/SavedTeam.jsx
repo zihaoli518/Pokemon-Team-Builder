@@ -76,23 +76,13 @@ const SavedTeam = (props) => {
 
   const addActiveClass = () => {
     const previousActive = document.getElementsByClassName('active-saved-team');
-    console.log('inside addActiveClass', previousActive)
-    if (previousActive.length===0) {
-      console.log('!previousActive')
-      let activeTeam = document.getElementById(props.savedTeamKey)
-      console.log(activeTeam)
-      activeTeam.classList.add('active-saved-team')
-    } else {
-      console.log('else')
-      console.log(previousActive[0].id, props.savedTeamKey)
-
-      if(previousActive[0].id !==props.savedTeamKey) {
+    if (previousActive.length!==0) {
+      if (previousActive[0].id !==props.savedTeamKey) {
         previousActive[0].classList.remove('active-saved-team');
-        let activeTeam = document.getElementById(props.savedTeamKey)
-        activeTeam.classList.add('active-saved-team')
       }
-    }
-
+    } 
+    let activeTeam = document.getElementById(props.savedTeamKey)
+    activeTeam.classList.add('active-saved-team')
   }
 
 

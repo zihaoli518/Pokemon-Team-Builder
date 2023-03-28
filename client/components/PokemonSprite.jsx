@@ -29,9 +29,11 @@ const PokemonSprite = props => {
 
   let className = '';
   let onClick = null;
+  let id = '';
 
   if (props.className) className = props.className;
   if (props.onClick) onClick = props.onClick;
+  if (props.id) id = id
   const animatedUrl = ('https://play.pokemonshowdown.com/sprites/xyani/' + props.pokemon.toLowerCase() + '.gif');
 
 
@@ -78,7 +80,7 @@ const PokemonSprite = props => {
   }, []);
 
   return (
-      <img onClick={onClick} className={className} src={url} />
+      <img onClick={onClick} className={className} id={props.id} src={url} />
   )
 }
 
