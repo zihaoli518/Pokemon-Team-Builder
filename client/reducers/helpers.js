@@ -49,6 +49,7 @@ helpers.reOrderSavedTeams = (savedTeams) => {
   for (let i=0; i<queue.length; i++) {
     let currentString = 'team_' + (i+1).toString();
     newSavedTeams[currentString]=queue[i];
+    newSavedTeams[currentString]['key'] = currentString;
   }
   console.log(newSavedTeams)
 

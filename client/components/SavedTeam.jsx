@@ -43,11 +43,10 @@ const SavedTeam = (props) => {
   let firstAdd = true;
 
   const populateTeam = () => {
-    {console.log('inside populateTeam (saved team), ', props.savedTeam)}
+    // {console.log('inside populateTeam (saved team), ', props.savedTeam)}
     const newTeamToBeDisplayed = [];
     for (let i=1; i<=6; i++) {
       let selectedMon = 'mon' + i.toString();
-      console.log(selectedMon)
       if (props.savedTeam && props.savedTeam[selectedMon]) {
         newTeamToBeDisplayed.push(
             <SavedTeamMember

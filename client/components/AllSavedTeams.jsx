@@ -23,6 +23,7 @@ const mapStateToProps = (state) => {
 };
 
 
+
 const AllSavedTeams= (props) => {
   const [allTeams, setAllTeams] = useState([])
 
@@ -36,7 +37,7 @@ const AllSavedTeams= (props) => {
 
   
   const populateSavedTeams = () => {
-    console.log('inside populateSavedTeamds', props.savedTeams,)
+    console.log('inside populateSavedTeams', props.savedTeams,)
     if (!props.savedTeams) return;
     const allSavedTeamsToBeDisplayed = [];
     for (let i=1; i<=Object.keys(props.savedTeams).length; i++) {
@@ -45,6 +46,7 @@ const AllSavedTeams= (props) => {
       if (props.savedTeams[currentTeamKey]) {
         currentTeamName = props.savedTeams[currentTeamKey]['name']
         currentTeam = props.savedTeams[currentTeamKey];
+        currentTeam.key = currentTeamKey;
         console.log('inside if, ', currentTeamKey, currentTeam)
       }
       console.log('inside populateSavedTeams for loop: ', props.savedTeams, currentTeamKey, props.savedTeams[currentTeamKey])
