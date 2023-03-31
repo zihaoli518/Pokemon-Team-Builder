@@ -17,6 +17,7 @@ import { connect } from 'react-redux';
 import * as actions from '../actions/actions';
 import PokemonSprite from './PokemonSprite.jsx';
 import StatChart from './StatChart.jsx';
+import CurrentPokemonDetails from './CurrentPokemonDetails.jsx'
 
 
 
@@ -47,12 +48,6 @@ class CurrentPokemonDisplay extends Component {
     super(props);
     this.state = {pokemon: this.props.currentPokemon, immunities: [], weaknesses: [], resistances:[]}
   }
-
-  // getTypes() {
-  //   console.log('inside getTypes(): ', this.props.currentPokemon.types)
-  //   if (this.props.currentPokemon.types.length=1) console.log('length is 1'); return [this.props.currentPokemon.types[0], ' '];
-  //   return this.props.currentPokemon.types
-  // }
 
   componentWillMount = () => {
     this.generateWeakness(this.props.currentPokemon.pokemon);
@@ -153,103 +148,57 @@ class CurrentPokemonDisplay extends Component {
     {
       console.log("inside current pokemon display", this.props.currentPokemon.pokemon);
     }
-    // {console.log(this.props.currentPokemon)}
     // {console.log(this.props.currentPokemon.pokemon)}
     return (
-      <div key={this.props.currentPokemon.pokemon} className="current-pokemon">
-        <div className="top-flexbox">
-          <h3 id={this.props.currentPokemon.pokemon}> {this.props.currentPokemon.pokemon} </h3>
-          <div className="types">
-            <h4 className="type" id={this.props.currentPokemon.types[0]}>{this.props.currentPokemon.types[0]}</h4>
-            <h4 className="type" id={this.props.currentPokemon.types[1]}>{this.props.currentPokemon.types[1]}</h4>
-          </div>
-          <div className="current-pokemon-spacer" ></div>
-          <div className="option-buttons">
-            <button className='add-to-your-team' onClick={()=>{this.addToTeam(this.props.currentPokemon, 'friendly');console.log('onclick fired GREEN')}}>Add</button>
-            <button className='add-to-enemy-team' onClick={()=>{this.addToTeam(this.props.currentPokemon, 'enemy');console.log('onclick fired RED')}}>Add</button>
-          </div>
-        </div>
-        <div className="current-pokemon-flexbox">
-          <div className="info">
-            <div className="outter">
-              {this.props.competetiveStatus ? (
-                <div className="competitive-info">
-                  <h4>Usage Rate: <span>{this.props.currentPokemon.usage}</span></h4>
-                  <h5>Most Used Abilities</h5>
-                  <ul className="inner" id='inner-1'>
-                    <li>
-                      <h6>{this.getAbilities()[0][0]}</h6>
-                      <p>{this.getAbilities()[0][1]}</p>
-                    </li>
-                    <li>
-                      <h6>{this.getAbilities()[1][0]}</h6>
-                      <p>{this.getAbilities()[1][1]}</p>
-                    </li>
-                  </ul>
-                  <h5>Most Commonly Brought Moves</h5>
-                  <ul className="inner">
-                    <div className='row-1'>
-                      <li>
-                        <h6>{this.getMoveSet()[0][0]}</h6>
-                        <p>{this.getMoveSet()[0][1]}</p>
-                      </li>
-                      <li>
-                        <h6>{this.getMoveSet()[1][0]}</h6>
-                        <p>{this.getMoveSet()[1][1]}</p>
-                      </li>
-                    </div>
-                    <div className='row-2'>
-                      <li>
-                        <h6>{this.getMoveSet()[2][0]}</h6>
-                        <p>{this.getMoveSet()[2][1]}</p>
-                      </li>
-                      <li>
-                        <h6>{this.getMoveSet()[3][0]}</h6>
-                        <p>{this.getMoveSet()[3][1]}</p>
-                      </li>
-                    </div>
-                  </ul>
-                </div>
-              ) : (
-                // alert(
-                //   "No competitive stats found! Current version of the app only supports gen8 OU tier... sorry"
-                // )
-                null
-              )}
+      <div className='current-pokemon-container'>
+        <div key={this.props.currentPokemon.pokemon} className="current-pokemon">
+          <div className="top-flexbox">
+            <h3 id={this.props.currentPokemon.pokemon}> {this.props.currentPokemon.pokemon} </h3>
+            <div className="types">
+              <h4 className="type" id={this.props.currentPokemon.types[0]}>{this.props.currentPokemon.types[0]}</h4>
+              <h4 className="type" id={this.props.currentPokemon.types[1]}>{this.props.currentPokemon.types[1]}</h4>
+            </div>
+            <div className="current-pokemon-spacer" ></div>
+            <div className="option-buttons">
+              <button className='add-to-your-team' onClick={()=>{this.addToTeam(this.props.currentPokemon, 'friendly');console.log('onclick fired GREEN')}}>Add</button>
+              <button className='add-to-enemy-team' onClick={()=>{this.addToTeam(this.props.currentPokemon, 'enemy');console.log('onclick fired RED')}}>Add</button>
             </div>
           </div>
-          
-          <PokemonSprite
-            pokemon={this.props.currentPokemon.pokemon}
-            className="pokemon-class"
-          />
+          <div className="current-pokemon-flexbox">
+            
+            <PokemonSprite
+              pokemon={this.props.currentPokemon.pokemon}
+              className="pokemon-class"
+            />
 
-          <div className="stats">
-            {/* <h5>Base Stats</h5> */}
-            <StatChart name={this.props.currentPokemon.pokemon} pokemonStats={this.props.currentPokemon.stats} currentPokemon={this.props.currentPokemon}/>
+            <div className="stats">
+              {/* <h5>Base Stats</h5> */}
+              <StatChart name={this.props.currentPokemon.pokemon} pokemonStats={this.props.currentPokemon.stats} currentPokemon={this.props.currentPokemon}/>
+            </div>
           </div>
-        </div>
-        <div className='current-pokemon-weakness-summary'> 
-        <div className='weaknesses'>
-              <h4>immunity : </h4>
-              <div className='weaknesses-inner'>
-                {this.state.immunities}
-              </div>
-          </div>
+          <div className='current-pokemon-weakness-summary'> 
           <div className='weaknesses'>
-              <h4>weakness : </h4>
-              <div className='weaknesses-inner'>
-                {this.state.weaknesses}
-              </div>
+                <h4>immunity : </h4>
+                <div className='weaknesses-inner'>
+                  {this.state.immunities}
+                </div>
+            </div>
+            <div className='weaknesses'>
+                <h4>weakness : </h4>
+                <div className='weaknesses-inner'>
+                  {this.state.weaknesses}
+                </div>
+            </div>
+            <div className='weaknesses'>
+                <h4>resistance : </h4>
+                <div className='weaknesses-inner'>
+                  {this.state.resistances}
+                </div>
+            </div>
           </div>
-          <div className='weaknesses'>
-              <h4>resistance : </h4>
-              <div className='weaknesses-inner'>
-                {this.state.resistances}
-              </div>
-          </div>
+          <div>{/* counters and weakness */}</div>
         </div>
-        <div>{/* counters and weakness */}</div>
+        <CurrentPokemonDetails />
       </div>
     );
   }

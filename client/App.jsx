@@ -62,7 +62,7 @@ class App extends Component {
           <PokemonSearch />
           <div className='main-row-container'>
             <AllSavedTeams />
-            <div className="current-pokemon-display">
+            <div className="current-pokemon-display-container">
               {this.props.start ? <CurrentPokemonDisplay /> : null}
             </div>
           </div>
