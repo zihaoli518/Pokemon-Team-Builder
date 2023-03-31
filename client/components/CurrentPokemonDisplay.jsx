@@ -36,7 +36,9 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => ({
   // create functions that will dispatch action creators
   addPokemonToYourTeam : (pokemonObj) => dispatch(actions.addPokemonToYourTeam(pokemonObj)),
-  addPokemonToEnemeyTeam: (pokemonObj) => dispatch(actions.addPokemonToEnemyTeam(pokemonObj))
+  addPokemonToEnemeyTeam: (pokemonObj) => dispatch(actions.addPokemonToEnemyTeam(pokemonObj)),
+  selectAbility : (ability) => dispatch(actions.selectAbility(ability)),
+
 });
 
 const types = ['bug', 'dark', 'dragon', 'electric', 'fairy', 'fighting', 'fire', 'flying', 'ghost', 'grass', 'ground', 'ice', 'normal', 'poison', 'psychic', 'rock', 'steel', 'water']
@@ -58,6 +60,7 @@ class CurrentPokemonDisplay extends Component {
     // console.log(prevState.currentPokemon, this.props.currentPokemon, this.state)
     if (prevState.currentPokemon.pokemon !== this.props.currentPokemon.pokemon) {
       this.generateWeakness();
+      this.updateActiveAbility();
     }
   }
 
@@ -133,7 +136,6 @@ class CurrentPokemonDisplay extends Component {
   }
 
 
-
   addToTeam(pokemon, team) {
     // e.preventDefault();
     if (team === "friendly") {
@@ -141,6 +143,27 @@ class CurrentPokemonDisplay extends Component {
     } else {
       this.props.addPokemonToEnemeyTeam(pokemon);
     }
+  }
+
+  updateActiveAbility() {
+    const firstAbility = this.props.currentPokemon.abilities[0].ability
+      const url = firstAbility.url;
+      fetch(url)
+        .then(data => data.json())
+        .then(data => {
+          let effectStr = data.effect_entries[1].effect; 
+          let index = 0; 
+          for (let i=0; i<effectStr.length; i++) {
+            if (effectStr[i]==='O') {
+              if (effectStr[i+1]==='v' && effectStr[i+2]==='e' && effectStr[i+3]==='r' && effectStr[i+4]==='w' ) break;
+            }
+            index++;
+          }
+          let newStr = effectStr.slice(0, index)
+          console.log(newStr)
+          let newAbilityObject = {name: firstAbility.name, description: newStr}
+          this.props.selectAbility(newAbilityObject);
+        })
   }
 
   render() {

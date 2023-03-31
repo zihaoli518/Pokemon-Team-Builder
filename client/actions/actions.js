@@ -110,3 +110,8 @@ export const activateCurrentTeamComponent = () => ({
   payload: {}
 })
 
+export const selectAbility = (ability) => ({
+  type: types.SELECT_ABILITY, 
+  payload: {ability: ability}
+})
+

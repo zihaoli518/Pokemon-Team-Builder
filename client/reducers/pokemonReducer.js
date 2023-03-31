@@ -18,22 +18,31 @@ import { getTypeWeaknesses } from 'poke-types';
 
 const initialState = {
   currentPokemon: {
-    isActive: false,
     pokemon: null,
     types: [],
+    abilities: [{ ability: { name: "", url: "", description: "" }, is_hidden: false, slot: 0 }],
+    activeAbility: {name: null, description: null},
+    item: "",
+    moves: {
+      move_1: {},
+      move_2: {},
+      move_3: {},
+      move_4: {},
+    },
     stats: {},
     weakness: {},
+    isActive: false,
   },
   yourTeam: {
     size: 0,
-    name: 'your team',
-    key: 'team_1',
+    name: "your team",
+    key: "team_1",
     mon1: null,
     mon2: null,
     mon3: null,
     mon4: null,
     mon5: null,
-    mon6: null
+    mon6: null,
   },
   enemyTeam: {
     size: 0,
@@ -42,12 +51,12 @@ const initialState = {
     mon3: null,
     mon4: null,
     mon5: null,
-    mon6: null
+    mon6: null,
   },
   teamStatus: false,
   showChartOption: false,
   showTypingChart: false,
-}
+};
 
 const pokemonReducer = (state = initialState, action) => {
 
@@ -77,7 +86,7 @@ const pokemonReducer = (state = initialState, action) => {
 
     // expecting data from pokeAPI fetch
     case types.ADD_POKEMON_POKEAPI: 
-      // console.log('inside reducer! ')
+
       // console.log(action.payload)
       const copy = {...state.currentPokemon};
       copy['pokemon'] = action.payload.pokemon
@@ -89,6 +98,7 @@ const pokemonReducer = (state = initialState, action) => {
       for (let i=0; i<pokemonData.types.length; i++) {
         copy.types.push(pokemonData.types[i].type.name)
       }
+      
       // organizing stats 
       copy.stats = {};
       copy.stats.hp = pokemonData.stats[0].base_stat;
@@ -102,6 +112,27 @@ const pokemonReducer = (state = initialState, action) => {
       // populating weakness object
       if (copy.types.length===1) copy.weakness = getTypeWeaknesses(copy.types[0]);
       else copy.weakness = getTypeWeaknesses(copy.types[0], copy.types[1]);
+
+      // reformatting abilities
+      copy.abilities = pokemonData.abilities;
+
+      // for (let i=0; i<copy.abilities.length; i++) {
+      // const url = copy.abilities[i].ability.url;
+      // console.log(url)
+      // fetch(url)
+      //   .then(data => data.json())
+      //   .then(data => {
+      //     copy.abilities[i]['description'] = data.effect_entries[1].effect;
+      //     // setting default active ability
+      //     if (i===0){
+      //       copy.activeAbility.name = copy.abilities[0].ability.name; 
+      //       copy.activeAbility.description = data.effect_entries[1].effect; 
+      //     }
+      //   })
+      // }
+  
+  
+      
 
       return {
         ...state, 
@@ -223,6 +254,14 @@ const pokemonReducer = (state = initialState, action) => {
           ...state,
           yourTeam: action.payload.team,
         }
+
+        case types.SELECT_ABILITY: 
+          const beforeSelectAbility = {...state.currentPokemon}
+          beforeSelectAbility.activeAbility = action.payload.ability
+          return {
+            ...state,
+            currentPokemon: beforeSelectAbility,
+          }
 
     default: {
       return state

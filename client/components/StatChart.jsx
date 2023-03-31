@@ -143,7 +143,7 @@ const StatChart = props => {
     destroyChart();
     myChart = new Chart(document.getElementById("myChart"), config);
     // props.setPreventChartLooping(false);
-  }, [props.currentPokemon]);
+  }, [props.currentPokemon.stats]);
 
   // modularizing destroy chart 
   const destroyChart = () => {
