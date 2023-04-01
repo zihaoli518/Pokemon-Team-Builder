@@ -44,18 +44,19 @@ const userFunctionsReducer = (state = initialState, action) => {
         mainDivClassName: newmainDivClassName
       }
 
-      case types.CHANGE_USER_STATE: 
+    case types.CHANGE_USER_STATE: 
       console.log('inside CHANGE_USER_STATE ', action)
       let SavedTeamFromDatabase = {
         team_1: null,
       }
-      if (action.payload.responseObj) SavedTeamFromDatabase = action.payload.responseObj.savedTeams;
-        return {
-          ...state,
-          isLoggedIn: true,
-          username: action.payload.username,
-          savedTeams: SavedTeamFromDatabase
-        }
+      if (action.payload.responseObj) SavedTeamFromDatabase = action.payload.responseObj;
+      console.log(SavedTeamFromDatabase)
+      return {
+        ...state,
+        isLoggedIn: true,
+        username: action.payload.username,
+        savedTeams: SavedTeamFromDatabase
+      }
 
       // case types.LOAD_SAVED_TEAMS: 
       // console.log('LOAD_SAVED_TEAMS ', action)

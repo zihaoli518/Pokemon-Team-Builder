@@ -115,25 +115,24 @@ const TeamDisplay= (props) => {
     let copy = {...teamState.selectedTeam}
     copy.name = input
     props.updateSavedTeam(copy)
-
     // saveTeamsToDatabase(props.savedTeams)
   }
 
-  const saveTeamsToDatabase = (savedTeams) => {
-    console.log('about to send this thing: ', {user: props.username, team: savedTeams})
-    fetch('/api/saveUserTeams', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        Accept: 'application/json, text/plain',
-      },
-      body: JSON.stringify({user: props.username, team: savedTeams})
-    })
-      .then(data => {
-        console.log(data);
-        console.log('saved teams to database!')
-      })
-  }
+  // const saveTeamsToDatabase = (savedTeams) => {
+  //   console.log('about to send this thing: ', {user: props.username, team: savedTeams})
+  //   fetch('/api/saveUserTeams', {
+  //     method: 'POST',
+  //     headers: {
+  //       'Content-Type': 'application/json',
+  //       Accept: 'application/json, text/plain',
+  //     },
+  //     body: JSON.stringify({user: props.username, team: savedTeams})
+  //   })
+  //     .then(data => {
+  //       console.log(data);
+  //       console.log('saved teams to database!')
+  //     })
+  // }
 
 
   return (

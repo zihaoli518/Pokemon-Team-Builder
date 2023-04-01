@@ -594,7 +594,7 @@ input[type="text"]
 .current-pokemon-display-container {
   width: 62%;
   height: 83%;
-  margin-left: 5%;
+  margin-left: 2.5%;
 }
 
 .current-pokemon-container{
@@ -958,10 +958,16 @@ input[type="text"]
 }
 
 .abilities-container-inner {
-  height: 20%;
+  height: 25%;
   width: 100%;
   display: flex;
   justify-content: center;
+}
+
+.abilities-container-inner h4 {
+  line-height: 80%;
+  text-align: center;
+
 }
 
 .abilities-container-inner .ability {
@@ -970,7 +976,19 @@ input[type="text"]
   border: 1.3px dotted black;
   border-radius: 0.3rem;
   box-shadow: 5px 5px 30px -10px rgba(63, 63, 63, 0.88);
+  display: flex;
+  vertical-align: middle;
+  align-items: center;
+}
 
+    // effects 
+.abilities-container-inner .ability:hover {
+  border: 2.3px dotted black;
+
+}
+
+.active-ability-highlighted {
+  background-color: #a185a19c;
 }
 
 .ability-description-container {
@@ -1059,6 +1077,9 @@ input[type="text"]
   border-radius: 0.3rem;
   box-shadow: 5px 5px 30px -10px rgba(63, 63, 63, 0.88);
   margin: 1%;
+
+  display: flex;
+  align-items: center;
 }
 
         // EVS

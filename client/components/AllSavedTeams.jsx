@@ -66,6 +66,19 @@ const AllSavedTeams= (props) => {
 
 
   const saveTeamsToDatabase = (savedTeams) => {
+    // parse ' for json 
+    if (savedTeams.team_1.mon1) {
+      for (let i=1; i<=Object.keys(savedTeams).length; i++) {
+        const teamKey = 'team_' + i; 
+        for (let j=1; j<=6; j++) {
+          const monKey = 'mon' + j;
+          if (!savedTeams[teamKey][monKey]) break;
+          savedTeams[teamKey][monKey].activeAbility.description = savedTeams[teamKey][monKey].activeAbility.description.replace(/[\/\(\)\']/g, "&apos;")
+        }
+      }
+      // savedTeams.team_1.mon1.activeAbility.description = savedTeams.team_1.mon1.activeAbility.description.replace(/[\/\(\)\']/g, "&apos;")
+    }
+
     console.log('about to send this thing: ', {username: props.username, team: savedTeams})
     fetch('/api/saveUserTeams', {
       method: 'POST',

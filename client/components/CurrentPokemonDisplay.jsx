@@ -28,8 +28,8 @@ const mapStateToProps = state => {
     moveSet : state.pokemon.currentPokemon.moves,
     abilities: state.pokemon.currentPokemon.abilities,
     competetiveStatus : state.pokemon.currentPokemon.competetiveStatus,
-    yourTeam : state.pokemon.yourTeam,
-    enemyTeam: state.pokemon.enemyTeam
+    // yourTeam : state.pokemon.yourTeam,
+    // enemyTeam: state.pokemon.enemyTeam
   }
 }
 
@@ -56,11 +56,11 @@ class CurrentPokemonDisplay extends Component {
   }
 
   componentDidUpdate = (prevState) => {
-    // console.log('inside componentWillUpdate - CurrentPokemonDisplay')
-    // console.log(prevState.currentPokemon, this.props.currentPokemon, this.state)
+    console.log('inside componentWillUpdate - CurrentPokemonDisplay')
+    console.log(this.props.currentPokemon)
     if (prevState.currentPokemon.pokemon !== this.props.currentPokemon.pokemon) {
       this.generateWeakness();
-      this.updateActiveAbility();
+      if (this.props.currentPokemon.slot.mon===null) this.updateActiveAbilityOnNewSearch();
     }
   }
 
@@ -145,26 +145,43 @@ class CurrentPokemonDisplay extends Component {
     }
   }
 
-  updateActiveAbility() {
+  updateActiveAbilityOnNewSearch() {
+    const activeAbility = this.props.currentPokemon.activeAbility; 
+    // if (activeAbility.name && activeAbility.name===this.props.currentPokemon.abilities[0].ability.name) return;
     const firstAbility = this.props.currentPokemon.abilities[0].ability
-      const url = firstAbility.url;
-      fetch(url)
-        .then(data => data.json())
-        .then(data => {
-          let effectStr = data.effect_entries[1].effect; 
-          let index = 0; 
-          for (let i=0; i<effectStr.length; i++) {
-            if (effectStr[i]==='O') {
-              if (effectStr[i+1]==='v' && effectStr[i+2]==='e' && effectStr[i+3]==='r' && effectStr[i+4]==='w' ) break;
-            }
-            index++;
-          }
-          let newStr = effectStr.slice(0, index)
-          console.log(newStr)
-          let newAbilityObject = {name: firstAbility.name, description: newStr}
-          this.props.selectAbility(newAbilityObject);
-        })
+    const url = firstAbility.url;
+    fetch(decodeURIComponent(url))
+      .then(data => data.json())
+      .then(data => {
+        let effectStr = data.effect_entries[1].effect; 
+
+        let array = effectStr.split(/\r?\n|\r|\n/g)
+        let newStr = array[0]
+        console.log(newStr)
+        let newAbilityObject = {name: firstAbility.name, description: newStr}
+        this.props.selectAbility(newAbilityObject);
+
+        // highlight first ability by default;
+
+        this.makeDivActive('ability1', 'active-ability-highlighted')
+      })
   }
+
+  // generalized function that makes a div have an unique classname (for active effects)
+  makeDivActive(div, activeClassName) {
+    // check if another div already has the active class, remove if found 
+    const previousActive = document.getElementsByClassName(activeClassName);
+    if (previousActive.length!==0) {
+      if (previousActive[0].classList !== div) {
+        previousActive[0].classList.remove(activeClassName);
+      }
+    } 
+    const container = document.getElementsByClassName(div)[0];
+    console.log('inside makeDivActive ', container)
+    container.classList.add(activeClassName)
+    setCurrentlyActiveDiv({div: div});
+  }
+
 
   render() {
     // if (this.props.currentPokemon.pokemon!==undefined) {

@@ -31,7 +31,8 @@ const initialState = {
     },
     stats: {},
     weakness: {},
-    isActive: false,
+    isActive: false, 
+    slot: {team: null, mon: null}
   },
   yourTeam: {
     size: 0,
@@ -115,6 +116,10 @@ const pokemonReducer = (state = initialState, action) => {
 
       // reformatting abilities
       copy.abilities = pokemonData.abilities;
+      for(let i=0; i<copy.abilities.length; i++) {
+        copy.abilities[i].ability.url = encodeURIComponent(copy.abilities[i].ability.url)
+      }
+
 
       // for (let i=0; i<copy.abilities.length; i++) {
       // const url = copy.abilities[i].ability.url;
@@ -130,8 +135,9 @@ const pokemonReducer = (state = initialState, action) => {
       //     }
       //   })
       // }
-  
-  
+      
+      // need to reset slot to avoid unwantingly changing active team 
+      copy.slot = {team: null, mon: null};
       
 
       return {
@@ -159,6 +165,7 @@ const pokemonReducer = (state = initialState, action) => {
       for (let i=1; i<=6; i++) {
         let currentMonString = 'mon' + i.toString();
         if (!(yourNewTeam[currentMonString])) {
+          currentPokemonY.slot.mon = currentMonString;
           yourNewTeam[currentMonString] = currentPokemonY;
           break;
         }
@@ -196,10 +203,14 @@ const pokemonReducer = (state = initialState, action) => {
         
       // select pokemon -> and make it the current display pokemon 
       case types.SELECT_TEAM_MEMBER : 
-        const copyOfCurrentPokemon = {...state.currentPokemon};
+        console.log('inside SELECT_TEAM_MEMBER', action.payload)
+        const copyOfCurrentPokemon = action.payload.pokemonData;
+        copyOfCurrentPokemon.slot.team = action.payload.team;
+        copyOfCurrentPokemon.slot.mon = action.payload.mon;
+
         return {
           ... state,
-          currentPokemon: action.payload
+          currentPokemon: copyOfCurrentPokemon
         }
 
       // remove pokemon from team 
@@ -255,12 +266,24 @@ const pokemonReducer = (state = initialState, action) => {
           yourTeam: action.payload.team,
         }
 
+        // save selected ability to currentPokemon.activeAbility and saving that to the team 
         case types.SELECT_ABILITY: 
+        console.log('inside SELECT_ABILITY', action.payload)
+
           const beforeSelectAbility = {...state.currentPokemon}
-          beforeSelectAbility.activeAbility = action.payload.ability
+          beforeSelectAbility.activeAbility = action.payload.ability;
+          const monChangingAbility = beforeSelectAbility.slot.mon;
+          const yourTeamWithNewAbility = {...state.yourTeam}; 
+          if (beforeSelectAbility.slot.mon!==null ) {
+            yourTeamWithNewAbility[monChangingAbility] = beforeSelectAbility;
+          }
+          
+          console.log(beforeSelectAbility.slot, monChangingAbility)
+          console.log(yourTeamWithNewAbility)
           return {
             ...state,
             currentPokemon: beforeSelectAbility,
+            yourTeam: yourTeamWithNewAbility
           }
 
     default: {

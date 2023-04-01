@@ -70,7 +70,8 @@ const LoginModal = props => {
         console.log('inside LoginModal submitHandler, ', response); 
         // if success 
         if (response.status==='success') {
-          props.changeUserState(response.username, response.savedTeams);
+          let savedTeams = parseResponse(response.savedTeams);
+          props.changeUserState(response.username, savedTeams);
           props.toggleLoginLoading();
           props.toggleShowLoginModal();
         }
@@ -88,6 +89,22 @@ const LoginModal = props => {
         
         // getUserData(response.username)
       })
+  }
+
+  const parseResponse = (savedTeams) => {
+    console.log('in parseResponse, ', savedTeams)
+    savedTeams = savedTeams.savedTeams;
+    for (let i=1; i<=Object.keys(savedTeams).length; i++) {
+      const teamKey = 'team_' + i; 
+      for (let j=1; j<=6; j++) {
+        const monKey = 'mon' + j;
+        console.log(teamKey, monKey)
+        console.log(savedTeams[teamKey][monKey])
+        if (!savedTeams[teamKey][monKey]) break;
+        savedTeams[teamKey][monKey].activeAbility.description = savedTeams[teamKey][monKey].activeAbility.description.replace("&apos;", "'")
+      }
+    }
+    return savedTeams;
   }
 
   const closeModal = (e) => {

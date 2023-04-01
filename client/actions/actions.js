@@ -50,9 +50,9 @@ export const removeTeamMember = (team, mon) => ({
   payload: { team: team, mon: mon },
 });
 
-export const selectTeamMember = (pokemonObj) => ({
+export const selectTeamMember = (pokemonData, team, mon) => ({
   type: types.SELECT_TEAM_MEMBER,
-  payload: pokemonObj,
+  payload: {pokemonData: pokemonData, team: team, mon: mon},
 });
 
 export const showTypingChart = () => ({
