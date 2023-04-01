@@ -162,6 +162,7 @@ userMiddlewares.saveUserTeams = (req, res, next) => {
   const username = req.body.username;
   const teams = JSON.stringify(req.body.team); 
 
+
   const querySave = `INSERT INTO UserTeams ("username", "savedTeams") VALUES ('${username}', '${teams}')`;
   const queryUpdate = `UPDATE UserTeams SET "savedTeams" = '${teams}' WHERE "username" = '${username}'`;
   db.query(queryUpdate)

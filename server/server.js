@@ -4,8 +4,9 @@ const path = require('path');
 
 const PORT = 3000; 
 
-const fetchMiddlewares = require('./controllers/fetchMiddlewares.js')
-const userMiddlewares = require('./controllers/userMiddlewares.js')
+const fetchMiddlewares = require('./controllers/fetchMiddlewares.js');
+const userMiddlewares = require('./controllers/userMiddlewares.js');
+const showdownMiddlewares = require('./controllers/showdownMiddlewares.js')
 
 const cookieParser = require("cookie-parser");
 
@@ -79,6 +80,12 @@ app.get('/api/users/:username', userMiddlewares.getUserData, (req, res) => {
 app.post('/api/saveUserTeams', userMiddlewares.saveUserTeams, (req, res) => {
   console.log('/api/saveUserTeams complete')
   return res.status(200).send({url: res.locals.url})
+})
+
+// get all items 
+app.get('/api/getAllItems', showdownMiddlewares.getAllItems, (req, res) => {
+  console.log('/api/getAllItems complete')
+  return res.status(200).send(res.locals.data)
 })
 
 

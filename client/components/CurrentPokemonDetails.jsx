@@ -17,6 +17,7 @@ import { connect } from 'react-redux';
 import * as actions from '../actions/actions';
 import PokemonSprite from './PokemonSprite.jsx';
 import StatChart from './StatChart.jsx';
+import allItemsJSON from './itemData.js'
 
 
 
@@ -32,6 +33,7 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => ({
   // create functions that will dispatch action creators
   selectAbility : (ability) => dispatch(actions.selectAbility(ability)),
+  saveItemToMon : (item, description, url) => dispatch(actions.saveItemToMon(item, description, url)),
   updateSavedTeam: (team) => dispatch(actions.updateSavedTeam(team)),
 
 });
@@ -40,15 +42,18 @@ const mapDispatchToProps = dispatch => ({
 
 const CurrentPokemonDetails = props => {
   console.log('inside CurrentPokemonDetails', props.currentPokemon)
+  console.log(typeof(allItemsJSON));
+  console.log(allItemsJSON)
   
   const [currentlyActiveDiv, setCurrentlyActiveDiv] = useState({div: '', });
   const [showBrowseArea, setShowBrowseArea] = useState(false);
 
   const [AbilitiesToBeDisplayed, setAbilitiesToBeDisplayed] = useState([]);
+  const [allItemsToBeDisplayed, setAllItemsToBeDisplayed] = useState([])
 
 
   // generalized function that makes a div have an unique classname (for active effects)
-  const makeDivActive = (div, activeClassName) => {
+  const makeDivActive = (div, activeClassName, activeComponent) => {
     // check if another div already has the active class, remove if found 
     const previousActive = document.getElementsByClassName(activeClassName);
     if (previousActive.length!==0) {
@@ -57,11 +62,14 @@ const CurrentPokemonDetails = props => {
       }
     } 
     const container = document.getElementsByClassName(div)[0];
-    console.log('container: ', div, document.getElementsByClassName(div))
+    console.log('container: ', container, document.getElementsByClassName(div))
     container.classList.add(activeClassName)
     
-    setShowBrowseArea(true);
-    setCurrentlyActiveDiv({div: div});
+    if (div !== 'abilities-container') setShowBrowseArea(true);
+    else setShowBrowseArea(false);
+
+
+    setCurrentlyActiveDiv({div: activeComponent});
   }
 
 
@@ -116,35 +124,71 @@ const CurrentPokemonDetails = props => {
         })
     }
 
+
+  const populateItems = () => {
+    const allItemsToBeDisplayed = [];
+
+    const chooseItem = (name, url, description, div, activeClassName, activeComponent) => {
+      console.log('inside chooseItem')
+      makeDivActive(div, activeClassName, activeComponent);
+      props.saveItemToMon(name, description, url);
+      props.updateSavedTeam(props.yourTeam);
+    }
+
+    for (let name in allItemsJSON) {
+      const url = allItemsJSON[name]['spriteUrl'];
+      const description = allItemsJSON[name]['desc'];
+      const className = 'item-row ' + 'item-row-'+ name;
+      allItemsToBeDisplayed.push(
+        <div className={className} onClick={()=>{chooseItem(name, url, description, 'item-row-'+ name, 'active-item-browse-area', 'item-container')}}>
+          <div className='item-row-top'>
+            <img src={url} alt="" />
+            <h4>{name}</h4>
+          </div>
+          <div className='item-row-bottom'>
+            <h5>{description}</h5>
+          </div>
+        </div>
+      )
+    }
+
+    setAllItemsToBeDisplayed(allItemsToBeDisplayed)
+  }
+
   
-  
+
+
   useEffect(() => {
     populateAbilities();
+    populateItems();
   }, [props.currentPokemon, props.activeAbility])
 
 
   return (
     <div className='current-pokemon-rightside-container'>
       <div className='pokemon-details-container'>
-        <div className='abilities-container' onClick={()=> {makeDivActive('abilities-container', 'active-pokemon-detail-container')}}>
+        <div className='abilities-container' onClick={()=> {makeDivActive('abilities-container', 'active-pokemon-detail-container', 'abilities-container')}}>
           <h3>ability</h3>
           <div className='abilities-container-inner'>              
             {AbilitiesToBeDisplayed}
           </div>
-          {/* <div className='ability-description-container'>
+          {currentlyActiveDiv.div ==='abilities-container'?
+          <div className='ability-description-container'> 
             <h4 className='ability-description'> {props.activeAbility.description} </h4>
-          </div> */}
+          </div> :
+          null
+        }
         </div>
 
-        <div className='item-container' onClick={()=> {makeDivActive('item-container', 'active-pokemon-detail-container')}}>
+        <div className='item-container' onClick={()=> {makeDivActive('item-container', 'active-pokemon-detail-container', 'item-container')}}>
           <h3>item</h3>
           <div className='item'>
-            <img src="https://www.gamerguides.com/assets/media/15/1997/item_0234.png" alt="" />
-            <h4>leftovers</h4>
+            <img src={props.currentPokemon.item.url} alt="" />
+            <h4>{props.currentPokemon.item.item}</h4>
           </div>
         </div>
 
-        <div className='moves-container' onClick={()=> {makeDivActive('moves-container', 'active-pokemon-detail-container')}}>
+        <div className='moves-container' onClick={()=> {makeDivActive('moves-container', 'active-pokemon-detail-container', 'moves-container')}}>
           <h3>moves</h3>
             <div className='moves-container-row'>
               <div className='move-container move-container-1'>
@@ -165,17 +209,26 @@ const CurrentPokemonDetails = props => {
 
         </div>
 
-        <div className='evs-container' onClick={()=> {makeDivActive('evs-container', 'active-pokemon-detail-container')}}>
+        <div className='evs-container' onClick={()=> {makeDivActive('evs-container', 'active-pokemon-detail-container', 'evs-container')}}>
           <h3>EVs</h3>
 
         </div>
       </div>
       {showBrowseArea ?
-        <div className='browse-move-area-container'>
-        {currentlyActiveDiv.div ==='abilities-container'?
-          <div> 
-            <h3>{props.activeAbility.name}</h3>
-            <h4 className='ability-description'> {props.activeAbility.description} </h4>
+        <div className='browse-area-container'>
+        {currentlyActiveDiv.div ==='item-container' || currentlyActiveDiv.div ==='item-row' ?
+          <div className='browse-items-container'> 
+            <h3>item</h3>
+            <div className='search-area'>
+              <input type="text" />
+            </div>
+            <h3>{props.item}</h3>
+            <div className='item-list'>
+              {allItemsToBeDisplayed}
+              <div className='item-row'>
+                <h4>item</h4>
+              </div>
+            </div>
           </div> :
           null
         }

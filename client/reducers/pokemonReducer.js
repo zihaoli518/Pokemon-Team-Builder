@@ -22,7 +22,7 @@ const initialState = {
     types: [],
     abilities: [{ ability: { name: "", url: "", description: "" }, is_hidden: false, slot: 0 }],
     activeAbility: {name: null, description: null},
-    item: "",
+    item: {},
     moves: {
       move_1: {},
       move_2: {},
@@ -268,7 +268,7 @@ const pokemonReducer = (state = initialState, action) => {
 
         // save selected ability to currentPokemon.activeAbility and saving that to the team 
         case types.SELECT_ABILITY: 
-        console.log('inside SELECT_ABILITY', action.payload)
+          console.log('inside SELECT_ABILITY', action.payload)
 
           const beforeSelectAbility = {...state.currentPokemon}
           beforeSelectAbility.activeAbility = action.payload.ability;
@@ -284,6 +284,19 @@ const pokemonReducer = (state = initialState, action) => {
             ...state,
             currentPokemon: beforeSelectAbility,
             yourTeam: yourTeamWithNewAbility
+          }
+        
+        case types.SAVE_ITEM_TO_MON: 
+
+          const copyOfPrevItemMon = {...state.currentPokemon};
+          const copyOfPrevItem = copyOfPrevItemMon.item;
+          copyOfPrevItem['item'] = action.payload.item;
+          copyOfPrevItem['description'] = action.payload.description;
+          copyOfPrevItem['url'] = action.payload.url;
+
+          return {
+            ...state,
+            currentPokemon: copyOfPrevItemMon
           }
 
     default: {

@@ -115,3 +115,7 @@ export const selectAbility = (ability) => ({
   payload: {ability: ability}
 })
 
+export const saveItemToMon = (item, description, url) => ({
+  type: types.SAVE_ITEM_TO_MON, 
+  payload: {item: item, description: description, url: url}
+})
