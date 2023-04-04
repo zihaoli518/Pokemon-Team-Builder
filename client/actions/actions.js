@@ -119,3 +119,13 @@ export const saveItemToMon = (item, description, url) => ({
   type: types.SAVE_ITEM_TO_MON, 
   payload: {item: item, description: description, url: url}
 })
+
+export const selectMoveFromList = (moveId, moveObj) => ({
+  type: types.SELECT_MOVE_FROM_LIST, 
+  payload: {moveId: moveId, moveObj: moveObj}
+})
+
+export const updateActiveMove = (moveId, moveObj) => ({
+  type: types.UPDATE_ACTIVE_MOVE, 
+  payload: {moveId: moveId, moveObj: moveObj}
+})

@@ -22,13 +22,17 @@ const initialState = {
     types: [],
     abilities: [{ ability: { name: "", url: "", description: "" }, is_hidden: false, slot: 0 }],
     activeAbility: {name: null, description: null},
-    item: {},
+    item: {item: "", description: "", url: ""},
     moves: {
       move_1: {},
       move_2: {},
       move_3: {},
       move_4: {},
     },
+    activeMove: {
+      move_x: {}
+    },
+    movePool: {},
     stats: {},
     weakness: {},
     isActive: false, 
@@ -116,28 +120,22 @@ const pokemonReducer = (state = initialState, action) => {
 
       // reformatting abilities
       copy.abilities = pokemonData.abilities;
-      for(let i=0; i<copy.abilities.length; i++) {
+      for (let i=0; i<copy.abilities.length; i++) {
         copy.abilities[i].ability.url = encodeURIComponent(copy.abilities[i].ability.url)
       }
 
 
-      // for (let i=0; i<copy.abilities.length; i++) {
-      // const url = copy.abilities[i].ability.url;
-      // console.log(url)
-      // fetch(url)
-      //   .then(data => data.json())
-      //   .then(data => {
-      //     copy.abilities[i]['description'] = data.effect_entries[1].effect;
-      //     // setting default active ability
-      //     if (i===0){
-      //       copy.activeAbility.name = copy.abilities[0].ability.name; 
-      //       copy.activeAbility.description = data.effect_entries[1].effect; 
-      //     }
-      //   })
-      // }
+      // reformatting move pool of pokemon 
+      for (let i=0; i<pokemonData.moves.length; i++) {
+        copy.movePool[pokemonData.moves[i].move.name] = true;
+      }
+
       
       // need to reset slot to avoid unwantingly changing active team 
       copy.slot = {team: null, mon: null};
+
+      // reset selected item
+      copy.item = {};
       
 
       return {
@@ -287,7 +285,6 @@ const pokemonReducer = (state = initialState, action) => {
           }
         
         case types.SAVE_ITEM_TO_MON: 
-
           const copyOfPrevItemMon = {...state.currentPokemon};
           const copyOfPrevItem = copyOfPrevItemMon.item;
           copyOfPrevItem['item'] = action.payload.item;
@@ -299,6 +296,14 @@ const pokemonReducer = (state = initialState, action) => {
             currentPokemon: copyOfPrevItemMon
           }
 
+        case types.UPDATE_ACTIVE_MOVE: 
+          const copyOfPrevActiveMove = {...state.currentPokemon};
+          copyOfPrevActiveMove[action.payload.moveId] = action.payload.moveObj
+
+          return {
+            ...state,
+            currentPokemon: copyOfPrevActiveMove
+          }
     default: {
       return state
     }

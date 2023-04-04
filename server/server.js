@@ -88,6 +88,11 @@ app.get('/api/getAllItems', showdownMiddlewares.getAllItems, (req, res) => {
   return res.status(200).send(res.locals.data)
 })
 
+app.get('/api/getAllSmogonData', showdownMiddlewares.getAllMoves, (req, res) => {
+  console.log('/api/getAllMoves complete')
+  return res.status(200).send(res.locals.data)
+})
+
 
 app.listen(PORT); 
 
