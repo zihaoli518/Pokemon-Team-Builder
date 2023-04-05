@@ -599,7 +599,7 @@ input[type="text"]
 
 // current pokemon
 .current-pokemon-display-container {
-  width: 64%;
+  width: 65%;
   height: 83%;
   margin-left: 2.5%;
 }
@@ -1102,12 +1102,12 @@ input[type="text"]
   margin: 2%;
 }
 
-.browse-items-container .search-area {
+.search-area {
   display: flex;
   justify-content: center;
 }
 
-.browse-items-container .search-area input {
+.search-area input {
   width: 70%;
   background-color: rgba(168, 166, 166, 0.364);
   border-radius: 0.3rem;
@@ -1214,12 +1214,23 @@ input[type="text"]
   margin-bottom: 2%;
 }
 
+.moves-container .types-colors-inner {
+  height: 3px;
+  width: 10%;
+  opacity: 70%;
+}
+
 .moves-container-row {
   height: 30%;
   width: 100%;
   display: flex;
   justify-content: left;
   margin-top: 2.5%;
+}
+
+.move-container h4 {
+  line-height: 90%;
+  text-align: center;
 }
 
 .move-container {
@@ -1233,14 +1244,157 @@ input[type="text"]
   margin: 1%;
 
   display: flex;
+  flex-direction: column;
   align-items: center;
+}
+
+.move-container-top-row {
+  display: flex;
+  justify-content: left;
 }
 
 .active-move-container {
   background-color: rgba(107, 116, 111, 0.639);
   box-shadow: 2px 2px 20px -10px rgba(63, 63, 63, 0.88);
+}
+
+
+.browse-moves-container {
+  height: 100%;
+  width: 100%;
+}
+
+.browse-area-container h3 {
+  margin: 2%;
+  text-align: center;
+}
+
+.browse-moves-container .moves-list {
+  height: 71%;
+  width: 90%;
+
+  background-color: rgba(123, 135, 151, 0.496);
+  border: 1.3px dotted black;
+  border-radius: 0.3rem;
+
+  margin: 0 auto;
+  overflow-y: scroll;
+}
+
+.move-row {
+  height: 12%;
+  width: 98%;
+  border: 1.3px dotted black;
+
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.move-row-top {
+  height: 40%;
+  width: 100%;
+  // display: flex;
+  // justify-content: left;
+  margin-bottom: 2%;
+  line-height: 90%;
+}
+
+.move-row-top h4 {
+  height: 60%;
+  width: 40%;
+  position: relative;
+  top: 15%;
+  left: 2%;
+}
+
+.move-row-top .type-symbol {
+  height: 85%;
+  width: 16%;
+  
+  position: relative;
+  left: 42%;
+  top: -50%;
+}
+
+.move-row-top .category-symbol {
+  height: 80%;
+  width: 13%;
+  
+  position: relative;
+  left: 43%;
+  top: -52%;
+}
+
+.move-row-top .basepower {
+  width: 10%;
+  position: relative;
+  left: 73%;
+  top: -150%;
+  text-align: center;
+}
+
+.move-row-top .accuracy {
+  width: 10%;
+  position: relative;
+  left: 84%;
+  top: -210%;
+  text-align: center;
 
 }
+
+.move-row-top h4 {
+  margin: 0;
+  font-size: 0.9rem;
+}
+
+.move-row-top span {
+  color: rgba(126, 20, 20, 0.889);
+  font-size: 1.1rem;
+}
+
+.move-row-bottom {
+  margin-top: 1%;
+}
+
+.move-row-bottom h5 {
+  width: 95%;
+  font-size: 0.75rem;
+  line-height: 100%;
+  margin: 0;
+  margin-left: 3%;
+  margin-bottom: -10%;
+}
+
+
+.move-row:hover{
+  background-color: rgba(144, 176, 205, 0.66);
+  border: 2px dotted rgba(80, 80, 80, 0.814);
+}
+
+.active-move-browse-area {
+  background-color: rgba(175, 212, 222, 0.66);
+  border: 2px dotted rgba(80, 80, 80, 0.814);
+}
+
+.move-selected {
+  height: 11%;
+  width: 90%;
+  margin: 0 auto;
+  border-radius: 0.3rem;
+  margin-top: 1%;
+  margin-bottom: 1%;
+
+  border: 1.3px dotted black;
+  background-color:#c4e1de87;
+}
+
+.move-selected-placeholder {
+  height: 11%;
+  width: 90%;
+}
+
+
 
 
 
@@ -1260,11 +1414,13 @@ input[type="text"]
 
 // browse area for items and moves 
 .browse-area-container {
-  width: 50%;
+  width: 60%;
   height: 130%;
   background-color: rgba(128, 128, 128, 0.308);
   border-radius: 0.5rem;
 }
+
+
 
 
 

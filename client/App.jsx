@@ -32,7 +32,6 @@ import AllSavedTeams from './components/AllSavedTeams.jsx';
 
 const mapStateToProps = state => ({
   currentPokemon: state.pokemon.currentPokemon,
-  start : state.pokemon.currentPokemon.isActive,
   teamStatus: state.pokemon.teamStatus,
   yourTeam: state.pokemon.yourTeam,
   enemyTeam: state.pokemon.enemyTeam,
@@ -63,7 +62,7 @@ class App extends Component {
           <div className='main-row-container'>
             <AllSavedTeams />
             <div className="current-pokemon-display-container">
-              {this.props.start ? <CurrentPokemonDisplay /> : null}
+              {this.props.currentPokemon.isActive ? <CurrentPokemonDisplay /> : null}
             </div>
           </div>
           <div className="teams">

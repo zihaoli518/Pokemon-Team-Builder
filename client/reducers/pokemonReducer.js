@@ -24,13 +24,14 @@ const initialState = {
     activeAbility: {name: null, description: null},
     item: {item: "", description: "", url: ""},
     moves: {
-      move_1: {},
-      move_2: {},
-      move_3: {},
-      move_4: {},
+      move_1: {name: null, type: ""},
+      move_2: {name: null, type: ""},
+      move_3: {name: null, type: ""},
+      move_4: {name: null, type: ""},
     },
     activeMove: {
-      move_x: {}
+      moveId: "",
+      moveObj: {name: null}
     },
     movePool: {},
     stats: {},
@@ -133,9 +134,15 @@ const pokemonReducer = (state = initialState, action) => {
       
       // need to reset slot to avoid unwantingly changing active team 
       copy.slot = {team: null, mon: null};
-
       // reset selected item
       copy.item = {};
+      // reset moves
+      copy.moves = {
+        move_1: {name: null, type: ""},
+        move_2: {name: null, type: ""},
+        move_3: {name: null, type: ""},
+        move_4: {name: null, type: ""},
+      };
       
 
       return {
@@ -297,12 +304,28 @@ const pokemonReducer = (state = initialState, action) => {
           }
 
         case types.UPDATE_ACTIVE_MOVE: 
+          console.log('inside UPDATE_ACTIVE_MOVE', action.payload)
+
           const copyOfPrevActiveMove = {...state.currentPokemon};
-          copyOfPrevActiveMove[action.payload.moveId] = action.payload.moveObj
+          let makeActiveMoveObj = action.payload.moveObj;
+          if (!makeActiveMoveObj) makeActiveMoveObj = {name: null}
+          copyOfPrevActiveMove.activeMove = {moveId: action.payload.moveId, moveObj: makeActiveMoveObj}
 
           return {
             ...state,
             currentPokemon: copyOfPrevActiveMove
+          }
+        
+        case types.SELECT_MOVE_FROM_LIST: 
+          console.log('inside SELECT_MOVE_FROM_LIST', action.payload)
+
+          const copyOfPrevMoveSet = {...state.currentPokemon};
+          copyOfPrevMoveSet.moves[action.payload.moveId] = action.payload.moveObj
+          copyOfPrevMoveSet.activeMove = {moveId: action.payload.moveId, moveObj: action.payload.moveObj}
+          console.log(copyOfPrevMoveSet)
+          return {
+            ...state,
+            currentPokemon: copyOfPrevMoveSet
           }
     default: {
       return state
