@@ -129,3 +129,9 @@ export const updateActiveMove = (moveId, moveObj) => ({
   type: types.UPDATE_ACTIVE_MOVE, 
   payload: {moveId: moveId, moveObj: moveObj}
 })
+
+
+export const refreshAndDecodeSavedTeams = (savedTeams) => ({
+  type: types.REFRESH_AND_DECODE_SAVED_TEAMS, 
+  payload: {savedTeams: savedTeams}
+})

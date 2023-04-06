@@ -296,19 +296,13 @@ const pokemonReducer = (state = initialState, action) => {
         
         case types.SAVE_ITEM_TO_MON: 
           console.log('inside SAVE_ITEM_TO_MON')
-          // console.log('mon5: ', state.yourTeam.mon5)
-          console.log(state.yourTeam.mon1.slot.mon, state.yourTeam.mon2.slot.mon)
-
+          console.log(action.payload)
           const copyOfPrevItemMon = {...state.currentPokemon};
-          // console.log(copyOfPrevItem)
           copyOfPrevItemMon.item['item'] = action.payload.item;
           copyOfPrevItemMon.item['description'] = action.payload.description;
           copyOfPrevItemMon.item['url'] = action.payload.url;
 
-          console.log(state.yourTeam.mon1.slot.mon, state.yourTeam.mon2.slot.mon)
-
           console.log('end of SAVE_ITEM_TO_MON', )
-                    // console.log('mon5: ', state.yourTeam.mon5)
 
           return {
             ...state,

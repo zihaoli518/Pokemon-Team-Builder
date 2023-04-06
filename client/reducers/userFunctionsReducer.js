@@ -117,20 +117,28 @@ const userFunctionsReducer = (state = initialState, action) => {
           beforeMakingTeamActive[action.payload.team.key] = action.payload.team;
           console.log(beforeMakingTeamActive)
         
-        return {
-          ...state,
-          savedTeams: beforeMakingTeamActive
-        }
+          return {
+            ...state,
+            savedTeams: beforeMakingTeamActive
+          }
 
         case types.TOGGLE_LOGIN_LOADING:
           console.log('inside TOGGLE_LOGIN_LOADING ',)
 
           const newLoginLoading = !state.loginLoading;
           // console.log({loginLoading: newLoginLoading})
-        return {
-          ...state, 
-          loginLoading: newLoginLoading
-        }
+          return {
+            ...state, 
+            loginLoading: newLoginLoading
+          }
+
+        case types.REFRESH_AND_DECODE_SAVED_TEAMS: 
+          console.log('inside REFRESH_AND_DECODE_SAVED_TEAMS ',)
+          // console.log({loginLoading: newLoginLoading})
+          return {
+            ...state, 
+            savedTeams: action.payload.savedTeams
+          }
 
     default: {
       return state

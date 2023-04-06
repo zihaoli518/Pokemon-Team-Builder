@@ -71,6 +71,7 @@ const LoginModal = props => {
         // if success 
         if (response.status==='success') {
           let savedTeams = parseResponse(response.savedTeams);
+          console.log('INSIDE LOGIN FETCH REQUEST RESPONSE: ', savedTeams)
           props.changeUserState(response.username, savedTeams);
           props.toggleLoginLoading();
           props.toggleShowLoginModal();
@@ -125,6 +126,7 @@ const LoginModal = props => {
       },
     })
       .then(data => {
+
         console.log(data);
         props.changeUserState(username, data);
         props.toggleShowLoginModal();
@@ -133,7 +135,6 @@ const LoginModal = props => {
       })
   }
 
-  console.log('inside loginModal, ', showUsernameAlert, showPasswordAlert)
 
   return (
     <div className={showModalClassName}>

@@ -146,11 +146,11 @@ const CurrentPokemonDetails = props => {
 
     const chooseItem = (name, url, description, div, activeClassName, activeComponent) => {
       console.log('inside chooseItem')
-      console.log(props.yourTeam.mon1.slot.mon, props.yourTeam.mon2.slot.mon)
 
       makeDivActive(div, activeClassName, activeComponent);
+      // encode url so it doesnt cause errors when saved to data base in JSON format
+      // url = encodeURIComponent(url)
       props.saveItemToMon(name, description, url);
-      console.log(props.yourTeam.mon1.slot.mon, props.yourTeam.mon2.slot.mon)
 
       props.updateSavedTeam(props.yourTeam);
 
