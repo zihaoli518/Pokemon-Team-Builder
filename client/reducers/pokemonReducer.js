@@ -130,9 +130,11 @@ const pokemonReducer = (state = initialState, action) => {
 
 
       // reformatting move pool of pokemon 
+      let newMovePool = {};
       for (let i=0; i<pokemonData.moves.length; i++) {
-        copy.movePool[pokemonData.moves[i].move.name.replace("-", " ")] = true;
+        newMovePool[pokemonData.moves[i].move.name.replace("-", " ")] = true;
       }
+      copy.movePool = newMovePool;
 
       
       // need to reset slot to avoid unwantingly changing active team 

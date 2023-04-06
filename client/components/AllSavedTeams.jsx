@@ -93,27 +93,29 @@ const AllSavedTeams= (props) => {
           console.log('in savedTeamsToDataBase... ', savedTeams[teamKey][monKey])
           savedTeams[teamKey][monKey].activeAbility.description = savedTeams[teamKey][monKey].activeAbility.description.replace(/[\/\(\)\']/g, "&apos;")
           if (savedTeams[teamKey][monKey].item.item) {
-            savedTeams[teamKey][monKey].item.description = savedTeams[teamKey][monKey].item.description.replace(/[\/\(\)\']/g, "&apos;");
+            // savedTeams[teamKey][monKey].item.description = savedTeams[teamKey][monKey].item.description.replace(/[\/\(\)\']/g, "&apos;");
             savedTeams[teamKey][monKey].item.url = encodeURIComponent(savedTeams[teamKey][monKey].item.url);
           }
           if (savedTeams[teamKey][monKey].activeMove.moveObj.name) {
             savedTeams[teamKey][monKey].activeMove.moveObj.typeImageUrl = encodeURIComponent(savedTeams[teamKey][monKey].activeMove.moveObj.typeImageUrl);
             savedTeams[teamKey][monKey].activeMove.moveObj.categoryUrl = encodeURIComponent(savedTeams[teamKey][monKey].activeMove.moveObj.categoryUrl);
           }
-          if (savedTeams[teamKey][monKey].moves.move_1.name || savedTeams[teamKey][monKey].moves.move_2.name || savedTeams[teamKey][monKey].moves.move_3.name || savedTeams[teamKey][monKey].moves.move_4.name) 
+          if (savedTeams[teamKey][monKey].moves.move_1.name || savedTeams[teamKey][monKey].moves.move_2.name || savedTeams[teamKey][monKey].moves.move_3.name || savedTeams[teamKey][monKey].moves.move_4.name) {
             for (let i=1; i<=4; i++) {
               if (!savedTeams[teamKey][monKey]['moves']['move_'+i].name) continue;
               savedTeams[teamKey][monKey]['moves']['move_'+i].typeImageUrl = encodeURIComponent(savedTeams[teamKey][monKey]['moves']['move_'+i].typeImageUrl);
-              savedTeams[teamKey][monKey]['moves']['move_'+i].categoryUrl = encodeURIComponent(savedTeams[teamKey][monKey]['moves']['move_'+i].categoryUrl);
+              savedTeams[teamKey][monKey]['moves']['move_'+i].categoryImageUrl = encodeURIComponent(savedTeams[teamKey][monKey]['moves']['move_'+i].categoryImageUrl);
+              console.log('inside inner for loop... ', savedTeams[teamKey][monKey]['moves']['move_'+i].typeImageUrl, savedTeams[teamKey][monKey]['moves']['move_'+i].categoryImageUrl)
             }
+          } 
           
         }
       }
       // savedTeams.team_1.mon1.activeAbility.description = savedTeams.team_1.mon1.activeAbility.description.replace(/[\/\(\)\']/g, "&apos;")
     }
 
-    // parse url
-    // for ()
+    // // parse for special characters 
+    // .replace(/[\/\(\)\']/g, "&apos;")
 
     console.log('about to send this thing: ', {username: props.username, team: savedTeams})
     fetch('/api/saveUserTeams', {

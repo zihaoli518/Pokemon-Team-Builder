@@ -149,7 +149,7 @@ const CurrentPokemonDetails = props => {
 
       makeDivActive(div, activeClassName, activeComponent);
       // encode url so it doesnt cause errors when saved to data base in JSON format
-      // url = encodeURIComponent(url)
+      // url = envURIComponent(url)
       props.saveItemToMon(name, description, url);
 
       props.updateSavedTeam(props.yourTeam);
@@ -384,7 +384,9 @@ const CurrentPokemonDetails = props => {
 
         <div className='evs-container' onClick={()=> {makeDivActive('evs-container', 'active-pokemon-detail-container', 'evs-container')}}>
           <h3>EVs</h3>
-
+          {/* <div class="slidecontainer"> */}
+            <input type="range" min="1" max="100" value="50" class="slider" id="myRange" />
+          {/* </div> */}
         </div>
       </div>
       {/* browse and search area on the right side  */}
