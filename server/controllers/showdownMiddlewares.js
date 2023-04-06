@@ -84,8 +84,8 @@ showdownMiddlewares.getAllMoves = (req, res, next) => {
   // http://pokeapi.co/api/v2/move/close-combat
 
   for (let i=0; i<arrayOfMoves.length; i++) {
-    let moveName = arrayOfMoves[i].name.toLowerCase();
-    // const parsedItemName = moveName.replace(' ', '-');
+    let moveName = arrayOfMoves[i].name.toLowerCase().replace('-', ' ');
+    // const parsedItemName = moveName.replace('-', '-');
 
     console.log('..........', i, '/', arrayOfMoves.length, '..........')
 

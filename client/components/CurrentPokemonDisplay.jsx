@@ -190,7 +190,7 @@ class CurrentPokemonDisplay extends Component {
     }
     // {console.log(this.props.currentPokemon.pokemon)}
     return (
-      <div className='current-pokemon-container'>
+      <div className='current-pokemon-container' key={this.props.currentPokemon.slot.mon}>
         <div key={this.props.currentPokemon.pokemon} className="current-pokemon">
           <div className="top-flexbox">
             <h3 id={this.props.currentPokemon.pokemon}> {this.props.currentPokemon.pokemon} </h3>
@@ -200,13 +200,14 @@ class CurrentPokemonDisplay extends Component {
             </div>
             <div className="current-pokemon-spacer" ></div>
             <div className="option-buttons">
-              <button className='add-to-your-team' onClick={()=>{this.addToTeam(this.props.currentPokemon, 'friendly');console.log('onclick fired GREEN')}}>Add</button>
-              <button className='add-to-enemy-team' onClick={()=>{this.addToTeam(this.props.currentPokemon, 'enemy');console.log('onclick fired RED')}}>Add</button>
+              <button className='add-to-your-team' onClick={()=>{this.addToTeam({...this.props.currentPokemon}, 'friendly');console.log('onclick fired GREEN')}}>Add</button>
+              <button className='add-to-enemy-team' onClick={()=>{this.addToTeam({...this.props.currentPokemon}, 'enemy');console.log('onclick fired RED')}}>Add</button>
             </div>
           </div>
           <div className="current-pokemon-flexbox">
             
             <PokemonSprite
+              key={this.props.currentPokemon.slot.mon}
               pokemon={this.props.currentPokemon.pokemon}
               className="pokemon-class"
             />

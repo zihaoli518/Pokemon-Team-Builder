@@ -29,7 +29,7 @@ const initialState = {
 }
 
 const userFunctionsReducer = (state = initialState, action) => {
-  console.log('inside user reducer, action: ', action)
+  // console.log('inside user reducer, action: ', action)
 
   switch (action.type) {
    
@@ -111,7 +111,7 @@ const userFunctionsReducer = (state = initialState, action) => {
 
         case types.UPDATE_SAVED_TEAM:
           console.log('inside UPDATE_SAVED_TEAM ')
-        
+          
           let beforeMakingTeamActive = {...state.savedTeams};
           console.log(beforeMakingTeamActive)
           beforeMakingTeamActive[action.payload.team.key] = action.payload.team;

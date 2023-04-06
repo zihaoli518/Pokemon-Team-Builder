@@ -52,6 +52,7 @@ const initialState = {
   },
   enemyTeam: {
     size: 0,
+    key: "team_1",
     mon1: null,
     mon2: null,
     mon3: null,
@@ -59,6 +60,8 @@ const initialState = {
     mon5: null,
     mon6: null,
   },
+  previousTeamKeyF: 'team_1',
+  previousTeamKeyE: 'team_1',
   teamStatus: false,
   showChartOption: false,
   showTypingChart: false,
@@ -66,29 +69,29 @@ const initialState = {
 
 const pokemonReducer = (state = initialState, action) => {
 
-  console.log('inside pokemon reducer, action: ', action)
+  // console.log('inside pokemon reducer, action: ', action)
 
 
   switch (action.type) {
-    // expecting data from smogon fetch
-    case types.ADD_POKEMON:
-      const newCurrentPokemon = state.currentPokemon;
-      newCurrentPokemon.isActive = true;
-      for (let key in action.payload) {
-        newCurrentPokemon[key] = action.payload[key]
-      }
-      // check if competitive stats not found 
-      if (Object.keys(newCurrentPokemon.moves)[0]===undefined) {
-        newCurrentPokemon.competetiveStatus = false;
-      } else newCurrentPokemon.competetiveStatus = true;
+    // // expecting data from smogon fetch
+    // case types.ADD_POKEMON:
+    //   const newCurrentPokemon = state.currentPokemon;
+    //   newCurrentPokemon.isActive = true;
+    //   for (let key in action.payload) {
+    //     newCurrentPokemon[key] = action.payload[key]
+    //   }
+    //   // check if competitive stats not found 
+    //   if (Object.keys(newCurrentPokemon.moves)[0]===undefined) {
+    //     newCurrentPokemon.competetiveStatus = false;
+    //   } else newCurrentPokemon.competetiveStatus = true;
 
-      // console.log('first reducer ', newCurrentPokemon)
-      return {
-         // making deep copy of previou state
-         ...state,
-         // reassigning updated values to states
-        currentPokemon: newCurrentPokemon
-      }
+    //   // console.log('first reducer ', newCurrentPokemon)
+    //   return {
+    //      // making deep copy of previou state
+    //      ...state,
+    //      // reassigning updated values to states
+    //     currentPokemon: newCurrentPokemon
+    //   }
 
     // expecting data from pokeAPI fetch
     case types.ADD_POKEMON_POKEAPI: 
@@ -128,7 +131,7 @@ const pokemonReducer = (state = initialState, action) => {
 
       // reformatting move pool of pokemon 
       for (let i=0; i<pokemonData.moves.length; i++) {
-        copy.movePool[pokemonData.moves[i].move.name] = true;
+        copy.movePool[pokemonData.moves[i].move.name.replace("-", " ")] = true;
       }
 
       
@@ -160,21 +163,16 @@ const pokemonReducer = (state = initialState, action) => {
 
     // add pokemon to your team 
     case types.ADD_POKEMON_TO_YOUR_TEAM :
-      const yourNewTeam = {...state.yourTeam};
-      const currentPokemonY = action.payload;
-
+      console.log('inside ADD_POKEMON_TO_YOUR_TEAM', action.payload)
+      const yourNewTeam = JSON.parse(JSON.stringify(state.yourTeam));
+      const currentPokemonY = JSON.parse(JSON.stringify(state.currentPokemon));
+      
       if (yourNewTeam.size>=6) return;
 
       yourNewTeam.size++;
-      // adding new pokemon to the first available spot 
-      for (let i=1; i<=6; i++) {
-        let currentMonString = 'mon' + i.toString();
-        if (!(yourNewTeam[currentMonString])) {
-          currentPokemonY.slot.mon = currentMonString;
-          yourNewTeam[currentMonString] = currentPokemonY;
-          break;
-        }
-      }
+
+      yourNewTeam['mon'+yourNewTeam.size] = {...currentPokemonY};
+      yourNewTeam['mon'+yourNewTeam.size].slot.mon = 'mon'+yourNewTeam.size;
 
       return {
         ... state,
@@ -209,13 +207,14 @@ const pokemonReducer = (state = initialState, action) => {
       // select pokemon -> and make it the current display pokemon 
       case types.SELECT_TEAM_MEMBER : 
         console.log('inside SELECT_TEAM_MEMBER', action.payload)
-        const copyOfCurrentPokemon = action.payload.pokemonData;
-        copyOfCurrentPokemon.slot.team = action.payload.team;
-        copyOfCurrentPokemon.slot.mon = action.payload.mon;
 
+        const copyOfPokemonData = {...action.payload.pokemonData};
+        copyOfPokemonData.slot.team = action.payload.team;
+        copyOfPokemonData.slot.mon = action.payload.mon;
+        
         return {
           ... state,
-          currentPokemon: copyOfCurrentPokemon
+          currentPokemon: copyOfPokemonData
         }
 
       // remove pokemon from team 
@@ -250,15 +249,19 @@ const pokemonReducer = (state = initialState, action) => {
         return {
           ...state,
           yourTeam: action.payload.enemeyTeam,
-          enemyTeam: action.payload.yourTeam
+          enemyTeam: action.payload.yourTeam,
+          previousTeamKeyF: state.previousTeamKeyE,
+          previousTeamKeyE: state.previousTeamKeyF,
         }
       
       case types.SET_YOUR_TEAM: 
+        let previousTeamKey = state.previousTeamKey;
 
         return {
           ...state,
           yourTeam: action.payload.team,
           teamStatus: true,
+          previousTeamKey: previousTeamKey,
         }
         
       case types.MAKE_SAVED_TEAM_ACTIVE:
@@ -292,11 +295,20 @@ const pokemonReducer = (state = initialState, action) => {
           }
         
         case types.SAVE_ITEM_TO_MON: 
+          console.log('inside SAVE_ITEM_TO_MON')
+          // console.log('mon5: ', state.yourTeam.mon5)
+          console.log(state.yourTeam.mon1.slot.mon, state.yourTeam.mon2.slot.mon)
+
           const copyOfPrevItemMon = {...state.currentPokemon};
-          const copyOfPrevItem = copyOfPrevItemMon.item;
-          copyOfPrevItem['item'] = action.payload.item;
-          copyOfPrevItem['description'] = action.payload.description;
-          copyOfPrevItem['url'] = action.payload.url;
+          // console.log(copyOfPrevItem)
+          copyOfPrevItemMon.item['item'] = action.payload.item;
+          copyOfPrevItemMon.item['description'] = action.payload.description;
+          copyOfPrevItemMon.item['url'] = action.payload.url;
+
+          console.log(state.yourTeam.mon1.slot.mon, state.yourTeam.mon2.slot.mon)
+
+          console.log('end of SAVE_ITEM_TO_MON', )
+                    // console.log('mon5: ', state.yourTeam.mon5)
 
           return {
             ...state,

@@ -934,6 +934,7 @@ input[type="text"]
   transform: scale(1.03);
   transition: ease-in-out;
   transition: 0.3s all ease;
+  cursor: pointer;
 }
 
 .pokemon-details-container .active-pokemon-detail-container {
@@ -1005,7 +1006,7 @@ input[type="text"]
     // effects 
 .abilities-container-inner .ability:hover {
   border: 2.3px dotted black;
-
+  cursor: help;
 }
 
 .active-ability-highlighted {
@@ -1168,6 +1169,7 @@ input[type="text"]
 .item-row:hover{
   background-color: rgba(144, 176, 205, 0.66);
   border: 2px dotted rgba(80, 80, 80, 0.814);
+  cursor: pointer;
 }
 
 .active-item-browse-area {
@@ -1269,8 +1271,53 @@ input[type="text"]
   text-align: center;
 }
 
+.moves-list-labels {
+  margin-top: -1%;
+  margin-bottom: 1.4%;
+  height: 2.5%;  
+  width: 90%;
+  display: flex;
+  justify-content: center;
+
+
+}
+
+.moves-list-labels .name {
+  position: relative;
+  margin: 0 auto;
+  left: 5%;
+}
+.moves-list-labels .type {
+  position: relative;
+  margin: 0 auto;
+  top: -5%;
+  left: 16%;
+  font-size: 0.85rem;
+}
+.moves-list-labels .cat {
+  position: relative;
+  margin: 0 auto;
+  top: -5%;
+  left: 5%;
+  font-size: 0.85rem;
+}
+.moves-list-labels .pow {
+  position: relative;
+  margin: 0 auto;
+  top: -5%;
+  left: 3%;
+  font-size: 0.85rem;
+}
+.moves-list-labels .acc {
+  position: relative;
+  margin: 0 auto;
+  top: -5%;
+  left: -1%;
+  font-size: 0.85rem;
+}
+
 .browse-moves-container .moves-list {
-  height: 71%;
+  height: 70%;
   width: 90%;
 
   background-color: rgba(123, 135, 151, 0.496);
@@ -1370,6 +1417,7 @@ input[type="text"]
 .move-row:hover{
   background-color: rgba(144, 176, 205, 0.66);
   border: 2px dotted rgba(80, 80, 80, 0.814);
+  cursor: pointer;
 }
 
 .active-move-browse-area {
@@ -1609,6 +1657,7 @@ input[type="text"]
 
   height: 100%;
   width: 98%;
+  cursor: pointer;
 }
 
 .team-member-container:nth-child(1) {
@@ -1617,36 +1666,39 @@ input[type="text"]
 }
 .team-member-container:nth-child(2) {
   -webkit-animation-delay:0.6s;
-  animation-delay:0.3s;
+  animation-delay:0.2s;
 }
 .team-member-container:nth-child(3) {
   -webkit-animation-delay:0.76s;
-  animation-delay:0.5s;
+  animation-delay:0.3s;
 }
 .team-member-container:nth-child(4) {
   -webkit-animation-delay:2s;
-  animation-delay:0.7s;
+  animation-delay:0.4s;
 }
 .team-member-container:nth-child(5) {
   -webkit-animation-delay:2.26s;
-  animation-delay:0.9s;
+  animation-delay:0.5s;
 }
 .team-member-container:nth-child(6) {
   -webkit-animation-delay:2.26s;
-  animation-delay:1s;
+  animation-delay:0.6s;
 }
 
 @-webkit-keyframes fadeIn  {
   0% {
      opacity:0;
+     transform: translateY(15px);
   }
-  
+  25% {
+    transform: translateY(-15px);
+  }
   75% {
      opacity:0.7;
   }
   
   100% {
-     opacity:2;
+     opacity:1;
   }
 
 }
@@ -1696,8 +1748,18 @@ input[type="text"]
   transition: ease-in-out;
 }
 
+.pokemon-sprite-class-small{
+  background-color: rgba(92, 143, 134, 0.298);
+  margin-top: -1.5%;
+  padding-bottom: -30px;
+  border-radius: 1.5rem;
+  box-shadow: 10px 5px 15px -10px rgba(49, 75, 74, 0.705);
+
+}
+
 .pokemon-sprite-class-small:hover{
   transform: scale(1.1);
+  transform: translateY(-10px);
   transition: ease-in-out;
   transition: 0.5s;
   background-color: rgba(67, 126, 116, 0.409);
@@ -1710,6 +1772,7 @@ input[type="text"]
 
 .need-active-team-member-hover-effect{
   transform: scale(1.1);
+  transform: translateY(-10px);
   transition: ease-in-out;
   transition: 0.5s;
   background-color: rgba(67, 126, 116, 0.658);
@@ -1745,7 +1808,7 @@ input[type="text"]
   width: 80px;
   font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
   font-size: 20px;
-  background-color: rgba(99, 133, 99, 0.721);
+  background-color: rgba(201, 198, 152, 0.721);
   color: rgb(41, 42, 42);
   border-radius: 0.3rem;
 

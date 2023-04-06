@@ -146,8 +146,12 @@ const CurrentPokemonDetails = props => {
 
     const chooseItem = (name, url, description, div, activeClassName, activeComponent) => {
       console.log('inside chooseItem')
+      console.log(props.yourTeam.mon1.slot.mon, props.yourTeam.mon2.slot.mon)
+
       makeDivActive(div, activeClassName, activeComponent);
       props.saveItemToMon(name, description, url);
+      console.log(props.yourTeam.mon1.slot.mon, props.yourTeam.mon2.slot.mon)
+
       props.updateSavedTeam(props.yourTeam);
 
       // clear input field 
@@ -255,11 +259,11 @@ const CurrentPokemonDetails = props => {
       const nameWithDash = name.replace(' ', '-');
       const className = "move-row move-row-" + nameWithDash; 
 
-      // // check if row should be pushed to array, if !searchStr then default push everything,  or if searchStr matches the start of item name
-      // if (searchStr) {
-      //   highlightedStr = nameLowerCase.slice(0, searchStr.length);
-      //   restOfStr = nameLowerCase.slice(searchStr.length, nameLowerCase.length);
-      // }
+      // check if row should be pushed to array, if !searchStr then default push everything,  or if searchStr matches the start of item name
+      if (searchStr) {
+        highlightedStr = name.slice(0, searchStr.length);
+        restOfStr = name.slice(searchStr.length, name.length);
+      }
 
       if (!searchStr || highlightedStr===searchStr) {
         if (searchStr)  highlightedStr = searchStr;
@@ -422,7 +426,7 @@ const CurrentPokemonDetails = props => {
               </div>
                 {/* active move */}
               {props.currentPokemon.activeMove.moveObj.exists ?
-                <div className='move-row move-selected'>
+                <div className='move-selected'>
                   <div className='move-row-top'>
                     <h4>{props.currentPokemon.activeMove.moveObj.name}</h4>
                     <img className='type-symbol' src={props.currentPokemon.activeMove.moveObj.typeImageUrl} alt="" />
@@ -436,6 +440,14 @@ const CurrentPokemonDetails = props => {
                 </div>
                 : <div className='move-selected-placeholder'> </div>
               }
+              <div className='moves-list-labels'>
+                <h5 className='name'>name</h5>
+                <h5 className='type'>type</h5>
+                <h5 className='cat'>cat</h5>
+                <h5 className='pow'>pow</h5>
+                <h5 className='acc'>acc</h5>
+
+              </div>
                 {/* all items */}
               <div className='moves-list'>
                 {allMovesToBeDisplayed}

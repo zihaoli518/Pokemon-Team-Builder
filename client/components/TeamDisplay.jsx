@@ -24,7 +24,9 @@ const mapStateToProps = (state) => {
     yourTeam: state.pokemon.yourTeam,
     enemyTeam: state.pokemon.enemyTeam,
     username: state.userFunctions.name,
-    savedTeams: state.userFunctions.savedTeams
+    savedTeams: state.userFunctions.savedTeams,
+    previousTeamKeyF: state.pokemon.previousTeamKeyF,
+    previousTeamKeyE: state.pokemon.previousTeamKeyE,
   };
 };
 
@@ -36,7 +38,7 @@ const mapDispatchToProps = dispatch => ({
 
 const TeamDisplay= (props) => {
   
-  {console.log('inside TeamDisplay', props.yourTeam)}
+  if (props.yourTeam.mon2) {console.log('inside TeamDisplay', 'slot for mon1: ', props.yourTeam.mon1.slot.mon, 'slot for mon2: ', props.yourTeam.mon2.slot.mon)}
   if(!props.yourTeam) return null;
   const [teamState, setTeamState] = useState({color: props.team, selectedTeam: {}, selectedTeamName: props.yourTeam.name, title: props.yourTeam.name, teamToBeDisplayed:[]})
   
@@ -54,11 +56,13 @@ const TeamDisplay= (props) => {
     if (props.team === 'green') {
       teamState.selectedTeam = props.yourTeam;
       teamState.selectedTeamName = 'yourTeam';
-      teamState.title = props.yourTeam.name
+      teamState.title = props.yourTeam.name;
+      teamState['previousTeamKey'] = props.previousTeamKeyF;
     } else {
       teamState.selectedTeam = props.enemyTeam
       teamState.selectedTeamName = 'enemyTeam';
-      teamState.title = 'enemy team'
+      teamState.title = 'enemy team';
+      teamState['previousTeamKey'] = props.previousTeamKeyE;
     }
 
     // seeting team name
@@ -66,16 +70,20 @@ const TeamDisplay= (props) => {
       setTeamState({...teamState, title: 'untitled'})
     }
     
-
     const newTeamToBeDisplayed = [];
+
     for (let i=1; i<=6; i++) {
       let selectedMon = 'mon' + i.toString();
+      // if re-render is needed, add unique key to the child <TeamMember /> component to force re-render 
+      let controlRerender = '';
+      console.log('POPULATE TEAM ',  teamState.previousTeamKey, teamState.selectedTeam, )
+      if (teamState.previousTeamKey!==teamState.selectedTeam.key) controlRerender = Math.random();
       // console.log('inside TeamDisplay for loop: ')
       // console.log(selectedTeam, selectedMon);
       if (teamState.selectedTeam[selectedMon]) {
         newTeamToBeDisplayed.push(
             <TeamMember
-              key={selectedMon+teamState.selectedTeam[selectedMon]['pokemon']}
+              key={selectedMon+teamState.selectedTeam[selectedMon]['pokemon'] + controlRerender}
               selectedTeamName={teamState.selectedTeamName}
               selectedTeam={teamState.selectedTeam}
               selectedMon={selectedMon}
