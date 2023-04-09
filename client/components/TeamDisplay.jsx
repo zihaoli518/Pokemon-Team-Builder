@@ -32,14 +32,15 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = dispatch => ({
   saveCurrentTeamAsNew : (teamObj) => dispatch(actions.saveCurrentTeamAsNew(teamObj)),
-  updateSavedTeam: (team) => dispatch(actions.updateSavedTeam(team))
+  updateSavedTeam: (team) => dispatch(actions.updateSavedTeam(team)),
+  clearTeam: (teamStr) => dispatch(actions.clearTeam(teamStr)),
 });
 
 
 const TeamDisplay= (props) => {
   
   if (props.yourTeam.mon2) {console.log('inside TeamDisplay', 'slot for mon1: ', props.yourTeam.mon1.slot.mon, 'slot for mon2: ', props.yourTeam.mon2.slot.mon)}
-  if(!props.yourTeam) return null;
+  if (!props.yourTeam) return null;
   const [teamState, setTeamState] = useState({color: props.team, selectedTeam: {}, selectedTeamName: props.yourTeam.name, title: props.yourTeam.name, teamToBeDisplayed:[]})
   
   useEffect(() => {
@@ -76,14 +77,13 @@ const TeamDisplay= (props) => {
       let selectedMon = 'mon' + i.toString();
       // if re-render is needed, add unique key to the child <TeamMember /> component to force re-render 
       let controlRerender = '';
-      console.log('POPULATE TEAM ',  teamState.previousTeamKey, teamState.selectedTeam, )
-      if (teamState.previousTeamKey!==teamState.selectedTeam.key) controlRerender = Math.random();
-      // console.log('inside TeamDisplay for loop: ')
-      // console.log(selectedTeam, selectedMon);
+      console.log('POPULATE TEAM ',  props.previousTeamKeyE, teamState.selectedTeam.key, )
+      if (props.previousTeamKeyE!==teamState.selectedTeam.key) controlRerender = Math.random();
+
       if (teamState.selectedTeam[selectedMon]) {
         newTeamToBeDisplayed.push(
             <TeamMember
-              key={selectedMon+teamState.selectedTeam[selectedMon]['pokemon'] + controlRerender}
+              key={props.yourTeam.key+selectedMon+teamState.selectedTeam[selectedMon]['pokemon']}
               selectedTeamName={teamState.selectedTeamName}
               selectedTeam={teamState.selectedTeam}
               selectedMon={selectedMon}
@@ -153,12 +153,12 @@ const TeamDisplay= (props) => {
         <div className='save-buttons-container'> 
           <button className='save-team-button' onClick={(e) => {saveTeam(e)}}>save</button>
           <button className='save-team-as-new-button' onClick={(e) => {saveTeamAsNew(e)}}>save as new</button>
+          <button className='clear-team-button' id='clear-team-button-f' onClick={(e) => {props.clearTeam('yourTeam')}}>clear</button>
         </div>
         :
-        null
+        <button className='clear-team-button' id='clear-team-button-e' onClick={(e) => {props.clearTeam('enemyTeam')}}>clear</button>
 
       }
-
     </div>
   );
 

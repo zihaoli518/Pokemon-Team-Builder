@@ -135,3 +135,18 @@ export const refreshAndDecodeSavedTeams = (savedTeams) => ({
   type: types.REFRESH_AND_DECODE_SAVED_TEAMS, 
   payload: {savedTeams: savedTeams}
 })
+
+export const updatePreviousTeamKey = (letter) => ({
+  type: types.UPDATE_PREVIOUS_TEAM_KEY, 
+  payload: {letter: letter}
+})
+
+export const clearTeam = (teamStr) => ({
+  type: types.CLEAR_TEAM, 
+  payload: teamStr
+})
+
+export const updateCalculatedStats = (evs, ivs, results) => ({
+  type: types.UPDATE_CALCULATED_STATS, 
+  payload: {evs: evs, ivs: ivs, results: results}
+})

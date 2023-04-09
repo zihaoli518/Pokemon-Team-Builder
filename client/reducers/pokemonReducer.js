@@ -15,10 +15,12 @@ import * as types from '../constants/actionTypes';
 
 import helpers from './helpers.js'
 import { getTypeWeaknesses } from 'poke-types';
+const calculator = require('pokemon-stat-calculator');
 
 const initialState = {
   currentPokemon: {
     pokemon: null,
+    level: 100,
     types: [],
     abilities: [{ ability: { name: "", url: "", description: "" }, is_hidden: false, slot: 0 }],
     activeAbility: {name: null, description: null},
@@ -33,6 +35,10 @@ const initialState = {
       moveId: "",
       moveObj: {name: null}
     },
+    evs:{obj: {hp: 0, attack: 0, defense: 0, specialA: 0, specialD: 0, Speed: 0}, array: [0,0,0,0,0,0]},
+    ivs:{obj: {hp: 31, attack: 31, defense: 31, specialA: 31, specialD: 31, Speed: 31}, array: [0,0,0,0,0,0]},
+    nature: 'serious',
+    calculatedStats: [0, 0, 0, 0, 0, 0],
     movePool: {},
     stats: {},
     weakness: {},
@@ -53,6 +59,7 @@ const initialState = {
   enemyTeam: {
     size: 0,
     key: "team_1",
+    name: "enemy team",
     mon1: null,
     mon2: null,
     mon3: null,
@@ -148,6 +155,13 @@ const pokemonReducer = (state = initialState, action) => {
         move_3: {name: null, type: ""},
         move_4: {name: null, type: ""},
       };
+      // reset evs and evs 
+      copy.evs = {obj: {hp: 0, attack: 0, defense: 0, specialA: 0, specialD: 0, Speed: 0}, array: [0,0,0,0,0,0]};
+      copy.ivs = {obj: {hp: 31, attack: 31, defense: 31, specialA: 31, specialD: 31, Speed: 31}, array: [31,31,31,31,31,31]};
+      copy.nature = 'serious';
+      const statsArray = helpers.statObjToArray(copy.stats);
+      const natureArray = calculator.getNatureValue(copy.nature)
+      copy.calculatedStats = calculator.calAllStats(copy.ivs.array, statsArray, copy.evs.array, copy.level, natureArray)
       
 
       return {
@@ -257,23 +271,25 @@ const pokemonReducer = (state = initialState, action) => {
         }
       
       case types.SET_YOUR_TEAM: 
-        let previousTeamKey = state.previousTeamKey;
+        let previousTeamKey = state.previousTeamKeyE;
 
         return {
           ...state,
           yourTeam: action.payload.team,
           teamStatus: true,
-          previousTeamKey: previousTeamKey,
+          previousTeamKeyE: previousTeamKey,
         }
         
       case types.MAKE_SAVED_TEAM_ACTIVE:
-        console.log('inside MAKE_SAVED_TEAM_ACTIVE', action.payload.team)
+        console.log('inside MAKE_SAVED_TEAM_ACTIVE', action.payload.key)
         const newActiveTeam = action.payload.team;
         newActiveTeam.key = action.payload.key;
 
         return {
           ...state,
-          yourTeam: action.payload.team,
+          yourTeam: newActiveTeam,
+          teamStatus: true,
+
         }
 
         // save selected ability to currentPokemon.activeAbility and saving that to the team 
@@ -335,6 +351,52 @@ const pokemonReducer = (state = initialState, action) => {
             ...state,
             currentPokemon: copyOfPrevMoveSet
           }
+
+        case types.UPDATE_PREVIOUS_TEAM_KEY: 
+        console.log('inside UPDATE_PREVIOUS_TEAM_KEY', state.yourTeam.key)
+
+          return {
+            ...state,
+            previousTeamKeyE: state.yourTeam.key
+          }
+        
+        case types.CLEAR_TEAM:
+          const emptyTeam ={
+            size: 0,
+            key: "team_1",
+            mon1: null,
+            mon2: null,
+            mon3: null,
+            mon4: null,
+            mon5: null,
+            mon6: null,
+          }
+          if (action.payload==='yourTeam') {
+            emptyTeam.name = 'your team';
+            return {
+              ...state,
+              yourTeam: emptyTeam
+            }
+          }
+          emptyTeam.name = 'enemy team';
+          return {
+            ...state,
+            enemyTeam: emptyTeam
+          }
+        
+        case types.UPDATE_CALCULATED_STATS: 
+        console.log('inside UPDATE_CALCULATED_STATS', action.payload)
+
+          return {
+            ...state,
+            currentPokemon: {
+              ...state.currentPokemon,
+              evs: {array: action.payload.evs},
+              ivs: {array: action.payload.ivs},
+              calculatedStats: action.payload.results
+            }
+          }
+         
     default: {
       return state
     }

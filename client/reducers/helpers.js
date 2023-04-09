@@ -56,4 +56,14 @@ helpers.reOrderSavedTeams = (savedTeams) => {
   return newSavedTeams
 }
 
+helpers.statObjToArray = (statObj) => {
+  let array = [];
+  const order = ['hp', 'attack', 'defense', 'specialA', 'specialD', 'speed']
+  order.forEach(stat => {
+    array.push(statObj[stat])
+  })
+  console.log('END OF STAT->OBJ ', array);
+  return array
+}
+
 export default helpers

@@ -30,7 +30,7 @@ const SavedTeamMember = props => {
           key={props.key}
           pokemon={props.pokemonName}
           className={"pokemon-sprite-saved-team"}
-          onClick={()=>{props.selectTeamMember(props.pokemonData)}}
+          // onClick={()=>{props.selectTeamMember(props.pokemonData)}}
         />
       </div>
     </div>

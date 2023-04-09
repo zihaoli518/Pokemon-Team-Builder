@@ -123,13 +123,13 @@ const LoginModal = props => {
         savedTeamsObject[teamKey][monKey].activeAbility.description = savedTeamsObject[teamKey][monKey].activeAbility.description.replace(/[\/\(\)\']/g, "&apos;")
         if (savedTeamsObject[teamKey][monKey].item.item) {
           // savedTeams[teamKey][monKey].item.description = savedTeams[teamKey][monKey].item.description.replace(/[\/\(\)\']/g, "&apos;");
-          // savedTeamsObject[teamKey][monKey].item.url = decodeURIComponent(savedTeamsObject[teamKey][monKey].item.url);
+          savedTeamsObject[teamKey][monKey].item.url = decodeURIComponent(savedTeamsObject[teamKey][monKey].item.url);
         }
         if (savedTeamsObject[teamKey][monKey].activeMove.moveObj.name) {
           savedTeamsObject[teamKey][monKey].activeMove.moveObj.typeImageUrl = decodeURIComponent(savedTeamsObject[teamKey][monKey].activeMove.moveObj.typeImageUrl);
           savedTeamsObject[teamKey][monKey].activeMove.moveObj.categoryUrl = decodeURIComponent(savedTeamsObject[teamKey][monKey].activeMove.moveObj.categoryUrl);
         }
-        if (savedTeamsObject[teamKey][monKey].moves.move_1.name || savedTeams[teamKey][monKey].moves.move_2.name || savedTeams[teamKey][monKey].moves.move_3.name || savedTeams[teamKey][monKey].moves.move_4.name) {
+        if (savedTeamsObject[teamKey][monKey].moves.move_1.name || savedTeamsObject[teamKey][monKey].moves.move_2.name || savedTeamsObject[teamKey][monKey].moves.move_3.name || savedTeamsObject[teamKey][monKey].moves.move_4.name) {
           for (let i=1; i<=4; i++) {
             if (!savedTeamsObject[teamKey][monKey]['moves']['move_'+i].name) continue;
             savedTeamsObject[teamKey][monKey]['moves']['move_'+i].typeImageUrl = decodeURIComponent(savedTeamsObject[teamKey][monKey]['moves']['move_'+i].typeImageUrl);

@@ -105,7 +105,7 @@ const AllSavedTeams= (props) => {
               if (!savedTeams[teamKey][monKey]['moves']['move_'+i].name) continue;
               savedTeams[teamKey][monKey]['moves']['move_'+i].typeImageUrl = encodeURIComponent(savedTeams[teamKey][monKey]['moves']['move_'+i].typeImageUrl);
               savedTeams[teamKey][monKey]['moves']['move_'+i].categoryImageUrl = encodeURIComponent(savedTeams[teamKey][monKey]['moves']['move_'+i].categoryImageUrl);
-              console.log('inside inner for loop... ', savedTeams[teamKey][monKey]['moves']['move_'+i].typeImageUrl, savedTeams[teamKey][monKey]['moves']['move_'+i].categoryImageUrl)
+              // console.log('inside inner for loop... ', savedTeams[teamKey][monKey]['moves']['move_'+i].typeImageUrl, savedTeams[teamKey][monKey]['moves']['move_'+i].categoryImageUrl)
             }
           } 
           

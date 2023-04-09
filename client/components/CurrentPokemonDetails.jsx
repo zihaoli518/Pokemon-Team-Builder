@@ -17,6 +17,8 @@ import { connect } from 'react-redux';
 import * as actions from '../actions/actions';
 import PokemonSprite from './PokemonSprite.jsx';
 import StatChart from './StatChart.jsx';
+import EvSliderContainer from './EvSliderContainer.jsx';
+import EvContainer from './EvContainer.jsx';
 
 // importing json files containing data from smogon 
 import Data from './dexData.js';
@@ -67,19 +69,31 @@ const CurrentPokemonDetails = props => {
       }
     } 
     const container = document.getElementsByClassName(div)[0];
-    console.log('inside makeDivActive ', div, activeComponent)
-    console.log('container: ', container, document.getElementsByClassName(div))
+    // console.log('inside makeDivActive ', div, activeComponent)
+    // console.log('container: ', container, document.getElementsByClassName(div))
     container.classList.add(activeClassName)
     
-    if (div !== 'abilities-container') setShowBrowseArea(true);
-    else setShowBrowseArea(false);
+    if (div === 'abilities-container' || div === 'evs-container') {
+      setShowBrowseArea(false);
+      const needStretched = document.getElementsByClassName("pokemon-details-container")[0];
+      needStretched.classList.add("pokemon-details-container-stretched");
+      if (div === 'evs-container')  setShowBrowseArea(true);
+    }
+    else {
+      setShowBrowseArea(true);
+      const previousActiveStretched = document.getElementsByClassName("pokemon-details-container-stretched");
+      if (previousActiveStretched.length!==0) {
+        if (previousActiveStretched[0].classList !== div) {
+          previousActiveStretched[0].classList.remove("pokemon-details-container-stretched");
+        }
+      } 
+    }
 
     // remove active move containers 
     if (activeComponent==='moves-container'||activeComponent==='move-container') {
       setCurrentlyActiveDiv({div: activeComponent});
       return;
     }
-    console.log('inside REMOVE ACTIVE MOVE CONTAINER', div)
     const previousActiveMove = document.getElementsByClassName('active-move-container');
     if (previousActiveMove.length!==0) {
       if (previousActiveMove[0].classList !== div) {
@@ -145,7 +159,7 @@ const CurrentPokemonDetails = props => {
     const allItemsToBeDisplayed = [];
 
     const chooseItem = (name, url, description, div, activeClassName, activeComponent) => {
-      console.log('inside chooseItem')
+      // console.log('inside chooseItem')
 
       makeDivActive(div, activeClassName, activeComponent);
       // encode url so it doesnt cause errors when saved to data base in JSON format
@@ -203,7 +217,6 @@ const CurrentPokemonDetails = props => {
 
   // populate moves
   const selectMoveContainer = (num) => {
-    console.log('inside selectMoveContainer ', )
     makeDivActive('move-container-' + num, 'active-move-container', 'move-container');
     props.updateActiveMove('move_'+num, props.currentPokemon.moves["move_"+num]);
   }
@@ -213,7 +226,6 @@ const CurrentPokemonDetails = props => {
     const allMovesToBeDisplayed = [];
 
     const chooseMove = (moveId, moveObj, div, activeClassName, activeComponent) => {
-      console.log('inside chooseMove')
       makeDivActive(div, activeClassName, activeComponent);
       props.selectMoveFromList(moveId, moveObj);
       // props.updateSavedTeam(props.yourTeam);
@@ -296,19 +308,28 @@ const CurrentPokemonDetails = props => {
 
 
   const handleFirstClick = (e) => {
-    // console.log('inside handleFirstClick! ', current)
     if (currentlyActiveDiv.div==='moves-container' || currentlyActiveDiv.div==='move-container') {
       return;
     }
-    console.log('OMG handleFirstClick!!!')
     selectMoveContainer(1); 
     e.preventDefault();
     e.stopPropagation();
   }
 
-  
-  
+  const helper = {};
+  // var rangeslider = document.getElementById("sliderRange");
+  // var output = document.getElementById("demo");
+  // output.innerHTML = rangeslider.value;
 
+  // rangeslider.oninput = function() {
+  //   output.innerHTML = this.value;
+  // }
+
+  // state for EVs 
+  const [valuesOfEV, setValuesOfEv] = useState({hp: 0, attack: 0, defense: 0, specialA: 0, specialD: 0, speed: 0});
+  const [valuesOfIV, setValuesOfIv] = useState({hp: 31, attack: 31, defense: 31, specialA: 31, specialD: 31, Speed: 31});
+  const [calculatedStat, setCalculatedStat] = useState({hp: 0, attack: 0, defense: 0, specialA: 0, specialD: 0, Speed: 0});
+  
 
   useEffect(() => {
     populateAbilities();
@@ -381,13 +402,15 @@ const CurrentPokemonDetails = props => {
             </div>
 
         </div>
-
-        <div className='evs-container' onClick={()=> {makeDivActive('evs-container', 'active-pokemon-detail-container', 'evs-container')}}>
-          <h3>EVs</h3>
-          {/* <div class="slidecontainer"> */}
-            <input type="range" min="1" max="100" value="50" class="slider" id="myRange" />
-          {/* </div> */}
-        </div>
+        <EvContainer 
+          makeDivActive={makeDivActive} 
+          valuesOfEV={valuesOfEV} 
+          setValuesOfEv={setValuesOfEv} 
+          valuesOfIV={valuesOfIV} 
+          setValuesOfIv={setValuesOfIv} 
+          calculatedStat={calculatedStat} 
+          setCalculatedStat={setCalculatedStat} 
+        />
       </div>
       {/* browse and search area on the right side  */}
       {showBrowseArea ?
@@ -448,14 +471,17 @@ const CurrentPokemonDetails = props => {
                 <h5 className='cat'>cat</h5>
                 <h5 className='pow'>pow</h5>
                 <h5 className='acc'>acc</h5>
-
               </div>
-                {/* all items */}
+                {/* all moves */}
               <div className='moves-list'>
                 {allMovesToBeDisplayed}
               </div>
             </div> :
             null
+          }
+          {currentlyActiveDiv.div==='evs-container' ?
+            <EvSliderContainer valuesOfEV={valuesOfEV}/> 
+            : null
           }
         </div> :
       null

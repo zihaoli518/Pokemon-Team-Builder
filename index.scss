@@ -14,6 +14,32 @@ $enemyTeamColor: rgb(220, 164, 161);
 @import url("https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600&display=swap"); //font-family: 'Orbitron', sans-serif;
 @import url('https://fonts.googleapis.com/css2?family=Inconsolata:wght@200;300;400;500;700&display=swap');
 
+
+// adjust font size
+@media all and (min-width: 50px)   {  body  { font-size:0.1em;  } }
+@media all and (min-width: 100px)  {  body  { font-size:0.2em;  } }
+@media all and (min-width: 200px)  {  body  { font-size:0.4em;  } }
+@media all and (min-width: 300px)  {  body  { font-size:0.6em;  } }
+@media all and (min-width: 400px)  {  body  { font-size:0.8em;  } }
+@media all and (min-width: 500px)  {  body  { font-size:1.0em;  } }
+@media all and (min-width: 600px)  {  body  { font-size:1.2em;  } }
+@media all and (min-width: 700px)  {  body  { font-size:1.4em;  } }
+@media all and (min-width: 800px)  {  body  { font-size:1.6em;  } }
+@media all and (min-width: 900px)  {  body  { font-size:1.8em;  } }
+@media all and (min-width: 1000px) {  body  { font-size:2.0em;  } }
+@media all and (min-width: 1100px) {  body  { font-size:2.2em;  } }
+@media all and (min-width: 1200px) {  body  { font-size:2.4em;  } }
+@media all and (min-width: 1300px) {  body  { font-size:2.6em;  } }
+@media all and (min-width: 1400px) {  body  { font-size:2.8em;  } }
+@media all and (min-width: 1500px) {  body  { font-size:3.0em;  } }
+@media all and (min-width: 1500px) {  body  { font-size:3.2em;  } }
+@media all and (min-width: 1600px) {  body  { font-size:3.4em;  } }
+@media all and (min-width: 1700px) {  body  { font-size:3.6em;  } }
+
+
+
+
+
 body {
   background-color: $color5;
   // background-image: url('https://lh3.googleusercontent.com/iC5rKNivUaFEznEEGWMGEtu2QlUltPAzF7lG4Q63fYEWNZ_EkFGBPdyyW4xwTbwKXLYODiGNNZpdpR7lkb9ba86BmUERRNVqZR7P4JARZcpTJDph96-jcNPjAaPB39ZTeK1GoKepiMH65hwnmPopcibYvxQUzfo1xeFbF5JfWyQbdfZ44rDEzezD-iwLIJ0fUlxxzA7wi4DQcnBmNZkwOlZH5iaISUkjrFv-xzxv1dqrqq2bsQRKN3IAE6-nYLKaooFvVJ7QuoPUEEMO4K2kHoJ5VBZdBbFXkPmCLitmBk3MOMYH-CA1icVBnTji7QOtsoODlLI0VpAh8nH-qRIriWJ7GMbwvxn3fHExUxgZ7TdlUYz5vY4YmqwK6qmFZiDhpQHZFD06LKWgVSSndicDqt7PROyyTit9Xm1PdfMfKNLS1l4qB_hsBOPp-XdodMrBqIaLANIVLtxq5dDfQtm5h-1zHjwynjxwb8E_PE-vkqZ63G5HMarBQ1khr6kaC7HLuwA1NO-DxX-g6V7qvSadcyCwL_C3rk_DM5aOk-JGbLW2MljgBplY84n2ds5j41HWmjww5PbkA6dD6Vy9gmktlG9cokcPoxPGksh_9jVADAuRBJ5xK5IagjJVOWLR5jzYrgMRZkz0qIl362gFXeksDgqFJGr0xJjJs1uypydzwW_fWKegY2w8Fo_BVPtDENb6D9hLsX0D0CYCsvwIsLIwJuAaXOhNkQzrG1rF1OmQ64ha6-lo7o6-y5ez_Yu6CybZ1tNrJ4XgF-n--V2_KvA7d1DI9FHuH5YlFSPNNXi2ratqaf3IdN4bXHz1z86Cr7aRpm95GQGvVhLZvuKdnw5wH1M9fBC98TXFN9AlTgrINVzENVSRz64fFPgVchmU-tT2znDSVgggLHt9XbnLNnLa47f_DqnFoS9abPAMR7WdAiAPCvcjzQkaG4jsVPnNPelmDvPNPoU_uzw=w1920-h1200-no?authuser=0');
@@ -212,7 +238,11 @@ html {
   font-size: 20px;
   background-color: $color2;
   border-radius: 0.3rem;
+  border: 2px rgb(107, 106, 106) solid;
+  position: relative;
+  top: -30%;
 }
+
 
 .display-block {
   display: block;
@@ -600,7 +630,7 @@ input[type="text"]
 // current pokemon
 .current-pokemon-display-container {
   width: 65%;
-  height: 83%;
+  height: 103%;
   margin-left: 2.5%;
 }
 
@@ -611,11 +641,19 @@ input[type="text"]
   justify-content: center;
 }
 
-.current-pokemon {
-  font-family: "Indie Flower", cursive;
-  font-weight: 500;
+.current-pokemon-outter-flexbox {
   max-width: 53%;
   min-width: 53%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.current-pokemon {
+  height: 82%;
+  width: 100%;
+  font-family: "Indie Flower", cursive;
+  font-weight: 500;
   // background-image: linear-gradient(
   //   105deg,
   // hsl(63deg 65% 88%) 0%,
@@ -636,6 +674,8 @@ input[type="text"]
 
   position: relative;
   margin-left: 2%;
+  display: flex;
+  flex-direction: column;
 }
 
 .current-pokemon h3 {
@@ -657,76 +697,42 @@ input[type="text"]
 
 // top-flexbox
 .current-pokemon .top-flexbox {
+  height: 15%;
+  width: 100%;
   display: flex;
   justify-content: center;
-  margin-bottom: -5px;
-  margin-left: -35px;
+  margin-bottom: 1%;
+  margin-left: -3%;
 }
 
 .current-pokemon .top-flexbox h3 {
-  font-size: 45px;
+  font-size: 80%;
   margin-top: 10px;
 }
 
 .current-pokemon .top-flexbox .types {
   display: flex;
   justify-content: center;
-  margin-left: 15px;
-  margin-top: 20px;
+  margin-left: 4%;
+  margin-top: 4%;
 }
 
 .current-pokemon .top-flexbox .types h4 {
-  font-size: 22px;
-  margin-top: 5px;
-  margin: 5px;
+  font-size: 1.4rem;
+  margin-top: 1%;
+  margin: 1%;
 }
 
-.top-flexbox .option-buttons {
-  flex: 0.1;
-  display: flex;
-  flex-direction: column;
-  position: absolute;
-  right: 100px;
-  top: -3px;
+.levels h4 {
+  font-size: 1.5rem;
+  position: relative;
+  top: -20%;
+  right: -20%;
 }
 
-.top-flexbox .option-buttons button {
-  height: 30px;
-  width: 100px;
-  font-size: 15px;
-  font-weight: 400;
-  font-family: 'Chakra Petch', sans-serif;
-  margin-right: -150px;
-  margin-top: 2px;
-  border-radius: 0.5rem;
-  background-color: $color4;
-  color: $color1;
-}
-
-.top-flexbox .option-buttons button:hover{
-  background-color: #e6e6e6;
-  transition: 0.5s;
-  border: 2.3px solid black;
-  cursor: pointer;
-  font-weight: 90 0;
-}
-
-.option-buttons .add-to-your-team {
-  color: $friendlyTeamColor !important
-}
-.option-buttons .add-to-your-team:hover {
-  color: darken($friendlyTeamColor, 40%) !important;
-}
-
-.option-buttons .add-to-enemy-team {
-  color: $enemyTeamColor !important
-}
-.option-buttons .add-to-enemy-team:hover {
-  color: darken($enemyTeamColor,40%) !important;
-}
 
 .current-pokemon-spacer {
-  flex: 0.25;
+  flex: 0.3;
 }
 
 
@@ -734,32 +740,42 @@ input[type="text"]
 // main flexbox
 .current-pokemon-flexbox {
   height: 50%;
-  width: 50%;
+  width: 70%;
   display: flex;
   justify-content: left;
   margin-left: 10%;
+  color: rgba(111, 136, 97, 0.404);
 }
 
 .current-pokemon-flexbox img {
   height: 85%;
-  width: 70%;
+  width: 45%;
   transition: ease-in-out;
   transition: 1s;
+  margin-top: 5%;
 }
 
 .current-pokemon-flexbox img:hover {
   transform: scale(1.3);
 }
 
-.stat-chart {
+.current-pokemon-flexbox .stats {
+  width: 55%;
   height: 100%;
-  width: 130%;
-  margin-top: 20px;
 }
 
-#myChart {
+.stat-chart-current-pokemon-chart {
+  height: 110%;
+  width: 140%;
+  margin-top: 13%;
+  margin-left: 14%;
+}
+
+#current-pokemon-chart {
   height: 270px !important;
   width: 100%;
+  border: 0.6px rgba(113, 147, 167, 0.747) dotted;
+  border-radius: 0.7rem;
 }
 
 // left
@@ -852,32 +868,33 @@ input[type="text"]
 
 
 
-
+// weakness summary
 .current-pokemon-weakness-summary {
-  margin-left: 1%;
-  margin-top: 6%;
-  margin-bottom: -15%;
+  height: 33%;
   width: 100%;
+  position: relative;
+  left: 1%;
+  top: 5%;
 }
 
 .current-pokemon-weakness-summary h4 {
-  font-size: 17px;
-  margin-top: -10px;
+  font-size: 1.2rem;
+  margin-top: -2%;
 }
 
 .current-pokemon-weakness-summary h5 {
   font-family: 'Inconsolata';
-  font-size: 15px;
-  margin-top: -10px;
+  font-size: 0.9rem;
   font-weight: 300;
+  position: relative;
+  top: -30%;
 }
 
 .current-pokemon-weakness-summary .weaknesses {
   display: flex;
   justify-content: left;
-  height: 35px;
+  height: 30%;
   width: 95%;
-
 }
 .current-pokemon-weakness-summary .weaknesses-inner {
   display: flex;
@@ -907,14 +924,99 @@ input[type="text"]
   font-weight: 700;
 }
 
+// buttons 
+.add-to-team-option-buttons {
+  height: 12%;
+  width: 100%;
+  position: relative;
+  left: 2%;
+  margin: 0;
+}
+
+.add-to-team-option-buttons button {
+  height: 60%;
+  width: 31%;
+  font-size: 1rem;
+  font-weight: 400;
+  font-family: 'Chakra Petch', sans-serif;
+  border-radius: 0.5rem;
+  background-color: $color4;
+  color: $color1;
+  z-index: 10;
+
+  position: relative;
+  top: -50%;
+  
+}
+
+.add-to-team-option-buttons button:hover{
+  background-color: #e6e6e6;
+  transition: 0.5s;
+  border: 2.3px solid black;
+  cursor: pointer;
+  font-weight: 90 0;
+}
+
+.add-to-team-option-buttons .add-to-your-team {
+  color: $friendlyTeamColor !important;
+  position: relative;
+}
+.add-to-team-option-buttons .add-to-your-team:hover {
+  color: darken($friendlyTeamColor, 40%) !important;
+}
+
+.add-to-team-option-buttons .add-to-enemy-team {
+  color: $enemyTeamColor !important;
+  position: relative;
+  right: -37%;
+}
+.add-to-team-option-buttons .add-to-enemy-team:hover {
+  color: darken($enemyTeamColor,40%) !important;
+}
+
+.down-arrow-gifs {
+  height: 10%;
+  width: 100%;
+  display: flex;
+  position: relative;
+  top: -4%;
+}
+.down-arrow-gifs img {
+  height: 150%;
+  width: 100%;
+  position: relative;
+}
+.down-arrow-gifs .arrow1 {
+  position: relative;
+  right: 8%;
+}
+.down-arrow-gifs .arrow2 {
+  position: relative;
+  left: 10%;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
 // current pokemon details
 .current-pokemon-rightside-container {
   width: 50%;
-  height: 100%;
+  height: 82%;
   display: flex;
+  z-index: 10;
 }
 
 .pokemon-details-container {
@@ -925,6 +1027,13 @@ input[type="text"]
 
   display: flex;
   flex-direction: column;
+  transition: 0.6s;
+}
+
+.pokemon-details-container-stretched {
+  height: 130%;
+  background-color: darken($color5, 8%);
+
 }
 
 // hover effect for each child element 
@@ -945,21 +1054,31 @@ input[type="text"]
 }
 
 
-.pokemon-details-container h3, .pokemon-details-container h4 {
+.pokemon-details-container h3 {
   margin: 5%;
+  font-size: 1.2rem;
+}
+.pokemon-details-container h4 {
+  margin: 5%;
+}
+.browse-area-container h3 {
+  font-size: 1.2rem;
+}
+.browse-area-container h5 {
+  font-size: 1rem;
 }
 
     // individual sections 
       // abilities
 .abilities-container {
-  height: 20%;
+  height: 19%;
 
   border: 1.3px dotted black;
   border-radius: 0.6rem;
 }
 
 .abilities-container.active-pokemon-detail-container {
-  height: 80%;
+  height: 40%;
 }
 
 
@@ -979,7 +1098,7 @@ input[type="text"]
 .abilities-container-inner h4 {
   line-height: 80%;
   text-align: center;
-
+  font-size: 1rem;
 }
 
 .abilities-container-inner .ability {
@@ -1028,7 +1147,7 @@ input[type="text"]
 
         // item
 .pokemon-details-container .item-container {
-  height: 14%;
+  height: 9%;
   width: 100%;
 
   display: flex;
@@ -1101,6 +1220,10 @@ input[type="text"]
   text-align: center;
   font-size: 1.3rem;
   margin: 2%;
+}
+
+.browse-items-container h4 {
+  font-size: 1.2rem;
 }
 
 .search-area {
@@ -1205,6 +1328,7 @@ input[type="text"]
         // moves
 .moves-container {
   height: 35%;
+  min-height: 25%;
   width: 100%;
 
   border: 1.3px dotted black;
@@ -1233,6 +1357,7 @@ input[type="text"]
 .move-container h4 {
   line-height: 90%;
   text-align: center;
+  font-size: 1rem;
 }
 
 .move-container {
@@ -1278,14 +1403,13 @@ input[type="text"]
   width: 90%;
   display: flex;
   justify-content: center;
-
-
 }
 
 .moves-list-labels .name {
   position: relative;
   margin: 0 auto;
   left: 5%;
+  line-height: 100%;
 }
 .moves-list-labels .type {
   position: relative;
@@ -1341,8 +1465,8 @@ input[type="text"]
 .move-row-top {
   height: 40%;
   width: 100%;
-  // display: flex;
-  // justify-content: left;
+  display: flex;
+  justify-content: left;
   margin-bottom: 2%;
   line-height: 90%;
 }
@@ -1351,7 +1475,7 @@ input[type="text"]
   height: 60%;
   width: 40%;
   position: relative;
-  top: 15%;
+  top: -70%;
   left: 2%;
 }
 
@@ -1360,8 +1484,7 @@ input[type="text"]
   width: 16%;
   
   position: relative;
-  left: 42%;
-  top: -50%;
+  top: 10%;
 }
 
 .move-row-top .category-symbol {
@@ -1369,30 +1492,28 @@ input[type="text"]
   width: 13%;
   
   position: relative;
-  left: 43%;
-  top: -52%;
+  left: 3%;
+  top: 10%;
 }
 
 .move-row-top .basepower {
   width: 10%;
   position: relative;
-  left: 73%;
-  top: -150%;
+  left: 5%;
   text-align: center;
 }
 
 .move-row-top .accuracy {
   width: 10%;
   position: relative;
-  left: 84%;
-  top: -210%;
+  left: 6%;
   text-align: center;
 
 }
 
 .move-row-top h4 {
   margin: 0;
-  font-size: 0.9rem;
+  font-size: 1rem;
 }
 
 .move-row-top span {
@@ -1447,28 +1568,219 @@ input[type="text"]
 
 
 
+
         // EVS
 .evs-container {
-  height: 30%;
+  height: 36%;
   width: 100%;
 
   border: 1.3px dotted black;
-  border-radius: 0.3rem;
+  border-radius: 0.7rem;
   box-shadow: 5px 5px 30px -10px rgba(63, 63, 63, 0.88);
 }
 
-.slider {
-  -webkit-appearance: none;  /* Override default CSS styles */
-  appearance: none;
-  width: 100%; /* Full-width */
-  height: 25px; /* Specified height */
-  background: #d3d3d3; /* Grey background */
-  outline: none; /* Remove outline */
-  opacity: 0.7; /* Set transparency (for mouse-over effects on hover) */
-  -webkit-transition: .2s; /* 0.2 seconds transition on hover */
-  transition: opacity .2s;
+.evs-container.active-pokemon-detail-container {
+  height: 45% 
+}
+.evs-container.active-pokemon-detail-container .ev-table-labels{
+  position: relative;
+  top: -5%;
+}
+.evs-container.active-pokemon-detail-container .evs-display-container{
+  position: relative;
+  top: 8%;
 }
 
+.evs-display-container {
+  width: 100%;
+  height: 97%;
+  margin-top: -10%;
+}
+
+.evs-display-container h4 {
+  font-family: "Gill Sans", sans-serif;
+  font-weight: 400;
+}
+
+.ev-container {
+  height: 12%;
+  width: 100%;
+  display: grid;
+  justify-content: center;
+  margin: 1%;
+}
+
+.evs-container h3 {
+  margin-bottom: 8%;
+  margin-top: 2%;
+}
+
+.evs-display-container input {
+  width: 12.5%;
+  height: 75%;
+  background-color: #6489b163;
+  border-radius: 0.3rem;
+  border: 1px rgb(49, 49, 49) dotted;
+
+  font-family: "Gill Sans", sans-serif;
+  font-weight: 400;
+  font-size: 27%;
+}
+.evs-display-container h4 {
+  margin: 0;
+  font-size: 0.85rem;
+}
+
+.ev-table-labels {
+  position: relative;
+  left: 0%;
+  top: -20%;
+  display: flex;
+  justify-content: center;
+  font-size: 0.9rem;
+  line-height: 90%;
+}
+
+.ev-table-labels h4 {
+  margin-top: -2.5%;
+  margin-bottom: -5%;
+}
+
+.base-table-label {
+  position: relative;
+  left: 3%; 
+}
+.ev-table-label {
+  position: relative;
+  left: 0%;
+  top: -200%;
+}
+
+.evs-display-container .base-stat-label {
+  position: relative;
+  left: -10%;
+  top: 10%;
+  font-size: 0.75rem;
+}
+
+.evs-display-container .base-stat {
+  position: relative;
+  left: 23%;
+  top: -90%;
+}
+
+.evs-display-container .ev-input {
+  width: 16%;
+  position: relative;
+  left: 42%;
+  top: -150%;
+}
+
+.evs-display-container .iv-input {
+  position: relative;
+  left: 69%;
+  top: -250%;
+}
+
+.evs-display-container .result-stat {
+  position: relative;
+  left: 95%;
+  top: -460%;
+}
+
+
+.ev-browser-area {
+  height: 100%;
+  width: 100%;
+}
+
+.ev-browser-area h4 {
+  font-size: 20%;
+}
+
+.dynamic-chart-container {
+  height: 35%;
+  width: 100%;
+  display: flex;
+}
+
+.stat-chart-calculated-stat-chart {
+  width: 70%;
+  height: 100%;
+  position: relative;
+  left: 15%;
+}
+
+#calculated-stat-chart {
+  
+}
+
+.calculated-stat-chart-labels {
+  height: 100%;
+  position: relative;
+  left: 20%;
+  top: 8%;
+  display: flex;
+  flex-direction: column;
+}
+
+.calculated-stat-chart-labels h4 {
+  height: 16%;
+  font-family: "Gill Sans", sans-serif;
+  font-weight: 400;
+  font-size: 22%;
+  margin: 0;
+}
+
+
+.nature-container {
+  height: 10%;
+  display: flex;
+  justify-content: center;
+  position: relative;
+  top: 3%;
+}
+
+.nature-container h4 {
+  font-size: 50%;
+  line-height: 100%;
+  position: relative;
+  top: -60%;
+}
+
+.nature-container select {
+  height: 70%;
+  max-height: 300px;
+  width: 45%;
+  background-color: $color4;
+  border-radius: 0.3rem;
+  position: relative;
+  top: 0%;
+  left: 5%;
+  
+}
+
+.ev-sliders-container {
+  height: 40%;
+  width: 80%;
+  margin: 0 auto;
+  margin-top: 10%;
+  display: flex;
+  flex-direction: column;
+}
+
+.ev-slider-container {
+  height: 17%;
+  display: flex;
+  justify-content: right;
+  position: relative;
+  right: 10%;
+}
+
+
+.slider {
+  margin: 5%;
+}
 
 
 
@@ -1648,8 +1960,8 @@ input[type="text"]
   background-color: rgba($enemyTeamColor, 1);
   border-radius: 1rem;
   box-shadow: 5px 5px 30px -10px rgba(63, 63, 63, 0.88);
-
-}
+  z-index: 10;
+} 
 
 
 .teams .team-members {
@@ -1810,8 +2122,8 @@ input[type="text"]
 
 .teams .save-buttons-container {
   position: relative;
-  left: 60%;
-  bottom: 125%;
+  left: 59%;
+  bottom: 147%;
   
 }
 
@@ -1819,16 +2131,33 @@ input[type="text"]
   height: 28px;
   width: 80px;
   font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
-  font-size: 20px;
+  font-size: 1.3rem;
   background-color: rgba(201, 198, 152, 0.721);
   color: rgb(41, 42, 42);
-  border-radius: 0.3rem;
-
+  border-radius: 0.4rem;
+  position: relative;
 }
 
 #main-div > div.teams > div.green > div.save-buttons-container > button.save-team-as-new-button {
   width: 120px;
-  margin-left: 5%;
+  margin-left: 2%;
+}
+
+
+.clear-team-button {
+  position: relative;
+  left: 2%;
+  top: -143%;
+}
+#clear-team-button-f {
+  background-color: #3e648c91;
+  border-radius: 1rem;
+}
+#clear-team-button-e {
+  top: -149%;
+  left: 88%;
+  background-color: #3e648c91;
+  border-radius: 1rem;
 }
 
 button:hover{

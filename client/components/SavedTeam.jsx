@@ -27,7 +27,8 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = dispatch => ({
   setYourTeam : (team) => dispatch(actions.setYourTeam(team)),
   editTeam: (key, team) => dispatch(actions.makeSavedTeamActive(key, team)),
-  removeTeam: (key) => dispatch(actions.removeSavedTeam(key))
+  removeTeam: (key) => dispatch(actions.removeSavedTeam(key)),
+  updatePreviousTeamKey: (letter) => dispatch(actions.updatePreviousTeamKey(letter)),
 });
 
 
@@ -86,12 +87,12 @@ const SavedTeam = (props) => {
 
 
   return (
-    <div className='saved-team' onClick={() => {props.setYourTeam(props.savedTeam)}}>
+    <div className='saved-team' onClick={() => {props.editTeam(props.savedTeamKey ,props.savedTeam); props.updatePreviousTeamKey("E")}}>
       <h5>{props.savedTeamName}</h5>
       <div className='team-members need-saved-team-hover-effect' id={props.savedTeamKey} onClick={()=> {addActiveClass()}}>
         {team}
       </div>
-      <img className='edit-team-button' src='https://cdn-icons-png.flaticon.com/512/6065/6065488.png' onClick={() => {props.editTeam(props.savedTeamKey ,props.savedTeam)}} />
+      <img className='edit-team-button' src='https://cdn-icons-png.flaticon.com/512/6065/6065488.png' onClick={() => {props.editTeam(props.savedTeamKey ,props.savedTeam); addActiveClass()}} />
       <img className='remove-team-button' src='https://www.pngplay.com/wp-content/uploads/7/Delete-Logo-PNG-HD-Quality.png' onClick={() => {props.removeTeam(props.savedTeamKey)}} />
 
     </div>
