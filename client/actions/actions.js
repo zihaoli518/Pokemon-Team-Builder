@@ -60,9 +60,9 @@ export const showTypingChart = () => ({
   payload: null,
 });
 
-export const switchTeams = (yourTeam, enemeyTeam) => ({
+export const switchTeams = (yourTeam, enemeyTeam, key) => ({
   type: types.SWITCH_TEAMS,
-  payload: {yourTeam: yourTeam, enemeyTeam: enemeyTeam},
+  payload: {yourTeam: yourTeam, enemeyTeam: enemeyTeam, key: key},
 });
 
 export const toggleMainDivState = (string) => ({
@@ -146,7 +146,12 @@ export const clearTeam = (teamStr) => ({
   payload: teamStr
 })
 
-export const updateCalculatedStats = (evs, ivs, results) => ({
+export const updateCalculatedStats = (evs, ivs, remainingEv, calcs) => ({
   type: types.UPDATE_CALCULATED_STATS, 
-  payload: {evs: evs, ivs: ivs, results: results}
+  payload: {evs: evs, ivs: ivs, remainingEv: remainingEv, calcs: calcs}
+})
+
+export const updateNature = (nature) => ({
+  type: types.UPDATE_NATURE, 
+  payload: nature
 })

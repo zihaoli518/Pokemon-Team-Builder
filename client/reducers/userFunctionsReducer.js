@@ -97,48 +97,48 @@ const userFunctionsReducer = (state = initialState, action) => {
           savedTeams: newSavedTeams
         }
       
-        case types.REMOVE_SAVED_TEAM: 
-          console.log('inside REMOVE_SAVED_TEAM ')
-          let beforeRemovingTeam = {...state.savedTeams};
-          delete beforeRemovingTeam[action.payload.key];
-          console.log(beforeRemovingTeam)
-          beforeRemovingTeam = helpers.reOrderSavedTeams(beforeRemovingTeam)
-          console.log(beforeRemovingTeam)
-          return {
-            ...state,
-            savedTeams: beforeRemovingTeam
-          }
+      case types.REMOVE_SAVED_TEAM: 
+        console.log('inside REMOVE_SAVED_TEAM ')
+        let beforeRemovingTeam = {...state.savedTeams};
+        delete beforeRemovingTeam[action.payload.key];
+        console.log(beforeRemovingTeam)
+        beforeRemovingTeam = helpers.reOrderSavedTeams(beforeRemovingTeam)
+        console.log(beforeRemovingTeam)
+        return {
+          ...state,
+          savedTeams: beforeRemovingTeam
+        }
 
-        case types.UPDATE_SAVED_TEAM:
-          console.log('inside UPDATE_SAVED_TEAM ')
-          
-          let beforeMakingTeamActive = {...state.savedTeams};
-          console.log(beforeMakingTeamActive)
-          beforeMakingTeamActive[action.payload.team.key] = action.payload.team;
-          console.log(beforeMakingTeamActive)
+      case types.UPDATE_SAVED_TEAM:
+        console.log('inside UPDATE_SAVED_TEAM ', action.payload.team.key)
         
-          return {
-            ...state,
-            savedTeams: beforeMakingTeamActive
-          }
+        let beforeMakingTeamActive = {...state.savedTeams};
+        console.log(beforeMakingTeamActive)
+        beforeMakingTeamActive[action.payload.team.key] = action.payload.team;
+        console.log(beforeMakingTeamActive)
+      
+        return {
+          ...state,
+          savedTeams: beforeMakingTeamActive
+        }
 
-        case types.TOGGLE_LOGIN_LOADING:
-          console.log('inside TOGGLE_LOGIN_LOADING ',)
+      case types.TOGGLE_LOGIN_LOADING:
+        console.log('inside TOGGLE_LOGIN_LOADING ',)
 
-          const newLoginLoading = !state.loginLoading;
-          // console.log({loginLoading: newLoginLoading})
-          return {
-            ...state, 
-            loginLoading: newLoginLoading
-          }
+        const newLoginLoading = !state.loginLoading;
+        // console.log({loginLoading: newLoginLoading})
+        return {
+          ...state, 
+          loginLoading: newLoginLoading
+        }
 
-        case types.REFRESH_AND_DECODE_SAVED_TEAMS: 
-          console.log('inside REFRESH_AND_DECODE_SAVED_TEAMS ',)
-          // console.log({loginLoading: newLoginLoading})
-          return {
-            ...state, 
-            savedTeams: action.payload.savedTeams
-          }
+      case types.REFRESH_AND_DECODE_SAVED_TEAMS: 
+        console.log('inside REFRESH_AND_DECODE_SAVED_TEAMS ',)
+        // console.log({loginLoading: newLoginLoading})
+        return {
+          ...state, 
+          savedTeams: action.payload.savedTeams
+        }
 
     default: {
       return state

@@ -89,6 +89,9 @@ html {
   border-radius: 0.3rem;
 }
 
+button:hover {
+  cursor: pointer;
+}
 
 
 
@@ -315,11 +318,12 @@ html {
   font-size: 25px;
   background-color: $color2;
   border-radius: 0.3rem;
+  cursor: pointer;
 }
 
 .modal .close-button {
   position: absolute;
-  bottom: 85%;
+  top: 0%;
   left: 82%;
 
   height: 15%;
@@ -535,7 +539,7 @@ input[type="text"]
 .saved-team {
   // max-height: 7%;
   height: 55px;
-  width: 84%;
+  width: 80%;
   background-color: rgba(90, 137, 169, 0.642);
   border-radius: 0.3rem;
   margin: 0 auto;
@@ -564,12 +568,12 @@ input[type="text"]
 
 
 .edit-team-button {
-  height: 45px;
-  width: 45px;
+  height: 95%;
+  width: 17%;
 
   position: relative;
   top: -145%;
-  left: 59%;
+  left: 61%;
 }
 
 .edit-team-button:hover{
@@ -588,12 +592,12 @@ input[type="text"]
 // }
 
 .remove-team-button {
-  height: 25px;
-  width: 25px;
+  height: 52%;
+  width: 9%;
 
   position: relative;
   top: -164%;
-  left: 55.5%;
+  left: 58.5%;
 }
 
 .remove-team-button:hover{
@@ -1625,6 +1629,7 @@ input[type="text"]
   font-family: "Gill Sans", sans-serif;
   font-weight: 400;
   font-size: 27%;
+  text-align: center;
 }
 .evs-display-container h4 {
   margin: 0;
@@ -1658,15 +1663,17 @@ input[type="text"]
 
 .evs-display-container .base-stat-label {
   position: relative;
-  left: -10%;
+  left: -12%;
   top: 10%;
   font-size: 0.75rem;
 }
 
 .evs-display-container .base-stat {
   position: relative;
-  left: 23%;
+  left: 21%;
   top: -90%;
+  width: 15%;
+  text-align: center;
 }
 
 .evs-display-container .ev-input {
@@ -1683,10 +1690,14 @@ input[type="text"]
 }
 
 .evs-display-container .result-stat {
+  width: 15%;
   position: relative;
   left: 95%;
   top: -460%;
+  text-align: center;
 }
+
+
 
 
 .ev-browser-area {
@@ -1702,34 +1713,39 @@ input[type="text"]
   height: 35%;
   width: 100%;
   display: flex;
+  margin-top: 5%;
 }
 
+
 .stat-chart-calculated-stat-chart {
-  width: 70%;
+  width: 75%;
   height: 100%;
   position: relative;
-  left: 15%;
+  left: 9%;
+
 }
 
 #calculated-stat-chart {
-  
+  height: 100%;
 }
 
 .calculated-stat-chart-labels {
-  height: 100%;
+  height: 91%;
   position: relative;
-  left: 20%;
+  left: 14%;
   top: 8%;
   display: flex;
-  flex-direction: column;
+  flex-direction: column;  
 }
 
 .calculated-stat-chart-labels h4 {
-  height: 16%;
+  height: 18.5%;
   font-family: "Gill Sans", sans-serif;
   font-weight: 400;
-  font-size: 22%;
+  font-size: 25%;
   margin: 0;
+  flex-shrink: 1;
+  text-align: center;
 }
 
 
@@ -1742,31 +1758,89 @@ input[type="text"]
 }
 
 .nature-container h4 {
-  font-size: 50%;
+  height: 100%;
+  font-size: 40%;
   line-height: 100%;
   position: relative;
-  top: -60%;
+  margin: 0;
+  top: 9%;
 }
 
 .nature-container select {
-  height: 70%;
+  height: 60%;
   max-height: 300px;
-  width: 45%;
+  width: 55%;
   background-color: $color4;
   border-radius: 0.3rem;
   position: relative;
   top: 0%;
   left: 5%;
-  
+  font-family: "Gill Sans", sans-serif;
+  font-size: 30%;
+}
+
+.remaining-ev-container {
+  height: 8%;
+  margin-top: 1%;
+  margin-left: -4%;
+  display: flex;
+  justify-content: left;
+  position: relative;
+  top: 5%;
+}
+.remaining-ev-container h4{
+  height: 100%;
+  margin-left: 3%;
+  font-size: 30%;
+  margin: 0 auto;
+}
+.remaining-ev-container h5{
+  height: 100%;
+  position: relative;
+  left: -25%;
+  font-size: 35%;
+  font-family: "Gill Sans", sans-serif;
+  font-weight: 400;
+  margin: 0 auto;
+
 }
 
 .ev-sliders-container {
-  height: 40%;
+  height: 35%;
   width: 80%;
   margin: 0 auto;
   margin-top: 10%;
   display: flex;
   flex-direction: column;
+  font-size: 120%;
+  border: 1.4px rgba(102, 106, 108, 0.518) dotted;
+  border-radius: 0.4rem;
+  background-color: #b2d1cbcb;
+}
+
+.ev-sliders-container h4 {
+  position: relative;
+  top: -15%;
+}
+
+.ev-used-container {
+  height: 35%;
+  width: 10%;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  left: 80%;
+  top: -33.5%;
+}
+
+.ev-used {
+  height: 17%;
+  position: relative;
+  left: 10%;
+  margin: 0 auto;
+  font-weight: 500;
+  font-family: "Gill Sans", sans-serif;
+  font-size: 28% !important;
 }
 
 .ev-slider-container {
@@ -1781,6 +1855,7 @@ input[type="text"]
 .slider {
   margin: 5%;
 }
+
 
 
 

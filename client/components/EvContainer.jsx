@@ -24,14 +24,16 @@ const calculator = require('pokemon-stat-calculator')
 const mapStateToProps = state => {
   return {
     currentPokemon: state.pokemon.currentPokemon,
-
+    yourTeam: state.pokemon.yourTeam,
   }
 }
 
 
 const mapDispatchToProps = dispatch => ({
   toggleMainDivState : (str) => dispatch(actions.toggleMainDivState(str)),
-  updateCalculatedStats : (evs, ivs, calcs) => dispatch(actions.updateCalculatedStats(evs, ivs, calcs)),
+  updateCalculatedStats : (evs, ivs, remainingEv, calcs) => dispatch(actions.updateCalculatedStats(evs, ivs, remainingEv, calcs)),
+  updateSavedTeam: (team) => dispatch(actions.updateSavedTeam(team)),
+
 });
 
 
@@ -65,15 +67,25 @@ const EvContainer = props => {
           if (currentValue>252) currentValue = 252;
           EVs.push(currentValue);
         }
+        let totalEvUsed = EVs.reduce(function(a, b){
+          return Number(a) + Number(b);
+        });
+        let remainingEv = 508 - totalEvUsed;
 
         let baseStats = statObjToArray(props.currentPokemon.stats)
         let IVs = [31, 31, 31, 31, 31, 31]
         let nature = calculator.getNatureValue(props.currentPokemon.nature);
-
-        console.log(baseStats, EVs, IVs, nature)
+        console.log(baseStats, EVs, IVs, totalEvUsed, remainingEv, nature)
         const results = calculator.calAllStats(IVs, baseStats, EVs, props.currentPokemon.level, nature)
         console.log(results)
-        props.updateCalculatedStats(EVs, IVs, results)
+        props.updateCalculatedStats(EVs, IVs, remainingEv, results);
+        props.updateSavedTeam(props.yourTeam);
+
+        // give style to remaining ev if below 0
+        const remainingEvDisplay = document.getElementById('remaining-Ev-value'); 
+        console.log(remainingEvDisplay)
+        if (Number(remainingEvDisplay.innerHTML<0)) remainingEvDisplay.style.color = "red";
+        else remainingEvDisplay.style.color = "black";
       })
     }
   }
@@ -87,7 +99,7 @@ const EvContainer = props => {
     console.log(baseStats, EVs, IVs, nature)
     const results = calculator.calAllStats(IVs, baseStats, EVs, props.currentPokemon.level, nature);
     console.log(results)
-    props.updateCalculatedStats(EVs, IVs, results)  
+    props.updateCalculatedStats(EVs, IVs, 508, results)  
   }
 
   const calculateHp = (base, ev, iv, level) => {
@@ -95,17 +107,17 @@ const EvContainer = props => {
     return hp;
   }
 
-  const calculateStat = (base, ev, iv, level) => {
-    const stat = Math.floor(0.01 * (2*base + iv + floor(0.25*ev)) * level + level + 10);
-    return stat;
+  const cleanUpEvs = () => {
+    const evArray = document.getElementsByClassName("ev-input");
+    for (let i=0; i<evArray.length; i++) {
+      evArray[i].value = props.currentPokemon.evs.array[i];
+    }
   }
 
-  const calculateStats = () => {
-
-  }
 
   useEffect(() => {
     mapOnFocusOutFunctios();
+    cleanUpEvs();
     if (!props.currentPokemon.calculatedStats.length) calculateInitialStats();
   }, [props.currentPokemon])
 

@@ -18,9 +18,9 @@
  
  import { getTypeWeaknesses } from 'poke-types';
  
- // global constant for maximum/minimum number as parameters for the color scale function  
- let maxStat = 165; 
- let minStat = 40;
+ // global values for maximum/minimum number as parameters for the color scale function  
+ let maxStat = 140; 
+ let minStat = 15;
  
  const mapStateToProps = state => {
    return {
@@ -99,7 +99,11 @@ const options = {
       max: 155,
       min: 25,
     }
-  }
+  },
+  animation: {
+    easing: 'easeOutCirc' // set easing function to "bounce"
+  },
+  startAngle: 290,
 }
  
  
@@ -126,11 +130,15 @@ const options = {
      for (let i=0; i<labels.length; i++) {
      }
      data.datasets[0].backgroundColor = 'rgba(111, 136, 97, 0.404)';
-     console.log('newStats:') 
-     console.log(newStats)
+
      data.datasets[0].borderColor = 'rgba(103, 129, 147, 0.757)';
      data.datasets[0].pointBackgroundColor = newColors;
-    //  data.datasets[0].pointHoverBackgroundColor = newColors;
+
+     // determine custom scale for graph 
+     let maxStatFromMon = Math.max(...newStats)
+     let currentMaxStat = Math.max(maxStat, maxStatFromMon*1.1);
+     console.log('maxStat: ', currentMaxStat)
+     options.scales.r.max = currentMaxStat;
    }
  
  

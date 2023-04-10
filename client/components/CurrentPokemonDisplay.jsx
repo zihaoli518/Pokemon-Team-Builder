@@ -177,7 +177,6 @@ class CurrentPokemonDisplay extends Component {
     } 
     const container = document.getElementsByClassName(div)[0];
     container.classList.add(activeClassName)
-    setCurrentlyActiveDiv({div: div});
   }
 
 

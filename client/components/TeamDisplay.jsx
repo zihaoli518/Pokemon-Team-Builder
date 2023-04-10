@@ -46,6 +46,7 @@ const TeamDisplay= (props) => {
   useEffect(() => {
     populateTeam(teamState.color)
     // console.log('title: ', teamState.title)
+    props.updateSavedTeam(props.yourTeam)
   }, [props.yourTeam, props.enemyTeam])
 
   const populateTeam = team => {
@@ -122,7 +123,7 @@ const TeamDisplay= (props) => {
     console.log(input)
     let copy = {...teamState.selectedTeam}
     copy.name = input
-    props.updateSavedTeam(copy)
+    if (teamState.color==='green') props.updateSavedTeam(copy)
     // saveTeamsToDatabase(props.savedTeams)
   }
 
@@ -153,7 +154,7 @@ const TeamDisplay= (props) => {
         <div className='save-buttons-container'> 
           <button className='save-team-button' onClick={(e) => {saveTeam(e)}}>save</button>
           <button className='save-team-as-new-button' onClick={(e) => {saveTeamAsNew(e)}}>save as new</button>
-          <button className='clear-team-button' id='clear-team-button-f' onClick={(e) => {props.clearTeam('yourTeam')}}>clear</button>
+          <button className='clear-team-button' id='clear-team-button-f' onClick={(e) => {props.clearTeam('yourTeam'); }}>clear</button>
         </div>
         :
         <button className='clear-team-button' id='clear-team-button-e' onClick={(e) => {props.clearTeam('enemyTeam')}}>clear</button>

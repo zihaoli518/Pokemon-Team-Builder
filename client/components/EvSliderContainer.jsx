@@ -27,31 +27,53 @@ const mapStateToProps = state => {
 }
 
 const mapDispatchToProps = dispatch => ({
-  toggleLoginLoading : () => dispatch(actions.toggleLoginLoading()),
+  updateNature : (nature) => dispatch(actions.updateNature(nature)),
+  updateCalculatedStats : (evs, ivs, remainingEv, calcs) => dispatch(actions.updateCalculatedStats(evs, ivs, remainingEv, calcs)),
 });
 
 
 const EvSliderContainer = props => {
 
   const [natureOptions, setNatureOptions] = useState([])
-
+  const statOrder = ['Atk', 'Def', 'SpA', 'SpD', 'Spe']
 
   const populateNatures = () => {
     console.log('inside populateNatures')
     let newNatureOptions = [];
     const natureArray = calculator.getNatureNames;
     natureArray.forEach(name => {
+      // get the short description str like (+Atk, -SpA)
+      const NatureValues = calculator.getNatureValue(name);
+      let DescStr = '';
+      for (let i=0; i<statOrder.length; i++) {
+        if (NatureValues[i] === 1.1) DescStr += ' (+' + statOrder[i] + ', '
+      }
+      for (let i=0; i<statOrder.length; i++) {
+        if (NatureValues[i] === 0.9) DescStr += '-' + statOrder[i] +')'
+      }
+
       newNatureOptions.push(
-      <option value={name}>{name}</option>
+      <option value={name}>{name + DescStr}</option>
     )})
     setNatureOptions(newNatureOptions);
     console.log(newNatureOptions)
   }
 
   const selectNature = () => {
+    console.log('inside selectNature')
     const select = document.getElementById("nature-select");
     const selectedOption = select.options[select.selectedIndex].value;
-    
+
+    props.updateNature(selectedOption);
+
+    let baseStats = statObjToArray(props.currentPokemon.stats)
+    let IVs = props.currentPokemon.ivs.array;
+    let EVs = props.currentPokemon.evs.array;
+    let nature = calculator.getNatureValue(selectedOption);
+
+    console.log(baseStats, EVs, IVs, nature)
+    const results = calculator.calAllStats(IVs, baseStats, EVs, props.currentPokemon.level, nature)
+    props.updateCalculatedStats(EVs, IVs, props.currentPokemon.remainingEv ,results);
   }
 
 
@@ -82,6 +104,11 @@ const EvSliderContainer = props => {
         </select>
       </div>
 
+      <div className='remaining-ev-container'>
+        <h4>remaining EVs:</h4>
+        <h5 id='remaining-Ev-value'>{props.currentPokemon.remainingEv}</h5>
+      </div>
+
       <div className='ev-sliders-container'>
         <div className='ev-slider-container'>
           <h4>HP :</h4>
@@ -89,8 +116,7 @@ const EvSliderContainer = props => {
         </div>
         <div className='ev-slider-container'>
           <h4>Attak :</h4>
-          <input type="range" min="0" max="252" value={props.valuesOfEV.attack} class="slider" id="myRange" />
-        </div>
+          <input type="range" min="0" max="252" value={props.valuesOfEV.attack} class="slider" id="myRange" />        </div>
         <div className='ev-slider-container'>
           <h4>Defense :</h4>
           <input type="range" min="0" max="252" value={props.valuesOfEV.defense} class="slider" id="myRange" />
@@ -107,6 +133,15 @@ const EvSliderContainer = props => {
           <h4>Speed :</h4>
           <input type="range" min="0" max="252" value={props.valuesOfEV.speed} class="slider" id="myRange" />
         </div>
+      </div>
+
+      <div className='ev-used-container'>
+        <h4 className='ev-used'>{props.currentPokemon.evs.array[0]}</h4>
+        <h4 className='ev-used'>{props.currentPokemon.evs.array[1]}</h4>
+        <h4 className='ev-used'>{props.currentPokemon.evs.array[2]}</h4>
+        <h4 className='ev-used'>{props.currentPokemon.evs.array[3]}</h4>
+        <h4 className='ev-used'>{props.currentPokemon.evs.array[4]}</h4>
+        <h4 className='ev-used'>{props.currentPokemon.evs.array[5]}</h4>
       </div>
     </div>
   );
@@ -130,6 +165,16 @@ const EvSliderContainer = props => {
   }
   var h = r * 0x10000 + g * 0x100 + b * 0x1;
   return "#" + ("000000" + h.toString(16)).slice(-6);
+}
+
+const statObjToArray = (statObj) => {
+  let array = [];
+  const order = ['hp', 'attack', 'defense', 'specialA', 'specialD', 'speed']
+  order.forEach(stat => {
+    array.push(statObj[stat])
+  })
+  console.log('END OF STAT->OBJ ', array);
+  return array
 }
 
 

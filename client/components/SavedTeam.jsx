@@ -92,7 +92,7 @@ const SavedTeam = (props) => {
       <div className='team-members need-saved-team-hover-effect' id={props.savedTeamKey} onClick={()=> {addActiveClass()}}>
         {team}
       </div>
-      <img className='edit-team-button' src='https://cdn-icons-png.flaticon.com/512/6065/6065488.png' onClick={() => {props.editTeam(props.savedTeamKey ,props.savedTeam); addActiveClass()}} />
+      <img className='edit-team-button' src='https://cdn-icons-png.flaticon.com/512/6065/6065488.png' onClick={() => {props.editTeam(props.savedTeamKey, props.savedTeam); addActiveClass()}} />
       <img className='remove-team-button' src='https://www.pngplay.com/wp-content/uploads/7/Delete-Logo-PNG-HD-Quality.png' onClick={() => {props.removeTeam(props.savedTeamKey)}} />
 
     </div>
