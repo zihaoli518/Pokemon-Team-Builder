@@ -83,7 +83,6 @@ const EvContainer = props => {
 
         // give style to remaining ev if below 0
         const remainingEvDisplay = document.getElementById('remaining-Ev-value'); 
-        console.log(remainingEvDisplay)
         if (Number(remainingEvDisplay.innerHTML<0)) remainingEvDisplay.style.color = "red";
         else remainingEvDisplay.style.color = "black";
       })

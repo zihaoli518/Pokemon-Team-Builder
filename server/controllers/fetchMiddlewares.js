@@ -1,12 +1,27 @@
 const fetch = require('node-fetch');
 const parse = require('node-html-parser');
 
+const hoshi = require('../../assets/hoshi.json');
+const lina = require('../../assets/lina.json');
+
+
 const fetchMiddlewares = {}; 
 
 fetchMiddlewares.fetchPokeAPI = (req, res, next) => {
   console.log('inside fetchPokeAPI');
 
   const pokemonName = req.body.pokemon
+
+  // adding hoshi 
+  if (pokemonName==='hoshi') {
+    res.locals.data = hoshi;
+    return next();
+  }
+  if (pokemonName==='lina') {
+    res.locals.data = lina;
+    return next();
+  }
+
   fetch('https://pokeapi.co/api/v2/pokemon/' + pokemonName.toLowerCase())
     .then(data => data.json())
     .then(data => {

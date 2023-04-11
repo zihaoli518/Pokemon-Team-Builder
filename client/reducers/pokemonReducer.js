@@ -258,9 +258,10 @@ const pokemonReducer = (state = initialState, action) => {
 
 
     case types.SHOW_TYPING_CHART:
+      const toggleTypingChart = !state.showTypingChart;
       return {
         ...state,
-        showTypingChart: true
+        showTypingChart: toggleTypingChart
       }
 
     case types.SWITCH_TEAMS:

@@ -55,7 +55,7 @@ const MatchupChart = (props) => {
 
 
   return (
-    <div className='matchup-chart'>
+    <div className='matchup-chart' id='matchup-chart'>
       <Row legend={true}/>
       {chart}
     </div>

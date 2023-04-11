@@ -27,26 +27,7 @@
      currentPokemon : state.pokemon.currentPokemon
    }
   }
- 
-  // helper function for generating color based on value 
- function stat2color(stat, max = maxStat, min = minStat) {
-   // perc ranges from 0-100 and is responsible for the color scale 
-   let perc;
-   if (stat > max) perc = 100;
-   else if (stat < min) perc = 0;
-   else perc = (stat / (max / 100));
- 
-   var r,g,b = 0;
-   if (perc < 50) {
-     r = 255;
-     g = Math.round(5.1 * perc);
-   } else {
-     g = 255;
-     r = Math.round(510 - 5.1 * perc);
-   }
-   var h = r * 0x10000 + g * 0x100 + b * 0x1;
-   return "#" + ("000000" + h.toString(16)).slice(-6);
- }
+
  
  // configurations for chart.js  
  let labels = ['HP', 'Defense', 'Sp. Def', 'Speed', 'Sp. Atk.', 'Atack',];
@@ -104,6 +85,28 @@ const options = {
     easing: 'easeOutCirc' // set easing function to "bounce"
   },
   startAngle: 290,
+  responsive: true,
+  maintainAspectRatio: false,
+}
+
+// helper function for generating color based on value 
+function stat2color(stat, max = maxStat, min = minStat) {
+  // perc ranges from 0-100 and is responsible for the color scale 
+  let perc;
+  if (stat > max) perc = 100;
+  else if (stat < min) perc = 0;
+  else perc = (stat / (max / 100));
+
+  var r,g,b = 0;
+  if (perc < 50) {
+    r = 255;
+    g = Math.round(5.1 * perc);
+  } else {
+    g = 255;
+    r = Math.round(510 - 5.1 * perc);
+  }
+  var h = r * 0x10000 + g * 0x100 + b * 0x1;
+  return "#" + ("000000" + h.toString(16)).slice(-6);
 }
  
  

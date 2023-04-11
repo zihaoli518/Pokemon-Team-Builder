@@ -53,45 +53,26 @@ class CurrentPokemonDisplay extends Component {
 
   componentWillMount = () => {
     this.generateWeakness(this.props.currentPokemon.pokemon);
+    this.playCrySound();
   }
 
   componentDidUpdate = (prevState) => {
     // console.log('inside componentWillUpdate - CurrentPokemonDisplay')
     // console.log(this.props.currentPokemon)
     if (prevState.currentPokemon.pokemon !== this.props.currentPokemon.pokemon) {
+      this.playCrySound();
       this.generateWeakness();
       if (this.props.currentPokemon.slot.mon===null) this.updateActiveAbilityOnNewSearch();
     }
   }
 
-  // get the top 2 most common abilities - currently unavailable 
-  // getAbilities() {
-  //   let abilityMap = {};
-  //   for (let i = 0; i < 2; i++) {
-  //     // break in case pokemon only has 1 ability
-  //     if (Object.keys(this.props.abilities)[i] === undefined) {
-  //       break;
-  //     }
-  //     let currentAbility = Object.keys(this.props.abilities)[i];
-  //     let currentPercentage =
-  //       this.props.abilities[Object.keys(this.props.abilities)[i]];
-  //     abilityMap[i] = [currentAbility, currentPercentage];
-  //   }
-  //   // console.log(abilityMap)
-  //   return abilityMap;
-  // }
+  playCrySound() {
+    const parsedName = this.props.currentPokemon.pokemon.replace('-', '');
+    const cryUrl = `https://play.pokemonshowdown.com/audio/cries/${parsedName}.mp3`;
+    const cryAudio = new Audio(cryUrl);
+    cryAudio.play();
+  }
 
-  // get the top 4 most used moves for current pokemon - currently unavailable 
-  // getMoveSet() {
-  //   let moveSetMap = {};
-  //   for (let i = 0; i < 4; i++) {
-  //     let currentMove = Object.keys(this.props.moveSet)[i];
-  //     let currentPercentage =
-  //       this.props.moveSet[Object.keys(this.props.moveSet)[i]];
-  //     moveSetMap[i] = [currentMove, currentPercentage];
-  //   }
-  //   return moveSetMap;
-  // }
   generateWeakness(pokemon) {
     const newImmunitiesArray = [];
     const newWeaknessArray = [];

@@ -152,8 +152,8 @@ const TeamDisplay= (props) => {
       </div>
       {(teamState.color==='green') ?
         <div className='save-buttons-container'> 
-          <button className='save-team-button' onClick={(e) => {saveTeam(e)}}>save</button>
-          <button className='save-team-as-new-button' onClick={(e) => {saveTeamAsNew(e)}}>save as new</button>
+          <img className='save-team-icon' src="/static/save-icon.png" alt="" onClick={(e) => {saveTeam(e)}} />
+          <img className='copy-team-icon' src="https://cdn-icons-png.flaticon.com/512/1621/1621635.png" alt="" onClick={(e) => {saveTeamAsNew(e)}} />
           <button className='clear-team-button' id='clear-team-button-f' onClick={(e) => {props.clearTeam('yourTeam'); }}>clear</button>
         </div>
         :
