@@ -39,7 +39,6 @@ const mapDispatchToProps = dispatch => ({
 
 const TeamDisplay= (props) => {
   
-  if (props.yourTeam.mon2) {console.log('inside TeamDisplay', 'slot for mon1: ', props.yourTeam.mon1.slot.mon, 'slot for mon2: ', props.yourTeam.mon2.slot.mon)}
   if (!props.yourTeam) return null;
   const [teamState, setTeamState] = useState({color: props.team, selectedTeam: {}, selectedTeamName: props.yourTeam.name, title: props.yourTeam.name, teamToBeDisplayed:[]})
   
@@ -78,7 +77,7 @@ const TeamDisplay= (props) => {
       let selectedMon = 'mon' + i.toString();
       // if re-render is needed, add unique key to the child <TeamMember /> component to force re-render 
       let controlRerender = '';
-      console.log('POPULATE TEAM ',  props.previousTeamKeyE, teamState.selectedTeam.key, )
+      // console.log('POPULATE TEAM ',  props.previousTeamKeyE, teamState.selectedTeam.key, )
       if (props.previousTeamKeyE!==teamState.selectedTeam.key) controlRerender = Math.random();
 
       if (teamState.selectedTeam[selectedMon]) {
@@ -120,7 +119,6 @@ const TeamDisplay= (props) => {
     console.log('inside saveTeam')
     let input = document.querySelector("#main-div > div.teams > div.green > h4").innerHTML;
     if (input===undefined) input = 'untitled'
-    console.log(input)
     let copy = {...teamState.selectedTeam}
     copy.name = input
     if (teamState.color==='green') props.updateSavedTeam(copy)

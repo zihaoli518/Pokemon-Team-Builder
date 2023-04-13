@@ -169,6 +169,12 @@ class CurrentPokemonDisplay extends Component {
     // {console.log(this.props.currentPokemon.pokemon)}
     return (
       <div className='current-pokemon-container' key={this.props.currentPokemon.slot.mon}>
+        <div className='evolution-container'>
+        <h4>evolution tree</h4>
+        <div>
+          <h4>charizard</h4>
+        </div>
+        </div>
         <div className='current-pokemon-outter-flexbox'>
           <div key={this.props.currentPokemon.pokemon} className="current-pokemon">
             <div className="top-flexbox">

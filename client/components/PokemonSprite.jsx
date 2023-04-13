@@ -35,7 +35,8 @@ const PokemonSprite = props => {
 
   if (props.className) className = props.className;
   if (props.onClick) onClick = props.onClick;
-  if (props.id) id = id
+  if (props.id) id = id;
+  
   const animatedUrl = ('https://play.pokemonshowdown.com/sprites/xyani/' + props.pokemon.toLowerCase() + '.gif');
 
   if (props.pokemon==='hoshi') {

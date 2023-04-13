@@ -195,7 +195,7 @@ button:hover {
   margin-bottom: 3%;
   margin-left: -0.5%;
 
-  box-shadow: 5px 5px 10px 0px rgba(0,0,0,0.75);
+  box-shadow: 5px 5px 10px 0px rgba(96, 119, 114, 0.75);
   border-radius: 0.5rem;
 
   vertical-align: middle;
@@ -399,6 +399,11 @@ button:hover {
   font-size: 1.4rem;
 }
 
+.modal h3 {
+  font-size: 50%;
+  margin: 5%;
+}
+
 // loading 
 #login-loading-gif {
   position: relative;
@@ -423,11 +428,14 @@ button:hover {
 
 // after login 
 .after-login-username-display {
+  width: 60%;
   display: flex;
   justify-content: center;
   width: 100%;
   height: 100%;
-  margin-right: -80%;
+  position: relative;
+  top: 42%;
+  left: 17%;
 
 }
 
@@ -443,10 +451,16 @@ button:hover {
 .after-login-username-display h3{
   height: 100%;
   margin-right: 7%;
-  font-size: 1.5rem;
+  font-size: 50%;
   line-height: 100%;
   color: #41746f;
   margin-top: 1.5%;
+  margin-right: 3%;
+}
+
+.after-login-username-display button {
+  position: relative;
+  top: -1%;
 }
 
 
@@ -503,7 +517,7 @@ h1 {
 .pokemon-search {
   position: relative;
   top: 0.7%;
-  left: 35%;
+  left: 30%;
   height: 8%;
   width: 20%;
   margin-right: -10%;
@@ -580,9 +594,9 @@ input[type="text"]
 .all-saved-teams-container {
   background-color: rgba(112, 172, 212, 0.7);
   border-radius: 0.5rem;
-  width: 25%;
+  width: 23%;
   height: 500px;
-  margin-left: 5%;
+  margin-left: 3%;
   text-align: center;
 }
 
@@ -729,7 +743,7 @@ input[type="text"]
 
 // current pokemon
 .current-pokemon-display-container {
-  width: 65%;
+  width: 70%;
   height: 103%;
   margin-left: 2.5%;
 
@@ -758,6 +772,19 @@ input[type="text"]
     transform: none; 
   }
 }
+
+
+
+
+.evolution-container {
+  height: 40%;
+  width: 10%;
+  font-size: 30%;
+}
+
+
+
+
 
 .current-pokemon-outter-flexbox {
   max-width: 53%;
@@ -2318,7 +2345,7 @@ input[type="text"]
 }
 
 .teams .save-buttons-container {
-  height: 100%;
+  height: 18%;
   width: 47%;
   position: relative;
   left: 60%;
@@ -2350,12 +2377,12 @@ input[type="text"]
 }
 
 .save-team-icon {
-  height: 16%;
+  height: 90%;
   width: 9%;
 }
 
 .copy-team-icon {
-  height: 16%;
+  height: 90%;
   width: 10%;
   margin-left: 3%;
 }

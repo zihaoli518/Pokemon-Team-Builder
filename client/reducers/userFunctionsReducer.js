@@ -87,7 +87,7 @@ const userFunctionsReducer = (state = initialState, action) => {
           if (newSavedTeams[key]) newSavedTeams[key]['key'] = key;
           if (!newSavedTeams.hasOwnProperty(key)) {
             newSavedTeams[key] = action.payload.team.team;
-            if(newSavedTeams['team_3']) console.log(newSavedTeams.team_1.name, newSavedTeams.team_2.name, newSavedTeams.team_3.name)
+            newSavedTeams[key].key = key
           }
           if (state.savedTeams.team_1===null) break;
         }

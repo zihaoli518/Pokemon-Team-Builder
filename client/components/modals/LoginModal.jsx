@@ -72,9 +72,9 @@ const LoginModal = props => {
         if (response.status==='success') {
           let savedTeams = parseResponse(response.savedTeams);
           console.log('INSIDE LOGIN FETCH REQUEST RESPONSE: ', savedTeams)
-          console.log('before parse function: ', savedTeams.team_1.mon1.moves.move_1.categoryImageUrl)
+          // console.log('before parse function: ', savedTeams.team_1.mon1.moves.move_1.categoryImageUrl)
           savedTeams = parseObjectForState(savedTeams);
-          console.log('after parse function: ', savedTeams.team_1.mon1.moves.move_1.categoryImageUrl)
+          // console.log('after parse function: ', savedTeams.team_1.mon1.moves.move_1.categoryImageUrl)
 
           props.changeUserState(response.username, savedTeams);
           props.toggleLoginLoading();
@@ -103,8 +103,8 @@ const LoginModal = props => {
       const teamKey = 'team_' + i; 
       for (let j=1; j<=6; j++) {
         const monKey = 'mon' + j;
-        console.log(teamKey, monKey)
-        console.log(savedTeams[teamKey][monKey])
+        // console.log(teamKey, monKey)
+        // console.log(savedTeams[teamKey][monKey])
         if (!savedTeams[teamKey][monKey]) break;
         savedTeams[teamKey][monKey].activeAbility.description = savedTeams[teamKey][monKey].activeAbility.description.replace("&apos;", "'")
       }
@@ -161,7 +161,7 @@ const LoginModal = props => {
     })
       .then(data => {
 
-        console.log(data);
+        // console.log(data);
         props.changeUserState(username, data);
         props.toggleShowLoginModal();
         // chage redux state

@@ -95,7 +95,7 @@ const TopNavBar = props => {
       <div className='top-nav-bar-buttons'>
       {(props.isLoggedIn)? 
         <div className='after-login-username-display'> 
-          <h2>hello hello! </h2>
+          <h2>welcome back! </h2>
           <h3>{props.username}</h3> 
           <button onClick={() => {console.log('logout clicked'); logout()}}>log out</button> 
         </div>
@@ -111,5 +111,7 @@ const TopNavBar = props => {
     </div>
   );
 }
+
+
 
 export default connect(mapStateToProps, mapDispatchToProps)(TopNavBar);

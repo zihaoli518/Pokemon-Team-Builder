@@ -45,7 +45,7 @@ const AllSavedTeams= (props) => {
 
   
   const populateSavedTeams = () => {
-    console.log('inside populateSavedTeams', props.savedTeams,)
+    console.log('inside populateSavedTeams', props.savedTeams)
     if (!props.savedTeams) return;
     const CopyOfSavedTeams = JSON.parse(JSON.stringify(props.savedTeams));
 
@@ -60,11 +60,10 @@ const AllSavedTeams= (props) => {
         // decode url for item
         for (let j=1; j<=6; j++) {    
           let mon = 'mon'+j;
-          console.log(mon)
           if (currentTeam[mon] && currentTeam[mon].item.url) currentTeam[mon].item.url = decodeURIComponent(currentTeam[mon].item.url)
         }
       }
-      console.log('inside populateSavedTeams for loop: ', props.savedTeams, currentTeamKey, props.savedTeams[currentTeamKey])
+      // console.log('inside populateSavedTeams for loop: ', props.savedTeams, currentTeamKey, props.savedTeams[currentTeamKey])
       // console.log(selectedTeam, selectedMon);
       allSavedTeamsToBeDisplayed.push(
           <SavedTeam
@@ -75,7 +74,7 @@ const AllSavedTeams= (props) => {
           />)
       if (i===Object.keys(props.savedTeams).length) break;
     }
-    console.log('end of populateTeams, ', allSavedTeamsToBeDisplayed)
+    // console.log('end of populateTeams, ', allSavedTeamsToBeDisplayed)
     setAllTeams(allSavedTeamsToBeDisplayed); 
     // if (props.savedTeams.team_1 && !props.savedTeams.team_1.mon1) props.refreshAndDecodeSavedTeams(CopyOfSavedTeams)
   }
@@ -90,7 +89,7 @@ const AllSavedTeams= (props) => {
         for (let j=1; j<=6; j++) {
           const monKey = 'mon' + j;
           if (!savedTeams[teamKey][monKey]) break;
-          console.log('in savedTeamsToDataBase... ', savedTeams[teamKey][monKey])
+          // console.log('in savedTeamsToDataBase... ', savedTeams[teamKey][monKey])
           savedTeams[teamKey][monKey].activeAbility.description = savedTeams[teamKey][monKey].activeAbility.description.replace(/[\/\(\)\']/g, "&apos;")
           if (savedTeams[teamKey][monKey].item.item) {
             // savedTeams[teamKey][monKey].item.description = savedTeams[teamKey][monKey].item.description.replace(/[\/\(\)\']/g, "&apos;");
