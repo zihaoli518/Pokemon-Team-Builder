@@ -28,6 +28,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => ({
   toggleLoginLoading : () => dispatch(actions.toggleLoginLoading()),
+  updateYourTeamKey : (num) => dispatch(actions.updateYourTeamKey(num))
 });
 
 
@@ -77,6 +78,7 @@ const LoginModal = props => {
           // console.log('after parse function: ', savedTeams.team_1.mon1.moves.move_1.categoryImageUrl)
 
           props.changeUserState(response.username, savedTeams);
+          props.updateYourTeamKey('team_' + (Object.keys(savedTeams).length + 1))
           props.toggleLoginLoading();
           props.toggleShowLoginModal();
         }

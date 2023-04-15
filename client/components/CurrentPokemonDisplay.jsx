@@ -18,6 +18,7 @@ import * as actions from '../actions/actions';
 import PokemonSprite from './PokemonSprite.jsx';
 import StatChartRadar from './StatChartRadar.jsx';
 import CurrentPokemonDetails from './CurrentPokemonDetails.jsx'
+import EvolutionTree from './EvolutionTree.jsx';
 
 
 
@@ -169,14 +170,10 @@ class CurrentPokemonDisplay extends Component {
     // {console.log(this.props.currentPokemon.pokemon)}
     return (
       <div className='current-pokemon-container' key={this.props.currentPokemon.slot.mon}>
-        <div className='evolution-container'>
-        <h4>evolution tree</h4>
-        <div>
-          <h4>charizard</h4>
-        </div>
-        </div>
+        <EvolutionTree />
         <div className='current-pokemon-outter-flexbox'>
           <div key={this.props.currentPokemon.pokemon} className="current-pokemon">
+             
             <div className="top-flexbox">
               <h3 id={this.props.currentPokemon.pokemon}> {this.props.currentPokemon.pokemon} </h3>
               <div className="types">
@@ -188,19 +185,25 @@ class CurrentPokemonDisplay extends Component {
                 <h4>level 100</h4>
               </div>
             </div>
+
             <div className="current-pokemon-flexbox">
-              
-              <PokemonSprite
-                key={this.props.currentPokemon.slot.mon}
-                pokemon={this.props.currentPokemon.pokemon}
-                className="pokemon-class"
-              />
+              <div className='current-sprite-main-container'>
+                <PokemonSprite
+                  key={this.props.currentPokemon.slot.mon}
+                  pokemon={this.props.currentPokemon.pokemon}
+                  className="current-sprite-main"
+                />
+              </div>
 
               <div className="stats">
                 {/* <h5>Base Stats</h5> */}
                 <StatChartRadar name={this.props.currentPokemon.pokemon} pokemonStats={this.props.currentPokemon.stats} currentPokemon={this.props.currentPokemon} id={'current-pokemon-chart'}/>
               </div>
             </div>
+            <div className={'oval-ground ' + 'type-'+this.props.currentPokemon.types[0]}>
+
+            </div>
+
             <div className='current-pokemon-weakness-summary'> 
               <div className='weaknesses'>
                   <h4>immunity : </h4>

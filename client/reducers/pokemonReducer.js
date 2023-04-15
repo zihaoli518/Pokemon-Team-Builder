@@ -138,13 +138,15 @@ const pokemonReducer = (state = initialState, action) => {
         copy.abilities[i].ability.url = encodeURIComponent(copy.abilities[i].ability.url)
       }
 
-
       // reformatting move pool of pokemon 
       let newMovePool = {};
       for (let i=0; i<pokemonData.moves.length; i++) {
         newMovePool[pokemonData.moves[i].move.name.replace("-", " ")] = true;
       }
       copy.movePool = newMovePool;
+
+      // add evolution chain 
+      copy.evolution_chain = pokemonData.evolution_chain;
 
       
       // need to reset slot to avoid unwantingly changing active team 
@@ -425,6 +427,12 @@ const pokemonReducer = (state = initialState, action) => {
         currentPokemon: currentPokemonBeforeEvs,
         yourTeam: yourTeamWithUpdatedStats
       }
+    
+      case types.UPDATE_YOUR_TEAM_KEY: 
+        return {
+          ...state,
+          yourTeam: {...state.yourTeam, key: action.payload}
+        }
          
     default: {
       return state

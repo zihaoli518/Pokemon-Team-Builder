@@ -155,3 +155,8 @@ export const updateNature = (nature) => ({
   type: types.UPDATE_NATURE, 
   payload: nature
 })
+
+export const updateYourTeamKey = (num) => ({
+  type: types.UPDATE_YOUR_TEAM_KEY,
+  payload: num
+})

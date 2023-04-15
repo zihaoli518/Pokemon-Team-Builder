@@ -28,6 +28,8 @@ app.use((req, res, next) => {
   next();
 });
 
+// // statically serve everything in the build folder on the route '/build'
+// serve static content 
 app.use('/static', 
 express.static(path.join(__dirname, '../assets')));
 
@@ -37,9 +39,7 @@ app.get('/', (req, res) => {
   return res.status(200).sendFile(path.join(__dirname, '../index.html'));
 });
 
-// // statically serve everything in the build folder on the route '/build'
-// serve static content 
-
+// routing fetch requests regarding pokemon data 
 app.post('/api/fetchPokeAPI', fetchMiddlewares.fetchPokeAPI, (req, res) => {
   console.log('/fetch-pokeAPI complete')
   return res.status(200).send(res.locals.data)
@@ -49,6 +49,15 @@ app.post('/api/testForNewerSprites', fetchMiddlewares.testForNewerSprites, (req,
   console.log('/testForNewerSprites complete')
   return res.status(200).send({url: res.locals.url})
 })
+
+app.post('/api/fetchEvolutionTree', fetchMiddlewares.getEvoluitonData, (req, res) => {
+  console.log('/fetchEvolutionTree complete')
+  return res.status(200).send({evolutionTree: res.locals.evolutionTree})
+})
+
+
+
+
 
 // app.post('/api/fetch-smogon', fetchMiddlewares.fetchSmogon, (req, res) => {
 //   console.log('/fetch-smogon complete')

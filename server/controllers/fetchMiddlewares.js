@@ -22,11 +22,33 @@ fetchMiddlewares.fetchPokeAPI = (req, res, next) => {
     return next();
   }
 
+  async function getEvolutionChainUrl(speciesUrl) {
+    await fetch(speciesUrl)
+      .then(data => data.json())
+      .then(data => {
+        res.locals.evolutionChainUrl = data.evolution_chain.url;
+      })
+  }
+
+  async function getEvolutionTree(evolutionChainUrl) {
+    await fetch(evolutionChainUrl)
+      .then(data => data.json())
+      .then(data => {
+        res.locals.data.evolution_chain = data.chain;
+        return next();
+      })
+  }
+
   fetch('https://pokeapi.co/api/v2/pokemon/' + pokemonName.toLowerCase())
     .then(data => data.json())
     .then(data => {
       res.locals.data = data;
-      return next();
+    })
+    .then(async() => {
+      await getEvolutionChainUrl(res.locals.data.species.url)
+    })
+    .then(async() => {
+      await getEvolutionTree(res.locals.evolutionChainUrl)
     })
     .catch(error => {
       return next(error);
@@ -83,6 +105,17 @@ fetchMiddlewares.testForNewerSprites = (req, res, next) => {
     .catch(error => {
       return next(error)
     })
+}
+
+
+fetchMiddlewares.getEvoluitonData = (req, res, next) => {
+  const pokemon = req.body.pokemon;
+
+  async function getSpeciesUrl() {
+    await fetch('https://pokeapi.co/api/v2/pokemon/charmeleon')
+  }
+
+
 }
 
 // not up to date with gen 9 
