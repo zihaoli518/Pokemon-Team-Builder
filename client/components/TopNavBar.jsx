@@ -73,7 +73,6 @@ const TopNavBar = props => {
 
   const logout = () => {
     console.log('inside logout ')
-    console.log(typeof(document.cookie))
     document.cookie = 'PokemonTeamBuilder=; expires=Thu, 01 Jan 1970 00:00:01 GMT;';
     nav("../../");
     location.reload();
@@ -82,7 +81,6 @@ const TopNavBar = props => {
 
   const checkLoggedIn = () => {
     if (props.isLoggedIn && redirectUser) {
-      console.log('props.isLoggedIn')
       setRedirectUser(false);
       nav("/users/" + props.username)
     }
@@ -101,8 +99,8 @@ const TopNavBar = props => {
         </div>
         :
         <div className='top-nav-bar-buttons-inner'>
-          <button onClick={() => {console.log('login clicked'); toggleShowLoginModal()}}>login</button> 
-          <button onClick={() => {console.log('sign up clicekd'); toggleShowSignupModal()}}>signup</button> 
+          <button onClick={() => {toggleShowLoginModal()}}>login</button> 
+          <button onClick={() => {toggleShowSignupModal()}}>signup</button> 
         </div>
         }
       </div>

@@ -117,7 +117,6 @@ html {
 #app {
   width: 100%;
   height: 100%;
-  margin-top: -20px;
 }
 
 .app-container {
@@ -159,8 +158,14 @@ button:hover {
   text-align: center;
   margin: 0 auto;
   border-radius: 0.4rem;
+  border: 1.2px rgba(128, 128, 128, 0.623) dotted;
   cursor: pointer;
 }
+
+.type-undefined {
+  border: none;
+}
+
 
 #bug {
   background-color: rgb(164, 174, 63);
@@ -275,12 +280,11 @@ button:hover {
 
 
 #main-div {
-  position:relative;
-  z-index: 3;
-  margin-top: -2.5%;
-
   height: 100%;
   width: 100%;
+  position:relative;
+  z-index: 3;
+
 }
 
 .inactive {
@@ -299,10 +303,10 @@ button:hover {
 
   background-color: lighten($color5, 10%);
   text-align: left;
-  height: 12%;
+  height: 10%;
   width: 101%;
   position: relative;
-  top: 0%; 
+  top: -1%; 
 
   box-shadow: 5px 5px 10px 0px rgba(96, 119, 114, 0.75);
   border-radius: 0.5rem;
@@ -313,11 +317,12 @@ button:hover {
 .title-container h1 {
   position: relative;
   left: 4%;
+  top: -15%;
   font-size: 65%;
 }
 
 .title-container img {
-  margin-top: 1.3%;
+  margin-top: 1%;
   margin-left: 6%;
   height: 75%;
 }
@@ -327,7 +332,7 @@ button:hover {
   margin: 0 auto;
   font-size: 40%;
   position: absolute;
-  top: 47%;
+  top: 65%;
   left: 66.5%;
 }
 
@@ -335,7 +340,7 @@ button:hover {
   z-index: 10;
   position: relative;
   left: 46%;
-  top: 10%;
+  top: 30%;
   margin-bottom: 0%;
   cursor: pointer;
 }
@@ -360,7 +365,7 @@ button:hover {
 
   position: absolute;
   left: 27%;
-  top: 1%;
+  top: 0%;
   
   animation: electabuzz 8s infinite;
 }
@@ -384,13 +389,14 @@ button:hover {
 // top nav bar
 .top-nav-bar {
   height: 4.5%;
-  width: 100%;
+  width: 40%;
   display: flex;
   justify-content: right;
   
-  position: relative;
+  position: absolute;
   top: 3%;
-  z-index: 10;
+  left: 55%;
+  z-index: 5;
 }
 
 .top-nav-bar-buttons {
@@ -406,7 +412,8 @@ button:hover {
 }
 .top-nav-bar-buttons-inner button {
   margin: 2%;
-  margin-top: 3.5%;
+  position: relative;
+  top: -10%;
 }
 
 .top-nav-bar  button{
@@ -626,19 +633,20 @@ h1 {
 
 // serach 
 .pokemon-search {
-  position: relative;
-  // top: 0.7%;
-  // left: 36%;
-  top: -9%;
-  left: 35%;
   height: 8%;
   width: 25%;
+  position: absolute;
+  // top: 0.7%;
+  // left: 36%;
+  top: 0.5%;
+
+  left: 38%;
   margin-right: -10%;
-  z-index: 10v;
+  z-index: 99;
 
   border: 1px black dotted;
   border-radius: 0.7rem;
-  background-color: #bfc6a494;
+  background-color: #a9b5be94;
   box-shadow: 2px 1px 5px 1px rgba(91, 91, 91, 0.676);
 }
 
@@ -650,9 +658,9 @@ h1 {
 
 
 #pokemon-name {
-  height: 50%;
-  width: 55%;
-  margin-right: 30px;
+  height: 60%;
+  width: 45%;
+  margin-right: 5%;
   border-radius: 0.3rem;
   background-color: rgba(224, 224, 207, 0.725) !important;
 }
@@ -698,6 +706,10 @@ input[type="text"]
   display: flex;
   justify-content: left;
   height: 55%;
+  position: relative;
+  top: 4%;
+
+
 }
 
 
@@ -952,8 +964,8 @@ input[type="text"]
 }
 
 .evolution-row a {
-  height: 100%;
-  width: 50%;
+  height: 40%;
+  width: 55%;
   position: relative;
   margin-top: 5%;
 }
@@ -981,15 +993,20 @@ input[type="text"]
 
 .evolution-sprite-current {
   transform: scale(1.2);
+  padding: 3px;
   transition: 1s ease-in-out;
-  background-color: rgba(183, 143, 143, 0.58);
-  border-radius: 0.7rem;
+  background-color: rgba(157, 155, 155, 0.541);
+  border-radius: 0.9rem;
 }
 
 .evolution-text-current {
-  color: rgb(111, 167, 180);
+  display: inline-block;
+  color: rgb(174, 219, 229);
   text-decoration: underline;
   font-size: 95%;
+  background-color: rgba(86, 86, 86, 0.473);
+  border-radius: 15%;
+  padding-left: 5px;
 }
 
 
@@ -1123,6 +1140,7 @@ input[type="text"]
 
 .current-pokemon-flexbox img:hover {
   transform: scale(1.3);
+  cursor: pointer;
 }
 
 .current-pokemon-flexbox .stats {
@@ -1132,9 +1150,10 @@ input[type="text"]
 
 .stat-chart-current-pokemon-chart {
   height: 100%;
-  width: 170%;
+  width: 125%;
   margin-top: 23%;
-  margin-left: -11%;
+  margin-left: 5%;
+
 }
 
 .stat-chart-current-pokemon-chart canvas {
@@ -1278,15 +1297,45 @@ input[type="text"]
 }
 
 .current-pokemon-weakness-summary .weaknesses {
-  display: flex;
-  justify-content: left;
   height: 30%;
   width: 95%;
-}
-.current-pokemon-weakness-summary .weaknesses-inner {
   display: flex;
   justify-content: left;
+}
+.weaknesses-inner {
   height: 100%;
+  display: flex;
+  justify-content: left;
+}
+
+.weaknesses-inner > * {
+  animation-delay: 3s;
+}
+
+.weaknesses-inner:nth-child(1) {
+  
+  -webkit-animation-delay:0.26s;
+  animation-delay:0.1s;
+}
+.weaknesses-inner:nth-child(2) {
+  -webkit-animation-delay:0.6s;
+  animation-delay:0.2s;
+}
+.weaknesses-inner:nth-child(3) {
+  -webkit-animation-delay:0.76s;
+  animation-delay:0.3s;
+}
+.weaknesses-inner:nth-child(4) {
+  -webkit-animation-delay:2s;
+  animation-delay:0.4s;
+}
+.weaknesses-inner:nth-child(5) {
+  -webkit-animation-delay:2.26s;
+  animation-delay:0.5s;
+}
+.weaknesses-inner:nth-child(6) {
+  -webkit-animation-delay:2.26s;
+  animation-delay:0.6s;
 }
 
 .current-pokemon-weakness-summary .type {
@@ -1296,7 +1345,11 @@ input[type="text"]
   line-height: 25px;
   margin-left: 4px;
   opacity: 70%;
+
+  animation: fadeIn 1s ease-in-out;
 }
+
+
 
 .current-pokemon-weakness-summary .resistance-immune {
   color: white;
@@ -1316,7 +1369,7 @@ input[type="text"]
   height: 12%;
   width: 100%;
   position: relative;
-  left: 2%;
+  left: 1%;
   margin: 0;
 }
 
@@ -1375,6 +1428,7 @@ input[type="text"]
 }
 .down-arrow-gifs .arrow1 {
   position: relative;
+  top: -10%;
   right: 8%;
 }
 .down-arrow-gifs .arrow2 {
@@ -2191,7 +2245,7 @@ input[type="text"]
 
 .ev-sliders-container {
   height: 35%;
-  width: 80%;
+  width: 90%;
   margin: 0 auto;
   margin-top: 10%;
   display: flex;
@@ -2361,7 +2415,7 @@ input[type="text"]
 
 // team display 
 .teams {
-  margin-top: 2.2%;
+  margin-top: 2.8%;
   display: flex;
   justify-content: center;
 
@@ -2371,19 +2425,6 @@ input[type="text"]
   position: relative;
 }
 
-.teams h4 {
-  margin-top: 2px;
-  margin-bottom: 1.5%;
-  font-size: 25px;
-  text-align: center;
-  font-family: "Indie Flower", cursive;
-  font-weight: 500;
-
-  width: 40%;
-  position: relative;
-  left: 30%;
-
-}
 
 .switch-teams-button-container {
   
@@ -2396,6 +2437,19 @@ input[type="text"]
   width: 50px;
 }
 
+@keyframes teamsMovement {
+  0% {
+    transform: translateY(-10px);
+  }
+  50% {
+    transform: translateY(3px);
+  }
+  100% {
+    transform: translateY(-10px);
+  }
+}
+
+
 .green {
   margin-right: 2%;
   margin-left: 0.5%;
@@ -2403,10 +2457,11 @@ input[type="text"]
 
   width: 47%;
   height: 100%;  
-  background-color: rgba($friendlyTeamColor, 1);
+  background-color: rgba($friendlyTeamColor, 0.8);
   border-radius: 1rem;
   box-shadow: 5px 5px 30px -10px rgba(63, 63, 63, 0.88);
 
+  animation: teamsMovement 3s infinite;
 }
 
 
@@ -2417,11 +2472,34 @@ input[type="text"]
 
   width: 47%;
   height: 100%;
-  background-color: rgba($enemyTeamColor, 1);
+  background-color: rgba($enemyTeamColor, 0.8);
   border-radius: 1rem;
   box-shadow: 5px 5px 30px -10px rgba(63, 63, 63, 0.88);
   z-index: 10;
+
+  animation: teamsMovement 3s infinite;
+
 } 
+
+.team-name-text-input {
+  width: 30%;
+  margin-top: 2px;
+  margin-bottom: 1.5%;
+  font-size: 25px;
+  text-align: center;
+  font-family: "Indie Flower", cursive;
+  font-weight: 500;
+  border: 1px rgba(128, 128, 128, 0.681) dotted;
+  border-radius: 0.5rem;
+
+  position: relative;
+  left: 35%;
+
+}
+
+.team-name-text-input:hover {
+  border: 2px rgb(128, 192, 229) solid;
+}
 
 
 .teams .team-members {
@@ -2666,28 +2744,57 @@ button:hover{
 
 
 // show typing chart button 
-.show-chart-button-container {
-  display: flex;
-  justify-content: center;
-  margin-top: 1%;
-  margin-bottom: 3%;
-  height: 40px;
+.analysis-menu-and-content-container {
+  height: 70%;
+  width: 100%;
+  margin-top: 1.5%;
+  margin-bottom: 1%;
+  margin-left: 3%;
+  padding-right: -13%;
+  border-radius: 0.5rem;
+
+  animation: rollout 0.5s ease-in-out;
 }
 
-.show-chart-button-area button{
+.analysis-menu {
+  height: 9.8%;
+  width: 50%;
+  position: relative;
+  top: 1%;
+}
+
+.analysis-menu button{
   height: 100%;
   font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
-  font-size: 23px;
+  font-size: 40%;
   background-color: $color4;
   color: $color2  ;
   border-radius: 0.6rem;
+  border: 1px grey dotted;
+  border-radius: 0.5rem;
+  position: relative;
+  top: -34%;
 }
 
-.show-chart-button-area button:hover{
+.analysis-menu .menu-button-active {
+  height: 110%;
   background-color: #e6e6e6;
-  transition: 0.5s;
+  color: rgb(50, 49, 49);
 }
 
+.analysis-menu button:hover{
+  background-color: #e6e6e6;
+  color: rgb(50, 49, 49);
+  transition: 0.8s;
+}
+
+.analysis-content-container {
+  height: 90%;
+  width: 93%;
+  background-color: rgba(128, 128, 128, 0.451);
+  border-radius: 0.4rem;
+  margin-top: -0.25%;
+}
 
 
 
@@ -2713,11 +2820,12 @@ button:hover{
 }
 
 .matchup-chart {
-  height: 50%;
-  width: 70%;
+  height: 97%;
+  width: 80%;
 
   position: relative;
-  left: 18%;
+  top: 1%;
+  margin: 0 auto;
   border-radius: 0.3rem;
 
   background-color: rgba(104, 109, 123, 0.815);
@@ -2734,23 +2842,28 @@ button:hover{
 }
 
 .row-outter-legends {
-  margin-left: -4%;
+  margin-left: -3%;
+  opacity: 75%;
+  border: 1px grey dotted;
+  border-radius: 0.5rem;
 }
 
 .row-inner {
   display: flex;
   justify-content: center;
   width: 100%;
+  margin-left: 0.4%;
 }
 
 .chart-legends {
-  width: 80%;
-  margin-left: 20px;
+  width: 5.5555%;
+  margin: 0.2%; 
   text-align: center;
 
   font-family: "Indie Flower", cursive;
   font-weight: 700;
   font-size: 1.2rem;
+  border-radius: 0.4rem;
 }
 
 .box {
@@ -2798,10 +2911,30 @@ button:hover{
   background-color: rgba(127, 0, 0, 0.724);
 }
 
-.chart-sprite {
-  height: 80px;
-  width: 80px;
+.chart-sprite-container {
+  height: 100%;
+  width: 6.7%;
 }
+
+.chart-sprite {
+  height: 100%;
+  width: 80%;
+  position: relative;
+  left: 10%;
+}
+
+
+// damage calc 
+.damage-calculator-container {
+  height: 95%;
+  width: 95%;
+  display: flex;
+  justify-content: center;
+}
+
+
+
+
 
 
 

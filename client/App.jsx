@@ -23,7 +23,7 @@ import CurrentPokemonDisplay from './components/CurrentPokemonDisplay.jsx'
 import TeamDisplay from './components/TeamDisplay.jsx';
 import SwitchTeams  from './components/SwitchTeams.jsx';
 import MoreInfo from './components/MoreInfo.jsx';
-import ShowChartButton from './components/ShowChartButton.jsx';
+import AnalysisMenu from './components/AnalysisMenu.jsx';
 
 import '../index.scss';
 import MatchupChart from './components/MatchupChart.jsx';
@@ -141,11 +141,8 @@ class App extends Component {
                 ]
               : null}
           </div>
-          <div className="show-chart-button-container">
-            {this.props.teamStatus ? <ShowChartButton /> : null}
-          </div>
+            {this.props.teamStatus ? <AnalysisMenu /> : null}
           {/* <div className="matchup-chart-container"> */}
-            {this.props.showTypingChart ? <MatchupChart /> : null}
           {/* </div> */}
           <div className='footer-container'>
               <h4>electabuzzed.gg</h4>

@@ -144,7 +144,7 @@ const TeamDisplay= (props) => {
 
   return (
     <div className={props.team}>
-      <h4 contenteditable="true">{teamState.title}</h4>
+      <h4 className='team-name-text-input' contenteditable="true">{teamState.title}</h4>
       <div className='team-members'>
         {teamState.teamToBeDisplayed}
       </div>

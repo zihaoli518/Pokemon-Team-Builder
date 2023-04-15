@@ -48,7 +48,7 @@ const mapDispatchToProps = dispatch => ({
 
 
 const CurrentPokemonDetails = props => {
-  console.log('inside CurrentPokemonDetails', props.currentPokemon, currentlyActiveDiv)
+  console.log('inside CurrentPokemonDetails', props.currentPokemon)
   
   const [currentlyActiveDiv, setCurrentlyActiveDiv] = useState({div: '', });
   const [showBrowseArea, setShowBrowseArea] = useState(false);

@@ -86,7 +86,7 @@ const options = {
   },
   startAngle: 290,
   responsive: true,
-  maintainAspectRatio: false,
+  maintainAspectRatio: true,
 }
 
 // helper function for generating color based on value 

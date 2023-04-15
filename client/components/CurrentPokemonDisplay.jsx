@@ -177,8 +177,8 @@ class CurrentPokemonDisplay extends Component {
             <div className="top-flexbox">
               <h3 id={this.props.currentPokemon.pokemon}> {this.props.currentPokemon.pokemon} </h3>
               <div className="types">
-                <h4 className="type" id={this.props.currentPokemon.types[0]}>{this.props.currentPokemon.types[0]}</h4>
-                <h4 className="type" id={this.props.currentPokemon.types[1]}>{this.props.currentPokemon.types[1]}</h4>
+                <h4 className={"type"} id={this.props.currentPokemon.types[0]}>{this.props.currentPokemon.types[0]}</h4>
+                <h4 className={"type"+" type-"+this.props.currentPokemon.types[1]} id={this.props.currentPokemon.types[1]}>{this.props.currentPokemon.types[1]}</h4>
               </div>
               <div className="current-pokemon-spacer" ></div>
               <div className="levels">

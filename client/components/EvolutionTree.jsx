@@ -40,14 +40,14 @@ const EvolutionTree= (props) => {
   const [evolutionTreeMinimized, setEvolutionTreeMinimized] = useState([]);
 
   
-  const toggleActive = (e) => {
-    e.stopPropagation();
-    if (className==='evolution-container-inner') {
-      setClassName('evolution-container-inner evolution-container-inner-active');
-      setFullDisplay(true)
-    }
-    else setClassName('evolution-container-inner')
-  }
+  // const toggleActive = (e) => {
+  //   e.stopPropagation();
+  //   if (className==='evolution-container-inner') {
+  //     setClassName('evolution-container-inner evolution-container-inner-active');
+  //     setFullDisplay(true)
+  //   }
+  //   else setClassName('evolution-container-inner')
+  // }
 
   const populateEvolutionTree = () => {
     console.log('inside populateEvolutionTree ', props.currentPokemon)

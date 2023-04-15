@@ -63,7 +63,7 @@ const AllSavedTeams= (props) => {
           if (currentTeam[mon] && currentTeam[mon].item.url) currentTeam[mon].item.url = decodeURIComponent(currentTeam[mon].item.url)
         }
       }
-      // console.log('inside populateSavedTeams for loop: ', props.savedTeams, currentTeamKey, props.savedTeams[currentTeamKey])
+      console.log('inside populateSavedTeams for loop: ', props.savedTeams, currentTeamKey, props.savedTeams[currentTeamKey])
       // console.log(selectedTeam, selectedMon);
       allSavedTeamsToBeDisplayed.push(
           <SavedTeam
