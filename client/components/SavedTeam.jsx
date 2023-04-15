@@ -27,7 +27,8 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = dispatch => ({
   setYourTeam : (team) => dispatch(actions.setYourTeam(team)),
   editTeam: (key, team) => dispatch(actions.makeSavedTeamActive(key, team)),
-  removeTeam: (key) => dispatch(actions.removeSavedTeam(key))
+  removeTeam: (key) => dispatch(actions.removeSavedTeam(key)),
+  updatePreviousTeamKey: (letter) => dispatch(actions.updatePreviousTeamKey(letter)),
 });
 
 
@@ -73,6 +74,19 @@ const SavedTeam = (props) => {
     setTeam(newTeamToBeDisplayed);
   }
 
+  const handleRemove = (e) => {
+    e.stopPropagation();
+    console.log('in onclick2', props.savedTeamKey); 
+    props.removeTeam(props.savedTeamKey)
+  }
+
+
+  const handleEdit = (e) => {
+    e.stopPropagation();
+    console.log('in onclick1', props.savedTeamKey); 
+    props.removeTeam(props.savedTeamKey)
+  }
+
   const addActiveClass = () => {
     const previousActive = document.getElementsByClassName('active-saved-team');
     if (previousActive.length!==0) {
@@ -86,13 +100,13 @@ const SavedTeam = (props) => {
 
 
   return (
-    <div className='saved-team' onClick={() => {props.setYourTeam(props.savedTeam)}}>
+    <div className='saved-team' onClick={() => {console.log('in onclick0' ,props.savedTeamKey); props.editTeam(props.savedTeamKey ,props.savedTeam); props.updatePreviousTeamKey("E")}}>
       <h5>{props.savedTeamName}</h5>
       <div className='team-members need-saved-team-hover-effect' id={props.savedTeamKey} onClick={()=> {addActiveClass()}}>
         {team}
       </div>
-      <img className='edit-team-button' src='https://cdn-icons-png.flaticon.com/512/6065/6065488.png' onClick={() => {props.editTeam(props.savedTeamKey ,props.savedTeam)}} />
-      <img className='remove-team-button' src='https://www.pngplay.com/wp-content/uploads/7/Delete-Logo-PNG-HD-Quality.png' onClick={() => {props.removeTeam(props.savedTeamKey)}} />
+      <img className='edit-team-button' src='https://cdn-icons-png.flaticon.com/512/6065/6065488.png' onClick={(e) => {console.log('in onclick1' ,props.savedTeamKey); props.editTeam(props.savedTeamKey, props.savedTeam); addActiveClass()}} />
+      <img className='remove-team-button' src='https://www.pngplay.com/wp-content/uploads/7/Delete-Logo-PNG-HD-Quality.png' onClick={(e) => {handleRemove(e)}} />
 
     </div>
   );

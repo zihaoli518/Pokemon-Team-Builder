@@ -1,17 +1,54 @@
 const fetch = require('node-fetch');
 const parse = require('node-html-parser');
 
+const hoshi = require('../../assets/hoshi.json');
+const lina = require('../../assets/lina.json');
+
+
 const fetchMiddlewares = {}; 
 
 fetchMiddlewares.fetchPokeAPI = (req, res, next) => {
   console.log('inside fetchPokeAPI');
 
   const pokemonName = req.body.pokemon
+
+  // adding hoshi 
+  if (pokemonName==='hoshi') {
+    res.locals.data = hoshi;
+    return next();
+  }
+  if (pokemonName==='lina') {
+    res.locals.data = lina;
+    return next();
+  }
+
+  async function getEvolutionChainUrl(speciesUrl) {
+    await fetch(speciesUrl)
+      .then(data => data.json())
+      .then(data => {
+        res.locals.evolutionChainUrl = data.evolution_chain.url;
+      })
+  }
+
+  async function getEvolutionTree(evolutionChainUrl) {
+    await fetch(evolutionChainUrl)
+      .then(data => data.json())
+      .then(data => {
+        res.locals.data.evolution_chain = data.chain;
+        return next();
+      })
+  }
+
   fetch('https://pokeapi.co/api/v2/pokemon/' + pokemonName.toLowerCase())
     .then(data => data.json())
     .then(data => {
       res.locals.data = data;
-      return next();
+    })
+    .then(async() => {
+      await getEvolutionChainUrl(res.locals.data.species.url)
+    })
+    .then(async() => {
+      await getEvolutionTree(res.locals.evolutionChainUrl)
     })
     .catch(error => {
       return next(error);
@@ -68,6 +105,17 @@ fetchMiddlewares.testForNewerSprites = (req, res, next) => {
     .catch(error => {
       return next(error)
     })
+}
+
+
+fetchMiddlewares.getEvoluitonData = (req, res, next) => {
+  const pokemon = req.body.pokemon;
+
+  async function getSpeciesUrl() {
+    await fetch('https://pokeapi.co/api/v2/pokemon/charmeleon')
+  }
+
+
 }
 
 // not up to date with gen 9 

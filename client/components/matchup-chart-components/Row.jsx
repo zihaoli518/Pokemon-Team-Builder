@@ -50,7 +50,7 @@ const Row = (props) => {
   
   return (
     <div className={className}>
-      <div>
+      <div className='chart-sprite-container'>
         {sprite}
       </div>
       <div className='row-inner'>

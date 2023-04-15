@@ -50,11 +50,15 @@
     "node-html-parser": "^6.1.4",
     "pg": "^8.10.0",
     "poke-types": "^1.0.22",
+    "pokemon-showdown": "^0.11.7",
+    "pokemon-stat-calculator": "^0.3.0",
     "react": "^18.2.0",
+    "react-chartjs-2": "^5.2.0",
     "react-dom": "^18.2.0",
     "react-redux": "^7.2.2",
     "react-router": "^6.4.0",
     "react-router-dom": "^6.9.0",
-    "redux": "^4.0.5"
+    "redux": "^4.0.5",
+    "smartcrop": "^2.0.5"
   }
 }

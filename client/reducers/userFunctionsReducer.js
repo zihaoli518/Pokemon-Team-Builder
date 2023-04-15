@@ -29,7 +29,7 @@ const initialState = {
 }
 
 const userFunctionsReducer = (state = initialState, action) => {
-  console.log('inside user reducer, action: ', action)
+  // console.log('inside user reducer, action: ', action)
 
   switch (action.type) {
    
@@ -44,18 +44,19 @@ const userFunctionsReducer = (state = initialState, action) => {
         mainDivClassName: newmainDivClassName
       }
 
-      case types.CHANGE_USER_STATE: 
+    case types.CHANGE_USER_STATE: 
       console.log('inside CHANGE_USER_STATE ', action)
       let SavedTeamFromDatabase = {
         team_1: null,
       }
-      if (action.payload.responseObj) SavedTeamFromDatabase = action.payload.responseObj.savedTeams;
-        return {
-          ...state,
-          isLoggedIn: true,
-          username: action.payload.username,
-          savedTeams: SavedTeamFromDatabase
-        }
+      if (action.payload.responseObj) SavedTeamFromDatabase = action.payload.responseObj;
+      console.log(SavedTeamFromDatabase)
+      return {
+        ...state,
+        isLoggedIn: true,
+        username: action.payload.username,
+        savedTeams: SavedTeamFromDatabase
+      }
 
       // case types.LOAD_SAVED_TEAMS: 
       // console.log('LOAD_SAVED_TEAMS ', action)
@@ -86,7 +87,7 @@ const userFunctionsReducer = (state = initialState, action) => {
           if (newSavedTeams[key]) newSavedTeams[key]['key'] = key;
           if (!newSavedTeams.hasOwnProperty(key)) {
             newSavedTeams[key] = action.payload.team.team;
-            if(newSavedTeams['team_3']) console.log(newSavedTeams.team_1.name, newSavedTeams.team_2.name, newSavedTeams.team_3.name)
+            newSavedTeams[key].key = key
           }
           if (state.savedTeams.team_1===null) break;
         }
@@ -96,39 +97,47 @@ const userFunctionsReducer = (state = initialState, action) => {
           savedTeams: newSavedTeams
         }
       
-        case types.REMOVE_SAVED_TEAM: 
-          console.log('inside REMOVE_SAVED_TEAM ')
-          let beforeRemovingTeam = {...state.savedTeams};
-          delete beforeRemovingTeam[action.payload.key];
-          console.log(beforeRemovingTeam)
-          beforeRemovingTeam = helpers.reOrderSavedTeams(beforeRemovingTeam)
-          console.log(beforeRemovingTeam)
-          return {
-            ...state,
-            savedTeams: beforeRemovingTeam
-          }
+      case types.REMOVE_SAVED_TEAM: 
+        console.log('inside REMOVE_SAVED_TEAM ')
+        let beforeRemovingTeam = {...state.savedTeams};
+        delete beforeRemovingTeam[action.payload.key];
+        console.log(beforeRemovingTeam)
+        beforeRemovingTeam = helpers.reOrderSavedTeams(beforeRemovingTeam)
+        console.log(beforeRemovingTeam)
+        return {
+          ...state,
+          savedTeams: beforeRemovingTeam
+        }
 
-        case types.UPDATE_SAVED_TEAM:
-          console.log('inside UPDATE_SAVED_TEAM ')
+      case types.UPDATE_SAVED_TEAM:
+        console.log('inside UPDATE_SAVED_TEAM ', action.payload.team.key)
         
-          let beforeMakingTeamActive = {...state.savedTeams};
-          console.log(beforeMakingTeamActive)
-          beforeMakingTeamActive[action.payload.team.key] = action.payload.team;
-          console.log(beforeMakingTeamActive)
-        
+        let beforeMakingTeamActive = {...state.savedTeams};
+        console.log(beforeMakingTeamActive)
+        beforeMakingTeamActive[action.payload.team.key] = action.payload.team;
+        console.log(beforeMakingTeamActive)
+      
         return {
           ...state,
           savedTeams: beforeMakingTeamActive
         }
 
-        case types.TOGGLE_LOGIN_LOADING:
-          console.log('inside TOGGLE_LOGIN_LOADING ',)
+      case types.TOGGLE_LOGIN_LOADING:
+        console.log('inside TOGGLE_LOGIN_LOADING ',)
 
-          const newLoginLoading = !state.loginLoading;
-          // console.log({loginLoading: newLoginLoading})
+        const newLoginLoading = !state.loginLoading;
+        // console.log({loginLoading: newLoginLoading})
         return {
           ...state, 
           loginLoading: newLoginLoading
+        }
+
+      case types.REFRESH_AND_DECODE_SAVED_TEAMS: 
+        console.log('inside REFRESH_AND_DECODE_SAVED_TEAMS ',)
+        // console.log({loginLoading: newLoginLoading})
+        return {
+          ...state, 
+          savedTeams: action.payload.savedTeams
         }
 
     default: {

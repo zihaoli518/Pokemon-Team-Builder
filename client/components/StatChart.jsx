@@ -17,8 +17,8 @@ import { connect } from 'react-redux';
 import { getTypeWeaknesses } from 'poke-types';
 
 // global constant for maximum/minimum number as parameters for the color scale function  
-const maxStat = 165; 
-const minStat = 40;
+let maxStat = 165; 
+let minStat = 40;
 
 const mapStateToProps = state => {
   return {
@@ -113,7 +113,7 @@ const StatChart = props => {
   const [startChart, setStartChart] = useState(false);
   const [currentPokemon, setCurrentPokemon] = useState({})
 
-  const populateData = () => {
+  const populateDataBase = () => {
     const newStats = [];
     const newLabels = [];
     let labelsCounter = 0;
@@ -124,6 +124,8 @@ const StatChart = props => {
     }
     data.datasets[0].data = newStats;
     data.labels = newLabels;
+    config.options.scales.x.max = maxStat;
+
     // generating color for each stat 
     const newColors = [];
     for (let i=0; i<newStats.length; i++) {
@@ -135,31 +137,64 @@ const StatChart = props => {
     }
   }
 
+  const populateDataEv = () => {
+    const newStats = [];
+    const newLabels = [];
+    let labelsCounter = 0;
+    for (let key in props.currentPokemon.stats) {
+      newStats.push(props.currentPokemon.calculatedStats[labelsCounter]);
+      newLabels.push(labels[labelsCounter] + ' ');
+      labelsCounter++;
+    }
+    data.datasets[0].data = newStats;
+    data.labels = newLabels;
+    config.options.scales.x.max = 500;
+    // generating color for each stat 
+    const newColors = [];
+    for (let i=0; i<newStats.length; i++) {
+      newColors.push(stat2color(newStats[i], 500, 50));
+    }
+    data.datasets[0].backgroundColor = newColors;
+    // generating labels 
+    for (let i=0; i<labels.length; i++) {
+    }
+  }
+
 
   let myChart; 
 
   useEffect(() => {
-    populateData();
-    destroyChart();
-    myChart = new Chart(document.getElementById("myChart"), config);
-    // props.setPreventChartLooping(false);
-  }, [props.currentPokemon]);
+    if (props.id==='current-pokemon-chart') {
+      populateDataBase();
+      destroyChart();
+      // console.log(data.datasets[0].data)
+
+      myChart = new Chart(document.getElementById(props.id), config);
+    }
+    else if (props.id==='calculated-stat-chart') {
+      populateDataEv();
+      destroyChart();
+      // console.log(data.datasets[0].data)
+      myChart = new Chart(document.getElementById(props.id), config);
+    }
+
+  }, [props.currentPokemon.stats, props.currentPokemon.calculatedStats]);
 
   // modularizing destroy chart 
   const destroyChart = () => {
     // remove chart that is currently using canvas 
     if(myChart) myChart.destroy();
-    const oldCanvas = document.getElementById('myChart');
+    const oldCanvas = document.getElementById(props.id);
     oldCanvas.remove();
     const newCanvas = document.createElement('canvas');
-    newCanvas.setAttribute('id', 'myChart');
-    const parent = document.getElementById('stat-chart-' + props.name);
+    newCanvas.setAttribute('id', props.id);
+    const parent = document.getElementById('stat-chart-' + props.name + props.id);
     parent.append(newCanvas);
   }
 
   return (
-    <div className='stat-chart' id={'stat-chart-' + props.name}>
-      <canvas id='myChart'>
+    <div className={'stat-chart-'+props.id} id={'stat-chart-' + props.name + props.id}>
+      <canvas id={props.id}>
 
       </canvas>
     </div>

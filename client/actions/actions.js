@@ -50,9 +50,9 @@ export const removeTeamMember = (team, mon) => ({
   payload: { team: team, mon: mon },
 });
 
-export const selectTeamMember = (pokemonObj) => ({
+export const selectTeamMember = (pokemonData, team, mon) => ({
   type: types.SELECT_TEAM_MEMBER,
-  payload: pokemonObj,
+  payload: {pokemonData: pokemonData, team: team, mon: mon},
 });
 
 export const showTypingChart = () => ({
@@ -60,9 +60,9 @@ export const showTypingChart = () => ({
   payload: null,
 });
 
-export const switchTeams = (yourTeam, enemeyTeam) => ({
+export const switchTeams = (yourTeam, enemeyTeam, key) => ({
   type: types.SWITCH_TEAMS,
-  payload: {yourTeam: yourTeam, enemeyTeam: enemeyTeam},
+  payload: {yourTeam: yourTeam, enemeyTeam: enemeyTeam, key: key},
 });
 
 export const toggleMainDivState = (string) => ({
@@ -110,3 +110,53 @@ export const activateCurrentTeamComponent = () => ({
   payload: {}
 })
 
+export const selectAbility = (ability) => ({
+  type: types.SELECT_ABILITY, 
+  payload: {ability: ability}
+})
+
+export const saveItemToMon = (item, description, url) => ({
+  type: types.SAVE_ITEM_TO_MON, 
+  payload: {item: item, description: description, url: url}
+})
+
+export const selectMoveFromList = (moveId, moveObj) => ({
+  type: types.SELECT_MOVE_FROM_LIST, 
+  payload: {moveId: moveId, moveObj: moveObj}
+})
+
+export const updateActiveMove = (moveId, moveObj) => ({
+  type: types.UPDATE_ACTIVE_MOVE, 
+  payload: {moveId: moveId, moveObj: moveObj}
+})
+
+
+export const refreshAndDecodeSavedTeams = (savedTeams) => ({
+  type: types.REFRESH_AND_DECODE_SAVED_TEAMS, 
+  payload: {savedTeams: savedTeams}
+})
+
+export const updatePreviousTeamKey = (letter) => ({
+  type: types.UPDATE_PREVIOUS_TEAM_KEY, 
+  payload: {letter: letter}
+})
+
+export const clearTeam = (teamStr) => ({
+  type: types.CLEAR_TEAM, 
+  payload: teamStr
+})
+
+export const updateCalculatedStats = (evs, ivs, remainingEv, calcs) => ({
+  type: types.UPDATE_CALCULATED_STATS, 
+  payload: {evs: evs, ivs: ivs, remainingEv: remainingEv, calcs: calcs}
+})
+
+export const updateNature = (nature) => ({
+  type: types.UPDATE_NATURE, 
+  payload: nature
+})
+
+export const updateYourTeamKey = (num) => ({
+  type: types.UPDATE_YOUR_TEAM_KEY,
+  payload: num
+})

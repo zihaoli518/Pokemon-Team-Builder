@@ -74,7 +74,9 @@ const PokemonSearch = props => {
         props.updatePokemon(pokemon, pokemonData);
         if (pokemonData.error === 404) {
           alert('Pokemon not found! Please check your spelling and try again :)')
-        }
+        };
+        input.value = '';
+        input.focus();
       })
   }
 

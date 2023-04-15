@@ -160,7 +160,12 @@ userMiddlewares.getUserData = (req, res, next) => {
 userMiddlewares.saveUserTeams = (req, res, next) => {
   console.log('inside middleware saveUserTeams,');
   const username = req.body.username;
-  const teams = JSON.stringify(req.body.team); 
+  let teams = JSON.stringify(req.body.team); 
+  // parse for special characters 
+  console.log(teams.includes("'"))
+  teams = teams.replace(/[\/\(\)\']/g, "&apos;")
+  console.log(teams.includes("'"))
+
 
   const querySave = `INSERT INTO UserTeams ("username", "savedTeams") VALUES ('${username}', '${teams}')`;
   const queryUpdate = `UPDATE UserTeams SET "savedTeams" = '${teams}' WHERE "username" = '${username}'`;

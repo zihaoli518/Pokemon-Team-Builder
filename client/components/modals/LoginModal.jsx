@@ -28,6 +28,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => ({
   toggleLoginLoading : () => dispatch(actions.toggleLoginLoading()),
+  updateYourTeamKey : (num) => dispatch(actions.updateYourTeamKey(num))
 });
 
 
@@ -70,7 +71,14 @@ const LoginModal = props => {
         console.log('inside LoginModal submitHandler, ', response); 
         // if success 
         if (response.status==='success') {
-          props.changeUserState(response.username, response.savedTeams);
+          let savedTeams = parseResponse(response.savedTeams);
+          console.log('INSIDE LOGIN FETCH REQUEST RESPONSE: ', savedTeams)
+          // console.log('before parse function: ', savedTeams.team_1.mon1.moves.move_1.categoryImageUrl)
+          savedTeams = parseObjectForState(savedTeams);
+          // console.log('after parse function: ', savedTeams.team_1.mon1.moves.move_1.categoryImageUrl)
+
+          props.changeUserState(response.username, savedTeams);
+          props.updateYourTeamKey('team_' + (Object.keys(savedTeams).length + 1))
           props.toggleLoginLoading();
           props.toggleShowLoginModal();
         }
@@ -84,10 +92,56 @@ const LoginModal = props => {
 
           setShowPasswordAlert({status:true, message: response.status});
         }
-
-        
         // getUserData(response.username)
       })
+  }
+
+  const parseResponse = (savedTeams) => {
+    console.log('in parseResponse, ', savedTeams)
+    savedTeams = savedTeams.savedTeams;
+    savedTeams = JSON.stringify(savedTeams).replace("&apos;", "'");
+    savedTeams = JSON.parse(savedTeams);
+    for (let i=1; i<=Object.keys(savedTeams).length; i++) {
+      const teamKey = 'team_' + i; 
+      for (let j=1; j<=6; j++) {
+        const monKey = 'mon' + j;
+        // console.log(teamKey, monKey)
+        // console.log(savedTeams[teamKey][monKey])
+        if (!savedTeams[teamKey][monKey]) break;
+        savedTeams[teamKey][monKey].activeAbility.description = savedTeams[teamKey][monKey].activeAbility.description.replace("&apos;", "'")
+      }
+    }
+    return savedTeams;
+  }
+
+  const parseObjectForState = (savedTeamsObject) => {
+
+    for (let i=1; i<=Object.keys(savedTeamsObject).length; i++) {
+      const teamKey = 'team_' + i; 
+      for (let j=1; j<=6; j++) {
+        const monKey = 'mon' + j;
+        if (!savedTeamsObject[teamKey][monKey]) break;
+        // console.log('in savedTeamsToDataBase... ', savedTeams[teamKey][monKey])
+        savedTeamsObject[teamKey][monKey].activeAbility.description = savedTeamsObject[teamKey][monKey].activeAbility.description.replace(/[\/\(\)\']/g, "&apos;")
+        if (savedTeamsObject[teamKey][monKey].item.item) {
+          // savedTeams[teamKey][monKey].item.description = savedTeams[teamKey][monKey].item.description.replace(/[\/\(\)\']/g, "&apos;");
+          savedTeamsObject[teamKey][monKey].item.url = decodeURIComponent(savedTeamsObject[teamKey][monKey].item.url);
+        }
+        if (savedTeamsObject[teamKey][monKey].activeMove.moveObj.name) {
+          savedTeamsObject[teamKey][monKey].activeMove.moveObj.typeImageUrl = decodeURIComponent(savedTeamsObject[teamKey][monKey].activeMove.moveObj.typeImageUrl);
+          savedTeamsObject[teamKey][monKey].activeMove.moveObj.categoryUrl = decodeURIComponent(savedTeamsObject[teamKey][monKey].activeMove.moveObj.categoryUrl);
+        }
+        if (savedTeamsObject[teamKey][monKey].moves.move_1.name || savedTeamsObject[teamKey][monKey].moves.move_2.name || savedTeamsObject[teamKey][monKey].moves.move_3.name || savedTeamsObject[teamKey][monKey].moves.move_4.name) {
+          for (let i=1; i<=4; i++) {
+            if (!savedTeamsObject[teamKey][monKey]['moves']['move_'+i].name) continue;
+            savedTeamsObject[teamKey][monKey]['moves']['move_'+i].typeImageUrl = decodeURIComponent(savedTeamsObject[teamKey][monKey]['moves']['move_'+i].typeImageUrl);
+            savedTeamsObject[teamKey][monKey]['moves']['move_'+i].categoryImageUrl = decodeURIComponent(savedTeamsObject[teamKey][monKey]['moves']['move_'+i].categoryImageUrl);
+            // console.log('inside inner for loop... ', savedTeamsObject[teamKey][monKey]['moves']['move_'+i].typeImageUrl, savedTeamsObject[teamKey][monKey]['moves']['move_'+i].categoryImageUrl)
+          }
+        } 
+      }
+    }
+    return savedTeamsObject;
   }
 
   const closeModal = (e) => {
@@ -108,7 +162,8 @@ const LoginModal = props => {
       },
     })
       .then(data => {
-        console.log(data);
+
+        // console.log(data);
         props.changeUserState(username, data);
         props.toggleShowLoginModal();
         // chage redux state
@@ -116,7 +171,6 @@ const LoginModal = props => {
       })
   }
 
-  console.log('inside loginModal, ', showUsernameAlert, showPasswordAlert)
 
   return (
     <div className={showModalClassName}>
