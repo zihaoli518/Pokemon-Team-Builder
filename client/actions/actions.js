@@ -160,3 +160,8 @@ export const updateYourTeamKey = (num) => ({
   type: types.UPDATE_YOUR_TEAM_KEY,
   payload: num
 })
+
+export const addMonToCalc = (pokemonObj, team) => ({
+  type: types.ADD_MON_TO_CALC,
+  payload: {pokemonObj: pokemonObj, team: team}
+})

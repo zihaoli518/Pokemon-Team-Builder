@@ -546,14 +546,14 @@ button:hover {
 
 // after login 
 .after-login-username-display {
-  width: 60%;
+
+  width: 200%;
+  height: 100%;
   display: flex;
   justify-content: center;
-  width: 100%;
-  height: 100%;
   position: relative;
-  top: 42%;
-  left: 17%;
+  top: 10%;
+  left: -40%;
 
 }
 
@@ -1054,6 +1054,7 @@ input[type="text"]
 .current-pokemon h3 {
   text-align: center;
   margin-bottom: 10px;
+  line-height: 100%;
 }
 
 // animation 
@@ -1369,13 +1370,16 @@ input[type="text"]
   height: 12%;
   width: 100%;
   position: relative;
-  left: 1%;
+  left: 0%;
   margin: 0;
+
+  display: flex;
+  justify-content: center;
 }
 
 .add-to-team-option-buttons button {
-  height: 60%;
-  width: 31%;
+  height: 70%;
+  width: 50%;
   font-size: 1rem;
   font-weight: 400;
   font-family: 'Chakra Petch', sans-serif;
@@ -1385,8 +1389,28 @@ input[type="text"]
   z-index: 10;
 
   position: relative;
-  top: -50%;
-  
+}
+
+.add-to-team-option-buttons .f {
+  height: 100%;
+  width: 40%;
+  display: flex;
+  justify-content: left;
+}
+
+.add-to-team-option-buttons .e {
+  height: 100%;
+  width: 40%;
+  display: flex;
+  justify-content: right;
+}
+
+.add-to-team-option-spacer {
+  width: 20%;
+}
+
+.add-to-calc {
+  background-color: rgba(108, 108, 108, 0.633) !important;
 }
 
 .add-to-team-option-buttons button:hover{
@@ -1397,20 +1421,20 @@ input[type="text"]
   font-weight: 90 0;
 }
 
-.add-to-team-option-buttons .add-to-your-team {
+.add-to-team-option-buttons .f > *  {
   color: $friendlyTeamColor !important;
   position: relative;
 }
-.add-to-team-option-buttons .add-to-your-team:hover {
+.add-to-team-option-buttons .f > *:hover {
   color: darken($friendlyTeamColor, 40%) !important;
 }
 
-.add-to-team-option-buttons .add-to-enemy-team {
+.add-to-team-option-buttons .e > * {
   color: $enemyTeamColor !important;
   position: relative;
-  right: -37%;
+
 }
-.add-to-team-option-buttons .add-to-enemy-team:hover {
+.add-to-team-option-buttons .e > *:hover {
   color: darken($enemyTeamColor,40%) !important;
 }
 
@@ -1420,10 +1444,11 @@ input[type="text"]
   display: flex;
   position: relative;
   top: -4%;
+  left: -2%;
 }
 .down-arrow-gifs img {
   height: 150%;
-  width: 100%;
+  width: 40%;
   position: relative;
 }
 .down-arrow-gifs .arrow1 {
@@ -1433,7 +1458,7 @@ input[type="text"]
 }
 .down-arrow-gifs .arrow2 {
   position: relative;
-  left: 10%;
+  left: 12%;
 }
 
 
@@ -2777,7 +2802,8 @@ button:hover{
 }
 
 .analysis-menu .menu-button-active {
-  height: 110%;
+  transform: translateY(-1.3%);
+  height: 107%;
   background-color: #e6e6e6;
   color: rgb(50, 49, 49);
 }

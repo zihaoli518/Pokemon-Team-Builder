@@ -36,8 +36,8 @@ const initialState = {
       moveId: "",
       moveObj: {name: null}
     },
-    evs:{obj: {hp: 0, attack: 0, defense: 0, specialA: 0, specialD: 0, Speed: 0}, array: [0,0,0,0,0,0]},
-    ivs:{obj: {hp: 31, attack: 31, defense: 31, specialA: 31, specialD: 31, Speed: 31}, array: [0,0,0,0,0,0]},
+    evs:{obj: {hp: 0, attack: 0, defense: 0, specialA: 0, specialD: 0, speed: 0}, array: [0,0,0,0,0,0]},
+    ivs:{obj: {hp: 31, attack: 31, defense: 31, specialA: 31, specialD: 31, speed: 31}, array: [0,0,0,0,0,0]},
     remainingEv: 508,
     nature: 'serious',
     calculatedStats: [0, 0, 0, 0, 0, 0],

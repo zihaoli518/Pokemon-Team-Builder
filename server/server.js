@@ -13,8 +13,6 @@ const cookieParser = require("cookie-parser");
 app.use(cookieParser());
 app.use(express.json());
 
-console.log('inside server.js', __dirname)
-
 // taking care of CORS
 app.use((req, res, next) => {
   console.log('inside first app.use, ');

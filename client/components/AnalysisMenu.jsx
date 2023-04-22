@@ -23,6 +23,8 @@ const mapStateToProps = state => {
   return {
     teamStatus: state.pokemon.teamStatus,
     showTypingChart: state.pokemon.showTypingChart,
+    pokemonCalcDataFriendly: state.damageCalc.pokemonCalcDataFriendly,
+    pokemonCalcDataEnemy: state.damageCalc.pokemonCalcDataEnemy,
   }
 }
 
@@ -57,12 +59,16 @@ const AnalysisMenu = props => {
     }
   }
 
+  useEffect(() => {
+    if (props.pokemonCalcDataFriendly.name) setShowContent({matchupChart: false, damageCalculator: true, exportCurrentTeam: false, importTeam: false})
+  }, [props.pokemonCalcDataFriendly.name, props.pokemonCalcDataEnemy.name])
+
 
   return (
     <div className='analysis-menu-and-content-container'>
       <div className='analysis-menu'>
-          <button className={className.matchupChart} id='show-matchup-chart-button' onClick={(e)=>{handleClick(e.target.id)}}>show matchup chart</button> 
-          <button className={className.damageCalculator} id='show-damage-calculator-button' onClick={(e)=>{handleClick(e.target.id)}}>show damage calculator</button> 
+          <button className={className.matchupChart} id='show-matchup-chart-button' onClick={(e)=>{handleClick(e.target.id)}}>matchup chart</button> 
+          <button className={className.damageCalculator} id='show-damage-calculator-button' onClick={(e)=>{handleClick(e.target.id)}}>damage calculator</button> 
           <button className={className.exportCurrentTeam} id='export-current-team-button' onClick={(e)=>{handleClick(e.target.id)}}>export current team</button> 
           <button className={className.importTeam} id='import-team-button' onClick={(e)=>{handleClick(e.target.id)}}>import team</button> 
       </div>

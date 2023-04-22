@@ -327,8 +327,8 @@ const CurrentPokemonDetails = props => {
 
   // state for EVs 
   const [valuesOfEV, setValuesOfEv] = useState({hp: 0, attack: 0, defense: 0, specialA: 0, specialD: 0, speed: 0});
-  const [valuesOfIV, setValuesOfIv] = useState({hp: 31, attack: 31, defense: 31, specialA: 31, specialD: 31, Speed: 31});
-  const [calculatedStat, setCalculatedStat] = useState({hp: 0, attack: 0, defense: 0, specialA: 0, specialD: 0, Speed: 0});
+  const [valuesOfIV, setValuesOfIv] = useState({hp: 31, attack: 31, defense: 31, specialA: 31, specialD: 31, speed: 31});
+  const [calculatedStat, setCalculatedStat] = useState({hp: 0, attack: 0, defense: 0, specialA: 0, specialD: 0, speed: 0});
   
 
   useEffect(() => {
