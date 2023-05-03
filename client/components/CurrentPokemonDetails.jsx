@@ -467,7 +467,7 @@ const CurrentPokemonDetails = props => {
               }
               <div className='moves-list-labels'>
                 <h5 className='name'>name</h5>
-                <h5 className='type'>type</h5>
+                <h5 className='type-l'>type</h5>
                 <h5 className='cat'>cat</h5>
                 <h5 className='pow'>pow</h5>
                 <h5 className='acc'>acc</h5>

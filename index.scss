@@ -1453,7 +1453,6 @@ input[type="text"]
 }
 .down-arrow-gifs .arrow1 {
   position: relative;
-  top: -10%;
   right: 8%;
 }
 .down-arrow-gifs .arrow2 {
@@ -1497,7 +1496,7 @@ input[type="text"]
 }
 
 .pokemon-details-container-stretched {
-  height: 130%;
+  height: 121%;
   background-color: darken($color5, 8%);
 
 }
@@ -1672,10 +1671,6 @@ input[type="text"]
 }
 
 
-.browse-area-container {
-  height: 100%;
-  width: 60%;
-}
 
 .browse-items-container {
   height: 100%;
@@ -1877,7 +1872,7 @@ input[type="text"]
   left: 5%;
   line-height: 100%;
 }
-.moves-list-labels .type {
+.moves-list-labels .type-l {
   position: relative;
   margin: 0 auto;
   top: -5%;
@@ -2326,7 +2321,7 @@ input[type="text"]
 // browse area for items and moves 
 .browse-area-container {
   width: 60%;
-  height: 130%;
+  height: 121%;
   background-color: rgba(128, 128, 128, 0.308);
   border-radius: 0.5rem;
 }
@@ -2953,10 +2948,104 @@ button:hover{
 // damage calc 
 .damage-calculator-container {
   height: 95%;
-  width: 95%;
+  width: 80%;
+  position: relative;
+  top: 1%;
+  margin: 0 auto;
+  display: flex;
+  justify-content: center;
+  font-size: 30%;
+  background-color: rgba(123, 125, 128, 0.692);
+}
+
+.calc-pokemon-display-container {
+  height: 90%;
+  width: 17%;
+  margin: 0 auto;
+}
+
+.calc-results {
+  width: 22%;
+  height: 90%;
+  margin: 0 auto;
+  margin-top: 2%;
+  border: 1px dotted black;
+}
+
+
+// calc pokemon display 
+.calc-pokemon-display-inner{
+  height: 30%;
+  width: 100%;
+  border: 1px dotted black;
+  text-align: center;
+}
+
+.calc-pokemon-display-inner h3 {
+  margin: 0 auto;
+  margin-top: 2%;
+}
+
+
+.calc-sprite-container {
+  height: 43%;
+  width: 80%;
+  margin: 0 auto;
+}
+
+.calc-sprite-placeholder {
+  height: 100%;
+  width: 50%;
+}
+
+.calc-pokemon-types-container {
+  height: 20%;
   display: flex;
   justify-content: center;
 }
+
+
+
+.calc-details-container {
+  height: 70%;
+  width: 100%;
+}
+
+.calc-details-container h4 {
+  margin: 0;
+  margin-top: 9%;
+}
+
+.calc-details-container select {
+  height: 100%;
+  width: 70%;
+  margin-top: 10%;
+
+}
+
+.calc-nature-container {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 10%;
+}
+
+.calc-ability-container {
+  display: flex;
+  justify-content: space-between;
+}
+
+.calc-item-container {
+  display: flex;
+  justify-content: space-between;
+}
+
+.calc-status-container {
+  display: flex;
+  justify-content: space-between;
+}
+
+
+
 
 
 

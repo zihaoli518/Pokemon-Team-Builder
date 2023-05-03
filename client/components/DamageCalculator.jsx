@@ -56,8 +56,6 @@ const DamageCalculator = props => {
     new Move(gen, 'Focus Blast')
   );
 
-  console.log(result)
-
   const handleClick = (button) => {
 
   }
@@ -67,11 +65,11 @@ const DamageCalculator = props => {
 
       <CalcPokemonDisplay team='friendly' className={'calc-pokemon-display-container calc-pokemon-display-container-friendly'}/>
 
-      <div className='friendly-calc-results'>
+      <div className='calc-results friendly-calc-results'>
 
       </div>
 
-      <div className='enemy-calc-results'>
+      <div className='calc-results enemy-calc-results'>
 
       </div>
 
