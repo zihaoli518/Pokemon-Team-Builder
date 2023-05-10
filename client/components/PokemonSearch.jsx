@@ -10,7 +10,7 @@
  */
 
 // importing dependencies 
-import React from 'react';
+import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 
 // importing other files and components
@@ -29,7 +29,7 @@ const PokemonSearch = props => {
 
   const eventHandler = e => {
     e.preventDefault();
-    const input = document.getElementById('pokemon-name');
+    const input = document.getElementById('pokemon-search-name');
     let pokemon = input.value;
     pokemon = pokemon.trim();
     // const heroku = 'https://obscure-dawn-47563.herokuapp.com/';
@@ -80,14 +80,30 @@ const PokemonSearch = props => {
       })
   }
 
-    return (
-      <div className='pokemon-search'>
-        <form onSubmit={eventHandler}>
-          <input type="text" id='pokemon-name' />
-          <button type='submit'> <span> Search</span> </button>
-        </form>
-      </div>
-    )
+  useEffect(() => {
+    // add event listeners
+    const searchElement = document.getElementById("search-bar-element");
+    const searchBar = document.getElementById('pokemon-search-name');
+
+    console.log('yayeet in useEffect', searchElement)
+
+    searchBar.addEventListener("focus", function () {
+      console.log('FOCUSING')
+      searchElement.classList.add("search-bar-element-focused");
+    });
+    searchBar.addEventListener("blur", function () {
+      searchElement.classList.remove("search-bar-element-focused");
+    });
+  })
+
+  return (
+    <div className='search-bar-element' id='search-bar-element'>
+      <form onSubmit={eventHandler}>
+        <input type="text" id='pokemon-search-name' />
+        <button type='submit'> <span> Search</span> </button>
+      </form>
+    </div>
+  )
 }
 
 export default connect(null, mapDispatchToProps)(PokemonSearch);

@@ -15,6 +15,7 @@ import { connect } from 'react-redux';
 
 import * as actions from '../actions/actions';
 import CalcPokemonDisplay from './analysis-menu/CalcPokemonDisplay.jsx';
+import CalcMovesResults from './analysis-menu/CalcMovesResults.jsx'
 
 import {calculate, Generations, Pokemon, Move} from '@smogon/calc';
  
@@ -22,8 +23,8 @@ import {calculate, Generations, Pokemon, Move} from '@smogon/calc';
 
 const mapStateToProps = state => {
   return {
-    teamStatus: state.pokemon.teamStatus,
-    showTypingChart: state.pokemon.showTypingChart,
+    pokemonCalcDataFriendly: state.damageCalc.pokemonCalcDataFriendly,
+    pokemonCalcDataEnemy: state.damageCalc.pokemonCalcDataEnemy,
   }
 }
 
@@ -61,19 +62,27 @@ const DamageCalculator = props => {
   }
 
   return (
-    <div className='damage-calculator-container'>
+    <div className='damage-calculator-container' >
 
-      <CalcPokemonDisplay team='friendly' className={'calc-pokemon-display-container calc-pokemon-display-container-friendly'}/>
+      <CalcPokemonDisplay 
+        key={props.pokemonCalcDataFriendly.name+'f'} 
+        team={'friendly'} 
+        className={'calc-pokemon-display-container calc-pokemon-display-container-friendly'}
+      />
 
       <div className='calc-results friendly-calc-results'>
-
+        <CalcMovesResults team={'friendly'}/>
       </div>
 
       <div className='calc-results enemy-calc-results'>
 
       </div>
 
-      <CalcPokemonDisplay team='enemy' className={'calc-pokemon-display-container calc-pokemon-display-container-enemy'}/>
+      <CalcPokemonDisplay 
+        key={props.pokemonCalcDataEnemy.name+'e'} 
+        team={'enemy'}
+        className={'calc-pokemon-display-container calc-pokemon-display-container-enemy'}
+      />
 
     </div>
   );

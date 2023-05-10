@@ -56,7 +56,7 @@ const EvSliderContainer = props => {
       <option value={name}>{name + DescStr}</option>
     )})
     setNatureOptions(newNatureOptions);
-    console.log(newNatureOptions)
+    // console.log(newNatureOptions)
   }
 
   const selectNature = () => {
@@ -79,15 +79,16 @@ const EvSliderContainer = props => {
   const handleSlider = (slider) => {          
     // give style to remaining ev if below 0
     const remainingEvDisplay = document.getElementById('remaining-Ev-value'); 
-    if (Number(remainingEvDisplay.innerHTML<0)) remainingEvDisplay.style.color = "red";
+    if (Number(remainingEvDisplay.innerHTML)<0) remainingEvDisplay.style.color = "red";
     else remainingEvDisplay.style.color = "black";
     
     const currentSlider = document.getElementById(slider);
-    const sliderOrder = ['hp-slider', 'attack-slider', 'defense-slider', 'specialA-slider', 'spdecialD-slider', 'speed-slider'];
+    const sliderOrder = ['hp-slider', 'attack-slider', 'defense-slider', 'specialA-slider', 'specialD-slider', 'speed-slider'];
     const index = sliderOrder.indexOf(slider);
     if (props.currentPokemon.remainingEv<=0 && currentSlider.value>props.currentPokemon.evs.array[index]) {
       alert('exceeded total EV allowed');
       remainingEvDisplay.style.color = "red";
+      return
     }
     const ArrayOfSliders = document.getElementsByClassName("slider");
     const EVs = [];
@@ -147,27 +148,27 @@ const EvSliderContainer = props => {
       <div className='ev-sliders-container'>
         <div className='ev-slider-container'>
           <h4>HP :</h4>
-          <input type="range" step="4" min="0" max="252" defaultValue={props.currentPokemon.evs.array[0]} class="slider" id="hp-slider" onChange={()=>{handleSlider("hp-slider" )}}/>
+          <input type="range" step="4" min="0" max="252" value={props.currentPokemon.evs.array[0]} class="slider" id="hp-slider" onChange={()=>{handleSlider("hp-slider" )}}/>
         </div>
         <div className='ev-slider-container'>
           <h4>Attak :</h4>
-          <input type="range" step="4" min="0" max="252" defaultValue={props.currentPokemon.evs.array[1]} class="slider" id="attack-slider" onChange={()=>{handleSlider("attack-slider")}}/>        
+          <input type="range" step="4" min="0" max="252" value={props.currentPokemon.evs.array[1]} class="slider" id="attack-slider" onChange={()=>{handleSlider("attack-slider")}}/>        
         </div>
         <div className='ev-slider-container'>
           <h4>Defense :</h4>
-          <input type="range" step="4" min="0" max="252" defaultValue={props.currentPokemon.evs.array[2]} class="slider" id="defense-slider" onChange={()=>{handleSlider("defense-slider")}}/>
+          <input type="range" step="4" min="0" max="252" value={props.currentPokemon.evs.array[2]} class="slider" id="defense-slider" onChange={()=>{handleSlider("defense-slider")}}/>
         </div>
         <div className='ev-slider-container'>
           <h4>Sp. Atk. :</h4>
-          <input type="range" step="4" min="0" max="252" defaultValue={props.currentPokemon.evs.array[3]} class="slider" id="specialA-slider" onChange={()=>{handleSlider("specialA-slider")}}/>
+          <input type="range" step="4" min="0" max="252" value={props.currentPokemon.evs.array[3]} class="slider" id="specialA-slider" onChange={()=>{handleSlider("specialA-slider")}}/>
         </div>
         <div className='ev-slider-container'>
           <h4>Sp. Def. :</h4>
-          <input type="range" step="4" min="0" max="252" defaultValue={props.currentPokemon.evs.array[4]} class="slider" id="specialD-slider" onChange={()=>{handleSlider("specialD-slider")}}/>
+          <input type="range" step="4" min="0" max="252" value={props.currentPokemon.evs.array[4]} class="slider" id="specialD-slider" onChange={()=>{handleSlider("specialD-slider")}}/>
         </div>
         <div className='ev-slider-container'>
           <h4>Speed :</h4>
-          <input type="range" step="4"  min="0" max="252" defaultValue={props.currentPokemon.evs.array[5]} class="slider" id="speed-slider" onChange={()=>{handleSlider("speed-slider")}}/>
+          <input type="range" step="4"  min="0" max="252" value={props.currentPokemon.evs.array[5]} class="slider" id="speed-slider" onChange={()=>{handleSlider("speed-slider")}}/>
         </div>
       </div>
 

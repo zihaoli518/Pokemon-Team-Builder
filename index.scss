@@ -632,7 +632,7 @@ h1 {
 
 
 // serach 
-.pokemon-search {
+.search-bar-element{
   height: 8%;
   width: 25%;
   position: absolute;
@@ -650,14 +650,30 @@ h1 {
   box-shadow: 2px 1px 5px 1px rgba(91, 91, 91, 0.676);
 }
 
-.pokemon-search form {
+.search-bar-element:hover {
+  background-color: #8cb4ab94;
+  transition: 0.3s ease-in-out;
+}
+
+.search-bar-element-focused {
+  background-color: #8cb4ab94;
+  transition: 0.8s ease-in-out;
+}
+
+.search-bar-element-flashing {
+  background-color: #b3d3cb81;
+  border: 1px whitesmoke dotted;
+  transition: 0.1s ease-in-out;
+}
+
+.search-bar-element form {
   height: 80%;
   margin-top: -15px;
   margin-left: 3%;
 }
 
 
-#pokemon-name {
+#pokemon-search-name {
   height: 60%;
   width: 45%;
   margin-right: 5%;
@@ -665,7 +681,9 @@ h1 {
   background-color: rgba(224, 224, 207, 0.725) !important;
 }
 
-.pokemon-search button {
+
+
+.search-bar-element button {
   height: 30px;
   width: 80px;
 
@@ -683,12 +701,12 @@ h1 {
   border-radius: 0.3rem;
 }
 
-.pokemon-search span {
+.search-bar-element span {
   position: relative;
   top: -5px;
 }
 
-.pokemon-search button:hover {
+.search-bar-element button:hover {
   box-shadow: 5px 5px 5px -5px rgba(85, 167, 255, 0.88);
 }
 
@@ -2993,6 +3011,11 @@ button:hover{
   margin: 0 auto;
 }
 
+.calc-sprite {
+  height: 100%;
+  width: 50%;
+}
+
 .calc-sprite-placeholder {
   height: 100%;
   width: 50%;
@@ -3042,6 +3065,71 @@ button:hover{
 .calc-status-container {
   display: flex;
   justify-content: space-between;
+}
+
+// calc ev box 
+.calc-ev-container {
+  margin-top: 10%;
+}
+
+.calc-ev-container .ev-table-labels {
+  top: 5%;
+}
+
+.calc-ev-container .ev-table-labels > * {
+  margin-left: 5%;
+  margin-right: 5%;
+}
+
+
+.calc-ev-container .evs-display-container {
+  margin: 0;
+  position: relative;
+  top: 10%;
+}
+
+.calc-ev-container .evs-display-container > * > * {
+  margin-left: 10%;
+}
+
+.calc-ev-container .base-stat-label {
+  position: relative;
+  left: -55%;
+  top: 50%;
+  font-size: 0.75rem;
+}
+
+.calc-ev-container .base-stat {
+  position: relative;
+  left: 1%;
+  top: -50%;
+  text-align: center;
+  font-size: 0.75rem;
+
+}
+
+.calc-ev-container .calc-ev-input {
+  height: 110%;
+  width: 25%;
+  position: relative;
+  left: 30%;
+  top: -150%;
+}
+
+.calc-ev-container .calc-iv-input {
+  height: 110%;
+  width: 18%;
+  position: relative;
+  left: 69%;
+  top: -250%;
+}
+
+.calc-ev-container .result-stat {
+  width: 15%;
+  position: relative;
+  left: 110%;
+  top: -320%;
+  text-align: center;
 }
 
 

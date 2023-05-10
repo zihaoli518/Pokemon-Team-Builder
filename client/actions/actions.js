@@ -165,3 +165,14 @@ export const addMonToCalc = (pokemonObj, team) => ({
   type: types.ADD_MON_TO_CALC,
   payload: {pokemonObj: pokemonObj, team: team}
 })
+
+
+export const changeCalcAttribute = (team, attributeName, attribute) => ({
+  type: types.CHANGE_CALC_ATTRIBUTE,
+  payload: {team: team, attributeName: attributeName, attribute: attribute}
+})
+
+export const updateCalculatedStatsCalc = (team, evs, results) => ({
+  type: types.UPDATE_CALCULATED_STATS_CALC, 
+  payload: {team: team, evs: evs, results: results}
+})
