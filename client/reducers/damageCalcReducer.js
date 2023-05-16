@@ -21,41 +21,42 @@ const initialState = {
   pokemonCalcDataFriendly: {
     name: null,
     types: [],
-    nature: 'serious',
+    nature: 'Serious',
     abilities: [{ ability: { name: "", url: "", description: "" }, is_hidden: false, slot: 0 }],
     activeAbility: '',
-    item: '',
-    status: 'healthy',
+    item: '(none)',
+    status: 'Healthy',
     stats: {hp: 0, atk: 0, def: 0, spa: 0, spd: 0, spe: 0},
     calculatedStats: [0, 0, 0, 0, 0, 0],
     evs: {hp: 0, atk: 0, def: 0, spa: 0, spd: 0, spe: 0},
     boosts: {hp: 0, atk: 0, def: 0, spa: 0, spd: 0, spe: 0},
     moves: {
-      move_1: null,
-      move_2: null,
-      move_3: null,
-      move_4: null,
+      move_1: {name: null, type: null, basepower: null},
+      move_2: {name: null, type: null, basepower: null},
+      move_3: {name: null, type: null, basepower: null},
+      move_4: {name: null, type: null, basepower: null},
     },
   },
   pokemonCalcDataEnemy: {
     name: null,
     types: [],
-    nature: 'serious',
+    nature: 'Serious',
     abilities: [{ ability: { name: "", url: "", description: "" }, is_hidden: false, slot: 0 }],
     activeAbility: '',
-    item: '',
-    status: 'healthy',
+    item: '(none)',
+    status: 'Healthy',
     stats: {hp: 0, atk: 0, def: 0, spa: 0, spd: 0, spe: 0},
     calculatedStats: [0, 0, 0, 0, 0, 0],
     evs: {hp: 0, atk: 0, def: 0, spa: 0, spd: 0, spe: 0},
     boosts: {hp: 0, atk: 0, def: 0, spa: 0, spd: 0, spe: 0},
     moves: {
-      move_1: null,
-      move_2: null,
-      move_3: null,
-      move_4: null,
+      move_1: {name: null, type: null, basepower: null},
+      move_2: {name: null, type: null, basepower: null},
+      move_3: {name: null, type: null, basepower: null},
+      move_4: {name: null, type: null, basepower: null},
     },
   },
+  analysisMenuStatus: false
 
 }
 
@@ -72,36 +73,45 @@ const damageCalcReducer = (state = initialState, action) => {
       const newPokemonCalcObj = {
         name: inputPokemon.pokemon,
         types: inputPokemon.types,
-        nature: inputPokemon.nature,
+        nature: capitalizeFirstLetter(inputPokemon.nature),
         abilities: inputPokemon.abilities,
-        activeAbility: inputPokemon.activeAbility.name,
-        item: '',
-        status: 'healthy',
+        activeAbility: capitalizeWords(inputPokemon.activeAbility.name),
+        item: inputPokemon.item.item ? capitalizeWords(inputPokemon.item.item) : '(none)',
+        status: 'Healthy',
         stats: {hp: inputPokemon.stats.hp, atk: inputPokemon.stats.attack, def: inputPokemon.stats.defense, spa: inputPokemon.stats.specialA, spd: inputPokemon.stats.specialD, spe: inputPokemon.stats.speed},
         calculatedStats: inputPokemon.calculatedStats,
         evs: {hp: inputPokemon.evs.array[0], atk: inputPokemon.evs.array[1], def: inputPokemon.evs.array[2], spa: inputPokemon.evs.array[3], spd: inputPokemon.evs.array[4], spe: inputPokemon.evs.array[5]},
         boosts: {hp: 0, atk: 0, def: 0, spa: 0, spd: 0, spd: 0},
-        moves: {},
+        moves: {
+          move_1: {name: null, type: null, basepower: null},
+          move_2: {name: null, type: null, basepower: null},
+          move_3: {name: null, type: null, basepower: null},
+          move_4: {name: null, type: null, basepower: null},
+        },
     }
       // check for moves 
       for (let i=1; i<=4; i++) {
-        // console.log(inputPokemon.moves['move_'+i])
-        if (inputPokemon.moves['move_'+i].name) {
-          newPokemonCalcObj.moves['move_'+i] = inputPokemon.moves['move_'+i].name.charAt(0).toUpperCase() + inputPokemon.moves.move_1.name.slice(1)
+        const moveKey = 'move_'+i;
+        if (inputPokemon.moves[moveKey].name) {
+          newPokemonCalcObj.moves[moveKey] = {name: inputPokemon.moves[moveKey].name, type: inputPokemon.moves[moveKey].type, basepower: inputPokemon.moves[moveKey].basePower}
         }
       }
+      // add default item
+      // if (inputPokemon.item.item) newPokemonCalcObj.item = inputPokemon.item.item
 
       if (action.payload.team==='friendly') {
-        return ({
+        return {
           ...state,
-          pokemonCalcDataFriendly: newPokemonCalcObj
-        })
-      } else {
-        return ({
-          ...state,
-          pokemonCalcDataEnemy: newPokemonCalcObj
-        })
+          pokemonCalcDataFriendly: newPokemonCalcObj,
+          analysisMenuStatus: true
+        }
       }
+      return {
+        ...state,
+        pokemonCalcDataEnemy: newPokemonCalcObj,
+        analysisMenuStatus: true
+      };
+
 
     case types.CHANGE_CALC_ATTRIBUTE:
       console.log('inside CHANGE_CALC_ATTRIBUTE ', action.payload);
@@ -127,8 +137,8 @@ const damageCalcReducer = (state = initialState, action) => {
           console.log('default case')
       }
 
-      if (action.payload.team==='friendly') return {...state, pokemonCalcDataFriendly :copyOfState}
-      else return {...state, pokemonCalcDataEnemy :copyOfState}
+      if (action.payload.team==='friendly') return {...state, pokemonCalcDataFriendly :copyOfState, }
+      else return {...state, pokemonCalcDataEnemy :copyOfState, }
     
     case types.UPDATE_CALCULATED_STATS_CALC: 
       console.log('inside UPDATE_CALCULATED_STATS_CALC ', action.payload);
@@ -144,10 +154,40 @@ const damageCalcReducer = (state = initialState, action) => {
       else return {...state, pokemonCalcDataEnemy : copyOfStateC}
     
 
+    case types.CHOOSE_MOVE_FOR_CALC:
+      console.log('inside CHOOSE_MOVE_FOR_CALC ', action.payload);
+      let copyOfStateM = {};
+
+      if (action.payload.team==='friendly') copyOfStateM = {...state.pokemonCalcDataFriendly}
+      else copyOfStateM = {...state.pokemonCalcDataEnemy};
+
+      const newMoveObj = {};
+      newMoveObj.name = action.payload.move;
+      newMoveObj.type = action.payload.type;
+      newMoveObj.basepower = action.payload.basepower;
+
+      copyOfStateM.moves[action.payload.moveId] = newMoveObj;
+
+      if (action.payload.team==='friendly') return {...state, pokemonCalcDataFriendly : copyOfStateM}
+      else return {...state, pokemonCalcDataEnemy : copyOfStateM}
+
     default: {
       return state
     }
   }
 }
+
+// helper functions 
+function capitalizeFirstLetter(str) {
+  return str.charAt(0).toUpperCase() + str.slice(1);
+}
+
+function capitalizeWords(str) {
+  return str.replace(/\b\w/g, function(match) {
+    return match.toUpperCase();
+  }).replace(/-/g, ' ');
+}
+
+
 
 export default damageCalcReducer;

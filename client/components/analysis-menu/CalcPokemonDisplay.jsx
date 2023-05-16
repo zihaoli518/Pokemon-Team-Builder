@@ -86,9 +86,9 @@ const CalcPokemonDetails = props => {
       let newNatureOptions = [];
       const natureArray = calculator.getNatureNames;
       for (let i=0; i<natureArray.length; i++) {
-        const name = natureArray[i];
+        const name = capitalizeFirstLetter(natureArray[i]);
         // remove duplicate because of default value 
-        if (name===currentPokemon.nature) continue;
+        if (name===capitalizeFirstLetter(currentPokemon.nature)) continue;
         // get the short description str like (+Atk, -SpA)
         const NatureValues = calculator.getNatureValue(name);
         let DescStr = '';
@@ -110,6 +110,7 @@ const CalcPokemonDetails = props => {
     const populateItems = () => {
       let newItemOptions = [];
       for (let name in allItemsJSON) {
+        if (allItemsJSON[name].name===currentPokemon.item) continue;
         newItemOptions.push(
           <option value={allItemsJSON[name].name}>{allItemsJSON[name].name}</option>
         )
@@ -118,12 +119,12 @@ const CalcPokemonDetails = props => {
     }
 
     const populateAbilities = () => {
-      console.log('inside populateAbilities ', currentPokemon)
       let newAbilitiesOptions = [];
       for (let i=0; i<currentPokemon.abilities.length; i++) {
-        if (currentPokemon.abilities[i].ability.name===currentPokemon.activeAbility) continue;
+        const abilityName = capitalizeWords(currentPokemon.abilities[i].ability.name);
+        if (abilityName===capitalizeWords(currentPokemon.activeAbility)) continue;
         newAbilitiesOptions.push(
-          <option value={currentPokemon.abilities[i].ability.name}>{currentPokemon.abilities[i].ability.name}</option>
+          <option value={abilityName}>{abilityName}</option>
         )
       }
       setAbilityOptions(newAbilitiesOptions)
@@ -133,7 +134,7 @@ const CalcPokemonDetails = props => {
       const newStatusOptions = [];
       statusArray.forEach(status => {
         newStatusOptions.push(
-          <option value={status}>{status}</option>
+          <option value={capitalizeFirstLetter(status)}>{capitalizeFirstLetter(status)}</option>
         )
       });
       setStatusOptions(newStatusOptions)
@@ -176,8 +177,12 @@ const CalcPokemonDetails = props => {
             />
           </div>
           <div className="calc-pokemon-types-container">
-            <h4>{currentPokemon.types[0]}</h4>
-            <h4>{currentPokemon.types[1]}</h4>
+            <img src={`https://play.pokemonshowdown.com/sprites/types/${capitalizeFirstLetter(currentPokemon.types[0])}.png`} alt="" />
+            {currentPokemon.types[1] ?
+              <img src={`https://play.pokemonshowdown.com/sprites/types/${capitalizeFirstLetter(currentPokemon.types[1])}.png`} alt="" />
+              :
+              null
+            }
           </div>
         </div>
       ) : (
@@ -212,7 +217,11 @@ const CalcPokemonDetails = props => {
         <div className="calc-ability-container">
           <h4>ability:</h4>
           <select className="calc-ability-container" id="calc-ability-select" onChange={(e) => props.changeCalcAttribute(props.team, 'ability', e.target.value)}>
-            <option value={currentPokemon.abilities[0].ability.name}>{currentPokemon.abilities[0].ability.name}</option>
+            {currentPokemon.activeAbility ? 
+              <option value={capitalizeWords(currentPokemon.activeAbility)}>{capitalizeWords(currentPokemon.activeAbility)}</option>
+              :
+              <option value={capitalizeWords(currentPokemon.abilities[0].ability.name)}>{capitalizeWords(currentPokemon.abilities[0].ability.name)}</option>
+            }
             {abilityOptions}
           </select>
         </div>
@@ -234,9 +243,16 @@ const CalcPokemonDetails = props => {
   );
 }
 
+// helper functions 
+function capitalizeFirstLetter(str) {
+  return str.charAt(0).toUpperCase() + str.slice(1);
+}
 
-
-
+function capitalizeWords(str) {
+  return str.replace(/\b\w/g, function(match) {
+    return match.toUpperCase();
+  }).replace(/-/g, ' ');
+}
 
 
 

@@ -176,3 +176,9 @@ export const updateCalculatedStatsCalc = (team, evs, results) => ({
   type: types.UPDATE_CALCULATED_STATS_CALC, 
   payload: {team: team, evs: evs, results: results}
 })
+
+
+export const chooseMoveForCalc = (team, moveId, move, type, basepower) => ({
+  type: types.CHOOSE_MOVE_FOR_CALC, 
+  payload: {team: team, moveId: moveId, move: move, type: type, basepower: basepower}
+})

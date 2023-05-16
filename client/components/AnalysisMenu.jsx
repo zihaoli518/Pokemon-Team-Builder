@@ -38,7 +38,7 @@ const mapDispatchToProps = dispatch => ({
 const AnalysisMenu = props => {
 
   const [showContent, setShowContent] = useState({matchupChart: false, damageCalculator: false, exportCurrentTeam: false, importTeam: false})
-  const [className, setClassName] = useState({matchupChart: 'menu-button', damageCalculator: 'menu-button', exportCurrentTeam: 'menu-button', importTeam: 'menu-button'})
+  const [className, setClassName] = useState({matchupChart: 'menu-button', damageCalculator: 'menu-button', specialMoves: 'menu-button', exportCurrentTeam: 'menu-button', importTeam: 'menu-button'})
 
 
   const handleClick = (button) => {
@@ -60,7 +60,7 @@ const AnalysisMenu = props => {
   }
 
   useEffect(() => {
-    if (props.pokemonCalcDataFriendly.name) setShowContent({matchupChart: false, damageCalculator: true, exportCurrentTeam: false, importTeam: false})
+    if (props.pokemonCalcDataFriendly.name || props.pokemonCalcDataEnemy.name) handleClick('show-damage-calculator-button');
   }, [props.pokemonCalcDataFriendly.name, props.pokemonCalcDataEnemy.name])
 
 
@@ -69,12 +69,14 @@ const AnalysisMenu = props => {
       <div className='analysis-menu'>
           <button className={className.matchupChart} id='show-matchup-chart-button' onClick={(e)=>{handleClick(e.target.id)}}>matchup chart</button> 
           <button className={className.damageCalculator} id='show-damage-calculator-button' onClick={(e)=>{handleClick(e.target.id)}}>damage calculator</button> 
+          <button className={className.specialMoves} id='show-damage-calculator-button' onClick={(e)=>{handleClick(e.target.id)}}>special moves</button> 
           <button className={className.exportCurrentTeam} id='export-current-team-button' onClick={(e)=>{handleClick(e.target.id)}}>export current team</button> 
           <button className={className.importTeam} id='import-team-button' onClick={(e)=>{handleClick(e.target.id)}}>import team</button> 
       </div>
       <div className='analysis-content-container'>
         {showContent.matchupChart ? <MatchupChart /> : null}
         {showContent.damageCalculator ? <DamageCalculator /> : null}
+        {showContent.specialMoves ? null : null}
         {showContent.exportCurrentTeam ? null : null}
         {showContent.matchuimportTeampChart ? null : null}
       </div>

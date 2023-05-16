@@ -34,6 +34,7 @@ import AllSavedTeams from './components/AllSavedTeams.jsx';
 const mapStateToProps = state => ({
   currentPokemon: state.pokemon.currentPokemon,
   teamStatus: state.pokemon.teamStatus,
+  analysisMenuStatus: state.damageCalc.analysisMenuStatus,
   yourTeam: state.pokemon.yourTeam,
   enemyTeam: state.pokemon.enemyTeam,
   showTypingChart: state.pokemon.showTypingChart,
@@ -60,6 +61,77 @@ const addSoundEffectToButtons = () => {
   buttons.forEach(button => {
     button.addEventListener('click', playSound)
   })
+}
+
+console.log('in APP')
+
+function capitalizeFirstLetter(str) {
+  return str.charAt(0).toUpperCase() + str.slice(1);
+}
+import {calculate, Generations, Pokemon, Move} from '@ajhyndman/smogon-calc';
+const attacker = {
+  name: 'charizard',
+  activeAbility: 'blaze',
+  abilityOn: true,
+  item: 'Choice Band',
+  nature: 'serious',
+  status: 'brn',
+}
+
+const defender = {
+  name: 'bronzong',
+  activeAbility: 'Bulletproof',
+  abilityOn: true,
+  item: 'choice specs',
+  nature: 'serious',
+  status: 'healthy',
+}
+
+let gen = 9; 
+while (gen > 0) {
+  try {
+    const attackerName = capitalizeFirstLetter(attacker.name);
+    const defenderName = capitalizeFirstLetter(defender.name);
+    const result = calculate(
+      gen,
+      new Pokemon(gen, attackerName, {
+        ability: attacker.activeAbility,
+        abilityOn: true,
+        item: attacker.item,
+        nature: attacker.nature,
+        evs: attacker.evs,
+        status: attacker.status,
+      }),
+      new Pokemon(gen, defenderName, {
+        ability: defender.activeAbility,
+        abilityOn: true,
+        item: defender.item,
+        nature: defender.nature,
+        evs: defender.evs,
+        status: defender.status,
+      }),
+      new Move(gen, 'earthquake')
+    );
+    console.log("inside calculateDamage", gen, result);
+    const minDamage = result.damage[0];
+    const maxDamge = result.damage[result.damage.length-1];
+
+    if (!minDamage) {
+      console.log(0, 'damage')
+    }
+
+    const hp = result.defender.stats.hp;
+    
+    const minPercentage = ((minDamage/hp) * 100).toFixed(1) + '%';
+    const maxPercentage = ((maxDamge/hp) * 100).toFixed(1) + '%';
+    
+    console.log(minDamage, maxDamge, minPercentage, maxPercentage);
+    break;
+
+  } catch (error) {
+    console.log(error)
+    gen--;
+  }
 }
 
 
@@ -141,7 +213,7 @@ class App extends Component {
                 ]
               : null}
           </div>
-            {this.props.teamStatus ? <AnalysisMenu /> : null}
+            {(this.props.teamStatus || this.props.analysisMenuStatus) ? <AnalysisMenu /> : null}
           {/* <div className="matchup-chart-container"> */}
           {/* </div> */}
           <div className='footer-container'>

@@ -2966,7 +2966,7 @@ button:hover{
 // damage calc 
 .damage-calculator-container {
   height: 95%;
-  width: 80%;
+  width: 90%;
   position: relative;
   top: 1%;
   margin: 0 auto;
@@ -3012,38 +3012,50 @@ button:hover{
 }
 
 .calc-sprite {
-  height: 100%;
+  height: 120%;
   width: 50%;
 }
 
 .calc-sprite-placeholder {
-  height: 100%;
+  height: 120%;
   width: 50%;
 }
 
 .calc-pokemon-types-container {
   height: 20%;
+  width: 100%;
   display: flex;
   justify-content: center;
+  margin-top: 10%;
 }
+
+.calc-pokemon-types-container img {
+  height: 50%;
+  width: 20%;
+  margin: 2%;
+}
+
+.calc-pokemon-types-container 
 
 
 
 .calc-details-container {
   height: 70%;
   width: 100%;
+
 }
 
 .calc-details-container h4 {
   margin: 0;
-  margin-top: 9%;
+  margin-top: 8%;
 }
 
 .calc-details-container select {
   height: 100%;
   width: 70%;
   margin-top: 10%;
-
+  background-color: whitesmoke;
+  border-radius: 0.3rem;
 }
 
 .calc-nature-container {
@@ -3070,6 +3082,7 @@ button:hover{
 // calc ev box 
 .calc-ev-container {
   margin-top: 10%;
+  margin-bottom: -8%;
 }
 
 .calc-ev-container .ev-table-labels {
@@ -3133,6 +3146,134 @@ button:hover{
 }
 
 
+// calc results 
+.calc-results-container {
+  height: 100%;
+  width: 100%;
+}
+
+.calc-results-summary {
+  height: 25%;
+  width: 70%;
+  margin: 0 auto;
+}
+
+.calc-results-labels {
+  height: 4%;
+  width: 95%;
+  margin: 0 auto;
+  margin-left: 5%;
+  position: relative;
+  top: -10%;
+  margin-bottom: -6%;
+  display: flex;
+}
+
+.calc-results-labels > * {
+  margin-right: 18%;
+}
+
+.calc-label-basepower {
+  width: 25%;
+  font-size: 70%;
+  white-space: nowrap;
+  position: relative;
+  top: 50%;
+  margin-left: 5%;
+}
+
+.calc-label-damage {
+  width: 10%;
+}
+
+
+.calc-result-row-container {
+  height: 15%;
+  width: 95%;
+  margin-top: 3%;
+  margin-left: 2%;
+  display: flex;
+  border: 1px rgb(91, 89, 89) dotted;
+
+}
+.calc-move-container {
+  height: 50%;
+  width: 38%;
+  min-width: 38%;
+  text-align: center;
+  margin-top: 5%;
+  line-height: 90%;
+  border-radius: 0.4rem;
+  background-color: rgba(255, 255, 255, 0.744);
+  cursor: pointer;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.calc-move-container h4 {
+
+}
+
+.calc-move-basepower {
+  margin-left: 9%;
+}
+
+.calc-result {
+  margin-left: 13%;
+  font-size: 120%;
+  line-height: 100%;
+  border: 1px #41746f dotted;
+}
+
+
+.calc-modal {
+  height: 40%;
+  width: 20%;
+  background-color: whitesmoke;
+  position: absolute;
+  top: 0%;
+  cursor: pointer;
+  overflow-y: scroll;
+}
+
+.calc-modal-1 {
+  top: -4%;
+}
+
+.calc-modal-2 {
+  top: 12%;
+}
+
+.calc-modal-3 {
+  top: 22%;
+}
+
+.calc-modal-2 {
+  top: 32%;
+}
+
+
+.calc-modal-option-container {
+  height: 100%;
+}
+
+.calc-modal-option {
+  height: 20%;
+}
+
+.calc-modal-option > * {
+  margin: 0 auto;
+}
+
+.calc-modal-option:hover {
+  background-color: rgba(128, 128, 128, 0.633);
+}
+
+// coloring search str
+.calc-modal-option span {
+  color: red;
+}
 
 
 

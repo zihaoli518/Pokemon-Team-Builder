@@ -38,6 +38,9 @@
     "webpack-hot-middleware": "^2.24.3"
   },
   "dependencies": {
+    "@ajhyndman/smogon-calc": "^0.8.0",
+    "@pkmn/data": "^0.7.39",
+    "@pkmn/dex": "^0.7.39",
     "@smogon/calc": "^0.7.0",
     "chart.js": "^4.2.1",
     "concurrently": "^7.4.0",

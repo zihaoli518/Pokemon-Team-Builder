@@ -57,6 +57,11 @@ const CurrentPokemonDetails = props => {
   const [allItemsToBeDisplayed, setAllItemsToBeDisplayed] = useState([]);
   const [allMovesToBeDisplayed, setAllMovesToBeDisplayed] = useState([]);
 
+  function capitalizeWords(str) {
+    return str.replace(/\b\w/g, function(match) {
+      return match.toUpperCase();
+    }).replace(/-/g, ' ');
+  }
 
 
   // generalized function that makes a div have an unique classname (for active effects)
@@ -116,7 +121,7 @@ const CurrentPokemonDetails = props => {
     }
 
     for (let i=0; i<props.currentPokemon.abilities.length; i++) {
-      const name =  props.currentPokemon.abilities[i].ability.name;
+      const name =  capitalizeWords(props.currentPokemon.abilities[i].ability.name);
       const url = props.currentPokemon.abilities[i].ability.url;
       let className = 'ability ability' + (i+1) + ' pokemon-details-' + name;
       // highlight active ability on load
