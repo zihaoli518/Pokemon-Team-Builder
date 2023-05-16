@@ -76,13 +76,32 @@ const MoveSearchModal = props => {
     for (let move in allMovesJSON) {
       const capitalizedName = allMovesJSON[move].name;
       const type = allMovesJSON[move].type;
-      const basepower = allMovesJSON[move].basePower;
+      let basepower = allMovesJSON[move].basePower;
+      if (basepower===0) basepower = null;
+      const category = allMovesJSON[move].category;
+      let typeImageUrl = `https://play.pokemonshowdown.com/sprites/types/${type}.png`;
+      let categoryImageUrl = '';
+      switch (category) {
+        case "Physical":
+          categoryImageUrl = "https://play.pokemonshowdown.com/sprites/categories/Physical.png";
+          break;
+        case "Special":
+          categoryImageUrl = "https://play.pokemonshowdown.com/sprites/categories/Special.png";
+          break;
+        case "Status":
+          categoryImageUrl = "https://play.pokemonshowdown.com/sprites/categories/Status.png";
+          break;
+      }
 
       let highlightedStr = '';
       let restOfStr = capitalizedName; 
 
+
       // check if row should be pushed to array, if !searchStr then default push everything,  or if searchStr matches the start of item name
       if (searchStr) {
+        // convert searchStr to str in case it starts with numbers
+        searchStr = searchStr.toString();
+        // format to highlight searched str
         highlightedStr = capitalizedName.slice(0, searchStr.length);
         restOfStr = capitalizedName.slice(searchStr.length, capitalizedName.length);
         searchStr = capitalizeWords(searchStr)
@@ -95,6 +114,9 @@ const MoveSearchModal = props => {
         arrayOfMoves.push(
           <div className='calc-modal-option' onClick={()=>{chooseMove(props.team, moveId, capitalizedName, type, basepower)}}>
               <h4><span>{highlightedStr}</span>{restOfStr}</h4>
+              <img className='type-symbol' src={typeImageUrl} alt="" />
+              <img className='category-symbol' src={categoryImageUrl} alt="" />
+              <h4 className='basepower'>{basepower}</h4>
           </div>
         )
       }
@@ -126,6 +148,7 @@ const MoveSearchModal = props => {
   return (
     <div className={`calc-modal calc-modal-${moveId}`} style={props.popUpDisplay[moveId] ? { display: 'block' } : { display: 'none' }}>
       <input className={'calc-modal-search'}  id={'calc-modal-search-' + props.team + moveId} type="text" onKeyUp={(event) => {searchAndDisplayMoves(event.target.id, moveId)}}/>
+      <img className='calc-search-glass' src="https://cdn-icons-png.flaticon.com/512/808/808731.png" alt="" />
       <div className='calc-modal-option-container'>
         {modalOptions}
       </div>

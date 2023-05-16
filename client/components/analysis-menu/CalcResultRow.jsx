@@ -96,7 +96,7 @@ const CalcResultRow = props => {
         const maxDamge = result.damage[result.damage.length-1];
 
         if (!minDamage) {
-          return ('0% - 0%')
+          return ('0%')
         }
 
         const hp = result.defender.stats.hp;
@@ -199,17 +199,17 @@ const CalcResultRow = props => {
 
   useEffect(() => {
     populateRow();
-  }, [props.pokemonCalcDataFriendly.moves[moveId], props.pokemonCalcDataEnemy.moves[moveId], props.popUpDisplay])
+  }, [props.pokemonCalcDataFriendly, props.pokemonCalcDataEnemy, props.popUpDisplay])
 
 
   return (
-    <div className='calc-result-row-container'>
+    <div className={`calc-result-row-container`}>
       <MoveSearchModal moveId={moveId} team={props.team} popUpDisplay={props.popUpDisplay} setPopUpDisplay={props.setPopUpDisplay} />
-      <div className='calc-move-container' onClick={()=>{console.log('calc-move-container onclick!'); props.setPopUpDisplay({...props.PopUpState, [moveId]:!props.popUpDisplay[moveId]})}}>
+      <div className={`calc-move-container type-${props.currentPokemon.moves[moveId].type ? props.currentPokemon.moves[moveId].type.toLowerCase() : null}`} onClick={()=>{console.log('calc-move-container onclick!'); props.setPopUpDisplay({...props.PopUpState, [moveId]:!props.popUpDisplay[moveId]})}}>
         <h4>{props.currentPokemon.moves[moveId].name}</h4>
       </div>
       <h4 className='calc-move-basepower'> {props.currentPokemon.moves[moveId].basepower}</h4>
-      <h4 className='calc-result'>{calcDisplay}</h4>
+      <h4 key={calcDisplay} className='calc-result'>{calcDisplay}</h4>
     </div>
   );
 }

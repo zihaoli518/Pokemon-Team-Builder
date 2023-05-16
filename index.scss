@@ -3196,6 +3196,7 @@ button:hover{
   border: 1px rgb(91, 89, 89) dotted;
 
 }
+
 .calc-move-container {
   height: 50%;
   width: 38%;
@@ -3204,26 +3205,25 @@ button:hover{
   margin-top: 5%;
   line-height: 90%;
   border-radius: 0.4rem;
-  background-color: rgba(255, 255, 255, 0.744);
+  // background-color: rgba(255, 255, 255, 0.744);
   cursor: pointer;
 
   display: flex;
   align-items: center;
   justify-content: center;
 }
-.calc-move-container h4 {
 
-}
 
 .calc-move-basepower {
   margin-left: 9%;
 }
 
 .calc-result {
+  width: 20%;
   margin-left: 13%;
   font-size: 120%;
   line-height: 100%;
-  border: 1px #41746f dotted;
+  animation: rollout 1s;
 }
 
 
@@ -3235,6 +3235,7 @@ button:hover{
   top: 0%;
   cursor: pointer;
   overflow-y: scroll;
+  border-radius: 0.4rem;
 }
 
 .calc-modal-1 {
@@ -3253,13 +3254,35 @@ button:hover{
   top: 32%;
 }
 
+.calc-modal-search {
+  height: 13%;
+  width: 80%;
+  margin-top: 1%;
+  margin-left: 3%;
+  position: absolute;
+  border-radius: 0.3rem;
+
+}
+
+.calc-search-glass {
+  height: 10%;
+  width: 7%;
+  position: relative;
+  top: 4%;
+  left: 74%;
+}
+
 
 .calc-modal-option-container {
   height: 100%;
+  margin-top: 3%;
 }
 
 .calc-modal-option {
   height: 20%;
+  display: flex;
+  align-items: center;
+  justify-content: left;
 }
 
 .calc-modal-option > * {
@@ -3268,6 +3291,11 @@ button:hover{
 
 .calc-modal-option:hover {
   background-color: rgba(128, 128, 128, 0.633);
+}
+
+.calc-modal-option h4 {
+  margin-left: 4%;
+  
 }
 
 // coloring search str
