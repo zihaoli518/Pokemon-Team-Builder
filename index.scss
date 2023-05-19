@@ -2968,12 +2968,15 @@ button:hover{
   height: 95%;
   width: 90%;
   position: relative;
-  top: 1%;
+  top: 2%;
   margin: 0 auto;
   display: flex;
   justify-content: center;
   font-size: 30%;
-  background-color: rgba(123, 125, 128, 0.692);
+
+  background-color: rgb(129, 138, 152);
+  backdrop-filter: blur(10px);
+  box-shadow: 0 8px 30px 0 rgba($color: #5d5c5c, $alpha: 0.5);
 }
 
 .calc-pokemon-display-container {
@@ -2987,7 +2990,9 @@ button:hover{
   height: 90%;
   margin: 0 auto;
   margin-top: 2%;
-  border: 1px dotted black;
+  border: 1px dotted rgb(57, 57, 57);
+  border-radius: 0.4rem;
+
 }
 
 
@@ -2995,8 +3000,10 @@ button:hover{
 .calc-pokemon-display-inner{
   height: 30%;
   width: 100%;
-  border: 1px dotted black;
+  border: 1px dotted rgb(57, 57, 57);
+  border-radius: 0.4rem;
   text-align: center;
+  cursor: pointer;
 }
 
 .calc-pokemon-display-inner h3 {
@@ -3110,6 +3117,7 @@ button:hover{
   left: -55%;
   top: 50%;
   font-size: 0.75rem;
+  
 }
 
 .calc-ev-container .base-stat {
@@ -3118,7 +3126,7 @@ button:hover{
   top: -50%;
   text-align: center;
   font-size: 0.75rem;
-
+  font-weight: 300;
 }
 
 .calc-ev-container .calc-ev-input {
@@ -3179,7 +3187,7 @@ button:hover{
   white-space: nowrap;
   position: relative;
   top: 50%;
-  margin-left: 5%;
+  margin-left: 7%;
 }
 
 .calc-label-damage {
@@ -3194,6 +3202,7 @@ button:hover{
   margin-left: 2%;
   display: flex;
   border: 1px rgb(91, 89, 89) dotted;
+  border-radius: 0.4rem;
 
 }
 
@@ -3203,9 +3212,12 @@ button:hover{
   min-width: 38%;
   text-align: center;
   margin-top: 5%;
+  margin-left: 2%;
   line-height: 90%;
   border-radius: 0.4rem;
-  // background-color: rgba(255, 255, 255, 0.744);
+  background-color: rgba(255, 255, 255, 0.744);
+  box-shadow: 0px 3px 3px 0 rgba($color: #5d5c5c, $alpha: 0.5);
+
   cursor: pointer;
 
   display: flex;
@@ -3213,16 +3225,60 @@ button:hover{
   justify-content: center;
 }
 
+.calc-move-container:hover {
+  transform: scale(1.05);
+  transition: 0.4s ease-in-out;
+}
+
+.calc-fallback-friendly {
+  position: absolute;
+  left: 27.5%;
+  margin-top: 1.5%;
+  color: grey;
+}
+
+.calc-fallback-enemy {
+  position: absolute;
+  left: 55%;
+  margin-top: 1.5%;
+  color: grey;
+}
+
+.category-icon-small {
+  height: 14%;
+  width: 10%;
+  position: relative;
+  top: 55%;
+  left: -10%;
+}
+
+.calc-super-effective {
+  width: 20%;
+  position: relative;
+  left: -45%;
+  top: 53%;
+
+  white-space: nowrap;
+  font-size: 73%;
+}
 
 .calc-move-basepower {
-  margin-left: 9%;
+  height: 80%;
+  width: 5%;
+  margin-left: -21%;
+  font-family: "Gill Sans", sans-serif;
+  font-weight: 300;
 }
 
 .calc-result {
   width: 20%;
-  margin-left: 13%;
-  font-size: 120%;
+  margin-left: 14%;
+  margin-top: 8%;
+  font-size: 100%;
   line-height: 100%;
+  font-family: "Gill Sans", sans-serif;
+  font-weight: 300;
+
   animation: rollout 1s;
 }
 
@@ -3230,7 +3286,7 @@ button:hover{
 .calc-modal {
   height: 40%;
   width: 20%;
-  background-color: whitesmoke;
+  background-color: rgb(236, 236, 236);
   position: absolute;
   top: 0%;
   cursor: pointer;
@@ -3238,20 +3294,20 @@ button:hover{
   border-radius: 0.4rem;
 }
 
-.calc-modal-1 {
-  top: -4%;
+.calc-modal-move_1 {
+  top: -3.5%;
 }
 
-.calc-modal-2 {
-  top: 12%;
+.calc-modal-move_2 {
+  top: 12.1%;
 }
 
-.calc-modal-3 {
-  top: 22%;
+.calc-modal-move_3 {
+  top: 28%;
 }
 
-.calc-modal-2 {
-  top: 32%;
+.calc-modal-move_4 {
+  top: 43.5%;
 }
 
 .calc-modal-search {
@@ -3283,6 +3339,7 @@ button:hover{
   display: flex;
   align-items: center;
   justify-content: left;
+  z-index: 3;
 }
 
 .calc-modal-option > * {
@@ -3295,13 +3352,88 @@ button:hover{
 
 .calc-modal-option h4 {
   margin-left: 4%;
-  
+  font-size: 85%;
+  z-index: 3;
 }
-
 // coloring search str
 .calc-modal-option span {
   color: red;
 }
+
+.calc-modal .category-symbol {
+  position: absolute;
+  left: 45%;
+  z-index: 2;
+}
+.calc-modal .type-symbol {
+  position: absolute;
+  left: 65%;
+}
+.calc-modal .basepower {
+  position: absolute;
+  left: 80%;
+}
+
+
+// give different colors to differnt type moves 
+$calc-opacity: 55%;
+
+.calc-move-container-bug {
+  background-color: rgba($bug-color, $calc-opacity);
+}
+.calc-move-container-dark {
+  background-color: rgba($dark-color, $calc-opacity);
+}
+.calc-move-container-dragon {
+  background-color: rgba($dragon-color, $calc-opacity);
+}
+.calc-move-container-electric {
+  background-color: rgba($electric-color, $calc-opacity);
+}
+.calc-move-container-fairy {
+  background-color: rgba($fairy-color, $calc-opacity);
+}
+.calc-move-container-fighting {
+  background-color: rgba($fighting-color, $calc-opacity);
+}
+.calc-move-container-fire {
+  background-color: rgba($fire-color, $calc-opacity);
+}
+.calc-move-container-flying {
+  background-color: rgba($flying-color, $calc-opacity);
+}
+.calc-move-container-ghost {
+  background-color: rgba($ghost-color, $calc-opacity);
+}
+.calc-move-container-grass {
+  background-color: rgba($grass-color, $calc-opacity);
+}
+.calc-move-container-ground {
+  background-color: rgba($ground-color, $calc-opacity);
+}
+.calc-move-container-ice {
+  background-color: rgba($ice-color, $calc-opacity);
+}
+.calc-move-container-normal {
+  background-color: rgba($normal-color, $calc-opacity);
+}
+.calc-move-container-poison {
+  background-color: rgba($poison-color, $calc-opacity);
+}
+.calc-move-container-psychic {
+  background-color: rgba($psychic-color, $calc-opacity);
+}
+.calc-move-container-rock {
+  background-color: rgba($rock-color, $calc-opacity);
+}
+.calc-move-container-steel {
+  background-color: rgba($steel-color, $calc-opacity);
+}
+.calc-move-container-water {
+  background-color: rgba($water-color, $calc-opacity);
+}
+
+
 
 
 

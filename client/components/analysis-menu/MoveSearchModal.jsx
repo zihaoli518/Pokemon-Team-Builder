@@ -46,7 +46,7 @@ const mapStateToProps = (state, ownProps) => {
 
 const mapDispatchToProps = dispatch => ({
   updateCalculatedStatsCalc : (team, evs, results) => dispatch(actions.updateCalculatedStatsCalc(team, evs, results)),
-  chooseMoveForCalc: (team, moveId, move, type, basepower) => dispatch(actions.chooseMoveForCalc(team, moveId, move, type, basepower)),
+  chooseMoveForCalc: (team, moveId, move, type, basepower, categoryUrl) => dispatch(actions.chooseMoveForCalc(team, moveId, move, type, basepower, categoryUrl)),
 });
 
 const statOrder = ['hp', 'atk', 'def', 'spa', 'spd', 'spe'];
@@ -62,15 +62,16 @@ const MoveSearchModal = props => {
 
 
   const populateModal = (moveId, searchStr) => {
-    console.log('inside populateModal, ', moveId, searchStr)
+    // console.log('inside populateModal, ', moveId, searchStr)
     const arrayOfMoves = [];
     // helper function for choose move onclick 
-    function chooseMove(team, moveId, move, type, basepower) {
-      props.chooseMoveForCalc(team, moveId, move, type, basepower);
+    function chooseMove(team, moveId, move, type, basepower, categoryUrl) {
+      props.chooseMoveForCalc(team, moveId, move, type, basepower, categoryUrl);
       // close the modal
       const newPopUpState = {...props.popUpDisplay};
       newPopUpState[moveId] = false;
       props.setPopUpDisplay(newPopUpState);
+      // props.setCategoryUrl(categoryUrl);
     }
 
     for (let move in allMovesJSON) {
@@ -107,15 +108,15 @@ const MoveSearchModal = props => {
         searchStr = capitalizeWords(searchStr)
       }
 
-      console.log('searchStr: ', searchStr, 'highlightedStr: ',  highlightedStr, 'restOfStr: ',restOfStr)
+      // console.log('searchStr: ', searchStr, 'highlightedStr: ',  highlightedStr, 'restOfStr: ',restOfStr)
 
       if (!searchStr || highlightedStr===searchStr) {
         if (searchStr)  highlightedStr = searchStr;
         arrayOfMoves.push(
-          <div className='calc-modal-option' onClick={()=>{chooseMove(props.team, moveId, capitalizedName, type, basepower)}}>
+          <div className='calc-modal-option' onClick={()=>{chooseMove(props.team, moveId, capitalizedName, type, basepower, categoryImageUrl)}}>
               <h4><span>{highlightedStr}</span>{restOfStr}</h4>
-              <img className='type-symbol' src={typeImageUrl} alt="" />
               <img className='category-symbol' src={categoryImageUrl} alt="" />
+              <img className='type-symbol' src={typeImageUrl} alt="" />
               <h4 className='basepower'>{basepower}</h4>
           </div>
         )
@@ -123,17 +124,11 @@ const MoveSearchModal = props => {
 
     }
     // update state
-    console.log('about to update state in populateModal() ', moveId, arrayOfMoves.length)
-    // let newState = {...modalOptions};
-    // newState[moveId] = arrayOfMoves;
-    // console.log(newState)
-
     setModalOptions(arrayOfMoves);
   }
 
   
   const searchAndDisplayMoves = (elementId, moveId) => {
-    console.log('inside searchAndDisplayMoves', elementId, moveId)
     const searchStr = document.getElementById(elementId).value;
     populateModal(moveId, searchStr);
   }

@@ -156,7 +156,7 @@ const EvolutionTree= (props) => {
     <div className='evolution-container' key={props.currentPokemon.name}>
   
       <div className={className} >
-        <h4>evolution tree</h4>
+        <h4>Evolutions</h4>
         <div className='evolution-tree-container'>
           {evolutionTree}
         </div>

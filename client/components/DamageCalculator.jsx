@@ -76,7 +76,7 @@ const DamageCalculator = props => {
       </div>
 
       <div className='calc-results enemy-calc-results'>
-        <CalcMovesResults team={'enemey'}/>
+        <CalcMovesResults team={'enemy'}/>
       </div>
 
       <CalcPokemonDisplay 

@@ -10,13 +10,14 @@
  */
 
 // importing dependencies 
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useState, lazy, Suspense} from 'react';
 import {useNavigate} from 'react-router-dom'
 
 import { connect } from 'react-redux';
 
 import * as actions from '../../actions/actions';
-import MoveSearchModal from './MoveSearchModal.jsx';
+// import MoveSearchModal from './MoveSearchModal.jsx';
+const MoveSearchModal = lazy(() => import('./MoveSearchModal.jsx'));
 
 const calculator = require('pokemon-stat-calculator')
 import {calculate, Generations, Pokemon, Move} from '@ajhyndman/smogon-calc';
@@ -36,9 +37,10 @@ const mapStateToProps = (state, ownProps) => {
   const pokemonCalcDataEnemy = state.damageCalc.pokemonCalcDataEnemy;
 
   const currentPokemon = (ownProps.team==='friendly') ? pokemonCalcDataFriendly : pokemonCalcDataEnemy;
-
+  const opposingPokemon = (ownProps.team==='friendly') ? pokemonCalcDataEnemy : pokemonCalcDataFriendly;
   return {
     currentPokemon: currentPokemon,
+    opposingPokemon: opposingPokemon,
     pokemonCalcDataFriendly: pokemonCalcDataFriendly,
     pokemonCalcDataEnemy: pokemonCalcDataEnemy,
   }
@@ -59,6 +61,9 @@ const statusMap = {healthy: '', poisoned: 'psn', 'badly poisoned': 'tox', burned
 const CalcResultRow = props => {
 
   const [calcDisplay, setCalcDisplay] = useState('');
+  const [categoryUrl, setCategoryUrl] = useState('');
+  const [superEffective, setSuperEffective] = useState({str: '', value: ''});
+
   const moveId = props.moveId;
 
 
@@ -104,7 +109,7 @@ const CalcResultRow = props => {
         const minPercentage = ((minDamage/hp) * 100).toFixed(1) + '%';
         const maxPercentage = ((maxDamge/hp) * 100).toFixed(1) + '%';
         
-        console.log(minDamage, maxDamge, minPercentage, maxPercentage)
+        // console.log(minDamage, maxDamge, minPercentage, maxPercentage)
         return (minPercentage + '-' + maxPercentage);
       } catch (error) {
         gen--;
@@ -113,60 +118,9 @@ const CalcResultRow = props => {
   }
 
 
-  // // update an array of jsx for every move, for every move container in calc, update state
-  // const populateModal = (moveId, searchStr) => {
-  //   console.log('inside populateModal, ', moveId, searchStr)
-  //   const arrayOfMoves = [];
-  //   // helper function for choose move onclick 
-  //   function chooseMove(team, moveId, move, type, basepower) {
-  //     props.chooseMoveForCalc(team, moveId, move, type, basepower);
-  //     // close the modal
-  //     const newPopUpState = {...props.popUpDisplay};
-  //     newPopUpState[moveId] = false;
-  //     props.setPopUpDisplay(newPopUpState);
-  //   }
-
-  //   for (let move in allMovesJSON) {
-  //     const capitalizedName = allMovesJSON[move].name;
-  //     const type = allMovesJSON[move].type;
-  //     const basepower = allMovesJSON[move].basePower;
-
-  //     let highlightedStr = '';
-  //     let restOfStr = capitalizedName; 
-
-  //     // check if row should be pushed to array, if !searchStr then default push everything,  or if searchStr matches the start of item name
-  //     if (searchStr) {
-  //       highlightedStr = capitalizedName.slice(0, searchStr.length);
-  //       restOfStr = capitalizedName.slice(searchStr.length, capitalizedName.length);
-  //       searchStr = capitalizeWords(searchStr)
-  //     }
-
-  //     console.log('searchStr: ', searchStr, 'highlightedStr: ',  highlightedStr, 'restOfStr: ',restOfStr)
-
-  //     if (!searchStr || highlightedStr===searchStr) {
-  //       if (searchStr)  highlightedStr = searchStr;
-  //       arrayOfMoves.push(
-  //         <div className='calc-modal-option' onClick={()=>{chooseMove(props.team, moveId, capitalizedName, type, basepower)}}>
-  //             <h4><span>{highlightedStr}</span>{restOfStr}</h4>
-  //         </div>
-  //       )
-  //     }
-
-  //   }
-  //   // update state
-  //   // let newState = {...modalOptions};
-  //   // newState[moveId] = arrayOfMoves;
-  //   // console.log(newState)
-
-  //   setModalOptions(prevState => ({
-  //     ...prevState,
-  //     [moveId]: arrayOfMoves
-  //   }));
-  // }
-
   // called during every useEffect, map onclick functions to move inputs 
   const populateRow = () => {
-      console.log('about to call populateModal() ', moveId)
+      // console.log('about to call populateModal() ', moveId)
       // calc 
       let calcDispay = '';
       // update calc if both pokemon are present 
@@ -180,34 +134,57 @@ const CalcResultRow = props => {
           defender = props.pokemonCalcDataFriendly;
         }
         let move = props.currentPokemon.moves[moveId].name;
-        console.log('about to calculate: ', attacker, defender, move)
         const calcResult = calculateDamage(attacker, defender, move);
-        setCalcDisplay(calcResult)
-      }
+        let superEffectiveStr = ''; 
+        console.log('checking for super effective! ')
+        const weaknessValue = props.opposingPokemon.weakness[props.currentPokemon.moves[moveId].type.toLowerCase()];
+        if (weaknessValue===0) superEffectiveStr = 'it does not effect ' + props.opposingPokemon.name + '...';
+        else if (weaknessValue===0.5) superEffectiveStr = `it's not very effective against ` + props.opposingPokemon.name + '...';
+        else if (weaknessValue===0.25) superEffectiveStr = `it's not very effective (x0.25) against ` + props.opposingPokemon.name + '...';
+        else if (weaknessValue===2) superEffectiveStr = `it's super effective against ` + props.opposingPokemon.name + '!';
+        else if (weaknessValue===4) superEffectiveStr = `it's super effective (x4) against ` + props.opposingPokemon.name + '!';
 
+        setSuperEffective({str: superEffectiveStr, value: weaknessValue.toString()})
+
+        setCalcDisplay(calcResult);
+      }
   }
 
-  // function for searching moves 
-
-  const searchAndDisplayMoves = (elementId, moveId) => {
-    console.log('inside searchAndDisplayMoves', elementId, moveId)
-    const searchStr = document.getElementById(elementId).value;
-    populateModal(moveId, searchStr);
+  // clear the category image when re-renders 
+  const clearCategoryImage = () => {
+    setCalcDisplay('');
   }
 
 
 
   useEffect(() => {
+    clearCategoryImage();
     populateRow();
   }, [props.pokemonCalcDataFriendly, props.pokemonCalcDataEnemy, props.popUpDisplay])
 
 
   return (
     <div className={`calc-result-row-container`}>
-      <MoveSearchModal moveId={moveId} team={props.team} popUpDisplay={props.popUpDisplay} setPopUpDisplay={props.setPopUpDisplay} />
-      <div className={`calc-move-container type-${props.currentPokemon.moves[moveId].type ? props.currentPokemon.moves[moveId].type.toLowerCase() : null}`} onClick={()=>{console.log('calc-move-container onclick!'); props.setPopUpDisplay({...props.PopUpState, [moveId]:!props.popUpDisplay[moveId]})}}>
+      {/* {props.popUpDisplay[moveId] ? 
+        <MoveSearchModal moveId={moveId} team={props.team} popUpDisplay={props.popUpDisplay} setPopUpDisplay={props.setPopUpDisplay} />
+        : null
+      } */}
+      <Suspense fallback={<div className={'calc-fallback-'+ props.team}>loading...</div>}>
+        <MoveSearchModal moveId={moveId} team={props.team} popUpDisplay={props.popUpDisplay} setPopUpDisplay={props.setPopUpDisplay} setCategoryUrl={setCategoryUrl} />
+      </Suspense>
+
+      <div className={`calc-move-container calc-move-container-${props.currentPokemon.moves[moveId].type ? props.currentPokemon.moves[moveId].type.toLowerCase() : null}`} onClick={()=>{props.setPopUpDisplay({...props.PopUpState, [moveId]:!props.popUpDisplay[moveId]})}}>
         <h4>{props.currentPokemon.moves[moveId].name}</h4>
       </div>
+      {props.currentPokemon.moves[moveId].categoryUrl ? 
+        <img className='category-icon-small' src={props.currentPokemon.moves[moveId].categoryUrl} alt="" />
+        : null
+      }
+      {props.opposingPokemon.name && props.currentPokemon.moves[moveId].name ?
+        <h4 className={`calc-super-effective calc-super-effective-${superEffective.value.replace('.', '')}`}>{superEffective.str}</h4>
+        : 
+        <div className='calc-super-effective'></div>
+      }
       <h4 className='calc-move-basepower'> {props.currentPokemon.moves[moveId].basepower}</h4>
       <h4 key={calcDisplay} className='calc-result'>{calcDisplay}</h4>
     </div>

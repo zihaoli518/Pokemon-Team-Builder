@@ -31,11 +31,12 @@ const initialState = {
     evs: {hp: 0, atk: 0, def: 0, spa: 0, spd: 0, spe: 0},
     boosts: {hp: 0, atk: 0, def: 0, spa: 0, spd: 0, spe: 0},
     moves: {
-      move_1: {name: null, type: null, basepower: null},
-      move_2: {name: null, type: null, basepower: null},
-      move_3: {name: null, type: null, basepower: null},
-      move_4: {name: null, type: null, basepower: null},
+      move_1: {name: null, type: null, basepower: null, categoryUrl: ''},
+      move_2: {name: null, type: null, basepower: null, categoryUrl: ''},
+      move_3: {name: null, type: null, basepower: null, categoryUrl: ''},
+      move_4: {name: null, type: null, basepower: null, categoryUrl: ''},
     },
+    categoryUrl: '',
   },
   pokemonCalcDataEnemy: {
     name: null,
@@ -50,10 +51,10 @@ const initialState = {
     evs: {hp: 0, atk: 0, def: 0, spa: 0, spd: 0, spe: 0},
     boosts: {hp: 0, atk: 0, def: 0, spa: 0, spd: 0, spe: 0},
     moves: {
-      move_1: {name: null, type: null, basepower: null},
-      move_2: {name: null, type: null, basepower: null},
-      move_3: {name: null, type: null, basepower: null},
-      move_4: {name: null, type: null, basepower: null},
+      move_1: {name: null, type: null, basepower: null, categoryUrl: ''},
+      move_2: {name: null, type: null, basepower: null, categoryUrl: ''},
+      move_3: {name: null, type: null, basepower: null, categoryUrl: ''},
+      move_4: {name: null, type: null, basepower: null, categoryUrl: ''},
     },
   },
   analysisMenuStatus: false
@@ -82,6 +83,7 @@ const damageCalcReducer = (state = initialState, action) => {
         calculatedStats: inputPokemon.calculatedStats,
         evs: {hp: inputPokemon.evs.array[0], atk: inputPokemon.evs.array[1], def: inputPokemon.evs.array[2], spa: inputPokemon.evs.array[3], spd: inputPokemon.evs.array[4], spe: inputPokemon.evs.array[5]},
         boosts: {hp: 0, atk: 0, def: 0, spa: 0, spd: 0, spd: 0},
+        weakness: inputPokemon.weakness,
         moves: {
           move_1: {name: null, type: null, basepower: null},
           move_2: {name: null, type: null, basepower: null},
@@ -165,6 +167,7 @@ const damageCalcReducer = (state = initialState, action) => {
       newMoveObj.name = action.payload.move;
       newMoveObj.type = action.payload.type;
       newMoveObj.basepower = action.payload.basepower;
+      newMoveObj.categoryUrl = action.payload.categoryUrl;
 
       copyOfStateM.moves[action.payload.moveId] = newMoveObj;
 
