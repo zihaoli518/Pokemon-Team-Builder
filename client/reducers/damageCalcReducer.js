@@ -13,7 +13,9 @@
 // importing action types
 import * as types from '../constants/actionTypes'; 
 
-import helpers from './helpers.js'
+import helpers from './helpers.js';
+const calculator = require('pokemon-stat-calculator');
+
 
 
 
@@ -96,6 +98,7 @@ const damageCalcReducer = (state = initialState, action) => {
         const moveKey = 'move_'+i;
         if (inputPokemon.moves[moveKey].name) {
           newPokemonCalcObj.moves[moveKey] = {name: inputPokemon.moves[moveKey].name, type: inputPokemon.moves[moveKey].type, basepower: inputPokemon.moves[moveKey].basePower}
+          newPokemonCalcObj.moves[moveKey].categoryUrl = `https://play.pokemonshowdown.com/sprites/categories/${inputPokemon.moves[moveKey].category}.png`
         }
       }
       // add default item
@@ -138,6 +141,9 @@ const damageCalcReducer = (state = initialState, action) => {
         default:
           console.log('default case')
       }
+      // re-calculate stats 
+      const newResults = calculator.calAllStats([31,31,31,31,31,31], statObjToArray(copyOfState.stats), statObjToArray(copyOfState.evs), 100, copyOfState.nature)
+      copyOfState.calculatedStats = newResults;
 
       if (action.payload.team==='friendly') return {...state, pokemonCalcDataFriendly :copyOfState, }
       else return {...state, pokemonCalcDataEnemy :copyOfState, }
@@ -191,6 +197,16 @@ function capitalizeWords(str) {
   }).replace(/-/g, ' ');
 }
 
-
+const statObjToArray = (statObj) => {
+  console.log('in statObjToArray', statObj)
+  let array = [];
+  const order = ['hp', 'atk', 'def', 'spa', 'spd', 'spe']
+  order.forEach(stat => {
+    console.log(stat,statObj[stat])
+    array.push(statObj[stat])
+  })
+  console.log('END OF STAT->OBJ ', array);
+  return array
+}
 
 export default damageCalcReducer;

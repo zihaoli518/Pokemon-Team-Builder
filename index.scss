@@ -2453,14 +2453,14 @@ input[type="text"]
 
 // team display 
 .teams {
+  height: 19%;
+  width: 100%;
   margin-top: 2.8%;
+  padding-top: 0.4%;
+  padding-bottom: 1%;
   display: flex;
   justify-content: center;
-
-  height: 18%;
-  width: 100%;
-
-  position: relative;
+  background-color: rgba(154, 154, 154, 0.631);
 }
 
 
@@ -2473,17 +2473,18 @@ input[type="text"]
   top: 30%;
   height: 50px;
   width: 50px;
+  cursor: pointer;
 }
 
 @keyframes teamsMovement {
   0% {
-    transform: translateY(-10px);
+    transform: translateY(-1px);
   }
   50% {
-    transform: translateY(3px);
+    transform: translateY(5px);
   }
   100% {
-    transform: translateY(-10px);
+    transform: translateY(-1px);
   }
 }
 
@@ -2494,7 +2495,7 @@ input[type="text"]
   padding-bottom: 1%;
 
   width: 47%;
-  height: 100%;  
+  height: 90%;  
   background-color: rgba($friendlyTeamColor, 0.8);
   border-radius: 1rem;
   box-shadow: 5px 5px 30px -10px rgba(63, 63, 63, 0.88);
@@ -2509,7 +2510,7 @@ input[type="text"]
   padding-bottom: 1%;
 
   width: 47%;
-  height: 100%;
+  height: 90%;
   background-color: rgba($enemyTeamColor, 0.8);
   border-radius: 1rem;
   box-shadow: 5px 5px 30px -10px rgba(63, 63, 63, 0.88);
@@ -2785,45 +2786,69 @@ button:hover{
 .analysis-menu-and-content-container {
   height: 70%;
   width: 100%;
-  margin-top: 1.5%;
+  margin-top: 0.3%;
   margin-bottom: 1%;
   margin-left: 3%;
-  padding-right: -13%;
   border-radius: 0.5rem;
 
   animation: rollout 0.5s ease-in-out;
+
+  position: relative;
+  display: flex;
+  flex-direction: column;
 }
 
 .analysis-menu {
-  height: 9.8%;
+  height: 8%;
   width: 50%;
   position: relative;
   top: 1%;
+  display: flex;
 }
 
-.analysis-menu button{
+.analysis-menu > * {
   height: 100%;
   font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
   font-size: 40%;
-  background-color: $color4;
-  color: $color2  ;
+  background-color: rgba(182, 188, 198, 0.716);
+  color: rgb(67, 67, 68);
+  box-shadow: 2px 0px 5px 1px rgba(167, 182, 184, 0.707);
   border-radius: 0.6rem;
   border: 1px grey dotted;
-  border-radius: 0.5rem;
+  border-radius: 0.2rem;
+
   position: relative;
-  top: -34%;
+  top: 0%;
+  z-index: 1;
+}
+
+.analysis-menu button{
+  // height: 100%;
+  // font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+  // font-size: 40%;
+  // background-color: $color4;
+  // color: $color2  ;
+  // border-radius: 0.6rem;
+  // border: 1px grey dotted;
+  // border-radius: 0.5rem;
 }
 
 .analysis-menu .menu-button-active {
-  transform: translateY(-1.3%);
-  height: 107%;
-  background-color: #e6e6e6;
+  transform: translateY(-15%);
+  height: 115%;
+  background-color: rgba(147, 158, 174, 0.954);
   color: rgb(50, 49, 49);
+
+  animation: strok 1.5s reverse;
+
 }
 
 .analysis-menu button:hover{
-  background-color: #e6e6e6;
+  transform: translateY(-15%);
+  background-color: rgba(147, 158, 174, 0.954);
+  height: 115%;
   color: rgb(50, 49, 49);
+  border: none;
   transition: 0.8s;
 }
 
@@ -2832,7 +2857,17 @@ button:hover{
   width: 93%;
   background-color: rgba(128, 128, 128, 0.451);
   border-radius: 0.4rem;
-  margin-top: -0.25%;
+
+}
+
+@keyframes strok {
+
+  100% {
+
+      stroke-dashoffset: 400;
+
+  }
+
 }
 
 
@@ -2968,7 +3003,7 @@ button:hover{
   height: 95%;
   width: 90%;
   position: relative;
-  top: 2%;
+  top: 1%;
   margin: 0 auto;
   display: flex;
   justify-content: center;
@@ -2980,9 +3015,13 @@ button:hover{
 }
 
 .calc-pokemon-display-container {
-  height: 90%;
+  height: 99%;
   width: 17%;
+  position: relative;
+  top: 2%;
   margin: 0 auto;
+  display: flex;
+  flex-direction: column;
 }
 
 .calc-results {
@@ -2991,7 +3030,7 @@ button:hover{
   margin: 0 auto;
   margin-top: 2%;
   border: 1px dotted rgb(57, 57, 57);
-  border-radius: 0.4rem;
+  border-radius: 1.5rem;
 
 }
 
@@ -3001,9 +3040,16 @@ button:hover{
   height: 30%;
   width: 100%;
   border: 1px dotted rgb(57, 57, 57);
-  border-radius: 0.4rem;
+  border-radius: 6rem;
   text-align: center;
   cursor: pointer;
+
+  box-shadow: 2px 1px 5px 1px rgba(132, 161, 165, 0.707);
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+
 }
 
 .calc-pokemon-display-inner h3 {
@@ -3042,126 +3088,150 @@ button:hover{
   margin: 2%;
 }
 
-.calc-pokemon-types-container 
-
-
-
-.calc-details-container {
-  height: 70%;
-  width: 100%;
-
-}
-
-.calc-details-container h4 {
-  margin: 0;
-  margin-top: 8%;
-}
-
-.calc-details-container select {
-  height: 100%;
-  width: 70%;
-  margin-top: 10%;
-  background-color: whitesmoke;
-  border-radius: 0.3rem;
-}
-
-.calc-nature-container {
-  display: flex;
-  justify-content: space-between;
-  margin-top: 10%;
-}
-
-.calc-ability-container {
-  display: flex;
-  justify-content: space-between;
-}
-
-.calc-item-container {
-  display: flex;
-  justify-content: space-between;
-}
-
-.calc-status-container {
-  display: flex;
-  justify-content: space-between;
-}
 
 // calc ev box 
 .calc-ev-container {
-  margin-top: 10%;
+  height: 35%;
+  margin-top: 5%;
   margin-bottom: -8%;
 }
 
+
 .calc-ev-container .ev-table-labels {
   top: 5%;
+  display: flex;
+  justify-content: left;
 }
 
-.calc-ev-container .ev-table-labels > * {
-  margin-left: 5%;
-  margin-right: 5%;
+.calc-ev-container .base-table-label {
+  position: absolute;
+  left: 25%;
+}
+
+.calc-ev-container .ev-table-label {
+  position: absolute;
+  left: 45%;
+}
+
+.calc-ev-container .iv-table-label {
+  position: absolute;
+  left: 70%;
 }
 
 
 .calc-ev-container .evs-display-container {
+  height: 95%;
+  width: 100%;
   margin: 0;
   position: relative;
   top: 10%;
 }
 
-.calc-ev-container .evs-display-container > * > * {
-  margin-left: 10%;
+.calc-ev-container .evs-display-container > *  {
+  margin-top: 1.5%;
+}
+
+.calc-ev-container .ev-container {
+  display: flex;
+  justify-content: left;
+  align-items: center;
+  position: relative;
 }
 
 .calc-ev-container .base-stat-label {
+  width: 20%;
+  white-space: nowrap;
   position: relative;
-  left: -55%;
-  top: 50%;
-  font-size: 0.75rem;
-  
+  left: 2%;
+  font-size: 80%;
 }
 
+
+
 .calc-ev-container .base-stat {
-  position: relative;
-  left: 1%;
-  top: -50%;
-  text-align: center;
-  font-size: 0.75rem;
+  position: absolute;
+  left: 20%;
+  top: 20%;
+  // text-align: center;
+  font-size: 100%;
   font-weight: 300;
 }
 
+
+
 .calc-ev-container .calc-ev-input {
-  height: 110%;
-  width: 25%;
-  position: relative;
-  left: 30%;
-  top: -150%;
+  height: 100%;
+  width: 15%;
+  position: absolute;
+  left: 40%;
+  top: 0%;
+  font-size: 100%;
+  font-weight: 300;
 }
 
 .calc-ev-container .calc-iv-input {
-  height: 110%;
-  width: 18%;
-  position: relative;
-  left: 69%;
-  top: -250%;
+  height: 100%;
+  width: 10%;
+  position: absolute;
+  left: 65%;
+  top: 0%;
+  background-color: rgba(142, 140, 140, 0.726);
+  font-size: 80%;
+  font-weight: 300;
 }
 
 .calc-ev-container .result-stat {
   width: 15%;
-  position: relative;
-  left: 110%;
-  top: -320%;
   text-align: center;
+  position: absolute;
+  left: 80%;
+  top: 20%;
+  font-size: 100%;
 }
+
+
+.calc-details-container {
+  height: 40%;
+  width: 100%;
+  margin-top: 7%;
+  position: relative;
+  top: 4%;
+  display: flex;
+  flex-direction: column;
+}
+
+.calc-details-container h4 {
+  margin: 0;
+  margin-top: 3%;
+}
+
+.calc-details-container select {
+  height: 80%;
+  width: 70%;
+  background-color: rgba(245, 245, 245, 0.789);
+  border-radius: 0.3rem;
+  font-size: 100%;
+}
+
+.calc-details-container > * {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+
 
 
 // calc results 
 .calc-results-container {
   height: 100%;
   width: 100%;
+  display: flex;
+  flex-direction: column;
 }
 
 .calc-results-summary {
-  height: 25%;
+  height: 27%;
   width: 70%;
   margin: 0 auto;
 }
@@ -3203,7 +3273,6 @@ button:hover{
   display: flex;
   border: 1px rgb(91, 89, 89) dotted;
   border-radius: 0.4rem;
-
 }
 
 .calc-move-container {
@@ -3292,6 +3361,7 @@ button:hover{
   cursor: pointer;
   overflow-y: scroll;
   border-radius: 0.4rem;
+  z-index: 10;
 }
 
 .calc-modal-move_1 {

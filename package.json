@@ -6,7 +6,8 @@
   "scripts": {
     "start": "nodemon server/server.js",
     "build": "webpack",
-    "dev": "concurrently \"NODE_ENV=development webpack-dev-server --hot --progress --color\" \"nodemon ./server/server.js\""
+    "dev": "concurrently \"NODE_ENV=development webpack-dev-server --hot --progress --color\" \"nodemon ./server/server.js\"",
+    "production": "concurrently \"NODE_ENV=production\" \"nodemon ./server/server.js\""
   },
   "repository": {
     "type": "git",
@@ -42,6 +43,7 @@
     "@pkmn/data": "^0.7.39",
     "@pkmn/dex": "^0.7.39",
     "@smogon/calc": "^0.7.0",
+    "bcrypt": "^5.1.0",
     "chart.js": "^4.2.1",
     "concurrently": "^7.4.0",
     "cookie-parser": "^1.4.6",

@@ -120,48 +120,67 @@ const CalcEV = props => {
             <h4 className='base-stat'>{props.currentPokemon.stats.hp}</h4>
             <input className='calc-ev-input' id='ev-input-hp' type="text" value={props.currentPokemon.evs.hp} onChange={(e)=>{handleEvChange(e, 0)}}/>
             <input className='calc-iv-input' type="text" value={31} />
-            <h4 className='result-stat'>{props.currentPokemon.calculatedStats[0]}</h4>
+            <h4 className='result-stat' key={props.currentPokemon.calculatedStats[0]} style={{color: stat2color(props.currentPokemon.calculatedStats[0], 500, 50)}}>{props.currentPokemon.calculatedStats[0]}</h4>
           </div>
           <div className='attack-ev-container ev-container'>
             <h4 className='base-stat-label'>Attack: </h4>
             <h4 className='base-stat'>{props.currentPokemon.stats.atk}</h4>
             <input className='calc-ev-input' type="text" value={props.currentPokemon.evs.atk} onChange={(e)=>{handleEvChange(e, 1)}}/>
             <input className='calc-iv-input' type="text" value={31} />
-            <h4 className='result-stat'>{props.currentPokemon.calculatedStats[1]}</h4>
+            <h4 className='result-stat' key={props.currentPokemon.calculatedStats[1]} style={{color: stat2color(props.currentPokemon.calculatedStats[1], 500, 50)}}> {props.currentPokemon.calculatedStats[1]}</h4>
           </div>
           <div className='defense-ev-container ev-container'>
             <h4 className='base-stat-label'>Defense: </h4>
             <h4 className='base-stat'>{props.currentPokemon.stats.def}</h4>
             <input className='calc-ev-input' type="text" value={props.currentPokemon.evs.def} onChange={(e)=>{handleEvChange(e, 2)}}/>
             <input className='calc-iv-input' type="text" value={31} />
-            <h4 className='result-stat'>{props.currentPokemon.calculatedStats[2]}</h4>
+            <h4 className='result-stat' key={props.currentPokemon.calculatedStats[2]} style={{color: stat2color(props.currentPokemon.calculatedStats[2], 500, 50)}}> {props.currentPokemon.calculatedStats[2]}</h4>
           </div>
           <div className='spatk-ev-container ev-container'>
             <h4 className='base-stat-label'>Sp. Atk.: </h4>
             <h4 className='base-stat'>{props.currentPokemon.stats.spa}</h4>
             <input className='calc-ev-input' type="text" value={props.currentPokemon.evs.spa} onChange={(e)=>{handleEvChange(e, 3)}}/>
             <input className='calc-iv-input' type="text" value={31} />
-            <h4 className='result-stat'>{props.currentPokemon.calculatedStats[3]}</h4>
+            <h4 className='result-stat' key={props.currentPokemon.calculatedStats[3]} style={{color: stat2color(props.currentPokemon.calculatedStats[3], 500, 50)}}>{props.currentPokemon.calculatedStats[3]}</h4>
           </div>
           <div className='spdef-ev-container ev-container'>
             <h4 className='base-stat-label'>Sp. Def.: </h4>
             <h4 className='base-stat'>{props.currentPokemon.stats.spd}</h4>
             <input className='calc-ev-input' type="text" value={props.currentPokemon.evs.spd} onChange={(e)=>{handleEvChange(e, 4)}}/>
             <input className='calc-iv-input' type="text" value={31} />
-            <h4 className='result-stat'>{props.currentPokemon.calculatedStats[4]}</h4>
+            <h4 className='result-stat' key={props.currentPokemon.calculatedStats[4]} style={{color: stat2color(props.currentPokemon.calculatedStats[4], 500, 50)}}>{props.currentPokemon.calculatedStats[4]}</h4>
           </div>
           <div className='speed-ev-container ev-container'>
             <h4 className='base-stat-label'>Speed: </h4>
             <h4 className='base-stat'>{props.currentPokemon.stats.spe}</h4>
             <input className='calc-ev-input' type="text" value={props.currentPokemon.evs.spe} onChange={(e)=>{handleEvChange(e, 5)}}/>
             <input className='calc-iv-input' type="text" value={31} />
-            <h4 className='result-stat'>{props.currentPokemon.calculatedStats[5]}</h4>
+            <h4 className='result-stat' key={props.currentPokemon.calculatedStats[5]} style={{color: stat2color(props.currentPokemon.calculatedStats[5], 500, 50)}}>{props.currentPokemon.calculatedStats[5]}</h4>
           </div>
         </div>
     </div>
   );
 }
 
+// helper function for generating color based on value 
+function stat2color(stat, max = maxStat, min = minStat) {
+  // perc ranges from 0-100 and is responsible for the color scale 
+  let perc;
+  if (stat > max) perc = 100;
+  else if (stat < min) perc = 0;
+  else perc = (stat / (max / 100));
+
+  var r,g,b = 0;
+  if (perc < 50) {
+    r = 255;
+    g = Math.round(5.1 * perc);
+  } else {
+    g = 255;
+    r = Math.round(510 - 5.1 * perc);
+  }
+  var h = r * 0x10000 + g * 0x100 + b * 0x1;
+  return "#" + ("000000" + h.toString(16)).slice(-6);
+}
 
 const statObjToArray = (statObj) => {
   let array = [];
@@ -172,6 +191,8 @@ const statObjToArray = (statObj) => {
   console.log('END OF STAT->OBJ CalcEV', array);
   return array
 }
+
+
 
 function debounce(func, delay) {
   let timeoutId;

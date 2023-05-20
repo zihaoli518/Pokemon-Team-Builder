@@ -62,7 +62,7 @@ const EvolutionTree= (props) => {
       firstTextClassName = 'evolution-text-current'
     }
     newTreeArray.push(
-      <div className='evolution-row evolution-tier-1'>
+      <div key={Math.random()} className='evolution-row evolution-tier-1'>
         <PokemonSprite key={props.currentPokemon.pokemon} pokemon={chain.species.name} className={firstSpriteClassName}/>
         <a className={firstTextClassName} onClick={(e)=>{handleFetch(e, chain.species.name)}}>{chain.species.name}</a>
       </div>
@@ -79,7 +79,7 @@ const EvolutionTree= (props) => {
           textClassName = 'evolution-text-current'
         }
         newTreeArray.push(
-          <div className={'evolution-row evolution-tier-' + level}>
+          <div key={Math.random()} className={'evolution-row evolution-tier-' + level}>
             <img className='arrows' src="https://cdn-icons-png.flaticon.com/512/109/109617.png" alt="" />
             <PokemonSprite key={props.currentPokemon.pokemon} pokemon={innerChain.species.name} className={spriteClassName}/>
             <a className={textClassName} onClick={(e)=>{handleFetch(e, innerChain.species.name)}}>{innerChain.species.name}</a>

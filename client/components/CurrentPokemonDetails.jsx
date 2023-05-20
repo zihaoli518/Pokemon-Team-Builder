@@ -127,7 +127,7 @@ const CurrentPokemonDetails = props => {
       // highlight active ability on load
       if (props.currentPokemon.activeAbility.name && props.currentPokemon.activeAbility.name===name) className += ' active-ability-highlighted';
       newAbilitiesToBeDisplayed.push(
-        <div className={className} onClick={()=> {chooseAbility(name, url, 'ability'+(i+1), 'active-ability-highlighted')}}>
+        <div key={name} className={className} onClick={()=> {chooseAbility(name, url, 'ability'+(i+1), 'active-ability-highlighted')}}>
           <h4>
             {name}
           </h4>
@@ -198,7 +198,7 @@ const CurrentPokemonDetails = props => {
         if (searchStr)  highlightedStr = searchStr;
         allItemsToBeDisplayed.push(
           // each item row 
-          <div className={className} onClick={()=>{chooseItem(name, url, description, 'item-row-'+ name, 'active-item-browse-area', 'item-container')}}>
+          <div key={name}  className={className} onClick={()=>{chooseItem(name, url, description, 'item-row-'+ name, 'active-item-browse-area', 'item-container')}}>
             <div className='item-row-top'>
               <img src={url} alt="" />
               <h4><span>{highlightedStr}</span>{restOfStr}</h4>
@@ -286,7 +286,7 @@ const CurrentPokemonDetails = props => {
         if (searchStr)  highlightedStr = searchStr;
         allMovesToBeDisplayed.push(
           // each item row 
-          <div className={className} onClick={()=>{chooseMove(props.currentPokemon.activeMove.moveId, currentMove, 'move-row-'+ nameWithDash, 'active-move-browse-area', 'moves-container')}}>
+          <div key={className} className={className} onClick={()=>{chooseMove(props.currentPokemon.activeMove.moveId, currentMove, 'move-row-'+ nameWithDash, 'active-move-browse-area', 'moves-container')}}>
             <div className='move-row-top'>
               <h4><span>{highlightedStr}</span>{restOfStr}</h4>
               <img className='type-symbol' src={typeImageUrl} alt="" />
