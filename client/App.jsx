@@ -26,7 +26,7 @@ import MoreInfo from './components/MoreInfo.jsx';
 import AnalysisMenu from './components/AnalysisMenu.jsx';
 
 import '../index.scss';
-import MatchupChart from './components/MatchupChart.jsx';
+import MatchupChart from './components/analysis-menu/MatchupChart.jsx';
 import AllSavedTeams from './components/AllSavedTeams.jsx';
 
 

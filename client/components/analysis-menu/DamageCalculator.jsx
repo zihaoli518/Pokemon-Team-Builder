@@ -13,9 +13,9 @@
 import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 
-import * as actions from '../actions/actions';
-import CalcPokemonDetails from './analysis-menu/CalcPokemonDetails.jsx';
-import CalcMovesResults from './analysis-menu/CalcMovesResults.jsx'
+import * as actions from '../../actions/actions';
+import CalcPokemonDetails from './calc-components/CalcPokemonDetails.jsx';
+import CalcMovesResults from './calc-components/CalcMovesResults.jsx'
 
 import {calculate, Generations, Pokemon, Move} from '@ajhyndman/smogon-calc';
  

@@ -15,7 +15,7 @@ import {useNavigate} from 'react-router-dom'
 
 import { connect } from 'react-redux';
 
-import * as actions from '../../actions/actions';
+import * as actions from '../../../actions/actions';
 // import MoveSearchModal from './MoveSearchModal.jsx';
 const MoveSearchModal = lazy(() => import('./MoveSearchModal.jsx'));
 
@@ -23,7 +23,7 @@ const calculator = require('pokemon-stat-calculator')
 import {calculate, Generations, Pokemon, Move} from '@ajhyndman/smogon-calc';
 
 // importing json files containing data from smogon 
-import Data from '../dexData.js';
+import Data from '../../dexData.js';
 const allItemsJSON = Data.allItemsJSON;
 const allMovesJSON = Data.allMovesJSON;
 const natureArray = Data.natureArray;
@@ -156,6 +156,16 @@ const CalcResultRow = props => {
   }
 
 
+  const handleMoveClick = () => {
+    // auto focus search 
+    const searchBar = document.getElementById('calc-modal-search-'+props.team+moveId);
+    console.log('inside handleMoveClick', searchBar)
+    searchBar.contentEditable = true;
+    setTimeout(() => {searchBar.focus() }, 500);
+    searchBar.focus();
+    props.setPopUpDisplay({...props.PopUpState, [moveId]:!props.popUpDisplay[moveId]});
+  }
+
 
   useEffect(() => {
     clearCategoryImage();
@@ -173,13 +183,13 @@ const CalcResultRow = props => {
         <MoveSearchModal moveId={moveId} team={props.team} popUpDisplay={props.popUpDisplay} setPopUpDisplay={props.setPopUpDisplay} setCategoryUrl={setCategoryUrl} />
       </Suspense>
 
-      <div className={`calc-move-container calc-move-container-${props.currentPokemon.moves[moveId].type ? props.currentPokemon.moves[moveId].type.toLowerCase() : null}`} onClick={()=>{props.setPopUpDisplay({...props.PopUpState, [moveId]:!props.popUpDisplay[moveId]})}}>
+      <div className={`calc-move-container calc-move-container-${props.currentPokemon.moves[moveId].type ? props.currentPokemon.moves[moveId].type.toLowerCase() : null}`} onClick={()=>{handleMoveClick()}}>
         <h4>{props.currentPokemon.moves[moveId].name}</h4>
-      </div>
       {props.currentPokemon.moves[moveId].categoryUrl ? 
         <img className='category-icon-small' src={props.currentPokemon.moves[moveId].categoryUrl} alt="" />
         : null
       }
+      </div>
       {props.opposingPokemon.name && props.currentPokemon.moves[moveId].name ?
         <h4 className={`calc-super-effective calc-super-effective-${superEffective.value.replace('.', '')}`}>{superEffective.str}</h4>
         : 

@@ -16,13 +16,13 @@ import { connect } from 'react-redux';
 const calculator = require('pokemon-stat-calculator')
 
 
-import * as actions from '../../actions/actions';
+import * as actions from '../../../actions/actions';
 
-import PokemonSprite from '../PokemonSprite.jsx';
+import PokemonSprite from '../../PokemonSprite.jsx';
 import CalcEV from './CalcEV.jsx';
 
 // importing json files containing data from smogon 
-import Data from '../dexData.js';
+import Data from '../../dexData.js';
 const allItemsJSON = Data.allItemsJSON;
 const allMovesJSON = Data.allMovesJSON;
 const natureArray = Data.natureArray;

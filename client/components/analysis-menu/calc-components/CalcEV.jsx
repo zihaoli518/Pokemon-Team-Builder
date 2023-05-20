@@ -15,7 +15,7 @@ import {useNavigate} from 'react-router-dom'
 
 import { connect } from 'react-redux';
 
-import * as actions from '../../actions/actions';
+import * as actions from '../../../actions/actions';
 
 const calculator = require('pokemon-stat-calculator')
 

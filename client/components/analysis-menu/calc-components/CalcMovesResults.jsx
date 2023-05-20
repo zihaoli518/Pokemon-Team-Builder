@@ -15,14 +15,14 @@ import {useNavigate} from 'react-router-dom'
 
 import { connect } from 'react-redux';
 
-import * as actions from '../../actions/actions';
+import * as actions from '../../../actions/actions';
 import CalcResultRow from './CalcResultRow.jsx';
 
 const calculator = require('pokemon-stat-calculator')
 import {calculate, Generations, Pokemon, Move} from '@ajhyndman/smogon-calc';
 
 // importing json files containing data from smogon 
-import Data from '../dexData.js';
+import Data from '../../dexData.js';
 const allItemsJSON = Data.allItemsJSON;
 const allMovesJSON = Data.allMovesJSON;
 const natureArray = Data.natureArray;

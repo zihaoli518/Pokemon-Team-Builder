@@ -333,8 +333,6 @@ const pokemonReducer = (state = initialState, action) => {
       copyOfPrevItemMon.item['description'] = action.payload.description;
       copyOfPrevItemMon.item['url'] = action.payload.url;
 
-      console.log('end of SAVE_ITEM_TO_MON', state.yourTeam.mon1.item.item)
-
       return {
         ...state,
         currentPokemon: copyOfPrevItemMon

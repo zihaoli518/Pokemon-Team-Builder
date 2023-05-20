@@ -118,7 +118,7 @@ const EvolutionTree= (props) => {
     })
       .then((response) => response.json())
       .then((pokemonData) => {
-        console.log('fetchPokeAPI ', pokemonData);
+        // console.log('fetchPokeAPI ', pokemonData);
         props.updatePokemon(pokemon, pokemonData);
         if (pokemonData.error === 404) {
           alert('Pokemon not found! Please check your spelling and try again :)')
@@ -128,9 +128,7 @@ const EvolutionTree= (props) => {
 
 
   useEffect(() => {
-    console.log('inside Evolution Tree UseEffect()')
-    // if (fullDisplay) populateEvolutionTree();
-    // else populateEvolutionTreeMinimized();
+
     populateEvolutionTree();
 
   }, [props.currentPokemon])
