@@ -143,6 +143,8 @@ const pokemonReducer = (state = initialState, action) => {
       for (let i=0; i<pokemonData.moves.length; i++) {
         newMovePool[pokemonData.moves[i].move.name.replace("-", " ")] = true;
       }
+      // for some reason corviknight is missing defog from api 
+      if (copy.pokemon==='corviknight') newMovePool['defog'] = true;
       copy.movePool = newMovePool;
 
       // add evolution chain 

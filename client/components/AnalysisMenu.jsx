@@ -18,6 +18,7 @@ import * as actions from '../actions/actions';
 import DamageCalculator from './analysis-menu/DamageCalculator.jsx'
 import MatchupChart from './analysis-menu/MatchupChart.jsx';
 import SpeedTier from './analysis-menu/SpeedTier.jsx';
+import SpecialMoves from './analysis-menu/SpecialMoves.jsx';
 
 
 const mapStateToProps = state => {
@@ -55,7 +56,7 @@ const AnalysisMenu = props => {
     } else if (button==='show-speed-tier-button') {
       setShowContent(falsifyAllExcept(showContent, 'speedTier', true, false));
       setClassName(falsifyAllExcept(className, 'speedTier', 'menu-button menu-button-active', 'menu-button'));
-    } else if (button==='specialMoves') {
+    } else if (button==='show-special-moves-button') {
       setShowContent(falsifyAllExcept(showContent, 'specialMoves', true, false));
       setClassName(falsifyAllExcept(className, 'specialMoves', 'menu-button menu-button-active', 'menu-button'));
     } else if (button==='import-team-button') {
@@ -74,7 +75,7 @@ const AnalysisMenu = props => {
           <button className={className.matchupChart} id='show-matchup-chart-button' onClick={(e)=>{handleClick(e.target.id)}}>matchup chart</button> 
           <button className={className.damageCalculator} id='show-damage-calculator-button' onClick={(e)=>{handleClick(e.target.id)}}>damage calculator</button> 
           <button className={className.speedTier} id='show-speed-tier-button' onClick={(e)=>{handleClick(e.target.id)}}>speed tiers</button> 
-          <button className={className.specialMoves} id='show-damage-special-moves-button' onClick={(e)=>{handleClick(e.target.id)}}>special moves</button> 
+          <button className={className.specialMoves} id='show-special-moves-button' onClick={(e)=>{handleClick(e.target.id)}}>special moves</button> 
           <button className={className.exportCurrentTeam} id='export-current-team-button' onClick={(e)=>{handleClick(e.target.id)}}>export current team</button> 
           <button className={className.importTeam} id='import-team-button' onClick={(e)=>{handleClick(e.target.id)}}>import team</button> 
       </div>
@@ -82,7 +83,7 @@ const AnalysisMenu = props => {
         {showContent.matchupChart ? <MatchupChart /> : null}
         {showContent.damageCalculator ? <DamageCalculator /> : null}
         {showContent.speedTier ? <SpeedTier /> : null}
-        {showContent.specialMoves ? null : null}
+        {showContent.specialMoves ? <SpecialMoves /> : null}
         {showContent.exportCurrentTeam ? null : null}
         {showContent.matchuimportTeampChart ? null : null}
       </div>
