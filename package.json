@@ -7,7 +7,7 @@
     "start": "nodemon server/server.js",
     "build": "webpack",
     "dev": "concurrently \"NODE_ENV=development webpack-dev-server --hot --progress --color\" \"nodemon ./server/server.js\"",
-    "production": "concurrently \"NODE_ENV=production\" \"nodemon ./server/server.js\""
+    "production": "concurrently \"NODE_ENV=production webpack --mode production\" \"nodemon ./server/server.js\""
   },
   "repository": {
     "type": "git",

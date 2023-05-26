@@ -96,11 +96,10 @@ $water-color
 
 
 body {
-  background-color: $color5;
-  background-image: url('./assets/background-merged.jpeg');
+  background-color: rgb(179, 179, 179);
+  background-image: url('./assets/background-merged-afternoon.jpeg');
   background-size: cover;
   background-repeat: no-repeat;
-
 
   font-family: "Indie Flower", cursive;
   height: 100%;
@@ -109,6 +108,24 @@ body {
 
   overflow-x: hidden;
 }
+
+.morning {
+  background-image: url('./assets/background-merged-morning.jpeg');
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+
+.afternoon {
+  background-image: url('./assets/background-merged-afternoon.jpeg');
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+
+// .night {
+//   background-image: url('./assets/background-merged-night.jpeg');
+//   background-size: cover;
+//   background-repeat: no-repeat;
+// }
 
 html {
   height: 100%;

@@ -158,7 +158,8 @@ userMiddlewares.getUserData = (req, res, next) => {
 
 
 userMiddlewares.saveUserTeams = (req, res, next) => {
-  console.log('inside middleware saveUserTeams,');
+  const contentLength = req.get('Content-Length');
+  console.log('inside middleware saveUserTeams, request: ', contentLength, ' bytes');
   const username = req.body.username;
   let teams = JSON.stringify(req.body.team); 
   // parse for special characters 

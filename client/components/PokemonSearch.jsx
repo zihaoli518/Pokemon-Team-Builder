@@ -57,7 +57,7 @@ const PokemonSearch = props => {
     //     alert('Pokemon not found! Current version of the app only supports gen8 OU tier... sorry')
     //     console.log('error inside PokemonSearch: ', error)
     //   });
-
+    
 
     // fetching from pokeAPI
     fetch('/api/fetchPokeAPI', {
@@ -80,12 +80,25 @@ const PokemonSearch = props => {
       })
   }
 
+  const changeBackground = () => {
+    const currentTime = new Date();
+    const currentHour = currentTime.getHours();
+    const appContainer =     document.querySelector("body");
+    console.log(currentHour)
+    document.querySelector("body")
+    if (currentHour >= 5 && currentHour < 3) {
+      appContainer.classList.add('morning');
+    } else {
+      appContainer.classList.add('afternoon');
+    }
+  }
+
   useEffect(() => {
     // add event listeners
     const searchElement = document.getElementById("search-bar-element");
     const searchBar = document.getElementById('pokemon-search-name');
 
-    console.log('yayeet in useEffect', searchElement)
+    console.log('yayeet in useEffect', searchElement);
 
     searchBar.addEventListener("focus", function () {
       console.log('FOCUSING')
@@ -94,6 +107,7 @@ const PokemonSearch = props => {
     searchBar.addEventListener("blur", function () {
       searchElement.classList.remove("search-bar-element-focused");
     });
+    changeBackground();
   })
 
   return (

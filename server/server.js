@@ -18,18 +18,22 @@ app.use((req, res, next) => {
   console.log('inside first app.use, ');
 
   res.header('Access-Control-Allow-Origin', '*');
+  // check for user permission with cookies 
   if (req.cookies.PokemonTeamBuilder)  {
-    console.log('if req.cookies');
-    // console.log(req.cookies)
     res.header('cookie', req.cookies);
   }
   next();
 });
 
+
+
 // // statically serve everything in the build folder on the route '/build'
-// serve static content 
+// serve static content from the asset folder
 app.use('/static', 
 express.static(path.join(__dirname, '../assets')));
+// serving bundle file output from webpack build in production mode 
+app.use('/build', 
+express.static(path.join(__dirname, '../build')));
 
 // serve index.html on the route '/'
 app.get('/', (req, res) => {

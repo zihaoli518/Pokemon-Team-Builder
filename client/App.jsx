@@ -63,7 +63,7 @@ const addSoundEffectToButtons = () => {
   })
 }
 
-console.log('in APP')
+console.log('in APP');
 
 function capitalizeFirstLetter(str) {
   return str.charAt(0).toUpperCase() + str.slice(1);
