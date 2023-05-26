@@ -11,7 +11,7 @@ const showdownMiddlewares = require('./controllers/showdownMiddlewares.js')
 const cookieParser = require("cookie-parser");
 
 app.use(cookieParser());
-app.use(express.json());
+app.use(express.json({limit: '50mb'}));
 
 // taking care of CORS
 app.use((req, res, next) => {
@@ -25,6 +25,8 @@ app.use((req, res, next) => {
   next();
 });
 
+// // increasing request limit so teams can be saved 
+// app.use(express.bodyParser({limit: '50mb'}));
 
 
 // // statically serve everything in the build folder on the route '/build'

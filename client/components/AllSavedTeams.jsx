@@ -21,7 +21,10 @@ import * as actions from '../actions/actions';
 const mapStateToProps = (state) => {
   return {
     savedTeams: state.userFunctions.savedTeams,
-    username: state.userFunctions.username
+    username: state.userFunctions.username,
+    saveToDatabase: state.userFunctions.saveToDatabase,
+    currentPokemon: state.pokemon.currentPokemon,
+    teamLength: state.pokemon.yourTeam.size,
   };
 };
 
@@ -35,13 +38,24 @@ const mapDispatchToProps = dispatch => ({
 const AllSavedTeams= (props) => {
   const [allTeams, setAllTeams] = useState([])
 
-  
+  // caching the last saved team, if it's exactly the same then don't make API call
+  const [savedTeamsCache, setSavedTeamsCache] = useState([])
+
+  // useEffect responsible for populating allTeams state (containing jsx elements to be displayed) every time anything is updated in any team
   useEffect(() => {
-    console.log('inside AllSavedTeams useEffect')
+    // console.log('inside AllSavedTeams useEffect')
     populateSavedTeams();
-    console.log(allTeams);
-    if (props.username && props.savedTeams.team_1) saveTeamsToDatabase(props.savedTeams)
   }, [props.savedTeams])
+  
+  // useEffect for saving teams to database
+  useEffect(() => {
+    console.log('inside 2nd useEffect', (JSON.stringify(savedTeamsCache)===JSON.stringify(props.savedTeams)))
+
+    if (JSON.stringify(savedTeamsCache)===JSON.stringify(props.savedTeams)) return; 
+    if (props.username && props.savedTeams.team_1) saveTeamsToDatabase(props.savedTeams);
+    // set cache 
+    setSavedTeamsCache({...props.savedTeams});
+  }, [props.currentPokemon.slot.team, props.currentPokemon.slot.mon, props.teamLength] )
 
   
   const populateSavedTeams = () => {

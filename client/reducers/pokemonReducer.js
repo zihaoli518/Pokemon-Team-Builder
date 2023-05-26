@@ -57,6 +57,7 @@ const initialState = {
     mon4: null,
     mon5: null,
     mon6: null,
+    activeMon: null,
   },
   enemyTeam: {
     size: 0,
@@ -68,6 +69,7 @@ const initialState = {
     mon4: null,
     mon5: null,
     mon6: null,
+    activeMon: null,
   },
   previousTeamKeyF: 'team_1',
   previousTeamKeyE: 'team_1',
