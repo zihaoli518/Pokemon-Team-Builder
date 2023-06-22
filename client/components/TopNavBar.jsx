@@ -95,7 +95,7 @@ const TopNavBar = props => {
         <div className='after-login-username-display'> 
           <h2>welcome back! </h2>
           <h3>{props.username}</h3> 
-          <button onClick={() => {console.log('logout clicked'); logout()}}>log out</button> 
+          <button id='log-out-button' onClick={() => {logout()}}>log out</button> 
         </div>
         :
         <div className='top-nav-bar-buttons-inner'>

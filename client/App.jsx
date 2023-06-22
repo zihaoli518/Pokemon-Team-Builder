@@ -185,9 +185,10 @@ class App extends Component {
         <div className={this.props.mainDivClassName} id={"main-div"}>
           <div className='title-container'>
             <h1>electabuzzed.gg</h1>
-            <img src="https://cdn.discordapp.com/emojis/933421274091360346.webp?size=96&quality=lossless" alt="" />
-              <h4>volume: </h4>
-              <input type="range" min="0" max="1" step="0.05" defaultValue={this.state.volume} id='volume-slider' onChange={() => {this.changeAppVolume()}} />
+            {/* <img src="https://cdn.discordapp.com/emojis/933421274091360346.webp?size=96&quality=lossless" alt="" /> */}
+            <img src="https://media.tenor.com/PH_6y3_A-ewAAAAi/electabuzz-pok%C3%A9mon-electabuzz.gif" alt="" />
+            <h4>volume: </h4>
+            <input type="range" min="0" max="1" step="0.05" defaultValue={this.state.volume} id='volume-slider' onChange={() => {this.changeAppVolume()}} />
           </div>
           {!this.props.currentPokemon.isActive ?
             <div className='explore-tip'>

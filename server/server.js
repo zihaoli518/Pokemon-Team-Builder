@@ -104,7 +104,19 @@ app.get('/api/getAllItems', showdownMiddlewares.getAllItems, (req, res) => {
 app.get('/api/getAllSmogonData', showdownMiddlewares.getAllMoves, (req, res) => {
   console.log('/api/getAllMoves complete')
   return res.status(200).send(res.locals.data)
+});
+
+app.get('/api/getAllMonData', showdownMiddlewares.getAllMons, (req, res) => {
+  console.log('/api/getAllMonData complete')
+  return res.status(200).send(res.locals.data)
 })
+
+app.get('/api/getTypesImages', showdownMiddlewares.getTypesImages, (req, res) => {
+  console.log('/api/getTypesImages complete')
+  return res.status(200).send(res.locals.data)
+})
+
+
 
 
 app.listen(PORT); 

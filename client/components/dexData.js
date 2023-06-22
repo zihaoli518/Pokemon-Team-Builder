@@ -1,12 +1,15 @@
 import itemsData from '../../items-data.json';
 import movesData from '../../moves-data.json';
+import monsData from '../../mons-data.json';
 const calculator = require('pokemon-stat-calculator')
 
 const allItemsJSON = itemsData;
 const allMovesJSON = movesData;
+const allMonsJSON = new Map(monsData);
 const natureArray = calculator.getNatureNames;
 
 const statusArray = ['healthy', 'poisoned', 'badly poisoned', 'burned', 'paralyzed', 'asleep', 'frozen'];
+const typesArray = ['bug', 'dark', 'dragon', 'electric', 'fairy', 'fighting', 'fire', 'flying', 'ghost', 'grass', 'ground', 'ice', 'normal', 'poison', 'psychic', 'rock', 'steel', 'water'];
 
 const specialMovesObj = {
   'hazard setting': {'Spikes': true, 'Stealth Rock': true, 'Sticky Web': true, 'Stone Axe': true, 'Toxic Spikes': true, },
@@ -22,7 +25,7 @@ const specialMovesObj = {
 
 
 
-const Data = {allItemsJSON: allItemsJSON, allMovesJSON: allMovesJSON, natureArray: natureArray, statusArray: statusArray, specialMovesObj: specialMovesObj}
+const Data = {allItemsJSON: allItemsJSON, allMovesJSON: allMovesJSON, allMonsJSON: allMonsJSON, natureArray: natureArray, statusArray: statusArray, specialMovesObj: specialMovesObj, typesArray: typesArray}
 
 
 

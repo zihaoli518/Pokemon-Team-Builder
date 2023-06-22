@@ -232,7 +232,7 @@ const pokemonReducer = (state = initialState, action) => {
       
     // select pokemon -> and make it the current display pokemon 
     case types.SELECT_TEAM_MEMBER : 
-      console.log('inside SELECT_TEAM_MEMBER', action.payload)
+      console.log('inside SELECT_TEAM_MEMBER', action.payload);
 
       const copyOfPokemonData = {...action.payload.pokemonData};
       copyOfPokemonData.slot.team = action.payload.team;

@@ -14,7 +14,7 @@ showdownMiddlewares.getAllSpecies = (req, res, next) => {
   const arrayOfSpecies= Dex.species.all();
   res.locals.data = arrayOfSpecies
 
-  return next()
+  return next();
 }
 
 
@@ -106,6 +106,49 @@ showdownMiddlewares.getAllMoves = (req, res, next) => {
 
   res.locals.data = arrayOfMoves
   return next()
+}
+
+showdownMiddlewares.getAllMons = (req, res, next) => {
+  console.log('inside getAllMons middleware');
+
+  const arrayOfMons = Dex.species.all();
+
+  const monsDataObject = new Map();
+
+  for (let i=0; i<arrayOfMons.length; i++) {
+    const monObj = arrayOfMons[i];
+    let monName = monObj.name;
+
+    console.log('..........', i, '/', arrayOfMons.length, '..........')
+
+    console.log('writing JSON data for: ', monName);
+    monsDataObject.set(monName, {
+      name: monName,
+      baseStats: monObj.baseStats,
+      types: monObj.types,
+      tier: monObj.tier,
+      pokedexId: monObj.num,
+      spriteUrl: `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${monObj.num}.png`
+    });
+    
+  }
+  
+  const monsDataJSON = JSON.stringify(Array.from(monsDataObject));
+
+  fs.writeFile("mons-data.json", monsDataJSON, 'utf8', function (err) {
+    if (err) {
+        console.log("An error occured while writing JSON Object to File.");
+        return console.log(err);
+    }
+    console.log("JSON file has been saved.");
+  });
+  
+  res.locals.data = monsDataJSON;
+  return next()
+}
+
+showdownMiddlewares.getTypesImages = (req, res, next) => {
+  
 }
 
 module.exports= showdownMiddlewares;

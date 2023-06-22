@@ -34,10 +34,8 @@ const mapDispatchToProps = dispatch => ({
 const EvolutionTree= (props) => {
 
   const [className, setClassName] = useState('evolution-container-inner-active evolution-container-inner');
-  const [fullDisplay, setFullDisplay] = useState(false);
-
   const [evolutionTree, setEvolutionTree] = useState([]);
-  const [evolutionTreeMinimized, setEvolutionTreeMinimized] = useState([]);
+  const [loadingStatus, setLoadingStatus] = useState(false);
 
   
   // const toggleActive = (e) => {
@@ -107,6 +105,7 @@ const EvolutionTree= (props) => {
       // }
 
   const handleFetch = (e, pokemon) => {
+    setLoadingStatus(true);
     e.stopPropagation();
     fetch('/api/fetchPokeAPI', {
       method: 'POST',
@@ -118,6 +117,7 @@ const EvolutionTree= (props) => {
     })
       .then((response) => response.json())
       .then((pokemonData) => {
+        setLoadingStatus(false);
         // console.log('fetchPokeAPI ', pokemonData);
         props.updatePokemon(pokemon, pokemonData);
         if (pokemonData.error === 404) {
@@ -159,7 +159,9 @@ const EvolutionTree= (props) => {
           {evolutionTree}
         </div>
       </div> 
-  
+      {loadingStatus ? 
+        <img className='between-rerender-loading-gif-evotree' src='/static/loading-2.gif' alt="" />
+        : null}
   </div>
  
   );
