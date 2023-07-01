@@ -21,12 +21,13 @@ import * as actions from '../actions/actions';
 const mapStateToProps = (state) => {
   return {
     currentPokemon: state.pokemon.currentPokemon,
+    historyCache: state.pokemon.historyCache,
   };
 };
 
 const mapDispatchToProps = dispatch => ({
   refreshAndDecodeSavedTeams : (savedTeams) => dispatch(actions.refreshAndDecodeSavedTeams(savedTeams)),
-  updatePokemon: (pokemon, pokemonData) => dispatch(actions.updatePokemonPokeAPI(pokemon, pokemonData)),
+  updatePokemon: (pokemon, pokemonData, mode) => dispatch(actions.updatePokemonPokeAPI(pokemon, pokemonData, mode)),
 });
 
 
@@ -105,6 +106,16 @@ const EvolutionTree= (props) => {
       // }
 
   const handleFetch = (e, pokemon) => {
+    // quickly loop thru the cache array to check if the data is saved, if found do not make api call 
+    for (let pokemonObj of props.historyCache) {
+      if (pokemonObj.pokemon===pokemon) {
+        console.log('cached!!')
+        setLoadingStatus(false);
+        props.updatePokemon(pokemon, pokemonObj, 'cached');
+        return 
+      }
+    }
+
     setLoadingStatus(true);
     e.stopPropagation();
     fetch('/api/fetchPokeAPI', {
@@ -118,11 +129,7 @@ const EvolutionTree= (props) => {
       .then((response) => response.json())
       .then((pokemonData) => {
         setLoadingStatus(false);
-        // console.log('fetchPokeAPI ', pokemonData);
         props.updatePokemon(pokemon, pokemonData);
-        if (pokemonData.error === 404) {
-          alert('Pokemon not found! Please check your spelling and try again :)')
-        };
       })
   }
 

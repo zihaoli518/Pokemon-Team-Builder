@@ -17,11 +17,12 @@ export const addPokemon = pokemon => ({
   payload: pokemon
 })
 
-export const updatePokemonPokeAPI = (pokemon, pokemonData) => ({
+export const updatePokemonPokeAPI = (pokemon, pokemonData, mode) => ({
   type: types.ADD_POKEMON_POKEAPI,
   payload: {
     pokemon: pokemon,
     pokemonData: pokemonData,
+    mode: mode 
   },
 });
 
@@ -181,4 +182,9 @@ export const updateCalculatedStatsCalc = (team, evs, results) => ({
 export const chooseMoveForCalc = (team, moveId, move, type, basepower, categoryUrl) => ({
   type: types.CHOOSE_MOVE_FOR_CALC, 
   payload: {team: team, moveId: moveId, move: move, type: type, basepower: basepower, categoryUrl: categoryUrl}
+})
+
+export const updateHistoryCache = (type, pokemonObj, array) => ({
+  type: types.UPDATE_HISTORY_CACHE, 
+  payload: {type: type, pokemonObj: pokemonObj, array: array}
 })

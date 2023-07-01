@@ -28,6 +28,7 @@ import AnalysisMenu from './components/AnalysisMenu.jsx';
 import '../index.scss';
 import MatchupChart from './components/analysis-menu/MatchupChart.jsx';
 import AllSavedTeams from './components/AllSavedTeams.jsx';
+import BrowsingHistory from './components/BrowsingHistory.jsx'
 
 
 
@@ -198,6 +199,7 @@ class App extends Component {
           }
           <img className='electabuzzes' src="https://www.models-resource.com/resources/big_icons/24/23144.png?updated=1510574730" alt="" />
           <PokemonSearch />
+          <BrowsingHistory />
 
           <div className='main-row-container'>
             <AllSavedTeams />

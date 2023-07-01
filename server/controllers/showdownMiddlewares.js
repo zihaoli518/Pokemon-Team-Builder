@@ -1,6 +1,8 @@
 const fs = require('fs');
 const fetch = require('node-fetch');
 const parse = require('node-html-parser');
+const path = require('path');
+const axios = require('axios');
 
 const { Dex } = require('pokemon-showdown');
 
@@ -148,7 +150,42 @@ showdownMiddlewares.getAllMons = (req, res, next) => {
 }
 
 showdownMiddlewares.getTypesImages = (req, res, next) => {
-  
+  const typesArray = ['bug', 'dark', 'dragon', 'electric', 'fairy', 'fighting', 'fire', 'flying', 'ghost', 'grass', 'ground', 'ice', 'normal', 'poison', 'psychic', 'rock', 'steel', 'water'];
+ 
+  // Function to download image for each type
+  async function downloadImages(types) {
+    for (const type of types) {
+      const imageUrl = `https://play.pokemonshowdown.com/sprites/types/${capitalizeFirstLetter(type)}.png`;
+      const imagePath = path.join(__dirname, `../../assets/types-images/${type}.png`);
+
+      try {
+        const response = await axios.get(imageUrl, { responseType: 'stream' });
+        const writer = fs.createWriteStream(imagePath);
+
+        response.data.pipe(writer);
+
+        await new Promise((resolve, reject) => {
+          writer.on('finish', resolve);
+          writer.on('error', reject);
+        });
+
+        console.log(`Image downloaded for type ${type}`);
+      } catch (error) {
+        console.error(`Error downloading image for type ${type}:`, error);
+      }
+    }
+  }
+
+  downloadImages(typesArray);
+  return next();
 }
 
+// helper functions 
+function capitalizeFirstLetter(str) {
+  return str.charAt(0).toUpperCase() + str.slice(1);
+}
+
+
+
 module.exports= showdownMiddlewares;
+

@@ -71,6 +71,7 @@ const initialState = {
     mon6: null,
     activeMon: null,
   },
+  historyCache: [],
   previousTeamKeyF: 'team_1',
   previousTeamKeyE: 'team_1',
   teamStatus: false,
@@ -106,6 +107,15 @@ const pokemonReducer = (state = initialState, action) => {
 
     // expecting data from pokeAPI fetch
     case types.ADD_POKEMON_POKEAPI: 
+      console.log('inside ADD_POKEMON_POKEAPI', action.payload);
+
+      // check if pokemon data received is in cached format 
+      if (action.payload.mode==='cached') {
+        return {
+          ...state,
+          currentPokemon: action.payload.pokemonData
+        }
+      }
 
       // console.log(action.payload)
       const copy = {...state.currentPokemon};
@@ -435,6 +445,38 @@ const pokemonReducer = (state = initialState, action) => {
           ...state,
           yourTeam: {...state.yourTeam, key: action.payload}
         }
+
+      case types.UPDATE_HISTORY_CACHE: 
+        console.log('inside UPDATE_HISTORY_CACHE', action.payload);
+
+        const copyOFHistoryCache = [...state.historyCache];
+
+      
+
+        if (action.payload.type==='add') {
+          //quickly check if pokemon already exists in cache
+          for (let i = 0; i < copyOFHistoryCache.length; i++) {
+            const pokemonObj = copyOFHistoryCache[i];
+            if (pokemonObj.pokemon === action.payload.pokemonObj.pokemon) {
+              copyOFHistoryCache.splice(i, 1);
+              copyOFHistoryCache.push(pokemonObj);
+              return {...state, historyCache: copyOFHistoryCache}
+            }
+          }
+          if (copyOFHistoryCache.length>=10) copyOFHistoryCache.shift();
+          copyOFHistoryCache.push(action.payload.pokemonObj);
+          return {
+            ...state,
+            historyCache: copyOFHistoryCache
+          }
+        } else if (action.payload.type==='sync') {
+          return {
+            ...state,
+            historyCache: action.payload.array
+          }
+        }
+
+        
          
     default: {
       return state

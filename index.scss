@@ -751,8 +751,8 @@ input[type="text"]
 .pokedex-modal { 
   height: 400%;
   width: 160%; 
-  background-color: rgb(237, 236, 236);
-
+  background-color: rgba(90, 96, 103, 0.947);
+  
   border-radius: 0.4rem;
   position: absolute;
   top: 100%; 
@@ -774,7 +774,7 @@ input[type="text"]
 
 .pokedex-fade-out {
   opacity: 0;
-  // pointer-events: none;
+  pointer-events: none;
   animation: fadeOut 0.5s forwards;
 
 }
@@ -831,29 +831,44 @@ input[type="text"]
 
   border: 1px rgba(128, 128, 128, 0.676) dotted;
   cursor: pointer;
+  animation: fadeIn 0.3s ease-in-out;
+
+  position: relative;
+}
+
+.pokedex-row span {
+  color: red;
 }
 
 .pokedex-row > * {
   margin: 0;
 }
 
-.pokedex-row img {
-  height: 100%;
-  width: 6%;
-}
 
 .pokedex-row:hover {
-  background-color: rgba(128, 128, 128, 0.622);
+  background-color: rgba(151, 147, 147, 0.622);
+  transform: translateY(-3%)
+}
+
+.pokemon-sprite-pokedex {
+  height: 150%;
+  width: 10%;
 }
 
 .pokedex-type-1 {
+  width: 8%;
+  height: 40%;
   position: absolute;
   left: 40%;
+
 }
 
 .pokedex-type-2 {
+  width: 8%;
+  height: 40%;
   position: absolute;
   left: 50%;
+
 }
 
 .pokedex-tier {
@@ -864,30 +879,37 @@ input[type="text"]
 
 
 .pokedex-stats {
-  height: 10%;
-  width: 35%;
+  height: 100%;
+  width: 46%;
   display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
+  // flex-direction: column;
+  // justify-content: center;
+  // align-items: center;
   position: absolute;
-  left: 67%;
+  left: 77%;
 }
 
 .pokedex-stats-labels {
   height: 40%;
+  width: 50%;
   display: flex;
   justify-content: center;
   align-items: center;
   font-size: 55%;
-
+  margin-top: 1%;
 }
 
 .pokedex-stats-labels > * {
   margin: 0;
   font-family: "Gill Sans", sans-serif;
+  color: rgba(176, 176, 176, 0.71);
   font-weight: 400;
-  position: absolute;
+  font-size: 92%;
+  text-align: center;
+  margin-left: 2.1%;
+  margin-right: 2.1%;
+  // position: absolute;
+  // left: 30%;
 }
 
 .pokedex-stats-labels:nth-child(2) {
@@ -896,17 +918,28 @@ input[type="text"]
 
 .pokedex-stats-base-stats {
   height: 60%;
+  width: 50%;
   display: flex;
   justify-content: center;
   align-items: center;
   font-size: 60%;
+  position: relative;
+  top: 40%;
+  margin-left: -0.5%;
+  margin-top: -1%;
 }
 
 .pokedex-stats-base-stats > * {
   margin: 0;
   width: 15%;
+  min-width: 15%;
   font-family: "Gill Sans", sans-serif;
+  font-size: 100%;
   font-weight: 400;
+  text-align: center;
+  margin-left: 0.5%;
+  margin-right: 0.5%;
+
 }
 
 .pokedex-stats-base-stats:nth-child(2) {
@@ -929,6 +962,102 @@ input[type="text"]
 
 
 }
+
+
+
+// browsing history 
+.browsing-history {
+  height: 8%;
+  width: 50%;
+  background-color: rgba(128, 128, 128, 0.684);
+  border-radius: 0.5rem;
+  margin-left: 28%;
+  margin-bottom: -1.5%;
+
+  position: relative;
+  display: flex;
+  justify-content: right;
+  align-items: center;
+}
+
+.browsing-history-logo {
+  position: relative;
+  height: 60%;
+  width: 6%;
+  margin-right: 1%;
+  opacity: 0.5;
+}
+
+.pokemon-sprite-cache {
+  height: 103%;
+  width: 9%;
+
+  opacity: 0;
+  animation: fadeInSpeedTier 0.4s ease-in;
+  animation-fill-mode: forwards;
+}
+
+.pokemon-sprite-cache:hover {
+  height: 107%;
+  width: 9%;
+  background-color: rgb(122, 132, 142);
+//   // transform: translateY(-1%);
+  border-radius: 0.5rem;
+  transition: 0.2s ease-in-out;
+  cursor: pointer;
+}
+
+.browsing-history > :nth-child(2) {
+  -webkit-animation-delay: 0s;
+  animation-delay: 0s;
+}
+
+.browsing-history > :nth-child(3) {
+  -webkit-animation-delay: 0.08s;
+  animation-delay: 0.08s;
+}
+
+.browsing-history > :nth-child(4) {
+  -webkit-animation-delay: 0.16s;
+  animation-delay: 0.16s;
+}
+
+.browsing-history > :nth-child(5) {
+  -webkit-animation-delay: 0.24s;
+  animation-delay: 0.24s;
+}
+
+.browsing-history > :nth-child(6) {
+  -webkit-animation-delay: 0.32s;
+  animation-delay: 0.32s;
+}
+
+.browsing-history > :nth-child(7) {
+  -webkit-animation-delay: 0.4s;
+  animation-delay: 0.4s;
+}
+
+.browsing-history > :nth-child(8) {
+  -webkit-animation-delay: 0.48s;
+  animation-delay: 0.48s;
+}
+
+.browsing-history > :nth-child(9) {
+  -webkit-animation-delay: 0.56s;
+  animation-delay: 0.56s;
+}
+
+.browsing-history > :nth-child(10) {
+  -webkit-animation-delay: 0.64s;
+  animation-delay: 0.64s;
+}
+
+.browsing-history > :nth-child(11) {
+  -webkit-animation-delay: 0.72s;
+  animation-delay: 0.72s;
+}
+
+
 
 
 
