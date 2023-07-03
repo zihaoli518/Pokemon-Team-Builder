@@ -91,46 +91,46 @@ const SpeedTier = props => {
   }
 
   const populateSpeedTier = (team, className) => {
-    const newArray = [];
-    const defaultIV = [31,31,31,31,31,31]
-    if (className==='friendly-speed-tier-row') {
-      for (let i=1; i<=6; i++) {
-        if (!team['mon'+i]) continue;   
-        // determine speed range 
-        console.log(i, team['mon'+i])
-        const baseStats = statObjToArray(team['mon'+i].stats)
-        const lowest = calculator.calAllStats(defaultIV, baseStats, [0,0,0,0,0,0], 100, 'Brave');
-        const highest = calculator.calAllStats(defaultIV, baseStats, [0,0,0,0,0, 252], 100, 'Jolly');
-        
-        const speedRange = `${lowest[5]} - ${highest[5]}`
+    const newArrayJSX = [];
+    const defaultIV = [31,31,31,31,31,31];
 
-        newArray.push(
-        <div className={'speed-tier-row ' + className}>
-          <PokemonSprite key={team['mon'+i].pokemon} pokemon={team['mon'+i].pokemon} className={'speed-tier-range-sprite'} />
-          <h4>{speedRange}</h4>
-        </div>
-      )}
-      setFriendlyMons(newArray);
-      return;
-    } else {
-      for (let i=1; i<=6; i++) {
-        if (!team['mon'+i]) continue;   
-        // determine speed range 
-        const baseStats = statObjToArray(team['mon'+i].stats)
-        const lowest = calculator.calAllStats(defaultIV, baseStats, [0,0,0,0,0,0], 100, 'Brave');
-        const highest = calculator.calAllStats(defaultIV, baseStats, [0,0,0,0,0, 252], 100, 'Jolly');
-        
-        const speedRange = `${lowest[5]} - ${highest[5]}`
+    const sortedArray = []; 
 
-        newArray.push(
-        <div className={'speed-tier-row ' + className}>
-          <h4>{speedRange}</h4>
-          <PokemonSprite key={team['mon'+i].pokemon} pokemon={team['mon'+i].pokemon} className={'speed-tier-range-sprite'} />
-        </div>
-      )}
-      setEnemyMons(newArray);
+    // sorting mons based on speed 
+    for (let i=1; i<=6; i++) {
+      if (!team['mon'+i]) continue;   
+      sortedArray.push(team['mon'+i]);
     }
+    sortedArray.sort((a, b) => {
+      const speedA = a.stats.speed;
+      const speedB = b.stats.speed;
+      if (speedA > speedB) {
+        return -1; 
+      } else if (speedB < speedA) {
+        return 1; 
+      } else {
+        return 0; 
+      }
+    });
+    console.log('sorted array: ', sortedArray)
 
+
+    for (let i=0; i<sortedArray.length; i++) {
+      // determine speed range 
+      const baseStats = statObjToArray(sortedArray[i].stats)
+      const lowest = calculator.calAllStats(defaultIV, baseStats, [0,0,0,0,0,0], 100, 'Brave');
+      const highest = calculator.calAllStats(defaultIV, baseStats, [0,0,0,0,0, 252], 100, 'Jolly');
+      
+      const speedRange = `${lowest[5]} - ${highest[5]}`;
+
+      newArrayJSX.push(
+      <div className={'speed-tier-row ' + className}>
+        <PokemonSprite key={sortedArray[i].pokemon} pokemon={sortedArray[i].pokemon} className={'speed-tier-range-sprite'} />
+        <h4>{speedRange}</h4>
+      </div>
+    )}
+    if (className==='friendly-speed-tier-row') setFriendlyMons(newArrayJSX);
+    else setEnemyMons(newArrayJSX);
   }
 
   useEffect(() => {

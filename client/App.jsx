@@ -154,8 +154,6 @@ class App extends Component {
 
 
   changeAppVolume = () => {
-    console.log('in change volume')
-
     // Get the current volume level from the volume control element
     var volumeControl = document.getElementById('volume-slider');
     var newAppVolume = volumeControl.value;

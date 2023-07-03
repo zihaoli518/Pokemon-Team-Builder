@@ -376,7 +376,7 @@ const CurrentPokemonDetails = props => {
     populateItems();
     // populateMoveContainers();
     populateMoves();
-  }, [props.currentPokemon, props.activeAbility])
+  }, [props.currentPokemon.pokemon, props.activeAbility.name])
 
 
   return (

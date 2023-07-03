@@ -224,21 +224,31 @@ const PokemonSearch = props => {
     const searchElement = document.getElementById("search-bar-element");
     const searchBar = document.getElementById('pokemon-search-name');
 
+    let clickOverride = false;
+    let timeoutId;
+
     searchBar.addEventListener("focus", function () {
-      console.log('adding focus function')
+      console.log('adding focus function');
+      clickOverride = true;
       searchElement.classList.add("search-bar-element-focused");
-      setModalClassName('pokedex-modal pokedex-fade-in')
+      setModalClassName('pokedex-modal pokedex-fade-in');
+
     });
+    
     searchBar.addEventListener("blur", function () {
+      clickOverride = false;
       console.log('adding blur function');
       searchElement.classList.remove("search-bar-element-focused");
       setTimeout(() => {
+        if (clickOverride) {
+          return
+        }
         setModalClassName('pokedex-modal pokedex-fade-out');
         setTimeout(() => {
-          setModalDisplay(false);
+          if (!clickOverride) setModalDisplay(false);
         }, 800);
         
-      }, 400);
+      }, 300);
     });
     setOnce(false);
   }
@@ -255,11 +265,11 @@ const PokemonSearch = props => {
     console.log('update cache - add ', props.currentPokemon);
     if (props.currentPokemon.pokemon) props.updateHistoryCache('add', props.currentPokemon, null);
     
-  }, [props.currentPokemon])
+  }, [props.currentPokemon.pokemon])
 
   return (
     <div className='search-bar-element' id='search-bar-element' >
-      <form onSubmit={(e) => searchEventHandler(e, null, )}>
+      <form onSubmit={(e) => searchEventHandler(e, null, props.historyCache)}>
         <input type="text" id='pokemon-search-name' autocomplete="off" placeholder="search a mon" onClick={()=>{setModalDisplay(true)}} onKeyUp={()=>{searchAndDisplayDex()}} />
         <button type='submit'> <span> Search</span> </button>
       </form> 
