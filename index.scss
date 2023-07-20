@@ -351,7 +351,7 @@ button:hover {
 
 
 .title-container  h4 {
-  width: 10%;
+  width: 5%;
   font-size: 40%;
   position: relative;
   left: 41.5%;
@@ -362,7 +362,8 @@ button:hover {
   height: 50%;
   z-index: 10;
   position: relative;
-  left: 36%;
+  left: 41%;
+
   cursor: pointer;
 }
 
@@ -410,19 +411,19 @@ button:hover {
 // top nav bar
 .top-nav-bar {
   height: 4.5%;
-  width: 40%;
+  width: 14%;
   display: flex;
-  justify-content: right;
+  justify-content: center;
   align-items: center;
   
   position: absolute;
   top: 2%;
-  left: 55%;
+  left: 85%;
   z-index: 5;
 }
 
 .top-nav-bar-buttons {
-  width: 30%;
+  width: 100%;
   height: 100%;
   text-align: center;
   line-height: 100%;
@@ -853,6 +854,12 @@ input[type="text"]
 .pokemon-sprite-pokedex {
   height: 150%;
   width: 10%;
+}
+
+.pokedex-sprite-placeholder { 
+  height: 90%;
+  width: 8%;
+  margin-right: 2%;
 }
 
 .pokedex-type-1 {
@@ -1465,6 +1472,61 @@ input[type="text"]
 .current-pokemon-spacer {
   flex: 0.3;
 }
+
+
+// immport export 
+.import-export-current-pokemon {
+  height: 100%;
+  width: 20%;
+}
+
+.import-export-buttons {
+  position: relative;
+}
+
+.import-export-modal {
+  height: 70%;
+  width: 50%;
+  position: absolute;
+  left: 20%;
+  z-index: 100;
+  background-color: grey;
+
+  display: flex;
+  flex-direction: column;
+  // justify-content: center;
+  align-items: center;
+}
+
+.import-export-modal .remove-button {
+  height: 10%;
+  width: 10%;
+  position: relative;
+  left: 40%;
+  margin-bottom: 2%;
+  cursor: pointer;
+  animation: none
+}
+
+.import-export-modal textarea {
+  height: 75%;
+  width: 90%;
+  resize: none;
+  margin: 0;
+  text-align: left;
+  vertical-align: top;
+  overflow-wrap: break-word;  
+  font-size: 60%;
+}
+
+.import-export-modal button {
+  width: 40%;
+  margin-top: 3%;
+}
+
+
+
+
 
 
 

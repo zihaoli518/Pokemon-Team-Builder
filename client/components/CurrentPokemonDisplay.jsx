@@ -19,6 +19,7 @@ import PokemonSprite from './PokemonSprite.jsx';
 import StatChartRadar from './StatChartRadar.jsx';
 import CurrentPokemonDetails from './CurrentPokemonDetails.jsx'
 import EvolutionTree from './EvolutionTree.jsx';
+import ImportExportModal from './modals/ImportExportModal.jsx'
 
 
 
@@ -181,9 +182,10 @@ class CurrentPokemonDisplay extends Component {
                 <h4 className={"type"+" type-"+this.props.currentPokemon.types[1]} id={this.props.currentPokemon.types[1]}>{this.props.currentPokemon.types[1]}</h4>
               </div>
               <div className="current-pokemon-spacer" ></div>
-              <div className="levels">
+              {/* <div className="levels">
                 <h4>level 100</h4>
-              </div>
+              </div> */}
+              <ImportExportModal />
             </div>
 
             <div className="current-pokemon-flexbox">

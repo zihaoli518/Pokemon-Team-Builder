@@ -53,6 +53,11 @@ const PokemonSprite = props => {
   // for saved teams - still sprites
   if (props.type==='still') {
     let stillUrl = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${props.pokedexId}.png`;
+    if (props.pokedexId<1) {
+      stillUrl = 'https://www.clipartmax.com/png/full/185-1853692_flat-mark-circle-round-question-help-icon-question-mark-in-circle.png';
+      className = 'pokedex-sprite-placeholder'
+    } 
+
     return (<img onClick={onClick} className={className} id={props.id} src={stillUrl} />
     )
   }

@@ -4,7 +4,7 @@ const parse = require('node-html-parser');
 const path = require('path');
 const axios = require('axios');
 
-const { Dex } = require('pokemon-showdown');
+const { Dex } = require('@pkmn/dex');
 
 const showdownMiddlewares = {}; 
 
@@ -124,17 +124,19 @@ showdownMiddlewares.getAllMons = (req, res, next) => {
     console.log('..........', i, '/', arrayOfMons.length, '..........')
 
     console.log('writing JSON data for: ', monName);
+    let spriteUrl = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${monObj.num}.png`;
+    if (monObj.num<1) spriteUrl = 'https://www.clipartmax.com/png/full/185-1853692_flat-mark-circle-round-question-help-icon-question-mark-in-circle.png'
     monsDataObject.set(monName, {
+      ...monObj,
       name: monName,
       baseStats: monObj.baseStats,
       types: monObj.types,
       tier: monObj.tier,
       pokedexId: monObj.num,
-      spriteUrl: `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${monObj.num}.png`
+      spriteUrl: spriteUrl,
     });
     
   }
-  
   const monsDataJSON = JSON.stringify(Array.from(monsDataObject));
 
   fs.writeFile("mons-data.json", monsDataJSON, 'utf8', function (err) {

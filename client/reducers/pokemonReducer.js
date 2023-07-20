@@ -153,7 +153,14 @@ const pokemonReducer = (state = initialState, action) => {
       // reformatting move pool of pokemon 
       let newMovePool = {};
       for (let i=0; i<pokemonData.moves.length; i++) {
+        // // keeping move pool up to date with gen 9 only 
+        // let gen9 = false;
+        // for (let i=0; i<pokemonData.moves[i].version_group_details.length; i++) {
+        //   if (pokemonData.moves[i].version_group_details[i].version_group.name === 'scarlet-violet') gen9=true;
+        // }
+        // if (gen9) newMovePool[pokemonData.moves[i].move.name.replace("-", " ")] = true;
         newMovePool[pokemonData.moves[i].move.name.replace("-", " ")] = true;
+
       }
       // for some reason corviknight is missing defog from api 
       if (copy.pokemon==='corviknight') newMovePool['defog'] = true;
