@@ -6,7 +6,8 @@ const PORT = 3000;
 
 const fetchMiddlewares = require('./controllers/fetchMiddlewares.js');
 const userMiddlewares = require('./controllers/userMiddlewares.js');
-const showdownMiddlewares = require('./controllers/showdownMiddlewares.js')
+const showdownMiddlewares = require('./controllers/showdownMiddlewares.js');
+const convertTeamFormatMiddlewares = require('./controllers/convertTeamFormatMiddlewares.js')
 
 const cookieParser = require("cookie-parser");
 
@@ -117,6 +118,11 @@ app.get('/api/getTypesImages', showdownMiddlewares.getTypesImages, (req, res) =>
 })
 
 
+// handle import and export format conversion requests 
+app.post('/api/importMon', convertTeamFormatMiddlewares.importMon, fetchMiddlewares.fetchPokeAPI, (req, res) => {
+  console.log('/api/importMon complete')
+  return res.status(200).send({pokemonData: res.locals.data, importedSet: res.locals.importedMon})
+})
 
 
 app.listen(PORT); 

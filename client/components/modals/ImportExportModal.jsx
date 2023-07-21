@@ -17,20 +17,19 @@ import * as actions from '../../actions/actions';
 
 import {calculate, Generations, Pokemon, Move} from '@ajhyndman/smogon-calc';
 
-// import {Teams} from 'pokemon-showdown';
  
 
 
 const mapStateToProps = state => {
   return {
-    pokemonCalcDataFriendly: state.damageCalc.pokemonCalcDataFriendly,
-    pokemonCalcDataEnemy: state.damageCalc.pokemonCalcDataEnemy,
+    currentPokemon: state.pokemon.currentPokemon,
   }
 }
 
 const mapDispatchToProps = dispatch => ({
   // create functions that will dispatch action creators
-  showTypingChart : () => dispatch(actions.showTypingChart()),
+  updatePokemon: (pokemon, pokemonData, mode) => dispatch(actions.updatePokemonPokeAPI(pokemon, pokemonData, mode)),
+  updatePokemonSet: (importedSet) => dispatch(actions.updatePokemonSet(importedSet))
 });
 
 
@@ -61,8 +60,25 @@ const ImportExportModal = props => {
 
     const handleImport = () => {
       const userInput = document.getElementById('import-current-pokemon-input').value;
-      const team = Teams.import(userInput);
-      console.log(team)
+      fetch('/api/importMon', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Accept: 'application/json, text/plain',
+        },
+        body: JSON.stringify({team: userInput})
+      })
+        .then((response) => response.json())
+        .then((response) => {
+          // console.log(response.pokemonData);
+          const pokemonData = response.pokemonData
+          props.updatePokemon(pokemonData.name, pokemonData);
+          return response.importedSet
+        })
+        .then((importedSet) => {
+          // console.log(importedSet);
+          // props.updatePokemonSet(importedSet)
+        })
     }
 
     // generate modal content 

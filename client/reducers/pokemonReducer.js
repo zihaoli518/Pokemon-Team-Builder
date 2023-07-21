@@ -16,6 +16,9 @@ import * as types from '../constants/actionTypes';
 import helpers from './helpers.js'
 import { getTypeWeaknesses } from 'poke-types';
 const calculator = require('pokemon-stat-calculator');
+import Data from '../components/dexData.js';
+const allItemsJSON = Data.allItemsJSON;
+const allMovesJSON = Data.allMovesJSON;
 
 const initialState = {
   currentPokemon: {
@@ -447,41 +450,63 @@ const pokemonReducer = (state = initialState, action) => {
         yourTeam: yourTeamWithUpdatedStats
       }
     
-      case types.UPDATE_YOUR_TEAM_KEY: 
+    case types.UPDATE_YOUR_TEAM_KEY: 
+      return {
+        ...state,
+        yourTeam: {...state.yourTeam, key: action.payload}
+      }
+
+    case types.UPDATE_HISTORY_CACHE: 
+      console.log('inside UPDATE_HISTORY_CACHE', action.payload);
+
+      const copyOFHistoryCache = [...state.historyCache];
+
+    
+
+      if (action.payload.type==='add') {
+        //quickly check if pokemon already exists in cache
+        for (let i = 0; i < copyOFHistoryCache.length; i++) {
+          const pokemonObj = copyOFHistoryCache[i];
+          if (pokemonObj.pokemon === action.payload.pokemonObj.pokemon) {
+            copyOFHistoryCache.splice(i, 1);
+            copyOFHistoryCache.push(pokemonObj);
+            return {...state, historyCache: copyOFHistoryCache}
+          }
+        }
+        if (copyOFHistoryCache.length>=10) copyOFHistoryCache.shift();
+        copyOFHistoryCache.push(action.payload.pokemonObj);
         return {
           ...state,
-          yourTeam: {...state.yourTeam, key: action.payload}
+          historyCache: copyOFHistoryCache
         }
-
-      case types.UPDATE_HISTORY_CACHE: 
-        console.log('inside UPDATE_HISTORY_CACHE', action.payload);
-
-        const copyOFHistoryCache = [...state.historyCache];
-
-      
-
-        if (action.payload.type==='add') {
-          //quickly check if pokemon already exists in cache
-          for (let i = 0; i < copyOFHistoryCache.length; i++) {
-            const pokemonObj = copyOFHistoryCache[i];
-            if (pokemonObj.pokemon === action.payload.pokemonObj.pokemon) {
-              copyOFHistoryCache.splice(i, 1);
-              copyOFHistoryCache.push(pokemonObj);
-              return {...state, historyCache: copyOFHistoryCache}
-            }
-          }
-          if (copyOFHistoryCache.length>=10) copyOFHistoryCache.shift();
-          copyOFHistoryCache.push(action.payload.pokemonObj);
-          return {
-            ...state,
-            historyCache: copyOFHistoryCache
-          }
-        } else if (action.payload.type==='sync') {
-          return {
-            ...state,
-            historyCache: action.payload.array
-          }
+      } else if (action.payload.type==='sync') {
+        return {  
+          ...state,
+          historyCache: action.payload.array
         }
+      }
+
+    case types.UPDATE_POKEMON_SET: 
+      console.log('inside UPDATE_POKEMON_SET', action.payload);
+      const importedSet = action.payload;
+      return {
+        ...state,
+        currentPokemon: {
+          ...state.currentPokemon,
+          // activeAbility: {name:importedSet.ability, description: ''},
+          // item: {item: importedSet.item, description: allItemsJSON[importedSet.item].desc, url: allItemsJSON[importedSet.item].spriteUrl}, 
+          // evs: {obj: importedSet.evs, array:[importedSet.evs.hp, importedSet.evs.atk, importedSet.evs.def, importedSet.evs.spa, importedSet.evs.spd, importedSet.evs.spe]},
+          // ivs: {obj: importedSet.ivs, array:[importedSet.ivs.hp, importedSet.ivs.atk, importedSet.ivs.def, importedSet.ivs.spa, importedSet.ivs.spd, importedSet.ivs.spe]},
+          nature: importedSet.nature.toLowerCase(),
+          // moves: {
+          //   move_1: {name: importedSet.moves[0], type: allMovesJSON[importedSet.moves[0]].type.toLowerCase()},
+          //   move_2: {name: importedSet.moves[1], type: allMovesJSON[importedSet.moves[1]].type.toLowerCase()},
+          //   move_3: {name: importedSet.moves[2], type: allMovesJSON[importedSet.moves[2]].type.toLowerCase()},
+          //   move_4: {name: importedSet.moves[3], type: allMovesJSON[importedSet.moves[3]].type.toLowerCase()}
+          // },
+          ZCHECK: true,
+        }
+      }
 
         
          

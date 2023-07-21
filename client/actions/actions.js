@@ -188,3 +188,8 @@ export const updateHistoryCache = (type, pokemonObj, array) => ({
   type: types.UPDATE_HISTORY_CACHE, 
   payload: {type: type, pokemonObj: pokemonObj, array: array}
 })
+
+export const updatePokemonSet = (importedSet) => ({
+  type: types.UPDATE_POKEMON_SET, 
+  payload: importedSet
+})
