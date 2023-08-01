@@ -16,6 +16,7 @@ import * as actions from '../actions/actions';
 import Data from './dexData.js';
 // importing other files and components
 import PokemonSprite from './PokemonSprite.jsx';
+import ImportExportModal from './modals/ImportExportModal.jsx';
 
 const allMonsJSON = Data.allMonsJSON;
 
@@ -85,6 +86,7 @@ const BrowsingHistory = props => {
     <div className='browsing-history' id='browsing-history' >
       {cacheOfHistoryDisplay}
       <img className='browsing-history-logo' src="/static/history.png" alt="" />
+      <ImportExportModal />
     </div>
   )
 }

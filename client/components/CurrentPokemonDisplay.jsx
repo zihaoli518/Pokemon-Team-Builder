@@ -185,7 +185,6 @@ class CurrentPokemonDisplay extends Component {
               {/* <div className="levels">
                 <h4>level 100</h4>
               </div> */}
-              <ImportExportModal />
             </div>
 
             <div className="current-pokemon-flexbox">

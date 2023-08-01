@@ -23,11 +23,14 @@ convertTeamFormatMiddlewares.importMon = (req, res, next) => {
   // console.log(Teams.export(testJSON))
   console.log(Teams.import(exportFormatMon));
 
-  const pokemonObjArray = Teams.import(exportFormatMon);
-  // fetch('')
-  req.body.pokemon = pokemonObjArray[0].species.toLowerCase();
+  const pokemonObj = Teams.import(exportFormatMon)[0];
+  pokemonObj.item = pokemonObj.item.toLowerCase().replace(' ','-');
+  pokemonObj.moves = pokemonObj.moves.map(move => move.toLowerCase());
 
-  res.locals.importedMon = pokemonObjArray[0];
+  // fetch('')
+  req.body.pokemon = pokemonObj.species.toLowerCase();
+
+  res.locals.importedMon = pokemonObj;
   return next();
 }
 

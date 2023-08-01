@@ -98,7 +98,6 @@ const EvContainer = props => {
     const EVs = props.currentPokemon.evs.array;
     const baseStats = statObjToArray(props.currentPokemon.stats); 
     const nature = calculator.getNatureValue(props.currentPokemon.nature);
-    console.log('after nature')
     console.log(baseStats, EVs, IVs, nature)
     const results = calculator.calAllStats(IVs, baseStats, EVs, props.currentPokemon.level, nature);
     console.log(results)
@@ -155,7 +154,6 @@ const EvContainer = props => {
 
 
   useEffect(() => {
-    console.log('inside 5/8 bug useEffect')
     // mapOnFocusOutFunctios();
     cleanUpEvs();
     if (!props.currentPokemon.calculatedStats.length) calculateInitialStats();

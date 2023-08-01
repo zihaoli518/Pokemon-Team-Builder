@@ -17,12 +17,13 @@ export const addPokemon = pokemon => ({
   payload: pokemon
 })
 
-export const updatePokemonPokeAPI = (pokemon, pokemonData, mode) => ({
+export const updatePokemonPokeAPI = (pokemon, pokemonData, mode, importedSet) => ({
   type: types.ADD_POKEMON_POKEAPI,
   payload: {
     pokemon: pokemon,
     pokemonData: pokemonData,
-    mode: mode 
+    mode: mode, 
+    importedSet: importedSet,
   },
 });
 

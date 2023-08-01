@@ -39790,7 +39790,7 @@
     "forceSTAB": false,
     "noSketch": false
   },
-  "x scissor": {
+  "x-scissor": {
     "exists": true,
     "name": "X-Scissor",
     "num": 404,

@@ -34,8 +34,10 @@ const mapDispatchToProps = dispatch => ({
 
 const EvSliderContainer = props => {
 
-  const [natureOptions, setNatureOptions] = useState([])
-  const statOrder = ['Atk', 'Def', 'SpA', 'SpD', 'Spe']
+  const [natureOptions, setNatureOptions] = useState([]);
+  const [currentNatureStr, setCurrentNatureStr] = useState('serious');
+
+  const statOrder = ['Atk', 'Def', 'SpA', 'SpD', 'Spe'];
 
   const populateNatures = () => {
     console.log('inside populateNatures')
@@ -108,14 +110,30 @@ const EvSliderContainer = props => {
 
     const results = calculator.calAllStats(IVs, baseStats, EVs, props.currentPokemon.level, nature)
     props.updateCalculatedStats(EVs, IVs, remainingEv, results);
+  }
 
-
+  const updateCurrentNature = () => {
+    // get the short description str like (+Atk, -SpA)
+    const NatureValues = calculator.getNatureValue(props.currentPokemon.nature);
+    let DescStr = props.currentPokemon.nature;
+    for (let i=0; i<statOrder.length; i++) {
+      if (NatureValues[i] === 1.1) DescStr += ' (+' + statOrder[i] + ', '
+    }
+    for (let i=0; i<statOrder.length; i++) {
+      if (NatureValues[i] === 0.9) DescStr += '-' + statOrder[i] +')'
+    }
+    setCurrentNatureStr(DescStr);
   }
 
 
     useEffect(() => {
       populateNatures();
-    }, [props.currentPokemon])
+    }, [props.currentPokemon]);
+
+    // for updating selected nature 
+    useEffect(() => {
+      updateCurrentNature();
+    }, [props.currentPokemon.nature])
 
 
   return (
@@ -135,7 +153,7 @@ const EvSliderContainer = props => {
       <div className='nature-container'>
         <h4>nature: </h4>
         <select name="" id="nature-select" onChange={() => selectNature()}>
-          <option value={props.currentPokemon.nature}>{props.currentPokemon.nature}</option>
+          <option value={props.currentPokemon.nature}>{currentNatureStr}</option>
           {natureOptions}
         </select>
       </div>

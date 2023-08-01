@@ -28,7 +28,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => ({
   // create functions that will dispatch action creators
-  updatePokemon: (pokemon, pokemonData, mode) => dispatch(actions.updatePokemonPokeAPI(pokemon, pokemonData, mode)),
+  updatePokemon: (pokemon, pokemonData, mode, importedSet) => dispatch(actions.updatePokemonPokeAPI(pokemon, pokemonData, mode, importedSet)),
   updatePokemonSet: (importedSet) => dispatch(actions.updatePokemonSet(importedSet))
 });
 
@@ -72,8 +72,8 @@ const ImportExportModal = props => {
         .then((response) => {
           // console.log(response.pokemonData);
           const pokemonData = response.pokemonData
-          props.updatePokemon(pokemonData.name, pokemonData);
-          return response.importedSet
+          props.updatePokemon(pokemonData.name, pokemonData, 'import', response.importedSet);
+          closeModal();
         })
         .then((importedSet) => {
           // console.log(importedSet);
@@ -96,8 +96,8 @@ const ImportExportModal = props => {
   return (
     <div className="import-export-current-pokemon">
       <div className="import-export-buttons">
-        <button onClick={()=>{toggleImport()}}>import</button>
-        <button onClick={()=>{toggleExport()}}>export</button>
+        <button onClick={()=>{toggleImport()}}>import set</button>
+        <button onClick={()=>{toggleExport()}}>export set</button>
       </div>
       {showModal ? 
         <div className={className}>

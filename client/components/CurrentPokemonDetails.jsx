@@ -48,7 +48,7 @@ const mapDispatchToProps = dispatch => ({
 
 
 const CurrentPokemonDetails = props => {
-  console.log('inside CurrentPokemonDetails', props.currentPokemon)
+  console.log('inside CurrentPokemonDetails', props.currentPokemon.activeMove.moveId)
   
   const [currentlyActiveDiv, setCurrentlyActiveDiv] = useState({div: '', });
   const [showBrowseArea, setShowBrowseArea] = useState(false);
@@ -260,7 +260,11 @@ const CurrentPokemonDetails = props => {
   const populateMoves = (searchStr) => {
     const allMovesToBeDisplayed = [];
 
+    console.log('inside populateMoves', props.currentPokemon.activeMove)
+
+
     const chooseMove = (moveId, moveObj, div, activeClassName, activeComponent) => {
+      console.log('inside chooseMove', moveId, props.currentPokemon.activeMove)
       makeDivActive(div, activeClassName, activeComponent);
       props.selectMoveFromList(moveId, moveObj);
       // console.log('about to selectMoveContainer', moveId[moveId.length-1]);
@@ -376,7 +380,7 @@ const CurrentPokemonDetails = props => {
     populateItems();
     // populateMoveContainers();
     populateMoves();
-  }, [props.currentPokemon.pokemon, props.activeAbility.name])
+  }, [props.currentPokemon.pokemon, props.activeAbility.name, props.currentPokemon.activeMove])
 
 
   return (
