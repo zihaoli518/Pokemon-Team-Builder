@@ -19,6 +19,7 @@ import PokemonSprite from './PokemonSprite.jsx';
 import StatChartRadar from './StatChartRadar.jsx';
 import CurrentPokemonDetails from './CurrentPokemonDetails.jsx'
 import EvolutionTree from './EvolutionTree.jsx';
+import ImportExportModal from './modals/ImportExportModal.jsx'
 
 
 
@@ -39,7 +40,7 @@ const mapDispatchToProps = dispatch => ({
   addPokemonToYourTeam : (pokemonObj) => dispatch(actions.addPokemonToYourTeam(pokemonObj)),
   addPokemonToEnemeyTeam: (pokemonObj) => dispatch(actions.addPokemonToEnemyTeam(pokemonObj)),
   selectAbility : (ability) => dispatch(actions.selectAbility(ability)),
-
+  addMonToCalc : (pokemonObj, team) => dispatch(actions.addMonToCalc(pokemonObj, team))
 });
 
 const types = ['bug', 'dark', 'dragon', 'electric', 'fairy', 'fighting', 'fire', 'flying', 'ghost', 'grass', 'ground', 'ice', 'normal', 'poison', 'psychic', 'rock', 'steel', 'water']
@@ -181,9 +182,9 @@ class CurrentPokemonDisplay extends Component {
                 <h4 className={"type"+" type-"+this.props.currentPokemon.types[1]} id={this.props.currentPokemon.types[1]}>{this.props.currentPokemon.types[1]}</h4>
               </div>
               <div className="current-pokemon-spacer" ></div>
-              <div className="levels">
+              {/* <div className="levels">
                 <h4>level 100</h4>
-              </div>
+              </div> */}
             </div>
 
             <div className="current-pokemon-flexbox">
@@ -226,8 +227,15 @@ class CurrentPokemonDisplay extends Component {
             </div>
           </div>
           <div className="add-to-team-option-buttons">
+            <div className='f'>
               <button className='add-to-your-team' onClick={()=>{this.addToTeam({...this.props.currentPokemon}, 'friendly')}}>Add</button>
-              <button className='add-to-enemy-team' onClick={()=>{this.addToTeam({...this.props.currentPokemon}, 'enemy')}}>Add</button>
+              <button className='add-to-calc' onClick={()=>{this.props.addMonToCalc({...this.props.currentPokemon}, 'friendly')}}>Calc</button>
+            </div>
+            <div className='add-to-team-option-spacer'></div>
+            <div className='e'>
+            <button className='add-to-enemy-team' onClick={()=>{this.addToTeam({...this.props.currentPokemon}, 'enemy')}}>Add</button>
+              <button className='add-to-calc' onClick={()=>{this.props.addMonToCalc({...this.props.currentPokemon}, 'enemy')}}>Calc</button>
+            </div>
           </div>
           <div className="down-arrow-gifs">
               <img className='arrow1' src="https://media3.giphy.com/media/deKZM8D0orxwQ18qtB/giphy.gif?cid=ecf05e47wdglkthtva45fblr1v52dyqktaeiws7a2zi294tv&rid=giphy.gif&ct=s" alt="" />

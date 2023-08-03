@@ -48,15 +48,21 @@ const mapDispatchToProps = dispatch => ({
 
 
 const CurrentPokemonDetails = props => {
-  console.log('inside CurrentPokemonDetails', props.currentPokemon)
+  console.log('inside CurrentPokemonDetails', props.currentPokemon.activeMove.moveId)
   
   const [currentlyActiveDiv, setCurrentlyActiveDiv] = useState({div: '', });
   const [showBrowseArea, setShowBrowseArea] = useState(false);
 
+  const [allMoveContainers, setAllMoveContainers] = useState([])
   const [allAbilitiesToBeDisplayed, setAllAbilitiesToBeDisplayed] = useState([]);
   const [allItemsToBeDisplayed, setAllItemsToBeDisplayed] = useState([]);
   const [allMovesToBeDisplayed, setAllMovesToBeDisplayed] = useState([]);
 
+  function capitalizeWords(str) {
+    return str.replace(/\b\w/g, function(match) {
+      return match.toUpperCase();
+    }).replace(/-/g, ' ');
+  }
 
 
   // generalized function that makes a div have an unique classname (for active effects)
@@ -69,7 +75,7 @@ const CurrentPokemonDetails = props => {
       }
     } 
     const container = document.getElementsByClassName(div)[0];
-    // console.log('inside makeDivActive ', div, activeComponent)
+    console.log('inside makeDivActive ', div, activeClassName, activeComponent, container)
     // console.log('container: ', container, document.getElementsByClassName(div))
     container.classList.add(activeClassName)
     
@@ -116,13 +122,13 @@ const CurrentPokemonDetails = props => {
     }
 
     for (let i=0; i<props.currentPokemon.abilities.length; i++) {
-      const name =  props.currentPokemon.abilities[i].ability.name;
+      const name =  capitalizeWords(props.currentPokemon.abilities[i].ability.name);
       const url = props.currentPokemon.abilities[i].ability.url;
       let className = 'ability ability' + (i+1) + ' pokemon-details-' + name;
       // highlight active ability on load
       if (props.currentPokemon.activeAbility.name && props.currentPokemon.activeAbility.name===name) className += ' active-ability-highlighted';
       newAbilitiesToBeDisplayed.push(
-        <div className={className} onClick={()=> {chooseAbility(name, url, 'ability'+(i+1), 'active-ability-highlighted')}}>
+        <div key={name} className={className} onClick={()=> {chooseAbility(name, url, 'ability'+(i+1), 'active-ability-highlighted')}}>
           <h4>
             {name}
           </h4>
@@ -159,8 +165,6 @@ const CurrentPokemonDetails = props => {
     const allItemsToBeDisplayed = [];
 
     const chooseItem = (name, url, description, div, activeClassName, activeComponent) => {
-      // console.log('inside chooseItem')
-
       makeDivActive(div, activeClassName, activeComponent);
       // encode url so it doesnt cause errors when saved to data base in JSON format
       // url = envURIComponent(url)
@@ -171,6 +175,8 @@ const CurrentPokemonDetails = props => {
       // clear input field 
       const input = document.getElementById('item-search-input');
       input.value = '';
+
+      handleFirstClick();
     }
 
 
@@ -193,7 +199,7 @@ const CurrentPokemonDetails = props => {
         if (searchStr)  highlightedStr = searchStr;
         allItemsToBeDisplayed.push(
           // each item row 
-          <div className={className} onClick={()=>{chooseItem(name, url, description, 'item-row-'+ name, 'active-item-browse-area', 'item-container')}}>
+          <div key={name}  className={className} onClick={()=>{chooseItem(name, url, description, 'item-row-'+ name, 'active-item-browse-area', 'item-container')}}>
             <div className='item-row-top'>
               <img src={url} alt="" />
               <h4><span>{highlightedStr}</span>{restOfStr}</h4>
@@ -217,17 +223,56 @@ const CurrentPokemonDetails = props => {
 
   // populate moves
   const selectMoveContainer = (num) => {
+    makeDivActive('moves-container', 'active-pokemon-detail-container', 'moves-container');
     makeDivActive('move-container-' + num, 'active-move-container', 'move-container');
     props.updateActiveMove('move_'+num, props.currentPokemon.moves["move_"+num]);
   }
+
+  // const populateMoveContainers = () => {
+  //   const allMoveContainers = []; 
+  //   for (let i=1; i<=3; i+2) {
+  //     const moveId = 'move_' + i;
+  //     const moveIdNext = 'move_' + (i+1);
+  //     console.log('in loop', i, moveId, moveIdNext)
+  //     allMoveContainers.push(
+  //       <div className='moves-container-row'>
+  //         <div key={props.currentPokemon.moves[moveId].name} className={'move-container move-container-'+i} onClick={()=>{selectMoveContainer(i)}}>
+  //           <div className='move-container-top-row'>
+  //             <img src={props.currentPokemon.moves[moveId].typeImageUrl} alt="" />
+  //             <img src={props.currentPokemon.moves[moveId].categoryImageUrl} alt="" />
+  //           </div>
+  //           <h4>{props.currentPokemon.moves[moveId].name}</h4>
+  //         </div>
+  //         <div key={props.currentPokemon.moves[moveIdNext].name} className={'move-container move-container-'+(i+1)} onClick={()=>{selectMoveContainer((i+1))}}>
+  //           <div className='move-container-top-row'>
+  //             <img src={props.currentPokemon.moves[moveIdNext].typeImageUrl} alt="" />
+  //             <img src={props.currentPokemon.moves[moveIdNext].categoryImageUrl} alt="" />
+  //           </div>
+  //           <h4>{props.currentPokemon.moves[moveIdNext].name}</h4>
+  //         </div>
+  //       </div>
+  //     )
+  //   };
+  //   setAllMoveContainers(allMoveContainers);
+  // }
 
 
   const populateMoves = (searchStr) => {
     const allMovesToBeDisplayed = [];
 
+    console.log('inside populateMoves', props.currentPokemon.activeMove)
+
+
     const chooseMove = (moveId, moveObj, div, activeClassName, activeComponent) => {
+      console.log('inside chooseMove', moveId, props.currentPokemon.activeMove)
       makeDivActive(div, activeClassName, activeComponent);
       props.selectMoveFromList(moveId, moveObj);
+      // console.log('about to selectMoveContainer', moveId[moveId.length-1]);
+      if (moveId==='move_4' && props.currentPokemon.moves.move_1.name && props.currentPokemon.moves.move_2.name && props.currentPokemon.moves.move_3.name) {
+        makeDivActive('evs-container', 'active-pokemon-detail-container', 'evs-container');
+        return;
+      }
+      selectMoveContainer(Number(moveId[moveId.length-1])+1);
       // props.updateSavedTeam(props.yourTeam);
 
       // clear input field 
@@ -281,7 +326,7 @@ const CurrentPokemonDetails = props => {
         if (searchStr)  highlightedStr = searchStr;
         allMovesToBeDisplayed.push(
           // each item row 
-          <div className={className} onClick={()=>{chooseMove(props.currentPokemon.activeMove.moveId, currentMove, 'move-row-'+ nameWithDash, 'active-move-browse-area', 'moves-container')}}>
+          <div key={className} className={className} onClick={()=>{chooseMove(props.currentPokemon.activeMove.moveId, currentMove, 'move-row-'+ nameWithDash, 'active-move-browse-area', 'moves-container')}}>
             <div className='move-row-top'>
               <h4><span>{highlightedStr}</span>{restOfStr}</h4>
               <img className='type-symbol' src={typeImageUrl} alt="" />
@@ -307,35 +352,35 @@ const CurrentPokemonDetails = props => {
   }
 
 
+
+  // state for EVs 
+  const [valuesOfEV, setValuesOfEv] = useState({hp: 0, attack: 0, defense: 0, specialA: 0, specialD: 0, speed: 0});
+  const [valuesOfIV, setValuesOfIv] = useState({hp: 31, attack: 31, defense: 31, specialA: 31, specialD: 31, speed: 31});
+  const [calculatedStat, setCalculatedStat] = useState({hp: 0, attack: 0, defense: 0, specialA: 0, specialD: 0, speed: 0});
+  
+  
+  // auto focus functions 
   const handleFirstClick = (e) => {
     if (currentlyActiveDiv.div==='moves-container' || currentlyActiveDiv.div==='move-container') {
       return;
     }
-    selectMoveContainer(1); 
+    selectMoveContainer(1);
+    if (!e) return;
     e.preventDefault();
     e.stopPropagation();
   }
 
-  const helper = {};
-  // var rangeslider = document.getElementById("sliderRange");
-  // var output = document.getElementById("demo");
-  // output.innerHTML = rangeslider.value;
+  const autoFocusNextMove = (num) => {
+    selectMoveContainer(num);
 
-  // rangeslider.oninput = function() {
-  //   output.innerHTML = this.value;
-  // }
-
-  // state for EVs 
-  const [valuesOfEV, setValuesOfEv] = useState({hp: 0, attack: 0, defense: 0, specialA: 0, specialD: 0, speed: 0});
-  const [valuesOfIV, setValuesOfIv] = useState({hp: 31, attack: 31, defense: 31, specialA: 31, specialD: 31, Speed: 31});
-  const [calculatedStat, setCalculatedStat] = useState({hp: 0, attack: 0, defense: 0, specialA: 0, specialD: 0, Speed: 0});
-  
+  }
 
   useEffect(() => {
     populateAbilities();
     populateItems();
+    // populateMoveContainers();
     populateMoves();
-  }, [props.currentPokemon, props.activeAbility])
+  }, [props.currentPokemon.pokemon, props.activeAbility.name, props.currentPokemon.activeMove])
 
 
   return (
@@ -358,7 +403,7 @@ const CurrentPokemonDetails = props => {
           <h3>item</h3>
 
             {props.currentPokemon.item.url ?
-            <div className='item'>
+            <div key={props.currentPokemon.item.item} className='item'>
               <img src={props.currentPokemon.item.url} alt="" />
               <h4>{props.currentPokemon.item.item.replace('-', ' ')}</h4>
               </div>
@@ -374,14 +419,14 @@ const CurrentPokemonDetails = props => {
                   <img src={props.currentPokemon.moves.move_1.typeImageUrl} alt="" />
                   <img src={props.currentPokemon.moves.move_1.categoryImageUrl} alt="" />
                 </div>
-                <h4>{props.currentPokemon.moves.move_1.name}</h4>
+                <h4 key={props.currentPokemon.moves.move_1.name}>{props.currentPokemon.moves.move_1.name}</h4>
               </div>
               <div className='move-container move-container-2' onClick={()=>{selectMoveContainer(2)}}>
                 <div className='move-container-top-row'>
                   <img src={props.currentPokemon.moves.move_2.typeImageUrl} alt="" />
                   <img src={props.currentPokemon.moves.move_2.categoryImageUrl} alt="" />
                 </div>
-                <h4>{props.currentPokemon.moves.move_2.name}</h4>
+                <h4 key={props.currentPokemon.moves.move_2.name}>{props.currentPokemon.moves.move_2.name}</h4>
               </div>
             </div>
             <div className='moves-container-row'>
@@ -390,14 +435,14 @@ const CurrentPokemonDetails = props => {
                   <img src={props.currentPokemon.moves.move_3.typeImageUrl} alt="" />
                   <img src={props.currentPokemon.moves.move_3.categoryImageUrl} alt="" />
                 </div>
-                <h4>{props.currentPokemon.moves.move_3.name}</h4>
+                <h4 key={props.currentPokemon.moves.move_3.name}>{props.currentPokemon.moves.move_3.name}</h4>
               </div>
               <div className='move-container move-container-4' onClick={()=>{selectMoveContainer(4)}}>
                 <div className='move-container-top-row'>
                   <img src={props.currentPokemon.moves.move_4.typeImageUrl} alt="" />
                   <img src={props.currentPokemon.moves.move_4.categoryImageUrl} alt="" />
                 </div>
-                <h4>{props.currentPokemon.moves.move_4.name}</h4>
+                <h4 key={props.currentPokemon.moves.move_4.name}>{props.currentPokemon.moves.move_4.name}</h4>
               </div>
             </div>
 
@@ -467,7 +512,7 @@ const CurrentPokemonDetails = props => {
               }
               <div className='moves-list-labels'>
                 <h5 className='name'>name</h5>
-                <h5 className='type'>type</h5>
+                <h5 className='type-l'>type</h5>
                 <h5 className='cat'>cat</h5>
                 <h5 className='pow'>pow</h5>
                 <h5 className='acc'>acc</h5>

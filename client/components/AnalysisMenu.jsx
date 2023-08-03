@@ -15,14 +15,18 @@ import { connect } from 'react-redux';
 
 import * as actions from '../actions/actions';
 
-import DamageCalculator from './DamageCalculator.jsx'
-import MatchupChart from './MatchupChart.jsx';
+import DamageCalculator from './analysis-menu/DamageCalculator.jsx'
+import MatchupChart from './analysis-menu/MatchupChart.jsx';
+import SpeedTier from './analysis-menu/SpeedTier.jsx';
+import SpecialMoves from './analysis-menu/SpecialMoves.jsx';
 
 
 const mapStateToProps = state => {
   return {
     teamStatus: state.pokemon.teamStatus,
     showTypingChart: state.pokemon.showTypingChart,
+    pokemonCalcDataFriendly: state.damageCalc.pokemonCalcDataFriendly,
+    pokemonCalcDataEnemy: state.damageCalc.pokemonCalcDataEnemy,
   }
 }
 
@@ -35,8 +39,8 @@ const mapDispatchToProps = dispatch => ({
 
 const AnalysisMenu = props => {
 
-  const [showContent, setShowContent] = useState({matchupChart: false, damageCalculator: false, exportCurrentTeam: false, importTeam: false})
-  const [className, setClassName] = useState({matchupChart: 'menu-button', damageCalculator: 'menu-button', exportCurrentTeam: 'menu-button', importTeam: 'menu-button'})
+  const [showContent, setShowContent] = useState({matchupChart: false, damageCalculator: false, speedTier: false, specialMoves: false, exportCurrentTeam: false, importTeam: false})
+  const [className, setClassName] = useState({matchupChart: 'menu-button', damageCalculator: 'menu-button', speedTier: 'menu-button', specialMoves: 'menu-button', exportCurrentTeam: 'menu-button', importTeam: 'menu-button'})
 
 
   const handleClick = (button) => {
@@ -44,31 +48,42 @@ const AnalysisMenu = props => {
     if (button==='show-matchup-chart-button') {
       // let chart = document.getElementById("matchup-chart")
       // if (chart) removeFadeOut(chart, 300);
-      setShowContent({matchupChart: true, damageCalculator: false, exportCurrentTeam: false, importTeam: false});
-      setClassName({matchupChart: 'menu-button menu-button-active', damageCalculator: 'menu-button', exportCurrentTeam: 'menu-button', importTeam: 'menu-button'})
+      setShowContent(falsifyAllExcept(showContent, 'matchupChart', true, false));
+      setClassName(falsifyAllExcept(className, 'matchupChart', 'menu-button menu-button-active', 'menu-button'));
     } else if (button==='show-damage-calculator-button') {
-      setShowContent({matchupChart: false, damageCalculator: true, exportCurrentTeam: false, importTeam: false})
-      setClassName({matchupChart: 'menu-button', damageCalculator: 'menu-button menu-button-active', exportCurrentTeam: 'menu-button', importTeam: 'menu-button'})
-
-    } else if (button==='export-current-team-button') {
-      
+      setShowContent(falsifyAllExcept(showContent, 'damageCalculator', true, false));
+      setClassName(falsifyAllExcept(className, 'damageCalculator', 'menu-button menu-button-active', 'menu-button'));
+    } else if (button==='show-speed-tier-button') {
+      setShowContent(falsifyAllExcept(showContent, 'speedTier', true, false));
+      setClassName(falsifyAllExcept(className, 'speedTier', 'menu-button menu-button-active', 'menu-button'));
+    } else if (button==='show-special-moves-button') {
+      setShowContent(falsifyAllExcept(showContent, 'specialMoves', true, false));
+      setClassName(falsifyAllExcept(className, 'specialMoves', 'menu-button menu-button-active', 'menu-button'));
     } else if (button==='import-team-button') {
       
     }
   }
 
+  useEffect(() => {
+    if (props.pokemonCalcDataFriendly.name || props.pokemonCalcDataEnemy.name) handleClick('show-damage-calculator-button');
+  }, [props.pokemonCalcDataFriendly.name, props.pokemonCalcDataEnemy.name])
+
 
   return (
     <div className='analysis-menu-and-content-container'>
       <div className='analysis-menu'>
-          <button className={className.matchupChart} id='show-matchup-chart-button' onClick={(e)=>{handleClick(e.target.id)}}>show matchup chart</button> 
-          <button className={className.damageCalculator} id='show-damage-calculator-button' onClick={(e)=>{handleClick(e.target.id)}}>show damage calculator</button> 
+          <button className={className.matchupChart} id='show-matchup-chart-button' onClick={(e)=>{handleClick(e.target.id)}}>matchup chart</button> 
+          <button className={className.damageCalculator} id='show-damage-calculator-button' onClick={(e)=>{handleClick(e.target.id)}}>damage calculator</button> 
+          <button className={className.speedTier} id='show-speed-tier-button' onClick={(e)=>{handleClick(e.target.id)}}>speed tiers</button> 
+          <button className={className.specialMoves} id='show-special-moves-button' onClick={(e)=>{handleClick(e.target.id)}}>special moves</button> 
           <button className={className.exportCurrentTeam} id='export-current-team-button' onClick={(e)=>{handleClick(e.target.id)}}>export current team</button> 
           <button className={className.importTeam} id='import-team-button' onClick={(e)=>{handleClick(e.target.id)}}>import team</button> 
       </div>
       <div className='analysis-content-container'>
         {showContent.matchupChart ? <MatchupChart /> : null}
         {showContent.damageCalculator ? <DamageCalculator /> : null}
+        {showContent.speedTier ? <SpeedTier /> : null}
+        {showContent.specialMoves ? <SpecialMoves /> : null}
         {showContent.exportCurrentTeam ? null : null}
         {showContent.matchuimportTeampChart ? null : null}
       </div>
@@ -79,7 +94,15 @@ const AnalysisMenu = props => {
 
 
 
-
+// helper functions
+function falsifyAllExcept(object, arg, singleValue, defaultValue) {
+  const obj = {...object}
+  for (let key in obj) {
+    if (key===arg) obj[key]=singleValue;
+    else obj[key]=defaultValue;
+  }
+  return obj;
+}
 
 function removeFadeOut( el, speed ) {
   var seconds = speed/1000;

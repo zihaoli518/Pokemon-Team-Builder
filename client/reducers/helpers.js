@@ -66,4 +66,16 @@ helpers.statObjToArray = (statObj) => {
   return array
 }
 
+helpers.capitalizeFirstLetter = (str) => {
+  return str.charAt(0).toUpperCase() + str.slice(1);
+}
+
+helpers.capitalizeWords = (str) => {
+  return str.replace(/\b\w/g, function(match) {
+    return match.toUpperCase();
+  }).replace(/-/g, ' ');
+}
+
+// helpers.lowerCaseAll = ()
+
 export default helpers

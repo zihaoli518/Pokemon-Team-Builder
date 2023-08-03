@@ -21,12 +21,13 @@ import * as actions from '../actions/actions';
 const mapStateToProps = (state) => {
   return {
     currentPokemon: state.pokemon.currentPokemon,
+    historyCache: state.pokemon.historyCache,
   };
 };
 
 const mapDispatchToProps = dispatch => ({
   refreshAndDecodeSavedTeams : (savedTeams) => dispatch(actions.refreshAndDecodeSavedTeams(savedTeams)),
-  updatePokemon: (pokemon, pokemonData) => dispatch(actions.updatePokemonPokeAPI(pokemon, pokemonData)),
+  updatePokemon: (pokemon, pokemonData, mode) => dispatch(actions.updatePokemonPokeAPI(pokemon, pokemonData, mode)),
 });
 
 
@@ -34,10 +35,8 @@ const mapDispatchToProps = dispatch => ({
 const EvolutionTree= (props) => {
 
   const [className, setClassName] = useState('evolution-container-inner-active evolution-container-inner');
-  const [fullDisplay, setFullDisplay] = useState(false);
-
   const [evolutionTree, setEvolutionTree] = useState([]);
-  const [evolutionTreeMinimized, setEvolutionTreeMinimized] = useState([]);
+  const [loadingStatus, setLoadingStatus] = useState(false);
 
   
   // const toggleActive = (e) => {
@@ -62,7 +61,7 @@ const EvolutionTree= (props) => {
       firstTextClassName = 'evolution-text-current'
     }
     newTreeArray.push(
-      <div className='evolution-row evolution-tier-1'>
+      <div key={Math.random()} className='evolution-row evolution-tier-1'>
         <PokemonSprite key={props.currentPokemon.pokemon} pokemon={chain.species.name} className={firstSpriteClassName}/>
         <a className={firstTextClassName} onClick={(e)=>{handleFetch(e, chain.species.name)}}>{chain.species.name}</a>
       </div>
@@ -79,7 +78,7 @@ const EvolutionTree= (props) => {
           textClassName = 'evolution-text-current'
         }
         newTreeArray.push(
-          <div className={'evolution-row evolution-tier-' + level}>
+          <div key={Math.random()} className={'evolution-row evolution-tier-' + level}>
             <img className='arrows' src="https://cdn-icons-png.flaticon.com/512/109/109617.png" alt="" />
             <PokemonSprite key={props.currentPokemon.pokemon} pokemon={innerChain.species.name} className={spriteClassName}/>
             <a className={textClassName} onClick={(e)=>{handleFetch(e, innerChain.species.name)}}>{innerChain.species.name}</a>
@@ -107,6 +106,17 @@ const EvolutionTree= (props) => {
       // }
 
   const handleFetch = (e, pokemon) => {
+    // quickly loop thru the cache array to check if the data is saved, if found do not make api call 
+    for (let pokemonObj of props.historyCache) {
+      if (pokemonObj.pokemon===pokemon) {
+        console.log('cached!!')
+        setLoadingStatus(false);
+        props.updatePokemon(pokemon, pokemonObj, 'cached');
+        return 
+      }
+    }
+
+    setLoadingStatus(true);
     e.stopPropagation();
     fetch('/api/fetchPokeAPI', {
       method: 'POST',
@@ -118,19 +128,14 @@ const EvolutionTree= (props) => {
     })
       .then((response) => response.json())
       .then((pokemonData) => {
-        console.log('fetchPokeAPI ', pokemonData);
+        setLoadingStatus(false);
         props.updatePokemon(pokemon, pokemonData);
-        if (pokemonData.error === 404) {
-          alert('Pokemon not found! Please check your spelling and try again :)')
-        };
       })
   }
 
 
   useEffect(() => {
-    console.log('inside Evolution Tree UseEffect()')
-    // if (fullDisplay) populateEvolutionTree();
-    // else populateEvolutionTreeMinimized();
+
     populateEvolutionTree();
 
   }, [props.currentPokemon])
@@ -156,12 +161,14 @@ const EvolutionTree= (props) => {
     <div className='evolution-container' key={props.currentPokemon.name}>
   
       <div className={className} >
-        <h4>evolution tree</h4>
+        <h4>Evolutions</h4>
         <div className='evolution-tree-container'>
           {evolutionTree}
         </div>
       </div> 
-  
+      {loadingStatus ? 
+        <img className='between-rerender-loading-gif-evotree' src='/static/loading-2.gif' alt="" />
+        : null}
   </div>
  
   );

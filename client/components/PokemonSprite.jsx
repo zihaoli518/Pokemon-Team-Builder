@@ -24,7 +24,6 @@ const mapDispatchToProps = dispatch => ({
 
 
 const PokemonSprite = props => {
-  // console.log('inside PokemonSprite, props:', props)
   const [url, setUrl] = useState('/static/loading.gif')
   const [initialRender, setInitialRender] = useState(true)
 
@@ -53,9 +52,14 @@ const PokemonSprite = props => {
 
   // for saved teams - still sprites
   if (props.type==='still') {
-    console.log('should be still')
     let stillUrl = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${props.pokedexId}.png`;
-    return (<CropImage src={stillUrl} maxWidth={'105%'} maxHeight={'105%'}/>)
+    if (props.pokedexId<1) {
+      stillUrl = 'https://www.clipartmax.com/png/full/185-1853692_flat-mark-circle-round-question-help-icon-question-mark-in-circle.png';
+      className = 'pokedex-sprite-placeholder'
+    } 
+
+    return (<img onClick={onClick} className={className} id={props.id} src={stillUrl} />
+    )
   }
 
 
@@ -74,7 +78,6 @@ const PokemonSprite = props => {
       isCancelled = true;
     }
     if (props.type==='still') {
-      console.log('should be still')
 
       // let stillUrl = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${props.pokedexId}.png`;
       // return (<croppedSprite src={stillUrl}/>)
@@ -94,7 +97,7 @@ const PokemonSprite = props => {
       })
         .then((response) => response.json())
         .then((updatedUrlObject) => {
-          console.log('testForNewerSprites FRONT ', updatedUrlObject);
+          // console.log('testForNewerSprites FRONT ', updatedUrlObject);
           setUrl(updatedUrlObject.url);
 
           if (localStorage.getItem('pokemon-team-builder-cache')) {

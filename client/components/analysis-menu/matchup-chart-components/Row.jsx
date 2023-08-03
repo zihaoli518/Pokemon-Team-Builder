@@ -13,7 +13,7 @@
  import React, { useState, useEffect } from 'react';
  import { connect } from 'react-redux';
  import Box from './Box.jsx';
- import PokemonSprite from '../PokemonSprite.jsx';
+ import PokemonSprite from '../../PokemonSprite.jsx';
  
  
  // const example = {

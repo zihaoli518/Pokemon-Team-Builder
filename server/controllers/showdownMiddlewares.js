@@ -1,8 +1,10 @@
 const fs = require('fs');
 const fetch = require('node-fetch');
 const parse = require('node-html-parser');
+const path = require('path');
+const axios = require('axios');
 
-const { Dex } = require('pokemon-showdown');
+const { Dex } = require('@pkmn/dex');
 
 const showdownMiddlewares = {}; 
 
@@ -14,7 +16,7 @@ showdownMiddlewares.getAllSpecies = (req, res, next) => {
   const arrayOfSpecies= Dex.species.all();
   res.locals.data = arrayOfSpecies
 
-  return next()
+  return next();
 }
 
 
@@ -108,4 +110,84 @@ showdownMiddlewares.getAllMoves = (req, res, next) => {
   return next()
 }
 
+showdownMiddlewares.getAllMons = (req, res, next) => {
+  console.log('inside getAllMons middleware');
+
+  const arrayOfMons = Dex.species.all();
+
+  const monsDataObject = new Map();
+
+  for (let i=0; i<arrayOfMons.length; i++) {
+    const monObj = arrayOfMons[i];
+    let monName = monObj.name;
+
+    console.log('..........', i, '/', arrayOfMons.length, '..........')
+
+    console.log('writing JSON data for: ', monName);
+    let spriteUrl = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${monObj.num}.png`;
+    if (monObj.num<1) spriteUrl = 'https://www.clipartmax.com/png/full/185-1853692_flat-mark-circle-round-question-help-icon-question-mark-in-circle.png'
+    monsDataObject.set(monName, {
+      ...monObj,
+      name: monName,
+      baseStats: monObj.baseStats,
+      types: monObj.types,
+      tier: monObj.tier,
+      pokedexId: monObj.num,
+      spriteUrl: spriteUrl,
+    });
+    
+  }
+  const monsDataJSON = JSON.stringify(Array.from(monsDataObject));
+
+  fs.writeFile("mons-data.json", monsDataJSON, 'utf8', function (err) {
+    if (err) {
+        console.log("An error occured while writing JSON Object to File.");
+        return console.log(err);
+    }
+    console.log("JSON file has been saved.");
+  });
+  
+  res.locals.data = monsDataJSON;
+  return next()
+}
+
+showdownMiddlewares.getTypesImages = (req, res, next) => {
+  const typesArray = ['bug', 'dark', 'dragon', 'electric', 'fairy', 'fighting', 'fire', 'flying', 'ghost', 'grass', 'ground', 'ice', 'normal', 'poison', 'psychic', 'rock', 'steel', 'water'];
+ 
+  // Function to download image for each type
+  async function downloadImages(types) {
+    for (const type of types) {
+      const imageUrl = `https://play.pokemonshowdown.com/sprites/types/${capitalizeFirstLetter(type)}.png`;
+      const imagePath = path.join(__dirname, `../../assets/types-images/${type}.png`);
+
+      try {
+        const response = await axios.get(imageUrl, { responseType: 'stream' });
+        const writer = fs.createWriteStream(imagePath);
+
+        response.data.pipe(writer);
+
+        await new Promise((resolve, reject) => {
+          writer.on('finish', resolve);
+          writer.on('error', reject);
+        });
+
+        console.log(`Image downloaded for type ${type}`);
+      } catch (error) {
+        console.error(`Error downloading image for type ${type}:`, error);
+      }
+    }
+  }
+
+  downloadImages(typesArray);
+  return next();
+}
+
+// helper functions 
+function capitalizeFirstLetter(str) {
+  return str.charAt(0).toUpperCase() + str.slice(1);
+}
+
+
+
 module.exports= showdownMiddlewares;
+

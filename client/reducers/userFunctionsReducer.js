@@ -24,8 +24,8 @@ const initialState = {
   username: null,
   savedTeams: {
     team_1: null,
-
-  }
+  },
+  saveToDatabase: false,
 }
 
 const userFunctionsReducer = (state = initialState, action) => {

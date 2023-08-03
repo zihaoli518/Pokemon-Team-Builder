@@ -6,7 +6,8 @@
   "scripts": {
     "start": "nodemon server/server.js",
     "build": "webpack",
-    "dev": "concurrently \"NODE_ENV=development webpack-dev-server --hot --progress --color\" \"nodemon ./server/server.js\""
+    "dev": "concurrently \"NODE_ENV=development webpack-dev-server --hot --progress --color\" \"nodemon ./server/server.js\"",
+    "production": "concurrently \"NODE_ENV=production webpack --mode production\" \"nodemon ./server/server.js\""
   },
   "repository": {
     "type": "git",
@@ -38,7 +39,12 @@
     "webpack-hot-middleware": "^2.24.3"
   },
   "dependencies": {
+    "@ajhyndman/smogon-calc": "^0.8.0",
+    "@pkmn/data": "^0.7.39",
+    "@pkmn/dex": "^0.7.39",
     "@smogon/calc": "^0.7.0",
+    "axios": "^1.4.0",
+    "bcrypt": "^5.1.0",
     "chart.js": "^4.2.1",
     "concurrently": "^7.4.0",
     "cookie-parser": "^1.4.6",
@@ -50,7 +56,7 @@
     "node-html-parser": "^6.1.4",
     "pg": "^8.10.0",
     "poke-types": "^1.0.22",
-    "pokemon-showdown": "^0.11.7",
+    "pokemon-showdown": "^0.11.9",
     "pokemon-stat-calculator": "^0.3.0",
     "react": "^18.2.0",
     "react-chartjs-2": "^5.2.0",

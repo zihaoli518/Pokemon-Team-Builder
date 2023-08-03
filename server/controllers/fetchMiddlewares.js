@@ -8,9 +8,9 @@ const lina = require('../../assets/lina.json');
 const fetchMiddlewares = {}; 
 
 fetchMiddlewares.fetchPokeAPI = (req, res, next) => {
-  console.log('inside fetchPokeAPI');
-
+  
   const pokemonName = req.body.pokemon
+  console.log('inside fetchPokeAPI', pokemonName);
 
   // adding hoshi 
   if (pokemonName==='hoshi') {

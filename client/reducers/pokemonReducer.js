@@ -16,6 +16,9 @@ import * as types from '../constants/actionTypes';
 import helpers from './helpers.js'
 import { getTypeWeaknesses } from 'poke-types';
 const calculator = require('pokemon-stat-calculator');
+import Data from '../components/dexData.js';
+const allItemsJSON = Data.allItemsJSON;
+const allMovesJSON = Data.allMovesJSON;
 
 const initialState = {
   currentPokemon: {
@@ -33,11 +36,11 @@ const initialState = {
       move_4: {name: null, type: ""},
     },
     activeMove: {
-      moveId: "",
+      moveId: "initial",
       moveObj: {name: null}
     },
-    evs:{obj: {hp: 0, attack: 0, defense: 0, specialA: 0, specialD: 0, Speed: 0}, array: [0,0,0,0,0,0]},
-    ivs:{obj: {hp: 31, attack: 31, defense: 31, specialA: 31, specialD: 31, Speed: 31}, array: [0,0,0,0,0,0]},
+    evs:{obj: {hp: 0, attack: 0, defense: 0, specialA: 0, specialD: 0, speed: 0}, array: [0,0,0,0,0,0]},
+    ivs:{obj: {hp: 31, attack: 31, defense: 31, specialA: 31, specialD: 31, speed: 31}, array: [0,0,0,0,0,0]},
     remainingEv: 508,
     nature: 'serious',
     calculatedStats: [0, 0, 0, 0, 0, 0],
@@ -57,6 +60,7 @@ const initialState = {
     mon4: null,
     mon5: null,
     mon6: null,
+    activeMon: null,
   },
   enemyTeam: {
     size: 0,
@@ -68,7 +72,9 @@ const initialState = {
     mon4: null,
     mon5: null,
     mon6: null,
+    activeMon: null,
   },
+  historyCache: [],
   previousTeamKeyF: 'team_1',
   previousTeamKeyE: 'team_1',
   teamStatus: false,
@@ -104,6 +110,15 @@ const pokemonReducer = (state = initialState, action) => {
 
     // expecting data from pokeAPI fetch
     case types.ADD_POKEMON_POKEAPI: 
+      console.log('inside ADD_POKEMON_POKEAPI', action.payload);
+
+      // check if pokemon data received is in cached format 
+      if (action.payload.mode==='cached') {
+        return {
+          ...state,
+          currentPokemon: action.payload.pokemonData
+        }
+      }
 
       // console.log(action.payload)
       const copy = {...state.currentPokemon};
@@ -141,8 +156,17 @@ const pokemonReducer = (state = initialState, action) => {
       // reformatting move pool of pokemon 
       let newMovePool = {};
       for (let i=0; i<pokemonData.moves.length; i++) {
+        // // keeping move pool up to date with gen 9 only 
+        // let gen9 = false;
+        // for (let i=0; i<pokemonData.moves[i].version_group_details.length; i++) {
+        //   if (pokemonData.moves[i].version_group_details[i].version_group.name === 'scarlet-violet') gen9=true;
+        // }
+        // if (gen9) newMovePool[pokemonData.moves[i].move.name.replace("-", " ")] = true;
         newMovePool[pokemonData.moves[i].move.name.replace("-", " ")] = true;
+
       }
+      // for some reason corviknight is missing defog from api 
+      if (copy.pokemon==='corviknight') newMovePool['defog'] = true;
       copy.movePool = newMovePool;
 
       // add evolution chain 
@@ -170,10 +194,36 @@ const pokemonReducer = (state = initialState, action) => {
       copy.calculatedStats = calculator.calAllStats(copy.ivs.array, statsArray, copy.evs.array, copy.level, natureArray)
       
 
+      // handling importing sets 
+      if (action.payload.mode==='import') {
+        const importedSet = action.payload.importedSet;
+        return {
+          ...state,
+          currentPokemon: {
+            ...copy,
+            activeAbility: {name:importedSet.ability, description: ''},
+            item: {item: importedSet.item, description: allItemsJSON[importedSet.item].desc, url: allItemsJSON[importedSet.item].spriteUrl}, 
+            evs: {obj: importedSet.evs, array:[importedSet.evs.hp, importedSet.evs.atk, importedSet.evs.def, importedSet.evs.spa, importedSet.evs.spd, importedSet.evs.spe]},
+            ivs: {obj: importedSet.ivs, array:[importedSet.ivs.hp, importedSet.ivs.atk, importedSet.ivs.def, importedSet.ivs.spa, importedSet.ivs.spd, importedSet.ivs.spe]},
+            nature: importedSet.nature.toLowerCase(),
+            moves: {
+              move_1: allMovesJSON[importedSet.moves[0].toLowerCase()],
+              move_2: allMovesJSON[importedSet.moves[1].toLowerCase()],
+              move_3: allMovesJSON[importedSet.moves[2].toLowerCase()],
+              move_4: allMovesJSON[importedSet.moves[3].toLowerCase()],
+            },
+          }
+        }
+      }
+
+
       return {
         ...state, 
         currentPokemon: copy
       }
+
+
+
 
     case types.UPDATE_GIF:
       const updatedCurrentPokemon = state.currentPokemon;
@@ -228,7 +278,7 @@ const pokemonReducer = (state = initialState, action) => {
       
     // select pokemon -> and make it the current display pokemon 
     case types.SELECT_TEAM_MEMBER : 
-      console.log('inside SELECT_TEAM_MEMBER', action.payload)
+      console.log('inside SELECT_TEAM_MEMBER', action.payload);
 
       const copyOfPokemonData = {...action.payload.pokemonData};
       copyOfPokemonData.slot.team = action.payload.team;
@@ -333,8 +383,6 @@ const pokemonReducer = (state = initialState, action) => {
       copyOfPrevItemMon.item['description'] = action.payload.description;
       copyOfPrevItemMon.item['url'] = action.payload.url;
 
-      console.log('end of SAVE_ITEM_TO_MON', state.yourTeam.mon1.item.item)
-
       return {
         ...state,
         currentPokemon: copyOfPrevItemMon
@@ -428,11 +476,64 @@ const pokemonReducer = (state = initialState, action) => {
         yourTeam: yourTeamWithUpdatedStats
       }
     
-      case types.UPDATE_YOUR_TEAM_KEY: 
+    case types.UPDATE_YOUR_TEAM_KEY: 
+      return {
+        ...state,
+        yourTeam: {...state.yourTeam, key: action.payload}
+      }
+
+    case types.UPDATE_HISTORY_CACHE: 
+      console.log('inside UPDATE_HISTORY_CACHE', action.payload);
+
+      const copyOFHistoryCache = [...state.historyCache];
+
+    
+
+      if (action.payload.type==='add') {
+        //quickly check if pokemon already exists in cache
+        for (let i = 0; i < copyOFHistoryCache.length; i++) {
+          const pokemonObj = copyOFHistoryCache[i];
+          if (pokemonObj.pokemon === action.payload.pokemonObj.pokemon) {
+            copyOFHistoryCache.splice(i, 1);
+            copyOFHistoryCache.push(pokemonObj);
+            return {...state, historyCache: copyOFHistoryCache}
+          }
+        }
+        if (copyOFHistoryCache.length>=10) copyOFHistoryCache.shift();
+        copyOFHistoryCache.push(action.payload.pokemonObj);
         return {
           ...state,
-          yourTeam: {...state.yourTeam, key: action.payload}
+          historyCache: copyOFHistoryCache
         }
+      } else if (action.payload.type==='sync') {
+        return {  
+          ...state,
+          historyCache: action.payload.array
+        }
+      }
+
+    case types.UPDATE_POKEMON_SET: 
+      console.log('inside UPDATE_POKEMON_SET', action.payload); 
+      const importedSet = action.payload; 
+      return {
+        ...state,
+        currentPokemon: {
+          ...state.currentPokemon,
+          activeAbility: {name:importedSet.ability, description: ''},
+          item: {item: importedSet.item, description: allItemsJSON[importedSet.item].desc, url: allItemsJSON[importedSet.item].spriteUrl}, 
+          evs: {obj: importedSet.evs, array:[importedSet.evs.hp, importedSet.evs.atk, importedSet.evs.def, importedSet.evs.spa, importedSet.evs.spd, importedSet.evs.spe]},
+          ivs: {obj: importedSet.ivs, array:[importedSet.ivs.hp, importedSet.ivs.atk, importedSet.ivs.def, importedSet.ivs.spa, importedSet.ivs.spd, importedSet.ivs.spe]},
+          nature: importedSet.nature.toLowerCase(),
+          moves: {
+            move_1: {name: importedSet.moves[0], type: allMovesJSON[importedSet.moves[0]].type.toLowerCase()},
+            move_2: {name: importedSet.moves[1], type: allMovesJSON[importedSet.moves[1]].type.toLowerCase()},
+            move_3: {name: importedSet.moves[2], type: allMovesJSON[importedSet.moves[2]].type.toLowerCase()},
+            move_4: {name: importedSet.moves[3], type: allMovesJSON[importedSet.moves[3]].type.toLowerCase()}
+          },
+        }
+      }
+
+        
          
     default: {
       return state

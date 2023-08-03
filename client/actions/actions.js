@@ -17,11 +17,13 @@ export const addPokemon = pokemon => ({
   payload: pokemon
 })
 
-export const updatePokemonPokeAPI = (pokemon, pokemonData) => ({
+export const updatePokemonPokeAPI = (pokemon, pokemonData, mode, importedSet) => ({
   type: types.ADD_POKEMON_POKEAPI,
   payload: {
     pokemon: pokemon,
     pokemonData: pokemonData,
+    mode: mode, 
+    importedSet: importedSet,
   },
 });
 
@@ -159,4 +161,36 @@ export const updateNature = (nature) => ({
 export const updateYourTeamKey = (num) => ({
   type: types.UPDATE_YOUR_TEAM_KEY,
   payload: num
+})
+
+export const addMonToCalc = (pokemonObj, team) => ({
+  type: types.ADD_MON_TO_CALC,
+  payload: {pokemonObj: pokemonObj, team: team}
+})
+
+
+export const changeCalcAttribute = (team, attributeName, attribute) => ({
+  type: types.CHANGE_CALC_ATTRIBUTE,
+  payload: {team: team, attributeName: attributeName, attribute: attribute}
+})
+
+export const updateCalculatedStatsCalc = (team, evs, results) => ({
+  type: types.UPDATE_CALCULATED_STATS_CALC, 
+  payload: {team: team, evs: evs, results: results}
+})
+
+
+export const chooseMoveForCalc = (team, moveId, move, type, basepower, categoryUrl) => ({
+  type: types.CHOOSE_MOVE_FOR_CALC, 
+  payload: {team: team, moveId: moveId, move: move, type: type, basepower: basepower, categoryUrl: categoryUrl}
+})
+
+export const updateHistoryCache = (type, pokemonObj, array) => ({
+  type: types.UPDATE_HISTORY_CACHE, 
+  payload: {type: type, pokemonObj: pokemonObj, array: array}
+})
+
+export const updatePokemonSet = (importedSet) => ({
+  type: types.UPDATE_POKEMON_SET, 
+  payload: importedSet
 })
