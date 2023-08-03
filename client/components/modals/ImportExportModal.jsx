@@ -40,8 +40,12 @@ const ImportExportModal = props => {
   const [modalShown, setModalShown] = useState({import: false, export: false});
   const [modalContent, setModalContent] = useState([]);
   const [className, setClassName] = useState(''); 
+  const [exportedFormat, setExportedFormat] = useState('');
   
-
+  const closeModal = () => {
+    setShowModal(false); 
+    setModalShown({import: false, export: false});
+  }
 
   const toggleImport = () => {
     // control state changes 
@@ -52,11 +56,6 @@ const ImportExportModal = props => {
     }
     setShowModal(true); 
     setModalShown({import: true, export: false});
-
-    const closeModal = () => {
-      setShowModal(false); 
-      setModalShown({import: false, export: false});
-    }
 
     const handleImport = () => {
       const userInput = document.getElementById('import-current-pokemon-input').value;
@@ -80,13 +79,50 @@ const ImportExportModal = props => {
           // props.updatePokemonSet(importedSet)
         })
     }
-
     // generate modal content 
     const newModalContent = (
       <div className='import-export-modal'>
         <img className="remove-button" onClick={()=>{closeModal()}} src='https://cdn-icons-png.flaticon.com/512/66/66847.png'></img>
         <textarea type='text' id='import-current-pokemon-input'></textarea>
         <button onClick={() => {handleImport()}}>import</button>
+      </div>
+    );
+    setModalContent(newModalContent);
+  }
+
+
+  const toggleExport = () => {
+    // control state changes 
+    if (showModal && modalShown.export) {
+      setShowModal(false); 
+      setModalShown({import: false, export: false});
+      return 
+    }
+    setShowModal(true); 
+    setModalShown({import: false, export: true});
+
+    const handleExport = () => {
+      const userInput = props.currentPokemon;
+      fetch('/api/exportMon', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Accept: 'application/json, text/plain',
+        },
+        body: JSON.stringify({mon: userInput})
+      })
+        .then((response) => response.json())
+        .then((response) => {
+          console.log(response.exportedSet);
+          setExportedFormat(response.exportedSet)
+        })
+    }
+
+    const newModalContent = (
+      <div className='import-export-modal' key={exportedFormat}>
+        <img className="remove-button" onClick={()=>{closeModal()}} src='https://cdn-icons-png.flaticon.com/512/66/66847.png'></img>
+        <textarea type='text' id='import-current-pokemon-input'>{exportedFormat}</textarea>
+        <button onClick={() => {handleExport()}}>export</button>
       </div>
     );
     setModalContent(newModalContent);

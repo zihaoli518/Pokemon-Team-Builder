@@ -124,6 +124,11 @@ app.post('/api/importMon', convertTeamFormatMiddlewares.importMon, fetchMiddlewa
   return res.status(200).send({pokemonData: res.locals.data, importedSet: res.locals.importedMon})
 })
 
+app.post('/api/exportMon', convertTeamFormatMiddlewares.exportMon, (req, res) => {
+  console.log('/api/exportMon complete')
+  return res.status(200).send({exportedSet: res.locals.exportedSet})
+})
+
 
 app.listen(PORT); 
 
