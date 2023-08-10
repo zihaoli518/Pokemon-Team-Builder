@@ -38,17 +38,19 @@ convertTeamFormatMiddlewares.exportMon = (req, res, next) => {
   const reduxPokemonObject = req.body.mon;
   const movesArray = [];
   for (let moveKey in reduxPokemonObject.moves) {
-    movesArray.push(capitalizeWords(reduxPokemonObject.moves[moveKey].name))
+    const moveName = reduxPokemonObject.moves[moveKey].name;
+    if (moveName) movesArray.push(capitalizeWords(moveName))
+    else movesArray.push('')
   }
 
   let standardFormatMon = {
     name: "",
     species: capitalizeWords(reduxPokemonObject.pokemon),
     gender: "",
-    item: capitalizeWords(reduxPokemonObject.item.item),
-    ability: capitalizeWords(reduxPokemonObject.activeAbility.name),
+    item: reduxPokemonObject.item.item ? capitalizeWords(reduxPokemonObject.item.item) : "",
+    ability: reduxPokemonObject.activeAbility.name ? capitalizeWords(reduxPokemonObject.activeAbility.name) : "",
     evs: reduxPokemonObject.evs.obj,
-    nature: capitalizeWords(reduxPokemonObject.nature),
+    nature: reduxPokemonObject.nature ? capitalizeWords(reduxPokemonObject.nature) : "",
     moves: movesArray
   }
 
@@ -63,6 +65,7 @@ function capitalizeFirstLetter(str) {
   return str.charAt(0).toUpperCase() + str.slice(1);
 }
 function capitalizeWords(str) {
+  console.log('capitalize', str)
   return str.replace(/\b\w/g, function(match) {
     return match.toUpperCase();
   }).replace(/-/g, ' ');

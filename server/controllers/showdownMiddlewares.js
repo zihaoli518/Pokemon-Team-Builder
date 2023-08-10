@@ -119,7 +119,7 @@ showdownMiddlewares.getAllMons = (req, res, next) => {
 
   for (let i=0; i<arrayOfMons.length; i++) {
     const monObj = arrayOfMons[i];
-    let monName = monObj.name;
+    let monName = monObj.name.replace(' ', '-');
 
     console.log('..........', i, '/', arrayOfMons.length, '..........')
 

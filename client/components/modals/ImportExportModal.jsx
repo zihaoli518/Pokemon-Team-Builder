@@ -10,7 +10,7 @@
  */
 
 // importing dependencies 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef} from 'react';
 import { connect } from 'react-redux';
 
 import * as actions from '../../actions/actions';
@@ -41,6 +41,20 @@ const ImportExportModal = props => {
   const [modalContent, setModalContent] = useState([]);
   const [className, setClassName] = useState(''); 
   const [exportedFormat, setExportedFormat] = useState('');
+  const [isCopied, setIsCopied] = useState(false);
+
+  const divRef = useRef(null);
+
+  const handleClickOutside = (event) => {
+    console.log("inside handleClickOutside");
+    console.log(divRef.current, event.target, event.target.nodeName)
+    if (divRef.current && !divRef.current.contains(event.target) && event.target.nodeName !== 'BUTTON') {
+      // Click occurred outside the div, execute your logic here
+      console.log("Click occurred outside the div");
+      setShowModal(false); 
+      setModalShown({import: false, export: false});
+    }
+  };
   
   const closeModal = () => {
     setShowModal(false); 
@@ -101,33 +115,78 @@ const ImportExportModal = props => {
     setShowModal(true); 
     setModalShown({import: false, export: true});
 
-    const handleExport = () => {
-      const userInput = props.currentPokemon;
-      fetch('/api/exportMon', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          Accept: 'application/json, text/plain',
-        },
-        body: JSON.stringify({mon: userInput})
-      })
-        .then((response) => response.json())
-        .then((response) => {
-          console.log(response.exportedSet);
-          setExportedFormat(response.exportedSet)
-        })
-    }
-
-    const newModalContent = (
-      <div className='import-export-modal' key={exportedFormat}>
-        <img className="remove-button" onClick={()=>{closeModal()}} src='https://cdn-icons-png.flaticon.com/512/66/66847.png'></img>
-        <textarea type='text' id='import-current-pokemon-input'>{exportedFormat}</textarea>
-        <button onClick={() => {handleExport()}}>export</button>
-      </div>
-    );
-    setModalContent(newModalContent);
-
+    handleExport();
   }
+
+  const handleExport = () => {
+    const userInput = props.currentPokemon;
+    fetch('/api/exportMon', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Accept: 'application/json, text/plain',
+      },
+      body: JSON.stringify({mon: userInput})
+    })
+      .then((response) => response.json())
+      .then((response) => {
+        console.log(response.exportedSet);
+        return response.exportedSet
+      })
+      .then((response) => {
+        console.log('about to set new content')
+        const newModalContent = (
+          <div className='import-export-modal' key={isCopied}>
+            <img className="remove-button" onClick={()=>{closeModal()}} src='https://cdn-icons-png.flaticon.com/512/66/66847.png'></img>
+            <textarea type='text' id='import-current-pokemon-input' value={response}></textarea>
+            <button onClick={() => {handleCopyClick(response)}}>
+              <span>{isCopied ? 'Copied!' : 'Copy'}</span>
+            </button>
+          </div>
+        );
+        setModalContent(newModalContent);
+        setExportedFormat(response.exportedSet);
+      })
+  }
+
+  async function copyTextToClipboard(text) {
+    if ('clipboard' in navigator) {
+      return await navigator.clipboard.writeText(text);
+    } else {
+      return document.execCommand('copy', true, text);
+    }
+  }
+
+  // onClick handler function for the copy button
+  const handleCopyClick = (copyText) => {
+    // Asynchronously call copyTextToClipboard
+    copyTextToClipboard(copyText)
+      .then(() => {
+        // If successful, update the isCopied state value
+        console.log('inside copyText .then')
+        setIsCopied(true);
+        setTimeout(() => {
+          setIsCopied(false);
+        }, 1500);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }
+
+  // update the modal content 
+  useEffect(() => {
+    handleExport();
+  }, [isCopied, exportedFormat])
+
+  // closes modal when click outside modal detected
+  useEffect(() => {
+    document.addEventListener("click", handleClickOutside);
+
+    return () => {
+      document.removeEventListener("click", handleClickOutside);
+    };
+  }, []);
 
   return (
     <div className="import-export-current-pokemon">
@@ -136,7 +195,7 @@ const ImportExportModal = props => {
         <button onClick={()=>{toggleExport()}}>export set</button>
       </div>
       {showModal ? 
-        <div className={className}>
+        <div ref={divRef} className={className} >
           {modalContent}
         </div> 
         : null}
