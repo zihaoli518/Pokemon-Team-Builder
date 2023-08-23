@@ -46,8 +46,7 @@ const ImportExportModal = props => {
   const divRef = useRef(null);
 
   const handleClickOutside = (event) => {
-    console.log("inside handleClickOutside");
-    console.log(divRef.current, event.target, event.target.nodeName)
+
     if (divRef.current && !divRef.current.contains(event.target) && event.target.nodeName !== 'BUTTON') {
       // Click occurred outside the div, execute your logic here
       console.log("Click occurred outside the div");
