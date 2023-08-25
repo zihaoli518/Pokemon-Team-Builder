@@ -106,16 +106,9 @@ const TeamDisplay= (props) => {
     e.preventDefault();
     // get edited team name from DOM
     let prevInput = document.querySelector("#main-div > div.teams > div.green > h4").innerHTML;
-    let newInput = '';
+    let newInput = prevInput;
     if (prevInput===undefined || prevInput==='your team') newInput = 'untitled';
-    // check for duplicate names 
-    if (prevInput==='untitled') newInput = prevInput + '-2';
-    let prevNum = Number(prevInput[prevInput.length-1]);
-    if (prevNum>1) {
-      prevNum++;
-      newInput = prevInput.slice(0, prevInput.length-2) + prevNum;
-    }
-    console.log('inside saveTeamAsNew', prevInput, newInput, prevInput==='your team')
+
     // sending payload to dispatch functions
     let payload = {name: newInput, team: {...teamState.selectedTeam}};
     payload.team.name = newInput;
@@ -130,6 +123,7 @@ const TeamDisplay= (props) => {
     // let input = document.querySelector("#main-div > div.teams > div.green > h4").innerHTML;
     let input = e.target.textContent;
     if (!input) input = document.querySelector("#main-div > div.teams > div.green > h4").innerHTML;
+    console.log('in saveTeam, ', input)
     if (input===undefined) input = 'untitled'
     let copy = {...teamState.selectedTeam}
     copy.name = input

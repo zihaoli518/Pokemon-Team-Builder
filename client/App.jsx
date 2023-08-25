@@ -134,7 +134,7 @@ class App extends Component {
             </div>
             : null
           }
-          <img className='electabuzzes' src="https://www.models-resource.com/resources/big_icons/24/23144.png?updated=1510574730" alt="" />
+          {/* <img className='electabuzzes' src="https://www.models-resource.com/resources/big_icons/24/23144.png?updated=1510574730" alt="" /> */}
           <PokemonSearch />
           <BrowsingHistory />
 
