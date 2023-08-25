@@ -101,23 +101,29 @@ const TeamDisplay= (props) => {
     // console.log('END of populateTeam() ', newTeamToBeDisplayed)
   }
 
+  // copy the current team as save as new team - mapped to onclick of copy 
   const saveTeamAsNew = (e) => {
     e.preventDefault();
     // get edited team name from DOM
-    let input = document.querySelector("#main-div > div.teams > div.green > h4").innerHTML;
-    if (input===undefined) input = 'untitled'
+    let prevInput = document.querySelector("#main-div > div.teams > div.green > h4").innerHTML;
+    let newInput = prevInput;
+    if (prevInput===undefined || prevInput==='your team') newInput = 'untitled';
+
     // sending payload to dispatch functions
-    let payload = {name: input, team: {...teamState.selectedTeam}};
-    payload.team.name = input;
+    let payload = {name: newInput, team: {...teamState.selectedTeam}};
+    payload.team.name = newInput;
     props.saveCurrentTeamAsNew(payload);
     // saving the new state to database 
     // saveTeamsToDatabase(props.savedTeams)
 
   }
 
-  const saveTeam = () => {
+  const saveTeam = (e) => {
     console.log('inside saveTeam')
-    let input = document.querySelector("#main-div > div.teams > div.green > h4").innerHTML;
+    // let input = document.querySelector("#main-div > div.teams > div.green > h4").innerHTML;
+    let input = e.target.textContent;
+    if (!input) input = document.querySelector("#main-div > div.teams > div.green > h4").innerHTML;
+    console.log('in saveTeam, ', input)
     if (input===undefined) input = 'untitled'
     let copy = {...teamState.selectedTeam}
     copy.name = input
@@ -144,7 +150,7 @@ const TeamDisplay= (props) => {
 
   return (
     <div className={props.team}>
-      <h4 className='team-name-text-input' contenteditable="true">{teamState.title}</h4>
+      <h4 className='team-name-text-input' contenteditable="true" onInput={(e) => {saveTeam(e)}}>{teamState.title}</h4>
       <div className='team-members'>
         {teamState.teamToBeDisplayed}
       </div>

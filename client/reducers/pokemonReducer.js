@@ -304,7 +304,6 @@ const pokemonReducer = (state = initialState, action) => {
 
       const returnState = {...state};
       returnState[team] = shuffledTeam;
-      shuffledTeam['name'] = 'untitled'
 
       return returnState;
 

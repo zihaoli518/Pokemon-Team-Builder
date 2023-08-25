@@ -81,14 +81,31 @@ const userFunctionsReducer = (state = initialState, action) => {
             savedTeams: newSavedTeams
           }
         }
+        let duplicate = false; 
+        let duplicateName = '';
 
         for (let i=1; i<=Object.keys(state.savedTeams).length+1; i++) {
           let key = 'team_' + i; 
+          console.log(key, newSavedTeams[key], action.payload.team.name, )
           if (newSavedTeams[key]) newSavedTeams[key]['key'] = key;
+          if (newSavedTeams[key] && newSavedTeams[key].name === action.payload.team.name && typeof(action.payload.team.name[action.payload.team.name.length-1]) !== 'number') {
+            console.log('duplicate 1')
+            duplicate = true;
+            duplicateName = action.payload.team.name + '-2';
+          }
+          if (newSavedTeams[key] && Number(newSavedTeams[key].name[newSavedTeams[key].name.length-1])>1 && action.payload.team.name === newSavedTeams[key].name.slice(0, newSavedTeams[key].name.length-2)){
+            console.log('duplicate 2')
+            duplicate = true;
+            let prevNum = Number(newSavedTeams[key].name[newSavedTeams[key].name.length-1]);
+            prevNum++;
+            duplicateName = newSavedTeams[key].name.slice(0, newSavedTeams[key].name.length-1) + prevNum;
+          }
           if (!newSavedTeams.hasOwnProperty(key)) {
             newSavedTeams[key] = action.payload.team.team;
             newSavedTeams[key].key = key
           }
+          if (duplicate && i===Object.keys(state.savedTeams).length+1) newSavedTeams[key].name = duplicateName;
+
           if (state.savedTeams.team_1===null) break;
         }
 
