@@ -39,7 +39,10 @@ const AllSavedTeams= (props) => {
   const [allTeams, setAllTeams] = useState([])
 
   // caching the last saved team, if it's exactly the same then don't make API call
-  const [savedTeamsCache, setSavedTeamsCache] = useState([])
+  const [savedTeamsCache, setSavedTeamsCache] = useState([]);
+  // state for if the display is collapsed
+  const [collapsed, setCollapsed] = useState(false);
+  
 
   // useEffect responsible for populating allTeams state (containing jsx elements to be displayed) every time anything is updated in any team
   useEffect(() => {
@@ -149,9 +152,15 @@ const AllSavedTeams= (props) => {
   return (
     <div className='all-saved-teams-container'>
       <h4>Saved Teams</h4>
-      <div className='all-saved-teams'>
-        {allTeams}
-      </div>
+      {collapsed ?
+        <div className='collapsed-all-saved-teams'> 
+          
+        </div>
+        :
+        <div className='all-saved-teams'>
+          {allTeams}
+        </div>
+      }
     </div>
   );
 
