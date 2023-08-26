@@ -5,7 +5,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
     mode: process.env.NODE_ENV,
     entry: "./index.js",
     output: {
-      path: path.resolve(__dirname, "./build"),
+      path: path.resolve(__dirname, "./public"),
       filename: "bundle.js",
     },
     module: {
