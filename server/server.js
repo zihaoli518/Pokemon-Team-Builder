@@ -38,10 +38,15 @@ express.static(path.join(__dirname, '../assets')));
 app.use('/build', 
 express.static(path.join(__dirname, '../build')));
 
-// serve index.html on the route '/'
+// // serve index.html on the route '/'
+// app.get('/', (req, res) => {
+//   console.log('get/ complete')
+//   return res.status(200).sendFile(path.join(__dirname, '../index.html'));
+// });
+
 app.get('/', (req, res) => {
   console.log('get/ complete')
-  return res.status(200).sendFile(path.join(__dirname, '../index.html'));
+  return res.status(200).sendFile(path.join(__dirname, '../assets/hoshi.png'));
 });
 
 // routing fetch requests regarding pokemon data 
