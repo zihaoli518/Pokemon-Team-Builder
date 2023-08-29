@@ -35,19 +35,15 @@ app.use((req, res, next) => {
 app.use('/static', 
 express.static(path.join(__dirname, '../assets')));
 // serving bundle file output from webpack build in production mode 
-app.use('/build', 
-express.static(path.join(__dirname, '../build')));
+app.use('/public', 
+express.static(path.join(__dirname, '../public')));
 
-// // serve index.html on the route '/'
-// app.get('/', (req, res) => {
-//   console.log('get/ complete')
-//   return res.status(200).sendFile(path.join(__dirname, '../index.html'));
-// });
-
+// serve index.html on the route '/'
 app.get('/', (req, res) => {
   console.log('get/ complete')
-  return res.status(200).sendFile(path.join(__dirname, '../assets/hoshi.png'));
+  return res.status(200).sendFile(path.join(__dirname, '../index.html'));
 });
+
 
 // routing fetch requests regarding pokemon data 
 app.post('/api/fetchPokeAPI', fetchMiddlewares.fetchPokeAPI, (req, res) => {
