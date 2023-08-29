@@ -38,6 +38,15 @@ express.static(path.join(__dirname, '../assets')));
 app.use('/public', 
 express.static(path.join(__dirname, '../public')));
 
+app.use(express.static('public', { 
+  setHeaders: (res, path) => {
+    if (path.endsWith('.js')) {
+      res.setHeader('Content-Type', 'application/javascript');
+    }
+  }
+}));
+
+
 // serve index.html on the route '/'
 app.get('/', (req, res) => {
   console.log('get/ complete')
