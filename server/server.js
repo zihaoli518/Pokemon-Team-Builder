@@ -131,5 +131,20 @@ app.post('/api/exportMon', convertTeamFormatMiddlewares.exportMon, (req, res) =>
 })
 
 
+// global error handler
+app.use((err, req, res, next) => {
+  const defaultErr = {
+    log: 'Express error handler caught unknown middleware error',
+    status: 444,
+    message: {err: 'an error occurred'}
+  };
+  const errorObj = Object.assign({}, defaultErr);
+  errorObj.message.err = err;
+  console.log('ERROR: ', errorObj.log);
+
+  return res.status(errorObj.status).send(errorObj.message);
+});
+
+
 app.listen(PORT); 
 
