@@ -1,5 +1,9 @@
 const path = require('path')
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const CompressionWebpackPlugin = require('compression-webpack-plugin');
+const TerserPlugin = require('terser-webpack-plugin');
+const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
+
 
   module.exports = {
     mode: process.env.NODE_ENV,
@@ -76,5 +80,20 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
       },
     },
 
-    plugins: [new HtmlWebpackPlugin({ template: "./index.html" })],
+    plugins: [
+      new HtmlWebpackPlugin({ template: "./index.html" }),
+      new BundleAnalyzerPlugin(),
+      new CompressionWebpackPlugin({
+        algorithm: 'gzip',
+        test: /\.(js|css|html|svg)$/,
+        threshold: 10240,
+        minRatio: 0.8,
+        deleteOriginalAssets: false,
+      }),
+    ],
+  
+    optimization: {
+      minimize: true,
+      minimizer: [new TerserPlugin()],
+    },
   };    
