@@ -173,7 +173,12 @@ const PokemonSearch = props => {
     
 
     // fetching from pokeAPI
-    fetch('/api/fetchPokeAPI', {
+
+    // setting url for fetch requests based on NODE_ENV 
+    const backendURL = '/api/fetchPokeAPI';
+    if (process.env.NODE_ENV==='production') backendURL = 'https://pokemon-team-builder-api.vercel.app/' + backendURL;
+
+    fetch(backendURL, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

@@ -5,8 +5,8 @@
   "main": "webpack.config.js",
   "scripts": {
     "start": "nodemon server/server.js",
-    "test-build": "NODE_ENV=production; webpack --mode production",
-    "build": "concurrently \"webpack\" \"nodemon ./server/server.js\"",
+    "build": "NODE_ENV=production; webpack --mode production",
+    "build-local": "concurrently \"webpack\" \"nodemon ./server/server.js\"",
     "dev": "concurrently \"NODE_ENV=development webpack-dev-server --hot --progress --color\" \"nodemon ./server/server.js\"",
     "production": "concurrently \"NODE_ENV=production; webpack --mode production\" \"nodemon ./server/server.js\""
   },

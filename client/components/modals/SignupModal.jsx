@@ -25,11 +25,15 @@ const mapDispatchToProps = dispatch => ({
   showTypingChart : () => dispatch(actions.showTypingChart()),
 });
 
+const passwordSymbol = '◓';
+
 
 const SignupModal = props => {
   const [showUsernameAlert, setShowUsernameAlert] = useState({status: false, message: 'please enter an username'});
   const [showPasswordAlert, setShowPasswordAlert] = useState(false);
   const [showSuccessMessage, setShowSuccessMessage] = useState(false);
+  const [passwordSymbols, setPasswordSymbols] = useState([]);
+  const [maskedPassword, setMaskedPassword] = useState('');
 
 
   const submitHandler = (e) => {
@@ -47,8 +51,12 @@ const SignupModal = props => {
       setShowPasswordAlert(true);
       return;
     }
+    
+    // setting url for fetch requests based on NODE_ENV 
+    const backendURL = '/api/signup';
+    if (process.env.NODE_ENV==='production') backendURL = 'https://pokemon-team-builder-api.vercel.app/' + backendURL;
 
-    fetch('/api/signup', {
+    fetch(backendURL, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -79,8 +87,17 @@ const SignupModal = props => {
     setShowSuccessMessage(false);
   }
 
-  const showModalClassName = props.show ? "modal display-block" : "modal display-none";
+  // displays empty string for password div and populate passwordSymbol state with matching number of balls 
+  function handlePasswordInput(e) {
+    const input = e.target.value;
+    const length = input.length;
+    const maskedValue = passwordSymbol.repeat(length); // Replace with '*' characters
+    
+    setMaskedPassword(maskedValue);
+  }
 
+  const showModalClassName = props.show ? "modal display-block" : "modal display-none";
+  
   return (
     <div className={showModalClassName}>
       <form className='modal-form' id='signup-modal-form' onSubmit={(e) => {submitHandler(e)}}>
@@ -95,7 +112,11 @@ const SignupModal = props => {
         </div>
         <div className="password-div">
             <label>password</label>    
-            <input type="text" name="password" placeholder="" id="signup-password"></input>
+
+            <input type="text" name="password" placeholder="" id="signup-password" value={maskedPassword} onInput={(e) => {handlePasswordInput(e)}}></input>
+            <div className='password-symbols'>
+              {passwordSymbols}
+            </div>
         </div>
         {showPasswordAlert ? 
               <h4>please enter a password</h4> :

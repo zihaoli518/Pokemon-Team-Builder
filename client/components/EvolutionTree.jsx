@@ -18,6 +18,7 @@ import SavedTeam from './SavedTeam.jsx';
 import * as actions from '../actions/actions';
 
 
+
 const mapStateToProps = (state) => {
   return {
     currentPokemon: state.pokemon.currentPokemon,
@@ -118,7 +119,11 @@ const EvolutionTree= (props) => {
 
     setLoadingStatus(true);
     e.stopPropagation();
-    fetch('/api/fetchPokeAPI', {
+    // setting url for fetch requests based on NODE_ENV 
+    const backendURL = '/api/fetchPokeAPI';
+
+    if (process.env.NODE_ENV==='production') backendURL = 'https://pokemon-team-builder-api.vercel.app/' + backendURL;
+    fetch(backendURL, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
