@@ -18,7 +18,7 @@ import Data from './dexData.js';
 import PokemonSprite from './PokemonSprite.jsx';
 import ImportExportModal from './modals/ImportExportModal.jsx';
 
-import historyImg from "../assets/history.png";
+import historyImg from "../../assets/history.png";
 
 const allMonsJSON = Data.allMonsJSON;
 
