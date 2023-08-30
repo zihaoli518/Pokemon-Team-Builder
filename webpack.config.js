@@ -82,7 +82,7 @@ const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPl
 
     plugins: [
       new HtmlWebpackPlugin({ template: "./index.html" }),
-      new BundleAnalyzerPlugin(),
+      // new BundleAnalyzerPlugin(),
       new CompressionWebpackPlugin({
         algorithm: 'gzip',
         test: /\.(js|css|html|svg)$/,
