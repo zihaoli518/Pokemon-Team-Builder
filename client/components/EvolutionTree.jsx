@@ -120,7 +120,7 @@ const EvolutionTree= (props) => {
     setLoadingStatus(true);
     e.stopPropagation();
     // setting url for fetch requests based on NODE_ENV 
-    const backendURL = '/api/fetchPokeAPI';
+    let backendURL = '/api/fetchPokeAPI';
 
     if (process.env.NODE_ENV==='production') backendURL = 'https://pokemon-team-builder-api.vercel.app/' + backendURL;
     fetch(backendURL, {

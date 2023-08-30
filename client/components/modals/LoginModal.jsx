@@ -59,7 +59,7 @@ const LoginModal = props => {
     props.toggleLoginLoading();
 
     // setting url for fetch requests based on NODE_ENV 
-    const backendURL = '/api/login';
+    let backendURL = '/api/login';
     if (process.env.NODE_ENV==='production') backendURL = 'https://pokemon-team-builder-api.vercel.app/' + backendURL;
 
     fetch(backendURL, {
@@ -158,7 +158,7 @@ const LoginModal = props => {
   const getUserData = (username) => {
     console.log('inside get userData(), ', username)
     // setting url for fetch requests based on NODE_ENV 
-    const backendURL = '/api/users/';
+    let backendURL = '/api/users/';
     if (process.env.NODE_ENV==='production') backendURL = 'https://pokemon-team-builder-api.vercel.app/' + backendURL;
     fetch(backendURL + username, {
       method: 'GET',
