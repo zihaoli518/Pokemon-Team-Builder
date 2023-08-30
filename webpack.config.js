@@ -45,6 +45,10 @@ const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPl
           use: [
             {
               loader: 'file-loader',
+              options: {
+                name: '[name].[hash].[ext]',
+                outputPath: 'staic'
+              }
             },
           ],
         },
