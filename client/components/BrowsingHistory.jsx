@@ -18,6 +18,8 @@ import Data from './dexData.js';
 import PokemonSprite from './PokemonSprite.jsx';
 import ImportExportModal from './modals/ImportExportModal.jsx';
 
+import historyImg from "../assets/history.png";
+
 const allMonsJSON = Data.allMonsJSON;
 
 const mapStateToProps = state => {
@@ -80,12 +82,15 @@ const BrowsingHistory = props => {
 
   useEffect(() => {
     populateHistory();
-  }, [props.historyCache])
+  }, [props.historyCache]);
+
+  // let historyImg = '/static/history.png';
+  // if (process.env.NODE_ENV==='production') historyImg = '/images/'
 
   return (
     <div className='browsing-history' id='browsing-history' >
       {cacheOfHistoryDisplay}
-      <img className='browsing-history-logo' src="/static/history.png" alt="" />
+      <img className='browsing-history-logo' src={historyImg} alt="" />
       <ImportExportModal />
     </div>
   )

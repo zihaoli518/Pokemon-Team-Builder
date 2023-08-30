@@ -47,7 +47,7 @@ const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPl
               loader: 'file-loader',
               options: {
                 name: '[name].[hash].[ext]',
-                outputPath: 'staic'
+                outputPath: 'static'
               }
             },
           ],
