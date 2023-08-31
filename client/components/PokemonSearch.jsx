@@ -16,6 +16,7 @@ import * as actions from '../actions/actions';
 import Data from './dexData.js';
 // importing other files and components
 import PokemonSprite from './PokemonSprite.jsx';
+import loadingGIF from '/static/loading-2.gif';
 
 const allMonsJSON = Data.allMonsJSON;
 
@@ -288,7 +289,7 @@ const PokemonSearch = props => {
         {pokedex}
       </div>
       {loadingStatus ? 
-        <img className='between-rerender-loading-gif' src='/static/loading-2.gif' alt="" />
+        <img className='between-rerender-loading-gif' src={loadingGIF} alt="" />
         : null}
     </div>
   )

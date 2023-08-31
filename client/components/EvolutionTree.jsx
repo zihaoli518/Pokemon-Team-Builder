@@ -16,6 +16,7 @@ import PokemonSprite from './PokemonSprite.jsx';
 import SavedTeam from './SavedTeam.jsx';
 
 import * as actions from '../actions/actions';
+import loadingGIF from '/static/loading-2.gif';
 
 
 
@@ -172,7 +173,7 @@ const EvolutionTree= (props) => {
         </div>
       </div> 
       {loadingStatus ? 
-        <img className='between-rerender-loading-gif-evotree' src='/static/loading-2.gif' alt="" />
+        <img className='between-rerender-loading-gif-evotree' src={loadingGIF} alt="" />
         : null}
   </div>
  

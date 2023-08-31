@@ -13,7 +13,7 @@
 import React, {useState} from 'react';
 import { connect } from 'react-redux';
 
-import { Redirect } from 'react-router';
+import loadingGIF from '/static/loading.gif';
 
 import * as actions from '../../actions/actions';
 
@@ -205,7 +205,7 @@ const LoginModal = props => {
         <button className='close-button' onClick={(e) => {closeModal(e)}}>close</button>
         {/* <button className='test-button' onClick={(e) => {getUserData('123')}}>test</button> */}
         {(props.loginLoading) ?
-          <img id='login-loading-gif' src='/static/loading.gif' alt="" /> :
+          <img id='login-loading-gif' src={loadingGIF} alt="" /> :
           null
         }
     </div>

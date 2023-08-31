@@ -60,7 +60,6 @@ const SavedTeam = (props) => {
       } else if (props.savedTeam && !props.savedTeam[selectedMon] && firstAdd) {
         newTeamToBeDisplayed.push(
           <div className='saved-team-member-container'>
-            {/* <img className='first-add-button' src="https://static.thenounproject.com/png/1649999-200.png" alt="" /> */}
           </div>
         )
         firstAdd = false;

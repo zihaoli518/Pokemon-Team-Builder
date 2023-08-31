@@ -14,7 +14,9 @@ import React, {useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import fetch from 'node-fetch';
 
-import CropImage from './croppedSprite.jsx'
+import loadingGIF from '/static/loading.gif';
+import hoshiHat from '/static/hoshi-hat.png';
+import hoshi from '/static/hoshi.png';
 
 
 const mapDispatchToProps = dispatch => ({
@@ -24,7 +26,7 @@ const mapDispatchToProps = dispatch => ({
 
 
 const PokemonSprite = props => {
-  const [url, setUrl] = useState('/static/loading.gif')
+  const [url, setUrl] = useState(loadingGIF)
   const [initialRender, setInitialRender] = useState(true)
 
 
@@ -39,16 +41,16 @@ const PokemonSprite = props => {
   const animatedUrl = ('https://play.pokemonshowdown.com/sprites/xyani/' + props.pokemon.toLowerCase() + '.gif');
 
   if (props.pokemon==='hoshi') {
-    if (props.type==='still') return (<img src='/static/hoshi-hat.png' className={className}/>)
+    if (props.type==='still') return (<img src={hoshiHat} className={className}/>)
     return (
-      <img src='/static/hoshi.png' className={className}/>
+      <img src={hoshi} className={className}/>
     )
   }
-  if (props.pokemon==='lina') {
-    return (
-      <img src='/static/lina.png' className={className}/>
-    )
-  }
+  // if (props.pokemon==='lina') {
+  //   return (
+  //     <img src='/static/lina.png' className={className}/>
+  //   )
+  // }
 
   // for saved teams - still sprites
   if (props.type==='still') {

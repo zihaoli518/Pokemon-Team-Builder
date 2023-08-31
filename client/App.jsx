@@ -30,21 +30,14 @@ import MatchupChart from './components/analysis-menu/MatchupChart.jsx';
 import AllSavedTeams from './components/AllSavedTeams.jsx';
 import BrowsingHistory from './components/BrowsingHistory.jsx'
 
+import themeSongFile from '/static/theme.mp3';
+import buttonSoundFile from '/static/button-sound-effect.mp3';
+
+const themeSong = new Audio(themeSongFile);
+const buttonSound = new Audio(buttonSoundFile);
 
 
-const mapStateToProps = state => ({
-  currentPokemon: state.pokemon.currentPokemon,
-  teamStatus: state.pokemon.teamStatus,
-  analysisMenuStatus: state.damageCalc.analysisMenuStatus,
-  yourTeam: state.pokemon.yourTeam,
-  enemyTeam: state.pokemon.enemyTeam,
-  showTypingChart: state.pokemon.showTypingChart,
-  mainDivClassName: state.userFunctions.mainDivClassName
-}) 
 
-
-const themeSong = new Audio('/static/theme.mp3');
-const buttonSound = new Audio('/static/button-sound-effect.mp3')
 
 themeSong.addEventListener('loadeddata', () => {
   themeSong.play();
@@ -64,16 +57,15 @@ const addSoundEffectToButtons = () => {
   })
 }
 
-console.log('in APP');
-
-function capitalizeFirstLetter(str) {
-  return str.charAt(0).toUpperCase() + str.slice(1);
-}
-import {calculate, Generations, Pokemon, Move} from '@ajhyndman/smogon-calc';
-import {Dex} from '@pkmn/dex'
-
-console.log(Dex.gen)
-
+const mapStateToProps = state => ({
+  currentPokemon: state.pokemon.currentPokemon,
+  teamStatus: state.pokemon.teamStatus,
+  analysisMenuStatus: state.damageCalc.analysisMenuStatus,
+  yourTeam: state.pokemon.yourTeam,
+  enemyTeam: state.pokemon.enemyTeam,
+  showTypingChart: state.pokemon.showTypingChart,
+  mainDivClassName: state.userFunctions.mainDivClassName
+}) 
 
 
 class App extends Component {
@@ -81,31 +73,30 @@ class App extends Component {
     super(props);
     this.state = {volume: 0.5}
   }
-
+  
   componentWillMount = () => {
     addSoundEffectToButtons();
   }
-
+  
   componentDidUpdate = () => {
     addSoundEffectToButtons();
-    // this.addSliderOnChange();
   }
-
-
+  
+  
   changeAppVolume = () => {
     // Get the current volume level from the volume control element
     var volumeControl = document.getElementById('volume-slider');
     var newAppVolume = volumeControl.value;
-
+    
     // Update the app volume variable
     console.log('new app volume:' , newAppVolume)
     this.setState({volume: newAppVolume})
-
+    
     // Update the volume of all audio elements
     themeSong.volume = newAppVolume;
     buttonSound.volume = newAppVolume;
   }
-
+  
   addSliderOnChange() {
     var slider = document.getElementById("volume-slider");
     console.log('inside addSliderOnChange, ', slider, this.changeAppVolume);
@@ -114,8 +105,8 @@ class App extends Component {
       this.changeAppVolume(); // call your function here
     });
   }
-
-
+  
+  
   render() {
     return (
       <div className='app-container'>
@@ -147,18 +138,17 @@ class App extends Component {
           <div className="teams">
             {this.props.teamStatus
               ? [
-                  <TeamDisplay key={"green"} team={"green"} />,
-                  <SwitchTeams />,
-                  <TeamDisplay key={"red"} team={"red"} />,
-                ]
+                <TeamDisplay key={"green"} team={"green"} />,
+                <SwitchTeams />,
+                <TeamDisplay key={"red"} team={"red"} />,
+              ]
               : null}
           </div>
             {(this.props.teamStatus || this.props.analysisMenuStatus) ? <AnalysisMenu /> : null}
-          {/* <div className="matchup-chart-container"> */}
-          {/* </div> */}
+
           <div className='footer-container'>
               <h4>electabuzzed.gg</h4>
-              <h5>developed by zihao li, your buddy. source code at: </h5>
+              <h5>source code at: </h5>
 
               <a href="https://github.com/zihaoli518/Pokemon-Team-Builder">https://github.com/zihaoli518/Pokemon-Team-Builder</a>
           </div>
@@ -169,5 +159,9 @@ class App extends Component {
 }
 
 
+export default connect(mapStateToProps, null)(App);
 
-export default connect(mapStateToProps, null)(App)
+
+function capitalizeFirstLetter(str) {
+  return str.charAt(0).toUpperCase() + str.slice(1);
+}
