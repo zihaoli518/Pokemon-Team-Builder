@@ -52,6 +52,16 @@ const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPl
             },
           ],
         },
+        {
+          test: /\.mp3$/,
+          use: {
+            loader: 'file-loader',
+            options: {
+              name: '[name].[hash].[ext]',
+              outputPath: 'static'
+            }
+          },
+        },
       ],
     },
     
