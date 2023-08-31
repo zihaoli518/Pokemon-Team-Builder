@@ -1,4 +1,4 @@
-const fetch = require('node-fetch');
+const fetch = import('node-fetch');
 const parse = require('node-html-parser');
 
 const hoshi = require('../../assets/hoshi.json');
