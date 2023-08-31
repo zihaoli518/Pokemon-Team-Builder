@@ -52,13 +52,18 @@ showdownMiddlewares.getAllItems = (req, res, next) => {
     import('node-fetch')
       .then(fetchModule => fetchModule.default)
       .then(fetch => {
-        await fetch(url)
+        fetch(url)
           // .then(data => data.json())
           .then(data => {
             console.log('status: ', data.status)
-            if (data.status===200) resultBoolean = true;
+            if (data.status===200) {
+              resultBoolean = true;
+              return resultBoolean;
+            }
           })
-        return resultBoolean
+      })
+      .catch(error => {
+        return next(error)
       })
   }
 
