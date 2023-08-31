@@ -14,9 +14,9 @@ import React, {useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import fetch from 'node-fetch';
 
-import loadingGIF from '/static/loading.gif';
-import hoshiHat from '/static/hoshi-hat.png';
-import hoshi from '/static/hoshi.png';
+import loadingGIF from '../../assets/loading.gif';
+import hoshiHat from '../../assets/hoshi-hat.png';
+import hoshi from '../../assets/hoshi.png';
 
 
 const mapDispatchToProps = dispatch => ({

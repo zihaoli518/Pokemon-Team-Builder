@@ -16,6 +16,7 @@ import PokemonSprite from './PokemonSprite.jsx';
 import TeamMember from './TeamMember.jsx';
 
 import * as actions from '../actions/actions';
+import saveIcon from '../../assets/save-icon.png'
 
 
 const mapStateToProps = (state) => {
@@ -140,7 +141,7 @@ const TeamDisplay= (props) => {
       </div>
       {(teamState.color==='green') ?
         <div className='save-buttons-container'> 
-          <img className='save-team-icon' src="/static/save-icon.png" alt="" onClick={(e) => {saveTeam(e)}} />
+          <img className='save-team-icon' src={saveIcon} alt="" onClick={(e) => {saveTeam(e)}} />
           <img className='copy-team-icon' src="https://cdn-icons-png.flaticon.com/512/1621/1621635.png" alt="" onClick={(e) => {saveTeamAsNew(e)}} />
           <button className='clear-team-button' id='clear-team-button-f' onClick={(e) => {props.clearTeam('yourTeam'); }}>clear</button>
         </div>

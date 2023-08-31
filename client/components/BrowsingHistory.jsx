@@ -84,8 +84,6 @@ const BrowsingHistory = props => {
     populateHistory();
   }, [props.historyCache]);
 
-  // let historyImg = '/static/history.png';
-  // if (process.env.NODE_ENV==='production') historyImg = '/images/'
 
   return (
     <div className='browsing-history' id='browsing-history' >

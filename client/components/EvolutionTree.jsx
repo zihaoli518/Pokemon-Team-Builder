@@ -16,7 +16,7 @@ import PokemonSprite from './PokemonSprite.jsx';
 import SavedTeam from './SavedTeam.jsx';
 
 import * as actions from '../actions/actions';
-import loadingGIF from '/static/loading-2.gif';
+import loadingGIF from '../../assets/loading-2.gif';
 
 
 

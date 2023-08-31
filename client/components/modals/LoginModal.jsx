@@ -13,7 +13,7 @@
 import React, {useState} from 'react';
 import { connect } from 'react-redux';
 
-import loadingGIF from '/static/loading.gif';
+import loadingGIF from '../../../assets/loading.gif';
 
 import * as actions from '../../actions/actions';
 

@@ -16,7 +16,7 @@ import * as actions from '../actions/actions';
 import Data from './dexData.js';
 // importing other files and components
 import PokemonSprite from './PokemonSprite.jsx';
-import loadingGIF from '/static/loading-2.gif';
+import loadingGIF from '../../assets/loading-2.gif';
 
 const allMonsJSON = Data.allMonsJSON;
 

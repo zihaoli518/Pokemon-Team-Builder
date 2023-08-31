@@ -154,6 +154,7 @@ app.use((err, req, res, next) => {
   return res.status(errorObj.status).send(errorObj.message);
 });
 
+export default app;
 
 app.listen(PORT); 
 
