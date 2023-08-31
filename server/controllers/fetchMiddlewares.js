@@ -17,43 +17,48 @@ fetchMiddlewares.fetchPokeAPI = (req, res, next) => {
     res.locals.data = hoshi;
     return next();
   }
-  if (pokemonName==='lina') {
-    res.locals.data = lina;
-    return next();
-  }
-
-  async function getEvolutionChainUrl(speciesUrl) {
-    await fetch(speciesUrl)
-      .then(data => data.json())
-      .then(data => {
-        res.locals.evolutionChainUrl = data.evolution_chain.url;
-      })
-  }
-
-  async function getEvolutionTree(evolutionChainUrl) {
-    await fetch(evolutionChainUrl)
-      .then(data => data.json())
-      .then(data => {
-        res.locals.data.evolution_chain = data.chain;
-        return next();
-      })
-  }
-
-  fetch('https://pokeapi.co/api/v2/pokemon/' + pokemonName.toLowerCase())
-    .then(data => data.json())
-    .then(data => {
-      res.locals.data = data;
-    })
-    .then(async() => {
-      await getEvolutionChainUrl(res.locals.data.species.url)
-    })
-    .then(async() => {
-      await getEvolutionTree(res.locals.evolutionChainUrl)
-    })
-    .catch(error => {
-      return next(error);
-    })
+  // if (pokemonName==='lina') {
+  //   res.locals.data = lina;
+  //   return next();
+  // }
+  // Import 'node-fetch' dynamically
+  import('node-fetch')
+    .then(fetchModule => fetchModule.default)
+    .then(fetch => {
+      async function getEvolutionChainUrl(speciesUrl) {
+        await fetch(speciesUrl)
+          .then(data => data.json())
+          .then(data => {
+            res.locals.evolutionChainUrl = data.evolution_chain.url;
+          })
+      }
+    
+      async function getEvolutionTree(evolutionChainUrl) {
+        await fetch(evolutionChainUrl)
+          .then(data => data.json())
+          .then(data => {
+            res.locals.data.evolution_chain = data.chain;
+            return next();
+          })
+      }
+  
+      fetch('https://pokeapi.co/api/v2/pokemon/' + pokemonName.toLowerCase())
+        .then(data => data.json())
+        .then(data => {
+          res.locals.data = data;
+        })
+        .then(async() => {
+          await getEvolutionChainUrl(res.locals.data.species.url)
+        })
+        .then(async() => {
+          await getEvolutionTree(res.locals.evolutionChainUrl)
+        })
+        .catch(error => {
+          return next(error);
+        })
+  })
 }
+
 
 fetchMiddlewares.fetchWeakness = (req, res, next) => {
   
