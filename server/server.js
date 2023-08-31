@@ -149,7 +149,7 @@ app.use((err, req, res, next) => {
   };
   const errorObj = Object.assign({}, defaultErr);
   errorObj.message.err = err;
-  console.log('ERROR: ', errorObj.log);
+  console.log('ERROR: ', err);
 
   return res.status(errorObj.status).send(errorObj.message);
 });
