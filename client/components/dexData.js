@@ -1,7 +1,50 @@
 import itemsData from '../../items-data.json';
 import movesData from '../../moves-data.json';
 import monsData from '../../mons-data.json';
-const calculator = require('pokemon-stat-calculator')
+
+import bugPNG from '../../assets/types-images/bug.png';
+import darkPNG from '../../assets/types-images/dark.png';
+import dragonPNG from '../../assets/types-images/dragon.png';
+import electricPNG from '../../assets/types-images/electric.png';
+import fairyPNG from '../../assets/types-images/fairy.png';
+import fightingPNG from '../../assets/types-images/fighting.png';
+import firePNG from '../../assets/types-images/fire.png';
+import flyingPNG from '../../assets/types-images/flying.png';
+import ghostPNG from '../../assets/types-images/ghost.png';
+import grassPNG from '../../assets/types-images/grass.png';
+import groundPNG from '../../assets/types-images/ground.png';
+import icePNG from '../../assets/types-images/ice.png';
+import normalPNG from '../../assets/types-images/normal.png';
+import poisonPNG from '../../assets/types-images/poison.png';
+import psychicPNG from '../../assets/types-images/psychic.png';
+import rockPNG from '../../assets/types-images/rock.png';
+import steelPNG from '../../assets/types-images/steel.png';
+import waterPNG from '../../assets/types-images/water.png';
+const calculator = require('pokemon-stat-calculator');
+
+const allTypeImageObj = {
+  bug: bugPNG,
+  dark: darkPNG,
+  dragon: dragonPNG,
+  electric: electricPNG,
+  fairy: fairyPNG,
+  fighting: fightingPNG,
+  fire: firePNG,
+  flying: flyingPNG,
+  ghost: ghostPNG,
+  grass: grassPNG,
+  ground: groundPNG,
+  ice: icePNG,
+  normal: normalPNG,
+  poison: poisonPNG,
+  psychic: psychicPNG, 
+  rock: rockPNG,
+  steel: steelPNG,
+  water: waterPNG
+};
+
+
+
 
 const allItemsJSON = itemsData;
 const allMovesJSON = movesData;
@@ -25,7 +68,9 @@ const specialMovesObj = {
 
 
 
-const Data = {allItemsJSON: allItemsJSON, allMovesJSON: allMovesJSON, allMonsJSON: allMonsJSON, natureArray: natureArray, statusArray: statusArray, specialMovesObj: specialMovesObj, typesArray: typesArray}
+
+
+const Data = {allItemsJSON: allItemsJSON, allMovesJSON: allMovesJSON, allMonsJSON: allMonsJSON, natureArray: natureArray, statusArray: statusArray, specialMovesObj: specialMovesObj, typesArray: typesArray, allTypeImageObj: allTypeImageObj}
 
 
 

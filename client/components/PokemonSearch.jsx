@@ -19,6 +19,7 @@ import PokemonSprite from './PokemonSprite.jsx';
 import loadingGIF from '../../assets/loading-2.gif';
 
 const allMonsJSON = Data.allMonsJSON;
+const allTypeImageObj = Data.allTypeImageObj;
 
 const mapStateToProps = state => {
   return {
@@ -66,6 +67,10 @@ const PokemonSearch = props => {
       if (!searchStr || highlightedStr===searchStr) {
         if (searchStr)  highlightedStr = searchStr;
 
+
+
+
+
         newPokedex.push(
           <div className='pokedex-row' onClick={(e) => {searchEventHandler(e, mon.name.toLowerCase(), historyCache)}}>
             <PokemonSprite
@@ -77,9 +82,10 @@ const PokemonSearch = props => {
             // onClick={()=>{props.selectTeamMember(props.pokemonData)}}
             />
             <h4 className='pokedex-mon-name'><span>{highlightedStr}</span>{restOfStr}</h4>
-            <img className='pokedex-type-1' src={`static/types-images/${mon.types[0].toLowerCase()}.png`} alt="" />
+            {/* <img className='pokedex-type-1' src={`static/types-images/${mon.types[0].toLowerCase()}.png`} alt="" /> */}
+            <img className='pokedex-type-1' src={allTypeImageObj[mon.types[0].toLowerCase()]} alt="" />
             {mon.types[1] ?
-             <img className='pokedex-type-2' src={`static/types-images/${mon.types[1].toLowerCase()}.png`} alt="" />
+             <img className='pokedex-type-2' src={allTypeImageObj[mon.types[1].toLowerCase()]} alt="" />
             : null}
             <h4 className='pokedex-tier'>{mon.tier}</h4>
             <div className='pokedex-stats'>
