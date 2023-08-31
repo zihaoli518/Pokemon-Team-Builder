@@ -32,6 +32,19 @@ app.use((req, res, next) => {
     'Access-Control-Allow-Headers',
     'X-CSRF-Token, X-Requested-With, Accept, Accept-Version, Content-Length, Content-MD5, Content-Type, Date, X-Api-Version'
   )
+
+
+  res.header('Access-Control-Allow-Credentials', true);
+  res.header('Access-Control-Allow-Origin', '*');
+  res.header('Content-Type', 'application/json');
+  // another common pattern
+  // res.setHeader('Access-Control-Allow-Origin', req.headers.origin);
+  res.header('Access-Control-Allow-Methods', 'GET,OPTIONS,PATCH,DELETE,POST,PUT')
+  res.header(
+    'Access-Control-Allow-Headers',
+    'X-CSRF-Token, X-Requested-With, Accept, Accept-Version, Content-Length, Content-MD5, Content-Type, Date, X-Api-Version'
+  )
+
   // check for user permission with cookies 
   if (req.cookies.PokemonTeamBuilder)  {
     res.header('cookie', req.cookies);
@@ -166,6 +179,10 @@ app.use((err, req, res, next) => {
 
   return res.status(errorObj.status).send(errorObj.message);
 });
+
+
+// Handle OPTIONS requests
+app.options('*', cors());
 
 
 app.listen(PORT); 
