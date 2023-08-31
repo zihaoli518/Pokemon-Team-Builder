@@ -48,13 +48,18 @@ showdownMiddlewares.getAllItems = (req, res, next) => {
 
   async function checkForSprite(url) {
     let resultBoolean = false;
-    await fetch(url)
-      // .then(data => data.json())
-      .then(data => {
-        console.log('status: ', data.status)
-        if (data.status===200) resultBoolean = true;
+    // dynamically import node-fetch
+    import('node-fetch')
+      .then(fetchModule => fetchModule.default)
+      .then(fetch => {
+        await fetch(url)
+          // .then(data => data.json())
+          .then(data => {
+            console.log('status: ', data.status)
+            if (data.status===200) resultBoolean = true;
+          })
+        return resultBoolean
       })
-    return resultBoolean
   }
 
   async function asyncHandler() {
