@@ -34,6 +34,8 @@ import themeSongFile from '../assets/theme.mp3';
 import buttonSoundFile from '../assets/button-sound-effect.mp3';
 import electabuzzGIF from '../assets/electabuzz.gif';
 
+import favicon from '../assets/favicon.ico'
+
 const themeSong = new Audio(themeSongFile);
 const buttonSound = new Audio(buttonSoundFile);
 
