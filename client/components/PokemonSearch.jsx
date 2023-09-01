@@ -72,7 +72,7 @@ const PokemonSearch = props => {
 
 
         newPokedex.push(
-          <div className='pokedex-row' onClick={(e) => {searchEventHandler(e, mon.name.toLowerCase(), historyCache)}}>
+          <div className='pokedex-row' key={'pokedex-'+mon.name} onClick={(e) => {searchEventHandler(e, mon.name.toLowerCase(), historyCache)}}>
             <PokemonSprite
               key={mon.name}
               pokemon={mon.name}
@@ -282,7 +282,7 @@ const PokemonSearch = props => {
   return (
     <div className='search-bar-element' id='search-bar-element' >
       <form onSubmit={(e) => searchEventHandler(e, null, props.historyCache)}>
-        <input type="text" id='pokemon-search-name' autocomplete="off" placeholder="search a mon" onClick={()=>{setModalDisplay(true)}} onKeyUp={()=>{searchAndDisplayDex()}} />
+        <input type="text" id='pokemon-search-name' autoComplete="off" placeholder="search a mon" onClick={()=>{setModalDisplay(true)}} onKeyUp={()=>{searchAndDisplayDex()}} />
         <button type='submit'> <span> Search</span> </button>
       </form> 
       <div className={modalClassName} style={modalDisplay ? { display: 'block'} : { display: 'none' }} >

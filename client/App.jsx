@@ -32,6 +32,7 @@ import BrowsingHistory from './components/BrowsingHistory.jsx'
 
 import themeSongFile from '../assets/theme.mp3';
 import buttonSoundFile from '../assets/button-sound-effect.mp3';
+import electabuzzGIF from '../assets/electabuzz.gif';
 
 const themeSong = new Audio(themeSongFile);
 const buttonSound = new Audio(buttonSoundFile);
@@ -39,9 +40,9 @@ const buttonSound = new Audio(buttonSoundFile);
 
 
 
-themeSong.addEventListener('loadeddata', () => {
-  themeSong.play();
-});
+// themeSong.addEventListener('loadeddata', () => {
+//   themeSong.play();
+// });
 window.addEventListener('click', () => {
   addSoundEffectToButtons();
   themeSong.play();
@@ -113,9 +114,9 @@ class App extends Component {
         <TopNavBar />
         <div className={this.props.mainDivClassName} id={"main-div"}>
           <div className='title-container'>
-            <h1>electabuzzed.gg</h1>
+            <h1>electabuzzed.xyz</h1>
             {/* <img src="https://cdn.discordapp.com/emojis/933421274091360346.webp?size=96&quality=lossless" alt="" /> */}
-            <img src="https://media.tenor.com/PH_6y3_A-ewAAAAi/electabuzz-pok%C3%A9mon-electabuzz.gif" alt="" />
+            <img src={electabuzzGIF} alt="" />
             <h4>volume: </h4>
             <input type="range" min="0" max="1" step="0.05" defaultValue={this.state.volume} id='volume-slider' onChange={() => {this.changeAppVolume()}} />
           </div>

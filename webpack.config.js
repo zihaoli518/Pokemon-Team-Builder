@@ -62,6 +62,16 @@ const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPl
             }
           },
         },
+        {
+          test: /\.(ico)$/,
+          use: {
+            loader: 'file-loader',
+            options: {
+              name: '[name].[ext]',
+              outputPath: 'static', 
+            },
+          }
+        }
       ],
     },
     

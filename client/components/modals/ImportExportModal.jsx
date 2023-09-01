@@ -180,11 +180,18 @@ const ImportExportModal = props => {
       });
   }
 
-  // update the modal content 
-  useEffect(() => {
-    handleExport();
-  }, [isCopied, exportedFormat])
+  // update the modal content - but do not run on load 
+  const [initialRender, setInitialRender] = useState(true);
 
+  useEffect(() => {
+    if (initialRender) {
+      setInitialRender(false);
+    } else {
+      handleExport();
+    }
+  }, [isCopied, exportedFormat]);
+
+  
   // closes modal when click outside modal detected
   useEffect(() => {
     document.addEventListener("click", handleClickOutside);
