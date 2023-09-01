@@ -74,7 +74,7 @@ const ImportExportModal = props => {
       const userInput = document.getElementById('import-current-pokemon-input').value;
       // setting url for fetch requests based on NODE_ENV 
       let backendURL = '/api/importMon';
-      if (process.env.NODE_ENV==='production') backendURL = 'https://pokemon-team-builder-api.vercel.app/' + backendURL;
+      if (process.env.NODE_ENV==='production') backendURL = 'https://pokemon-team-builder-api.vercel.app' + backendURL;
       fetch(backendURL, {
         method: 'POST',
         headers: {

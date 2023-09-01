@@ -54,7 +54,7 @@ const SignupModal = props => {
     
     // setting url for fetch requests based on NODE_ENV 
     let backendURL = '/api/signup';
-    if (process.env.NODE_ENV==='production') backendURL = 'https://pokemon-team-builder-api.vercel.app/' + backendURL;
+    if (process.env.NODE_ENV==='production') backendURL = 'https://pokemon-team-builder-api.vercel.app' + backendURL;
 
     fetch(backendURL, {
       method: 'POST',

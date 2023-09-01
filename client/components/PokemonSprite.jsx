@@ -90,7 +90,7 @@ const PokemonSprite = props => {
 
     // setting url for fetch requests based on NODE_ENV 
     let backendURL = '/api/testForNewerSprites';
-    if (process.env.NODE_ENV==='production') backendURL = 'https://pokemon-team-builder-api.vercel.app/' + backendURL;
+    if (process.env.NODE_ENV==='production') backendURL = 'https://pokemon-team-builder-api.vercel.app' + backendURL;
 
     if (!isCancelled) {
       fetch(backendURL, {
