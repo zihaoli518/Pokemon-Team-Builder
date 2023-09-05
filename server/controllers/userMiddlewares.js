@@ -11,7 +11,6 @@ const userMiddlewares = {};
 
 userMiddlewares.signUp = (req, res, next) => {
   const { username, password } = req.body;
-  console.log('inside userController.signUp, username and password: ', username, password);
   bcrypt.hash(password, saltFactor, (err, hash) => {
     // save hashed password and username to database
     // const signupQuery = 'INSERT INTO users (username, password) VALUES ($1, $2)';
@@ -37,7 +36,7 @@ userMiddlewares.signUp = (req, res, next) => {
         await initializeUserTeams();
       })
       .then(() => {
-        console.log(res.locals.signupData)
+        // console.log(res.locals.signupData)
         return next();
       })
 
@@ -76,7 +75,6 @@ userMiddlewares.signUp = (req, res, next) => {
 };
 
 userMiddlewares.logIn = (req, res, next) => {
-  console.log('inside middleware logIn, ', req.body)
   const { username } = req.body;
   const query = `SELECT password FROM Users WHERE username = '${username}'`;
   // query database to see if that username exists
@@ -104,11 +102,9 @@ userMiddlewares.logIn = (req, res, next) => {
           }
           if (result) {
             //if passwords MATCH
-            console.log('password is a match')
             const query = `SELECT "savedTeams" FROM UserTeams WHERE username = '${username}'`;
             db.query(query)
               .then(dbResponse => {
-                console.log('inside .then dbResponse, ', dbResponse.rows[0])
                 const token = jwt.sign({ username: username}, process.env.JWT_SECRET, {
                   expiresIn: process.env.JWT_EXPIRES_IN,  });
     
