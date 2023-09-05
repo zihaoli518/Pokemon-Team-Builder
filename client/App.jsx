@@ -34,7 +34,7 @@ import themeSongFile from '../assets/theme.mp3';
 import buttonSoundFile from '../assets/button-sound-effect.mp3';
 import electabuzzGIF from '../assets/electabuzz.gif';
 
-import favicon from '../assets/favicon.ico'
+import favicon from '../assets/favicon.ico';
 
 const themeSong = new Audio(themeSongFile);
 const buttonSound = new Audio(buttonSoundFile);
@@ -119,6 +119,7 @@ class App extends Component {
             <h1>electabuzzed.xyz</h1>
             {/* <img src="https://cdn.discordapp.com/emojis/933421274091360346.webp?size=96&quality=lossless" alt="" /> */}
             <img src={electabuzzGIF} alt="" />
+            <img src={favicon} alt="" />
             <h4>volume: </h4>
             <input type="range" min="0" max="1" step="0.05" defaultValue={this.state.volume} id='volume-slider' onChange={() => {this.changeAppVolume()}} />
           </div>
