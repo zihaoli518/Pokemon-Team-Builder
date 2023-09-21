@@ -112,48 +112,59 @@ class App extends Component {
   
   render() {
     return (
-      <div className='app-container'>
+      <div className="app-container">
         <TopNavBar />
         <div className={this.props.mainDivClassName} id={"main-div"}>
-          <div className='title-container'>
+          <div className="title-container">
             <h1>electabuzzed.xyz</h1>
             {/* <img src="https://cdn.discordapp.com/emojis/933421274091360346.webp?size=96&quality=lossless" alt="" /> */}
             <img src={electabuzzGIF} alt="" />
             <h4>volume: </h4>
-            <input type="range" min="0" max="1" step="0.05" defaultValue={this.state.volume} id='volume-slider' onChange={() => {this.changeAppVolume()}} />
+            <input
+              type="range"
+              min="0"
+              max="1"
+              step="0.05"
+              defaultValue={this.state.volume}
+              id="volume-slider"
+              onChange={() => {
+                this.changeAppVolume();
+              }}
+            />
           </div>
-          {!this.props.currentPokemon.isActive ?
-            <div className='explore-tip'>
+          {!this.props.currentPokemon.isActive ? (
+            <div className="explore-tip">
               <h4>start exploring/team building by looking up a pokemon!</h4>
             </div>
-            : null
-          }
+          ) : null}
           {/* <img className='electabuzzes' src="https://www.models-resource.com/resources/big_icons/24/23144.png?updated=1510574730" alt="" /> */}
           <PokemonSearch />
           <BrowsingHistory />
 
-          <div className='main-row-container'>
+          <div className="main-row-container">
             <AllSavedTeams />
             <div className="current-pokemon-display-container">
-              {this.props.currentPokemon.isActive ? <CurrentPokemonDisplay /> : null}
+              {this.props.currentPokemon.isActive ? (
+                <CurrentPokemonDisplay />
+              ) : null}
             </div>
           </div>
           <div className="teams">
-            {this.props.teamStatus
-              ? [
-                <TeamDisplay key={"green"} team={"green"} />,
-                <SwitchTeams />,
-                <TeamDisplay key={"red"} team={"red"} />,
-              ]
-              : null}
+            <TeamDisplay key={"green"} team={"green"} />
+            <SwitchTeams />
+            <TeamDisplay key={"red"} team={"red"} />,
           </div>
-            {(this.props.teamStatus || this.props.analysisMenuStatus) ? <AnalysisMenu /> : null}
+          {this.props.teamStatus || this.props.analysisMenuStatus ? (
+            <AnalysisMenu />
+          ) : null}
 
-          <div className='footer-container'>
-              <h4>electabuzzed.gg</h4>
-              <h5>source code at: </h5>
+          <div className="footer-container">
+            <h4>electabuzzed.gg</h4>
+            <h5>source code at: </h5>
 
-              <a href="https://github.com/zihaoli518/Pokemon-Team-Builder">https://github.com/zihaoli518/Pokemon-Team-Builder</a>
+            <a href="https://github.com/zihaoli518/Pokemon-Team-Builder">
+              https://github.com/zihaoli518/Pokemon-Team-Builder
+            </a>
           </div>
         </div>
       </div>

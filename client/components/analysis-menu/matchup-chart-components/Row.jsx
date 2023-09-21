@@ -14,11 +14,10 @@
  import { connect } from 'react-redux';
  import Box from './Box.jsx';
  import PokemonSprite from '../../PokemonSprite.jsx';
+ import { Container, Row, Col } from 'react-bootstrap';
+
  
  
- // const example = {
- //   pokemon, 
- // }
 
 const types = ['bug', 'dark', 'dragon', 'electric', 'fairy', 'fighting', 'fire', 'flying', 'ghost', 'grass', 'ground', 'ice', 'normal', 'poison', 'psychic', 'rock', 'steel', 'water']
  
