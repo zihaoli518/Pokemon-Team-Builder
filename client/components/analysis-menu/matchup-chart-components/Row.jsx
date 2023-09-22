@@ -14,7 +14,6 @@
  import { connect } from 'react-redux';
  import Box from './Box.jsx';
  import PokemonSprite from '../../PokemonSprite.jsx';
- import { Container, Row, Col } from 'react-bootstrap';
 
  
  

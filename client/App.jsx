@@ -159,7 +159,7 @@ class App extends Component {
           ) : null}
 
           <div className="footer-container">
-            <h4>electabuzzed.gg</h4>
+            <h4>electabuzzed.xyz</h4>
             <h5>source code at: </h5>
 
             <a href="https://github.com/zihaoli518/Pokemon-Team-Builder">
