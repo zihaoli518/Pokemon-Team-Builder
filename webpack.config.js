@@ -1,4 +1,5 @@
-const path = require('path')
+const path = require('path');
+const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CompressionWebpackPlugin = require('compression-webpack-plugin');
 const TerserPlugin = require('terser-webpack-plugin');
@@ -7,13 +8,18 @@ const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPl
 
   module.exports = {
     mode: process.env.NODE_ENV,
-    entry: "./index.js",
+    entry: "./client/index.js",
     output: {
       path: path.resolve(__dirname, "./public"),
       filename: "bundle.js",
     },
     module: {
       rules: [
+        {
+          test: /\.(sass|scss|less|css)$/,         
+          exclude: [ /client\/stylesheets\/modules/],
+          use: ['style-loader', 'css-loader', 'sass-loader'],
+        },
         {
           test: /.(js|jsx)$/,
           exclude: /node_modules/,
@@ -23,11 +29,6 @@ const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPl
               presets: ["@babel/preset-env", "@babel/preset-react"],
             },
           },
-        },
-        {
-          test: /.(css|scss)$/,
-          exclude: [/node_modules/, /client\/stylesheets\/modules/],
-          use: ['style-loader', 'css-loader', 'sass-loader'],
         },
         {
           test: /\.ttf$/,
@@ -105,7 +106,7 @@ const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPl
     },
 
     plugins: [
-      new HtmlWebpackPlugin({ template: "./index.html" }),
+      new HtmlWebpackPlugin({ template: "./client/index.html" }),
       // new BundleAnalyzerPlugin(),
       new CompressionWebpackPlugin({
         algorithm: 'gzip',
@@ -114,6 +115,11 @@ const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPl
         minRatio: 0.8,
         deleteOriginalAssets: false,
       }),
+      new webpack.ProvidePlugin({
+        jQuery: 'jquery',
+        $: 'jquery',
+        jquery: 'jquery'
+    })
     ],
   
     optimization: {

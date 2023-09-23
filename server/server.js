@@ -76,7 +76,7 @@ app.use(express.static('public', {
 // serve index.html on the route '/'
 app.get('/', (req, res) => {
   console.log('get/ complete')
-  return res.status(200).sendFile(path.join(__dirname, '../index.html'));
+  return res.status(200).sendFile(path.join(__dirname, '../client/index.html'));
 });
 
 

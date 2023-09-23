@@ -99,7 +99,7 @@ $water-color
 
 body {
   background-color: rgb(179, 179, 179);
-  background-image: url('./assets/background-merged-afternoon.jpeg');
+  background-image: url('../assets/background-merged-afternoon.jpeg');
   background-size: cover;
   background-repeat: no-repeat;
 
@@ -112,19 +112,19 @@ body {
 }
 
 .morning {
-  background-image: url('./assets/background-merged-morning.jpeg');
+  background-image: url('../assets/background-merged-morning.jpeg');
   background-size: cover;
   background-repeat: no-repeat;
 }
 
 .afternoon {
-  background-image: url('./assets/background-merged-afternoon.jpeg');
+  background-image: url('../assets/background-merged-afternoon.jpeg');
   background-size: cover;
   background-repeat: no-repeat;
 }
 
 // .night {
-//   background-image: url('./assets/background-merged-night.jpeg');
+//   background-image: url('../assets/background-merged-night.jpeg');
 //   background-size: cover;
 //   background-repeat: no-repeat;
 // }
@@ -305,7 +305,6 @@ button:hover {
   width: 100%;
   position:relative;
   z-index: 3;
-
 }
 
 .inactive {
@@ -439,21 +438,21 @@ button:hover {
   justify-content: center;
   align-items: center;
 }
-.top-nav-bar-buttons-inner button {
-  margin-left: 5%;
-}
+// .top-nav-bar-buttons-inner button {
+//   margin-left: 5%;
+// }
 
-.top-nav-bar  button{
-  height: 90%;
-  width: 50%;
-  font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
-  font-size: 40%;
-  line-height: 100%;
-  background-color: $color2;
-  border-radius: 0.3rem;
-  border: 2px rgb(107, 106, 106) solid;
-  position: relative;
-}
+// .top-nav-bar  button{
+//   height: 90%;
+//   width: 50%;
+//   font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+//   font-size: 40%;
+//   line-height: 100%;
+//   background-color: $color2;
+//   border-radius: 0.3rem;
+//   border: 2px rgb(107, 106, 106) solid;
+//   position: relative;
+// }
 
 
 .display-block {
