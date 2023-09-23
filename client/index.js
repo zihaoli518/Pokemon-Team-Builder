@@ -15,12 +15,16 @@ import { render } from 'react-dom';
 import { BrowserRouter } from 'react-router-dom';
 
 // importing App component 
-import App from './client/App.jsx';
-import background from './background-merged.jpeg'
+import App from './App.jsx';
+import background from '../assets/background-merged.jpeg'
 
 // importing redux depedencies 
-import store from './client/store.js';
+import store from './store.js';
 import { Provider } from 'react-redux';
+
+// importing bootstrap
+import 'bootstrap/dist/css/bootstrap.min.css';
+import './index.scss';
 
 
 render(
@@ -33,8 +37,3 @@ render(
   </Provider>,
   document.getElementById("app")
 );
-
-{/* <div className='background' style={{ 
-  backgroundImage: `url(${background})` }}> 
-   <App />
- </div> */}

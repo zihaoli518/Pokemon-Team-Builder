@@ -99,7 +99,7 @@ const TopNavBar = props => {
         </div>
         :
         <div className='top-nav-bar-buttons-inner'>
-          <button onClick={() => {toggleShowLoginModal()}}>login</button> 
+          <button className="btn btn-primary" onClick={() => {toggleShowLoginModal()}}>login</button> 
           <button onClick={() => {toggleShowSignupModal()}}>signup</button> 
         </div>
         }
