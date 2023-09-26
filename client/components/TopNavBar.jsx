@@ -19,6 +19,10 @@ import * as actions from '../actions/actions';
 
 import SignupModal from './modals/SignupModal.jsx';
 import LoginModal from './modals/LoginModal.jsx';
+import PokemonSearch from './PokemonSearch.jsx'
+
+import '../styles/TopNavBar.scss';
+import electabuzzGIF from '../../assets/electabuzz.gif';
 
 
 const mapStateToProps = state => {
@@ -90,6 +94,22 @@ const TopNavBar = props => {
   return (
     
     <div className='top-nav-bar'>
+        <h1>electabuzzed.xyz</h1>
+        {/* <img src="https://cdn.discordapp.com/emojis/933421274091360346.webp?size=96&quality=lossless" alt="" /> */}
+        <img className='electabuzz-logo' src={electabuzzGIF} alt="" />
+        <h4>volume: </h4>
+        <input
+          type="range"
+          min="0"
+          max="1"
+          step="0.05"
+          defaultValue={props.appVolume}
+          id="volume-slider"
+          onChange={() => {
+            props.changeAppVolume();
+          }}
+        />
+      <PokemonSearch />
       <div className='top-nav-bar-buttons'>
       {(props.isLoggedIn)? 
         <div className='after-login-username-display'> 
