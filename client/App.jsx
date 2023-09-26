@@ -31,7 +31,7 @@ import BrowsingHistory from './components/BrowsingHistory.jsx'
 
 import themeSongFile from '../assets/theme.mp3';
 import buttonSoundFile from '../assets/button-sound-effect.mp3';
-import electabuzzGIF from '../assets/electabuzz.gif';
+import './styles/app.scss'
 
 import favicon from '../assets/favicon.ico';
 
@@ -53,7 +53,7 @@ const addSoundEffectToButtons = () => {
   const playSound = () => {
     buttonSound.play();
   }
-  const buttons =document.querySelectorAll('button');
+  const buttons = document.querySelectorAll('button');
   buttons.forEach(button => {
     button.addEventListener('click', playSound)
   })
@@ -112,32 +112,14 @@ class App extends Component {
   render() {
     return (
       <div className="app-container">
-        <TopNavBar />
+        <TopNavBar appVolume={this.state.volume} changeAppVolume={this.changeAppVolume}/>
         <div className={this.props.mainDivClassName} id={"main-div"}>
-          <div className="title-container">
-            <h1>electabuzzed.xyz</h1>
-            {/* <img src="https://cdn.discordapp.com/emojis/933421274091360346.webp?size=96&quality=lossless" alt="" /> */}
-            <img src={electabuzzGIF} alt="" />
-            <h4>volume: </h4>
-            <input
-              type="range"
-              min="0"
-              max="1"
-              step="0.05"
-              defaultValue={this.state.volume}
-              id="volume-slider"
-              onChange={() => {
-                this.changeAppVolume();
-              }}
-            />
-          </div>
           {!this.props.currentPokemon.isActive ? (
             <div className="explore-tip">
               <h4>start exploring/team building by looking up a pokemon!</h4>
             </div>
           ) : null}
           {/* <img className='electabuzzes' src="https://www.models-resource.com/resources/big_icons/24/23144.png?updated=1510574730" alt="" /> */}
-          <PokemonSearch />
           <BrowsingHistory />
 
           <div className="main-row-container">

@@ -1,0 +1,53 @@
+
+body {
+  background-color: rgb(179, 179, 179);
+  background-image: url('../../assets/background-merged-afternoon.jpeg');
+  background-size: cover;
+  background-repeat: no-repeat;
+
+  font-family: "Indie Flower", cursive;
+  height: 100%;
+  width: 100%;
+  margin: 0;
+
+  overflow-x: hidden;
+}
+
+.morning {
+  background-image: url('../../assets/background-merged-morning.jpeg');
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+
+.afternoon {
+  background-image: url('../../assets/background-merged-afternoon.jpeg');
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+
+// .night {
+//   background-image: url('../assets/background-merged-night.jpeg');
+//   background-size: cover;
+//   background-repeat: no-repeat;
+// }
+
+html {
+  height: 100%;
+  width: 100%;
+}
+
+
+#app {
+  width: 100%;
+  height: 100%;
+}
+
+.app-container {
+  height: 100%;
+  width: 100%;
+}
+
+.background {
+  height: 100%;
+  width: 100%;
+}

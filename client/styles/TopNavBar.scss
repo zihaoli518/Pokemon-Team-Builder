@@ -1,0 +1,116 @@
+/* Styles for TopNavBar */
+// @import '../global.scss';
+
+// top nav bar
+.top-nav-bar {
+  height: 10%;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: lighten(#badcd8, 10%);
+}
+
+.top-nav-bar-buttons {
+  width: 100%;
+  height: 100%;
+  text-align: center;
+  line-height: 100%;
+  font-size: 80%;
+}
+
+.top-nav-bar-buttons-inner {
+  height: 100%;
+  width: 100%;
+  margin-right: -35%;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.title-container {
+  display: flex;
+  justify-content: left;
+  align-items: center;
+
+  background-color: lighten(#badcd8, 10%);
+  text-align: left;
+  height: 10%;
+  width: 101%;
+  position: relative;
+  top: -1%; 
+
+  box-shadow: 5px 5px 10px 0px rgba(96, 107, 119, 0.75);
+  border-radius: 0.1rem;
+
+  vertical-align: middle;
+}
+
+.title-container h1 {
+  position: relative;
+  left: 4%;
+  line-height: 100%;
+  font-size: 65%;
+}
+
+.electabuzz-logo {
+  margin-top: 1%;
+  margin-left: 6%;
+  height: 10%;
+}
+
+
+.title-container  h4 {
+  width: 5%;
+  font-size: 40%;
+  position: relative;
+  left: 41.5%;
+}
+
+#volume-slider {
+  width: 7%;
+  height: 50%;
+  z-index: 10;
+  position: relative;
+  left: 41%;
+
+  cursor: pointer;
+}
+
+#volume-slider::-webkit-slider-runnable-track {
+  background-color: rgba(87, 91, 97, 0.624);
+  border-radius: 0.5rem;
+}
+#volume-slider::-webkit-slider-thumb {
+  transform: scale(1.4);
+  background-color: #fff;
+  border: 1px solid #ccc;
+  border-radius: 1rem;
+  -webkit-appearance: none;
+  position: relative;
+
+}
+
+.electabuzzes {
+  height: 17%;
+  width: 8%;
+
+  position: absolute;
+  left: 27%;
+  top: 0%;
+  
+  animation: electabuzz 8s infinite;
+}
+
+@keyframes electabuzz {
+  0% {
+    transform: translateX(-5px);
+  }
+  50% {
+    transform: translateX(780px) scaleX(-1);
+  }
+  100% {
+    transform: translateX(-5px);
+  }
+}
