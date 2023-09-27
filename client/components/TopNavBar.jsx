@@ -94,10 +94,11 @@ const TopNavBar = props => {
   return (
     
     <div className='top-nav-bar'>
-        <h1>electabuzzed.xyz</h1>
+        <h1 className='top-title'>electabuzzed.xyz</h1>
         {/* <img src="https://cdn.discordapp.com/emojis/933421274091360346.webp?size=96&quality=lossless" alt="" /> */}
         <img className='electabuzz-logo' src={electabuzzGIF} alt="" />
-        <h4>volume: </h4>
+        <PokemonSearch />
+        <h4 className='volume-label'>volume: </h4>
         <input
           type="range"
           min="0"
@@ -109,7 +110,6 @@ const TopNavBar = props => {
             props.changeAppVolume();
           }}
         />
-      <PokemonSearch />
       <div className='top-nav-bar-buttons'>
       {(props.isLoggedIn)? 
         <div className='after-login-username-display'> 
@@ -119,8 +119,8 @@ const TopNavBar = props => {
         </div>
         :
         <div className='top-nav-bar-buttons-inner'>
-          <button className="btn btn-primary" onClick={() => {toggleShowLoginModal()}}>login</button> 
-          <button onClick={() => {toggleShowSignupModal()}}>signup</button> 
+          <button className="btn btn-secondary" onClick={() => {toggleShowLoginModal()}}>login</button> 
+          <button className="btn btn-secondary" onClick={() => {toggleShowSignupModal()}}>signup</button> 
         </div>
         }
       </div>
