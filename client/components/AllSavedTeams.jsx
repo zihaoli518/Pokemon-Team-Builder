@@ -17,6 +17,8 @@ import SavedTeam from './SavedTeam.jsx';
 
 import * as actions from '../actions/actions';
 
+import '../styles/AllSavedTeams.scss';
+
 
 const mapStateToProps = (state) => {
   return {
