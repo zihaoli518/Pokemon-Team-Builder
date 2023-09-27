@@ -24,7 +24,7 @@ import { Provider } from 'react-redux';
 
 // importing bootstrap
 import 'bootstrap/dist/css/bootstrap.min.css';
-import './global.scss';
+import './index.scss';
 
 
 render(

@@ -17,6 +17,8 @@ import Data from './dexData.js';
 // importing other files and components
 import PokemonSprite from './PokemonSprite.jsx';
 import loadingGIF from '../../assets/loading-2.gif';
+// importing style 
+import '../styles/PokemonSearch.scss';
 
 const allMonsJSON = Data.allMonsJSON;
 const allTypeImageObj = Data.allTypeImageObj;
@@ -129,8 +131,8 @@ const PokemonSearch = props => {
     setTimeout(() => {
       setModalClassName('pokedex-modal pokedex-fade-out');
       setTimeout(() => {
-      const searchElement = document.getElementById("search-bar-element");
-      searchElement.classList.remove("search-bar-element-focused");
+      const searchElement = document.getElementById("search-bar-container");
+      searchElement.classList.remove("search-bar-container-focused");
       setModalDisplay(false);
       }, 1500);
       
@@ -233,7 +235,7 @@ const PokemonSearch = props => {
 
   const addEventListenersOnce = () => {
     // add event listeners
-    const searchElement = document.getElementById("search-bar-element");
+    const searchElement = document.getElementById("search-bar-container");
     const searchBar = document.getElementById('pokemon-search-name');
 
     let clickOverride = false;
@@ -242,7 +244,7 @@ const PokemonSearch = props => {
     searchBar.addEventListener("focus", function () {
       console.log('adding focus function');
       clickOverride = true;
-      searchElement.classList.add("search-bar-element-focused");
+      searchElement.classList.add("search-bar-container-focused");
       setModalClassName('pokedex-modal pokedex-fade-in');
 
     });
@@ -250,7 +252,7 @@ const PokemonSearch = props => {
     searchBar.addEventListener("blur", function () {
       clickOverride = false;
       console.log('adding blur function');
-      searchElement.classList.remove("search-bar-element-focused");
+      searchElement.classList.remove("search-bar-container-focused");
       setTimeout(() => {
         if (clickOverride) {
           return
@@ -280,7 +282,7 @@ const PokemonSearch = props => {
   }, [props.currentPokemon.pokemon])
 
   return (
-    <div className='search-bar-element' id='search-bar-element' >
+    <div className='search-bar-container' id='search-bar-container' >
       <form onSubmit={(e) => searchEventHandler(e, null, props.historyCache)}>
         <input type="text" id='pokemon-search-name' autoComplete="off" placeholder="search a mon" onClick={()=>{setModalDisplay(true)}} onKeyUp={()=>{searchAndDisplayDex()}} />
         <button type='submit'> <span> Search</span> </button>
