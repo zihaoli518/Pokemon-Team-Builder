@@ -1,0 +1,146 @@
+/* Styles for LoginModal */
+@import './global.scss';
+
+.modal {
+  height: 32% !important;
+  width: 30% !important;
+  min-height: 270px;
+  min-width: 385px;
+  border-radius: 0.3rem;
+
+  position: fixed;
+  left: 35% !important;
+  top: 20% !important;
+  background: lighten(rgb(125, 102, 102), 4%);
+  
+  z-index: 99;
+
+  pointer-events:all !important; // pointer-events not supported below IE11
+  opacity: 90% !important;
+
+  font-family: "Indie Flower";
+  border-radius: 0.5rem;
+}
+
+.modal h2 {
+  font-size: 3rem;
+  margin: 0;
+  margin-bottom: 5%;
+}
+
+.modal-form {
+  text-align: center;
+  font-size: 1.5rem;
+  min-width: 80%;
+}
+
+.modal-form label {
+  margin-right: 3%;
+}
+
+.modal-form .username-div {
+  margin-bottom: 3%;
+  margin-left: -13%;
+  margin-top: 2%;
+}
+
+.modal-form .password-div  {
+  margin-left: -13%;
+  margin-bottom: 4%;
+}
+
+.modal-form .password-div label {
+  margin-right: 4.5%;
+}
+
+#login-button {
+  position: absolute;
+  bottom: 8%;
+  right: 37%;
+
+  height: 13%;
+  width: 23%;
+  font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+  font-size: 25px;
+  background-color: $color2;
+  border-radius: 0.3rem;
+  cursor: pointer;
+}
+
+#log-out-button {
+  width: 22%;
+}
+
+
+.modal .close-button {
+  position: absolute;
+  top: 0%;
+  left: 82%;
+
+  height: 15%;
+  width: 18%;
+
+  background-color: rgb(78, 77, 80);
+  color: $color2;
+
+  font-size: 1.4rem;
+}
+
+.modal h3 {
+  font-size: 50%;
+  margin: 5%;
+}
+
+// loading 
+#login-loading-gif {
+  position: relative;
+  top: -55%;
+  left: 25%;
+
+  height: 80%;
+  width: 60%;
+}
+
+// error messages 
+.modal h4 {   
+  margin: 0;
+  margin-top: -4%;
+  margin-bottom: -1.5%;
+
+  color: rgb(220, 15, 15);
+  font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+  font-weight: 400;
+  font-size: 1rem;
+} 
+
+// after login 
+.after-login-username-display {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  left: 0%;
+}
+
+.after-login-username-display h2{
+  color: color3;
+  font-size: 50%;
+  line-height: 100%;
+  margin-right: 3%;
+}
+
+.after-login-username-display h3{
+  margin-right: 4%;
+  font-size: 50%;
+  line-height: 100%;
+  color: #41746f;
+}
+
+#log-out-button {
+  width: 30%;
+  font-size: 70%;
+  display: flex;
+  position: relative;
+}

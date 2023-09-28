@@ -16,6 +16,8 @@ import { connect } from 'react-redux';
 import loadingGIF from '../../../assets/loading.gif';
 
 import * as actions from '../../actions/actions';
+import '../../styles/LoginModal.scss';
+
 
 
 const mapStateToProps = state => {

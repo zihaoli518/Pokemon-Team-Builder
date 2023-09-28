@@ -17,6 +17,8 @@ import Data from './dexData.js';
 // importing other files and components
 import PokemonSprite from './PokemonSprite.jsx';
 import ImportExportModal from './modals/ImportExportModal.jsx';
+import '../styles/BrowsingHistory.scss';
+
 
 import historyImg from "../../assets/history.png";
 

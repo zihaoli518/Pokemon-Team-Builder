@@ -99,9 +99,9 @@ const SavedTeam = (props) => {
 
 
   return (
-    <div className='saved-team' onClick={() => {console.log('in onclick0' ,props.savedTeamKey); props.editTeam(props.savedTeamKey ,props.savedTeam); props.updatePreviousTeamKey("E")}}>
+    <div className='saved-team-container' onClick={() => {console.log('in onclick0' ,props.savedTeamKey); props.editTeam(props.savedTeamKey ,props.savedTeam); props.updatePreviousTeamKey("E")}}>
       <h5>{props.savedTeamName}</h5>
-      <div className='team-members need-saved-team-hover-effect' id={props.savedTeamKey} onClick={()=> {addActiveClass()}}>
+      <div className='saved-team-members need-saved-team-hover-effect' id={props.savedTeamKey} onClick={()=> {addActiveClass()}}>
         {team}
       </div>
       <img className='edit-team-button' src='https://cdn-icons-png.flaticon.com/512/6065/6065488.png' onClick={(e) => {console.log('in onclick1' ,props.savedTeamKey); props.editTeam(props.savedTeamKey, props.savedTeam); addActiveClass()}} />

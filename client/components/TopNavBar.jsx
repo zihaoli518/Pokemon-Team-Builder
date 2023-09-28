@@ -22,6 +22,7 @@ import LoginModal from './modals/LoginModal.jsx';
 import PokemonSearch from './PokemonSearch.jsx'
 
 import '../styles/TopNavBar.scss';
+
 import electabuzzGIF from '../../assets/electabuzz.gif';
 
 
@@ -115,7 +116,7 @@ const TopNavBar = props => {
         <div className='after-login-username-display'> 
           <h2>welcome back! </h2>
           <h3>{props.username}</h3> 
-          <button id='log-out-button' onClick={() => {logout()}}>log out</button> 
+          <button className={'btn btn-secondary'} id='log-out-button' onClick={() => {logout()}}>log out</button> 
         </div>
         :
         <div className='top-nav-bar-buttons-inner'>

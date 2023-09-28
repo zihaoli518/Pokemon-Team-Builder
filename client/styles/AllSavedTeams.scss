@@ -1,0 +1,177 @@
+/* Styles for AllSavedTeams */
+@import './global.scss';
+
+
+// saved teams 
+.all-saved-teams-container {
+  background-color: rgba(112, 172, 212, 0.7);
+  border-radius: 0.5rem;
+  width: 23%;
+  height: 90%;
+  margin-left: 3%;
+  text-align: center;
+}
+
+.all-saved-teams-container h4 {
+  font-size: 50%;
+  font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+  font-weight: 500;
+  
+  margin-top: 1%;
+  margin-bottom: 0%;
+  color: #132033;
+  z-index: -1;
+}
+
+
+.all-saved-teams {
+  height: 89%;
+  overflow-y:auto;
+  border-radius: 0.3rem;
+  position: relative;
+  top: 1%;
+}
+
+.saved-team-container {
+  height: 12%;
+  width: 95%;
+  border-radius: 0.3rem;
+  margin: 0 auto;
+  margin-top: 4%;
+  margin-bottom: 6%;
+  margin-left: 2%;
+
+  display: flex;
+  justify-content: center;
+}
+
+
+.all-saved-teams-container h5 {
+  height: 4% !important;
+  width: 30% !important;
+  font-weight: 400;
+  font-size: 30%;
+  line-height: 100%;
+
+  z-index: 0;
+
+  margin-top: -3.5%;
+  
+  position: absolute;
+  left: 3%;
+  
+  
+  background-color: rgba(75, 115, 142, 0.671);
+  border-radius: 0.3rem;
+
+
+}
+
+.saved-team-members {
+  height: 100%;
+  width: 95%;
+  background-color: rgba(90, 137, 169, 0.642);
+  border-radius: 0.5rem;
+
+  display: flex;
+  justify-content: center;
+
+  position: relative;
+
+}
+
+.saved-team-member-container {
+  height: 100%;
+  width: 20%;
+}
+
+.saved-team-member {
+  height: 90%;
+  width: 95%;
+  animation: rollout 0.4s ease-in-out;
+  display: flex;
+  position: relative;
+  top: 5%;
+}
+
+
+// .saved-team .team-members {
+//   position: relative;
+//   left: -8%;
+//   bottom: 40%;
+  
+//   height: 100%;
+//   width: 100%;
+// }
+
+.pokemon-sprite-saved-team {
+  height: 95%;
+  width: 94%;
+
+  position: relative;
+  left: 0%;
+
+}
+
+.saved-team .first-add-button {
+  height: 80%;
+  width: 80%;
+}
+
+
+.edit-team-button {
+  height: 95%;
+  width: 17%;
+
+  position: relative;
+  // top: -145%;
+  // left: 61%;
+}
+
+.edit-team-button:hover{
+  transform: scale(1.3);
+  transition: 0.5s;
+  transition: ease-in-out;
+  cursor: pointer;
+}
+
+// .edit-team-button:hover + .team-members {
+//   background-color: rgba(45, 86, 114, 0.792);
+//   margin-top: -0.7%;
+//   border-radius: 0.3rem;
+// }
+// .team-members:hover + .edit-team-button {
+//   height: 50px;
+// }
+
+.remove-team-button {
+  height: 52%;
+  width: 9%;
+
+  position: relative;
+  top: 20%;
+  cursor: pointer;
+}
+
+.remove-team-button:hover{
+  transform: scale(1.2);
+  transition: 0.5s;
+  transition: ease-in-out;
+}
+
+    // effects 
+.need-saved-team-hover-effect:hover{
+  background-color: rgba(45, 86, 114, 0.792);
+  border-radius: 0.3rem;
+  cursor: pointer;
+}
+
+.active-saved-team {
+  background-color: rgba(64, 93, 112, 0.792);
+  border-radius: 0.3rem;
+
+}
+
+// .saved-team-member-container{
+//   pointer-events: none;
+// }

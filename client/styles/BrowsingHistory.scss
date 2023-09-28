@@ -1,0 +1,100 @@
+/* Styles for BrowsingHistory */
+@import './global.scss';
+
+
+// browsing history 
+.browsing-history {
+  height: 8%;
+  width: 50%;
+  background-color: rgba(128, 128, 128, 0.684);
+  border-radius: 0.5rem;
+  margin-left: 28%;
+  margin-top: 0.5%;
+  margin-bottom: -1.5%;
+
+  position: relative;
+  display: flex;
+  justify-content: right;
+  align-items: center;
+}
+
+.browsing-history-logo {
+  position: relative;
+  height: 60%;
+  width: 6%;
+  margin-right: 1%;
+  opacity: 0.5;
+}
+
+.pokemon-sprite-cache {
+  height: 103%;
+  width: 9%;
+
+  opacity: 0;
+  animation: fadeInSpeedTier 0.4s ease-in;
+  animation-fill-mode: forwards;
+}
+
+.pokemon-sprite-cache:hover {
+  height: 107%;
+  width: 9%;
+  background-color: rgb(122, 132, 142);
+//   // transform: translateY(-1%);
+  border-radius: 0.5rem;
+  transition: 0.2s ease-in-out;
+  cursor: pointer;
+}
+
+.browsing-history > :nth-child(2) {
+  -webkit-animation-delay: 0s;
+  animation-delay: 0s;
+}
+
+.browsing-history > :nth-child(3) {
+  -webkit-animation-delay: 0.08s;
+  animation-delay: 0.08s;
+}
+
+.browsing-history > :nth-child(4) {
+  -webkit-animation-delay: 0.16s;
+  animation-delay: 0.16s;
+}
+
+.browsing-history > :nth-child(5) {
+  -webkit-animation-delay: 0.24s;
+  animation-delay: 0.24s;
+}
+
+.browsing-history > :nth-child(6) {
+  -webkit-animation-delay: 0.32s;
+  animation-delay: 0.32s;
+}
+
+.browsing-history > :nth-child(7) {
+  -webkit-animation-delay: 0.4s;
+  animation-delay: 0.4s;
+}
+
+.browsing-history > :nth-child(8) {
+  -webkit-animation-delay: 0.48s;
+  animation-delay: 0.48s;
+}
+
+.browsing-history > :nth-child(9) {
+  -webkit-animation-delay: 0.56s;
+  animation-delay: 0.56s;
+}
+
+.browsing-history > :nth-child(10) {
+  -webkit-animation-delay: 0.64s;
+  animation-delay: 0.64s;
+}
+
+.browsing-history > :nth-child(11) {
+  -webkit-animation-delay: 0.72s;
+  animation-delay: 0.72s;
+}
+
+
+
+
