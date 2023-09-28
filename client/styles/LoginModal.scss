@@ -19,6 +19,7 @@
   opacity: 90% !important;
 
   font-family: "Indie Flower";
+  border-radius: 0.5rem;
 }
 
 .modal h2 {
@@ -114,17 +115,16 @@
 
 // after login 
 .after-login-username-display {
-  width: 200%;
+  width: 100%;
   height: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
   position: relative;
-  left: -40%;
+  left: 0%;
 }
 
 .after-login-username-display h2{
-  height: 70%;
   color: color3;
   font-size: 50%;
   line-height: 100%;
@@ -132,13 +132,15 @@
 }
 
 .after-login-username-display h3{
-  height: 70%;
   margin-right: 4%;
   font-size: 50%;
   line-height: 100%;
   color: #41746f;
 }
 
-.after-login-username-display button {
+#log-out-button {
+  width: 30%;
+  font-size: 70%;
+  display: flex;
   position: relative;
 }
