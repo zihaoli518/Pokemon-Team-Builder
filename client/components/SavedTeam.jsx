@@ -99,7 +99,7 @@ const SavedTeam = (props) => {
 
 
   return (
-    <div className='saved-team' onClick={() => {console.log('in onclick0' ,props.savedTeamKey); props.editTeam(props.savedTeamKey ,props.savedTeam); props.updatePreviousTeamKey("E")}}>
+    <div className='saved-team-container' onClick={() => {console.log('in onclick0' ,props.savedTeamKey); props.editTeam(props.savedTeamKey ,props.savedTeam); props.updatePreviousTeamKey("E")}}>
       <h5>{props.savedTeamName}</h5>
       <div className='saved-team-members need-saved-team-hover-effect' id={props.savedTeamKey} onClick={()=> {addActiveClass()}}>
         {team}

@@ -7,57 +7,77 @@
   background-color: rgba(112, 172, 212, 0.7);
   border-radius: 0.5rem;
   width: 23%;
-  height: 100%;
+  height: 90%;
   margin-left: 3%;
   text-align: center;
 }
 
 .all-saved-teams-container h4 {
-  font-size: 25px;
+  font-size: 50%;
   font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
   font-weight: 500;
-
-  margin-bottom: -2px;
-  margin-top: 15px;
+  
+  margin-top: 1%;
+  margin-bottom: 0%;
   color: #132033;
+  z-index: -1;
 }
 
+
+.all-saved-teams {
+  height: 89%;
+  overflow-y:auto;
+  border-radius: 0.3rem;
+  position: relative;
+  top: 1%;
+}
+
+.saved-team-container {
+  height: 12%;
+  width: 95%;
+  border-radius: 0.3rem;
+  margin: 0 auto;
+  margin-top: 4%;
+  margin-bottom: 6%;
+  margin-left: 2%;
+
+  display: flex;
+  justify-content: center;
+}
+
+
 .all-saved-teams-container h5 {
-  height: 20% !important;
+  height: 4% !important;
   width: 30% !important;
   font-weight: 400;
   font-size: 30%;
   line-height: 100%;
 
-  z-index: 100;
-  margin: 0;
-  margin-top: 2%;
-  
-  position: relative;
-  top: -10%;
+  z-index: 0;
 
+  margin-top: -3.5%;
+  
+  position: absolute;
+  left: 3%;
+
+  
   background-color: rgba(75, 115, 142, 0.671);
   border-radius: 0.3rem;
 
 
 }
 
-.all-saved-teams {
-  height: 90%;
-  overflow-y:auto;
-  border-radius: 0.3rem;
-  position: relative;
-  top: 5%;
-}
-
 .saved-team-members {
   height: 100%;
-  width: 100%;
+  width: 95%;
+  background-color: rgba(90, 137, 169, 0.642);
+  border-radius: 0.5rem;
+
   display: flex;
   justify-content: center;
 
   position: relative;
-  top: -10%;
+
 }
 
 .saved-team-member-container {
@@ -66,36 +86,31 @@
 }
 
 .saved-team-member {
-  height: 100%;
-  width: 100%;
+  height: 90%;
+  width: 95%;
   animation: rollout 0.4s ease-in-out;
-}
-
-.saved-team {
-  height: 12%;
-  width: 80%;
-  background-color: rgba(90, 137, 169, 0.642);
-  border-radius: 0.3rem;
-  margin: 0 auto;
-  margin-bottom: 3%;
-  margin-left: 2%;
-}
-
-.saved-team .team-members {
+  display: flex;
   position: relative;
-  left: -8%;
-  bottom: 40%;
-  
-  height: 100%;
-  width: 100%;
+  top: 5%;
 }
+
+
+// .saved-team .team-members {
+//   position: relative;
+//   left: -8%;
+//   bottom: 40%;
+  
+//   height: 100%;
+//   width: 100%;
+// }
 
 .pokemon-sprite-saved-team {
   height: 95%;
   width: 94%;
 
   position: relative;
-  top: -25%;
+  left: 0%;
+
 }
 
 .saved-team .first-add-button {
@@ -109,8 +124,8 @@
   width: 17%;
 
   position: relative;
-  top: -145%;
-  left: 61%;
+  // top: -145%;
+  // left: 61%;
 }
 
 .edit-team-button:hover{
@@ -134,8 +149,7 @@
   width: 9%;
 
   position: relative;
-  top: -164%;
-  left: 58.5%;
+  top: 20%;
   cursor: pointer;
 }
 
@@ -149,6 +163,7 @@
 .need-saved-team-hover-effect:hover{
   background-color: rgba(45, 86, 114, 0.792);
   border-radius: 0.3rem;
+  cursor: pointer;
 }
 
 .active-saved-team {
