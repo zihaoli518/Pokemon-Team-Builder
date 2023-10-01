@@ -53,6 +53,18 @@
   margin-right: 4.5%;
 }
 
+#login-password {
+  color: transparent;
+}
+
+.masked-password {
+  text-align: left;
+  position: relative;
+  margin-top: -4%;
+  left: 50%;
+  font-size: 70%;
+}
+
 #login-button {
   position: absolute;
   bottom: 8%;
@@ -74,11 +86,11 @@
 
 .modal .close-button {
   position: absolute;
-  top: 0%;
-  left: 82%;
+  top: 1%;
+  right: 1%;
 
-  height: 15%;
-  width: 18%;
+  height: 12%;
+  width: 12%;
 
   background-color: rgb(78, 77, 80);
   color: $color2;

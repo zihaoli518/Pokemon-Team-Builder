@@ -111,7 +111,7 @@ const SignupModal = props => {
             <input type="text" name="username" placeholder="" id="signup-username"></input>
         </div>
         <div className="password-div">
-            <label>password</label>    
+            <label>password: </label>    
 
             <input type="text" name="password" placeholder="" id="signup-password" value={maskedPassword} onInput={(e) => {handlePasswordInput(e)}}></input>
             <div className='password-symbols'>
@@ -122,9 +122,9 @@ const SignupModal = props => {
               <h4>please enter a password</h4> :
               null
             }   
-        <input type="submit" id="login-button" value="sign up" />
+        <input type="submit" id="login-button" value="sign up" className='btn-secondary'/>
       </form>
-      <button className='close-button' onClick={(e) => {closeModal(e)}}>close</button>
+      <button className='close-button btn-close' onClick={(e) => {closeModal(e)}}></button>
       {showSuccessMessage ?
           <h3>account successfully created!</h3> :
           null

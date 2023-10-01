@@ -18,7 +18,7 @@ import loadingGIF from '../../../assets/loading.gif';
 import * as actions from '../../actions/actions';
 import '../../styles/LoginModal.scss';
 
-
+const passwordSymbol = '◓';
 
 const mapStateToProps = state => {
   return {
@@ -38,6 +38,9 @@ const LoginModal = props => {
 
   const [showUsernameAlert, setShowUsernameAlert] = useState({status: false, message: null});
   const [showPasswordAlert, setShowPasswordAlert] = useState({status: false, message: null});
+  const [maskedPassword, setMaskedPassword] = useState('');
+  const [password, setPassword] = useState('');
+
 
   const showModalClassName = props.show ? "modal display-block" : "modal display-none";
 
@@ -46,7 +49,7 @@ const LoginModal = props => {
     console.log('inside submitHandler from logging in...')
     
     const username = document.getElementById('login-username').value;
-    const password = document.getElementById('login-password').value;
+
     if (username==='') {
       setShowPasswordAlert({status:false, message: null})
       setShowUsernameAlert({status:true, message: 'please enter an username'});
@@ -150,8 +153,18 @@ const LoginModal = props => {
     return savedTeamsObject;
   }
 
+  // displays empty string for password div and populate passwordSymbol state with matching number of balls 
+  function handlePasswordInput(e) {
+    const input = e.target.value;
+    const length = input.length;
+    const maskedValue = passwordSymbol.repeat(length); // Replace with '*' characters
+
+    setMaskedPassword(maskedValue);
+    let newStr = password + input[input.length-1];
+    setPassword(newStr);
+  }
+
   const closeModal = (e) => {
-    console.log('in closeModal')
     props.toggle(false); 
     // setShowUsernameAlert(false);
     // setShowPasswordAlert(false);
@@ -194,8 +207,9 @@ const LoginModal = props => {
             <input type="text" name="username" placeholder="" id="login-username"></input>
         </div>
         <div className="password-div">
-            <label>password</label>      
-            <input type="text" name="password" placeholder="" id="login-password"></input>
+            <label>password: </label>      
+            <input type="text" name="password" placeholder="" id="login-password"  onInput={(e) => {handlePasswordInput(e)}}></input>
+            <p className="masked-password">{maskedPassword}</p>
         </div>
         {showPasswordAlert.status ? 
               <h4>{showPasswordAlert.message}</h4> :
@@ -204,7 +218,7 @@ const LoginModal = props => {
         <input type="submit" id="login-button" value="log in" />
       </form>
 
-        <button className='close-button' onClick={(e) => {closeModal(e)}}>close</button>
+        <button className='close-button btn-close' onClick={(e) => {closeModal(e)}}></button>
         {/* <button className='test-button' onClick={(e) => {getUserData('123')}}>test</button> */}
         {(props.loginLoading) ?
           <img id='login-loading-gif' src={loadingGIF} alt="" /> :
