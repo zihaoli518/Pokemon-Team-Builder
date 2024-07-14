@@ -20,6 +20,8 @@ import * as actions from '../actions/actions';
 import SignupModal from './modals/SignupModal.jsx';
 import LoginModal from './modals/LoginModal.jsx';
 import PokemonSearch from './PokemonSearch.jsx'
+import { Switch, FormControlLabel } from '@mui/material';
+
 
 import '../styles/TopNavBar.scss';
 
@@ -81,7 +83,6 @@ const TopNavBar = props => {
     document.cookie = 'PokemonTeamBuilder=; expires=Thu, 01 Jan 1970 00:00:01 GMT;';
     nav("../../");
     location.reload();
-
   }
 
   const checkLoggedIn = () => {
@@ -111,6 +112,12 @@ const TopNavBar = props => {
             props.changeAppVolume();
           }}
         />
+
+        <FormControlLabel
+          control={<Switch checked={props.themeMode === 'modernDark'} onChange={() => {props.handleThemeChange()}} />}
+          label="Dark Mode"
+        />
+
       <div className='top-nav-bar-buttons'>
       {(props.isLoggedIn)? 
         <div className='after-login-username-display'> 
@@ -120,7 +127,7 @@ const TopNavBar = props => {
         </div>
         :
         <div className='top-nav-bar-buttons-inner'>
-          <button className="btn btn-secondary" onClick={() => {toggleShowLoginModal()}}>login</button> 
+          <button className="btn btn-secondary"  onClick={() => {toggleShowLoginModal()}}>login</button> 
           <button className="btn btn-secondary" onClick={() => {toggleShowSignupModal()}}>signup</button> 
         </div>
         }
@@ -133,4 +140,4 @@ const TopNavBar = props => {
 
 
 
-export default connect(mapStateToProps, mapDispatchToProps)(TopNavBar);
+export default connect(mapStateToProps, mapDispatchToProps)(TopNavBar); 

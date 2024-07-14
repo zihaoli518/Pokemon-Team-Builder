@@ -20,6 +20,19 @@ const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPl
           exclude: [ /client\/stylesheets\/modules/],
           use: ['style-loader', 'css-loader', 'sass-loader'],
         },
+        // {
+        //   test: /\.(module\.scss|module\.css)$/,
+        //   use: [
+        //     'style-loader',
+        //     {
+        //       loader: 'css-loader',
+        //       options: {
+        //         modules: true
+        //       },
+        //     },
+        //     // 'sass-loader',
+        //   ],
+        // },
         {
           test: /.(js|jsx)$/,
           exclude: /node_modules/,
@@ -52,6 +65,10 @@ const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPl
               }
             },
           ],
+        },
+        {
+          test: /\.svg$/,
+          use: ['@svgr/webpack', 'file-loader'],
         },
         {
           test: /\.mp3$/,

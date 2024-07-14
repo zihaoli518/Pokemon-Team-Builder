@@ -94,11 +94,16 @@
 
 .top-nav-bar-buttons button {
   height: 50% ;
+  width: 20%;
   margin-left: 2%;
   font-size: 60%;
-  display: inline-flex;
-  align-items: center;
   
+  font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+  font-size: 1.3rem;
+  background-color: rgba(108, 129, 136, 0.721);
+  color: rgb(41, 42, 42);
+  border-radius: 0.4rem;
+  position: relative;
   
 }
 

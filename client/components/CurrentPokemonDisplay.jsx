@@ -231,8 +231,8 @@ class CurrentPokemonDisplay extends Component {
           </div>
           <div className="add-to-team-option-buttons">
             <div className='f'>
-              {/* <button className='add-to-your-team' onClick={()=>{this.addToTeam({...this.props.currentPokemon}, 'friendly')}}>Add</button> */}
-              <PlusButton className='add-to-team-button' onClick={()=>{this.addToTeam({...this.props.currentPokemon}, 'friendly')}}/>
+              <button className='add-to-your-team' onClick={()=>{this.addToTeam({...this.props.currentPokemon}, 'friendly')}}>Add</button>
+              {/* <PlusButton className='add-to-team-button' onClick={()=>{this.addToTeam({...this.props.currentPokemon}, 'friendly')}}/> */}
               <button className='add-to-calc' onClick={()=>{this.props.addMonToCalc({...this.props.currentPokemon}, 'friendly')}}>Calc</button>
             </div>
             <div className='add-to-team-option-spacer'></div>
@@ -252,5 +252,6 @@ class CurrentPokemonDisplay extends Component {
     );
   }
 }
+
 
 export default connect(mapStateToProps, mapDispatchToProps)(CurrentPokemonDisplay)

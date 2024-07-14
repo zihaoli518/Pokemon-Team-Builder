@@ -28,7 +28,7 @@ const mapDispatchToProps = dispatch => ({
   switchTeams: (yourTeam, EnemyTeam, key) => dispatch(actions.switchTeams(yourTeam, EnemyTeam, key))
 });
 
-const SwitchTeams = props => {
+const RoutesTeams = props => {
   let oldLength = Object.keys(props.savedTeams).length
   let newKey = 'team_'+(oldLength+1);
 
@@ -41,4 +41,4 @@ const SwitchTeams = props => {
   );
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(SwitchTeams);
+export default connect(mapStateToProps, mapDispatchToProps)(RoutesTeams);

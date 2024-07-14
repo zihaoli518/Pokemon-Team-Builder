@@ -16,8 +16,8 @@ import PokemonSprite from './PokemonSprite.jsx';
 import TeamMember from './TeamMember.jsx';
 
 import * as actions from '../actions/actions';
-import saveIcon from '../../assets/save-icon.png'
-
+import saveIcon from '../../assets/save-icon.png';
+import PlusButton from './small-components/PlusButton.jsx';
 
 const mapStateToProps = (state) => {
   return {
@@ -147,7 +147,6 @@ const TeamDisplay= (props) => {
         </div>
         :
         <button className='clear-team-button' id='clear-team-button-e' onClick={(e) => {props.clearTeam('enemyTeam')}}>clear</button>
-
       }
     </div>
   );

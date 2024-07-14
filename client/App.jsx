@@ -10,8 +10,8 @@
  */
 
 // importing dependencies
-import React, { Component } from 'react';
-import { Switch } from 'react-router-dom';
+import React, { useState, useEffect, useCallback } from 'react';
+import { Routes } from 'react-router-dom';
 import { Router, Route, Link, browserHistory, IndexRedirect } from 'react-router'
 
 import { connect } from 'react-redux';
@@ -27,10 +27,15 @@ import AnalysisMenu from './components/AnalysisMenu.jsx';
 
 import MatchupChart from './components/analysis-menu/MatchupChart.jsx';
 import AllSavedTeams from './components/AllSavedTeams.jsx';
-import BrowsingHistory from './components/BrowsingHistory.jsx'
+import BrowsingHistory from './components/BrowsingHistory.jsx';
+import FloatingNavigator from './components/FloatingNavigator.jsx'
 
 import themeSongFile from '../assets/theme.mp3';
 import buttonSoundFile from '../assets/button-sound-effect.mp3';
+
+import { Switch, FormControlLabel } from '@mui/material';
+import { createTheme, ThemeProvider, useTheme } from '@mui/material/styles';
+
 import './styles/app.scss'
 
 import favicon from '../assets/favicon.ico';
@@ -39,11 +44,50 @@ const themeSong = new Audio(themeSongFile);
 const buttonSound = new Audio(buttonSoundFile);
 
 
+let modernDarkTheme = createTheme({
+  palette: {
+    mode: 'dark',
+    primary: {
+      main: '#8ea8bd',
+      contrastText: '#e5eaea',
+      dark: '#263238',
+    },
+    secondary: {
+      main: '#80cbc4',
+    },
+    custom: {
+      friendly: {
+        main: '#badcd8'
+      },
+      enemy: {
+        main: '#FF5733'
+      }
+    }
+  },
+});
 
+let palletTownTheme = createTheme({
+  palette: {
+    mode: 'light',
+    primary: {
+      main: '#A5D6A7',
+      contrastText: '#e5eaea',
+      dark: '#263238',
+    },
+    secondary: {
+      main: '#80cbc4',
+    },
+    custom: {
+      friendly: {
+        main: '#badcd8'
+      },
+      enemy: {
+        main: '#FF5733'
+      }
+    }
+  },
+});
 
-// themeSong.addEventListener('loadeddata', () => {
-//   themeSong.play();
-// });
 window.addEventListener('click', () => {
   addSoundEffectToButtons();
   themeSong.play();
@@ -69,63 +113,63 @@ const mapStateToProps = state => ({
   mainDivClassName: state.userFunctions.mainDivClassName
 }) 
 
+const App = (props) => {
+  const [volume, setVolume] = useState(0.5);
+  const [themeMode, setThemeMode] = useState('modernDark')
 
-class App extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {volume: 0.5}
-  }
-  
-  componentWillMount = () => {
+  useEffect(() => {
     addSoundEffectToButtons();
-  }
-  
-  componentDidUpdate = () => {
+  }, []);
+
+  useEffect(() => {
     addSoundEffectToButtons();
-  }
-  
-  
-  changeAppVolume = () => {
-    // Get the current volume level from the volume control element
-    var volumeControl = document.getElementById('volume-slider');
-    var newAppVolume = volumeControl.value;
-    
-    // Update the app volume variable
-    console.log('new app volume:' , newAppVolume)
-    this.setState({volume: newAppVolume})
-    
-    // Update the volume of all audio elements
+  }, [props.currentPokemon, props.teamStatus, props.analysisMenuStatus]);
+
+  const changeAppVolume = useCallback(() => {
+    const volumeControl = document.getElementById('volume-slider');
+    const newAppVolume = volumeControl.value;
+    console.log('new app volume:', newAppVolume);
+    setVolume(newAppVolume);
     themeSong.volume = newAppVolume;
     buttonSound.volume = newAppVolume;
+  }, []);
+
+  useEffect(() => {
+    const slider = document.getElementById("volume-slider");
+    slider.addEventListener("change", changeAppVolume);
+    return () => {
+      slider.removeEventListener("change", changeAppVolume);
+    }
+  }, [changeAppVolume]);
+
+  // passing theme 
+  const theme = (themeMode==='modernDark') ? modernDarkTheme : palletTownTheme;
+  const handleThemeChange = () => {
+    if (themeMode==='modernDark') setThemeMode('palletTown');
+    if (themeMode==='palletTown') setThemeMode('modernDark');
   }
-  
-  addSliderOnChange() {
-    var slider = document.getElementById("volume-slider");
-    console.log('inside addSliderOnChange, ', slider, this.changeAppVolume);
-    slider.addEventListener("change", function() {
-      console.log("Slider value changed!");
-      this.changeAppVolume(); // call your function here
-    });
-  }
-  
-  
-  render() {
-    return (
+   
+
+  return (
+    <ThemeProvider theme={theme}>
       <div className="app-container">
-        <TopNavBar appVolume={this.state.volume} changeAppVolume={this.changeAppVolume}/>
-        <div className={this.props.mainDivClassName} id={"main-div"}>
-          {!this.props.currentPokemon.isActive ? (
+        <TopNavBar appVolume={volume} changeAppVolume={changeAppVolume} themeMode={themeMode} handleThemeChange={handleThemeChange} />
+        <div className={props.mainDivClassName} id={"main-div"}>
+          {!props.currentPokemon.isActive ? (
             <div className="explore-tip">
               <h4>start exploring/team building by looking up a pokemon!</h4>
             </div>
           ) : null}
-          {/* <img className='electabuzzes' src="https://www.models-resource.com/resources/big_icons/24/23144.png?updated=1510574730" alt="" /> */}
-          <BrowsingHistory />
+          
+          <div className='navigator-and-history-container'> 
+            <FloatingNavigator />
+            <BrowsingHistory />
+          </div>
 
           <div className="main-row-container">
             <AllSavedTeams />
             <div className="current-pokemon-display-container">
-              {this.props.currentPokemon.isActive ? (
+              {props.currentPokemon.isActive ? (
                 <CurrentPokemonDisplay />
               ) : null}
             </div>
@@ -133,9 +177,9 @@ class App extends Component {
           <div className="teams">
             <TeamDisplay key={"green"} team={"green"} />
             <SwitchTeams />
-            <TeamDisplay key={"red"} team={"red"} />,
+            <TeamDisplay key={"red"} team={"red"} />
           </div>
-          {this.props.teamStatus || this.props.analysisMenuStatus ? (
+          {props.teamStatus || props.analysisMenuStatus ? (
             <AnalysisMenu />
           ) : null}
 
@@ -149,10 +193,9 @@ class App extends Component {
           </div>
         </div>
       </div>
-    );
-  }
+    </ThemeProvider>
+  );
 }
-
 
 export default connect(mapStateToProps, null)(App);
 

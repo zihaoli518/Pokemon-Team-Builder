@@ -56280,7 +56280,7 @@
         "spd": 58,
         "spe": 97
       },
-      "abilities": { "0": "Hunger Switch" },
+      "abilities": { "0": "Hunger Routes" },
       "weightkg": 3,
       "eggGroups": ["Field", "Fairy"],
       "otherFormes": ["Morpeko-Hangry"],
@@ -56331,10 +56331,10 @@
         "spd": 58,
         "spe": 97
       },
-      "abilities": { "0": "Hunger Switch" },
+      "abilities": { "0": "Hunger Routes" },
       "weightkg": 3,
       "eggGroups": ["Field", "Fairy"],
-      "requiredAbility": "Hunger Switch",
+      "requiredAbility": "Hunger Routes",
       "battleOnly": "Morpeko",
       "isNonstandard": "Past",
       "id": "morpekohangry",

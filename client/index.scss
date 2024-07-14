@@ -116,6 +116,9 @@ body {
 button {
   display: inline-flex;
   align-items: center;
+
+  justify-content: center; /* Center horizontally */
+
 }
 
 button:hover {
@@ -324,6 +327,10 @@ h1 {
 }
 
 
+.volume-label {
+  font-size: 40%;
+}
+
 
 
 
@@ -337,7 +344,12 @@ h1 {
   height: 55%;
   position: relative;
   top: 4.5%;
+}
 
+.navigator-and-history-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 
@@ -2089,7 +2101,7 @@ h1 {
   text-align: center;
   font-family: "Indie Flower", cursive;
   font-weight: 500;
-  border: 1px rgba(128, 128, 128, 0.681) dotted;
+  // border: 1px rgba(128, 128, 128, 0.681) dotted;
   border-radius: 0.5rem;
 
   position: relative;

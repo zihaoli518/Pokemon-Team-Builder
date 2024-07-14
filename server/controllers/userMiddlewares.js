@@ -3,7 +3,7 @@ require('dotenv').config({path: path.resolve(__dirname+'../../../.env')});
 
 
 const db = require('../dbModel.js');
-const bcrypt = require('bcrypt');
+const bcrypt = require('bcryptjs');
 const saltFactor = 10;
 const jwt = require('jsonwebtoken')
 
