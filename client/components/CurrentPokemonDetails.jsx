@@ -10,7 +10,7 @@
  */
 
 // importing dependencies 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { connect } from 'react-redux';
 
 // importing files 
@@ -19,6 +19,9 @@ import PokemonSprite from './PokemonSprite.jsx';
 import StatChart from './StatChart.jsx';
 import EvSliderContainer from './EvSliderContainer.jsx';
 import EvContainer from './EvContainer.jsx';
+
+import isEqualState from 'lodash.isequal';
+
 
 // importing json files containing data from smogon 
 import Data from './dexData.js';
@@ -40,7 +43,7 @@ const mapDispatchToProps = dispatch => ({
   // create functions that will dispatch action creators
   selectAbility : (ability) => dispatch(actions.selectAbility(ability)),
   saveItemToMon : (item, description, url) => dispatch(actions.saveItemToMon(item, description, url)),
-  updateSavedTeam: (team) => dispatch(actions.updateSavedTeam(team)),
+  updateSavedTeam: (team, triggeredBy) => dispatch(actions.updateSavedTeam(team, triggeredBy)),
   updateActiveMove: (moveId, moveObj) => dispatch(actions.updateActiveMove(moveId, moveObj)),
   selectMoveFromList: (moveId, moveObj) => dispatch(actions.selectMoveFromList(moveId,moveObj))
 });
@@ -118,7 +121,7 @@ const CurrentPokemonDetails = props => {
     const chooseAbility = (name, url, div, activeClassName) => {
       getAbilityDescription(name, url);
       makeDivActive(div, activeClassName);
-      props.updateSavedTeam(props.yourTeam);
+      props.updateSavedTeam(props.yourTeam, 'CurrentPokemonDetails.chooseAbility');
     }
 
     for (let i=0; i<props.currentPokemon.abilities.length; i++) {
@@ -170,7 +173,7 @@ const CurrentPokemonDetails = props => {
       // url = envURIComponent(url)
       props.saveItemToMon(name, description, url);
 
-      props.updateSavedTeam(props.yourTeam);
+      props.updateSavedTeam(props.yourTeam, 'CurrentPokemonDetails.chooseItem');
 
       // clear input field 
       const input = document.getElementById('item-search-input');
@@ -375,11 +378,16 @@ const CurrentPokemonDetails = props => {
 
   }
 
+  const prevPokemon = useRef(props.currentPokemon);
+
   useEffect(() => {
-    populateAbilities();
-    populateItems();
-    // populateMoveContainers();
-    populateMoves();
+    if (!isEqualState(prevPokemon.current, props.currentPokemon)) {
+      console.log('DIFFERENT MON ', prevPokemon.current, props.currentPokemon )
+      populateAbilities();
+      populateItems();
+      // populateMoveContainers();
+      populateMoves();
+    }
   }, [props.currentPokemon.pokemon, props.activeAbility.name, props.currentPokemon.activeMove])
 
 

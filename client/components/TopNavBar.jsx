@@ -20,7 +20,9 @@ import * as actions from '../actions/actions';
 import SignupModal from './modals/SignupModal.jsx';
 import LoginModal from './modals/LoginModal.jsx';
 import PokemonSearch from './PokemonSearch.jsx'
-import { Switch, FormControlLabel } from '@mui/material';
+import { Switch, FormControlLabel, FormLabel } from '@mui/material';
+import { useTheme } from '@mui/material/styles';
+
 
 
 import '../styles/TopNavBar.scss';
@@ -43,6 +45,7 @@ const mapDispatchToProps = dispatch => ({
 
 
 const TopNavBar = props => {
+  const theme = useTheme();
 
   const [showLoginModal, setShowLoginModal] = useState(false);
   const [showSignupModal, setShowSignupModal] = useState(false);
@@ -93,14 +96,21 @@ const TopNavBar = props => {
 
   }
 
+
   return (
-    
-    <div className='top-nav-bar'>
-        <h1 className='top-title'>electabuzzed.xyz</h1>
-        {/* <img src="https://cdn.discordapp.com/emojis/933421274091360346.webp?size=96&quality=lossless" alt="" /> */}
-        <img className='electabuzz-logo' src={electabuzzGIF} alt="" />
-        <PokemonSearch />
-        <h4 className='volume-label'>volume: </h4>
+    <div className="top-nav-bar">
+      <h1 className="top-title">electabuzzed.xyz</h1>
+      {/* <img src="https://cdn.discordapp.com/emojis/933421274091360346.webp?size=96&quality=lossless" alt="" /> */}
+      <img className="electabuzz-logo" src={electabuzzGIF} alt="" />
+      <PokemonSearch />
+      <div className="volume-container">
+        <FormLabel
+          sx={{
+            color: theme.palette.text.secondary,
+          }}
+        >
+          volume
+        </FormLabel>
         <input
           type="range"
           min="0"
@@ -112,28 +122,67 @@ const TopNavBar = props => {
             props.changeAppVolume();
           }}
         />
-
-        <FormControlLabel
-          control={<Switch checked={props.themeMode === 'modernDark'} onChange={() => {props.handleThemeChange()}} />}
-          label="Dark Mode"
-        />
-
-      <div className='top-nav-bar-buttons'>
-      {(props.isLoggedIn)? 
-        <div className='after-login-username-display'> 
-          <h2>welcome back! </h2>
-          <h3>{props.username}</h3> 
-          <button className={'btn btn-secondary'} id='log-out-button' onClick={() => {logout()}}>log out</button> 
-        </div>
-        :
-        <div className='top-nav-bar-buttons-inner'>
-          <button className="btn btn-secondary"  onClick={() => {toggleShowLoginModal()}}>login</button> 
-          <button className="btn btn-secondary" onClick={() => {toggleShowSignupModal()}}>signup</button> 
-        </div>
-        }
       </div>
-          <LoginModal show={showLoginModal} toggle={toggleShowLoginModal} changeUserState={props.changeUserState} toggleShowLoginModal={toggleShowLoginModal}/>
-          <SignupModal show={showSignupModal} toggle={toggleShowSignupModal}/>
+
+      <FormControlLabel
+        className='dark-mode-switch'
+        control={
+          <Switch
+            checked={props.themeMode === "modernDark"}
+            onChange={() => {
+              props.handleThemeChange();
+            }}
+          />
+        }
+        sx={{
+          marginLeft: '3%'
+        }}
+        label={(props.themeMode === "modernDark") ? "modern" : "pallet town"}
+      />
+
+      <div className="top-nav-bar-buttons">
+        {props.isLoggedIn ? (
+          <div className="after-login-username-display">
+            <h2>welcome back! </h2>
+            <h3>{props.username}</h3>
+            <button
+              className={"btn btn-secondary"}
+              id="log-out-button"
+              onClick={() => {
+                logout();
+              }}
+            >
+              log out
+            </button>
+          </div>
+        ) : (
+          <div className="top-nav-bar-buttons-inner">
+            <button
+              className="btn btn-secondary"
+              onClick={() => {
+                toggleShowLoginModal();
+              }}
+            >
+              login
+            </button>
+            <button
+              className="btn btn-secondary"
+              onClick={() => {
+                toggleShowSignupModal();
+              }}
+            >
+              signup
+            </button>
+          </div>
+        )}
+      </div>
+      <LoginModal
+        show={showLoginModal}
+        toggle={toggleShowLoginModal}
+        changeUserState={props.changeUserState}
+        toggleShowLoginModal={toggleShowLoginModal}
+      />
+      <SignupModal show={showSignupModal} toggle={toggleShowSignupModal} />
     </div>
   );
 }

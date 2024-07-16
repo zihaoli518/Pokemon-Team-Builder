@@ -127,7 +127,7 @@ const userFunctionsReducer = (state = initialState, action) => {
         }
 
       case types.UPDATE_SAVED_TEAM:
-        console.log('inside UPDATE_SAVED_TEAM ', action.payload.team.key)
+        console.log('inside UPDATE_SAVED_TEAM ', action.payload.team.key, 'triggered by: ', action.payload.triggeredBy)
         
         let beforeMakingTeamActive = {...state.savedTeams};
         console.log(beforeMakingTeamActive)

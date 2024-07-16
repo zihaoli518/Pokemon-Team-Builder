@@ -1,39 +1,37 @@
 
-body {
-  background-color: rgb(179, 179, 179);
-  // // background-image: url('../../assets/background-merged-afternoon.jpeg');
-  // background-size: cover;
-  // background-repeat: no-repeat;
-
-  font-family: "Indie Flower", cursive;
-  height: 100%;
+// .morning {
+  //   background-image: url('../../assets/background-merged-morning.jpeg');
+  //   background-size: cover;
+  //   background-repeat: no-repeat;
+  // }
+  
+  // .afternoon {
+    //   background-image: url('../../assets/background-merged-afternoon.jpeg');
+    //   background-size: cover;
+    //   background-repeat: no-repeat;
+    // }
+    
+    // .night {
+      //   background-image: url('../assets/background-merged-night.jpeg');
+      //   background-size: cover;
+      //   background-repeat: no-repeat;
+      // }
+      
+html {
+  height: auto;
+  min-height: 100%;
   width: 100%;
-  margin: 0;
-
-  overflow-x: hidden;
 }
 
-// .morning {
-//   background-image: url('../../assets/background-merged-morning.jpeg');
-//   background-size: cover;
-//   background-repeat: no-repeat;
-// }
-
-// .afternoon {
-//   background-image: url('../../assets/background-merged-afternoon.jpeg');
-//   background-size: cover;
-//   background-repeat: no-repeat;
-// }
-
-// .night {
-//   background-image: url('../assets/background-merged-night.jpeg');
-//   background-size: cover;
-//   background-repeat: no-repeat;
-// }
-
-html {
-  height: 100%;
+body {
+  height: auto;
+  min-height: 100%;
   width: 100%;
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+  font-family: "Indie Flower";
+
 }
 
 
@@ -47,7 +45,35 @@ html {
   width: 100%;
 }
 
+#main-div {
+  width: 100%;
+  height: 100%;
+  min-height: 100%;
+  position: relative;
+  z-index: 3;
+}
+
 .background {
   height: 100%;
   width: 100%;
+}
+
+// main row 
+.main-row-container {
+  height: 58vh;
+  width: 100%;
+  display: flex;
+  justify-content: left;
+  position: relative;
+  top: 4.5%;
+}
+
+.navigator-and-history-container {
+  height: 8vh;
+  width: 100%;
+  margin-top: 0.4%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
 }

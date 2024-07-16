@@ -10,7 +10,7 @@
  */
 
 // importing dependencies 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { connect } from 'react-redux';
 import PokemonSprite from './PokemonSprite.jsx';
 import TeamMember from './TeamMember.jsx';
@@ -18,6 +18,9 @@ import TeamMember from './TeamMember.jsx';
 import * as actions from '../actions/actions';
 import saveIcon from '../../assets/save-icon.png';
 import PlusButton from './small-components/PlusButton.jsx';
+
+import isEqualState from 'lodash.isequal';
+
 
 const mapStateToProps = (state) => {
   return {
@@ -33,21 +36,31 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = dispatch => ({
   saveCurrentTeamAsNew : (teamObj) => dispatch(actions.saveCurrentTeamAsNew(teamObj)),
-  updateSavedTeam: (team) => dispatch(actions.updateSavedTeam(team)),
+  updateSavedTeam: (team, triggeredBy) => dispatch(actions.updateSavedTeam(team, triggeredBy)),
   clearTeam: (teamStr) => dispatch(actions.clearTeam(teamStr)),
 });
 
 
 const TeamDisplay= (props) => {
-  
+
   if (!props.yourTeam) return null;
+
   const [teamState, setTeamState] = useState({color: props.team, selectedTeam: {}, selectedTeamName: props.yourTeam.name, title: props.yourTeam.name, teamToBeDisplayed:[]})
   
+
+  const prevYourTeam = useRef(props.yourTeam);
+  const prevEnemyTeam = useRef(props.enemyTeam);
+
   useEffect(() => {
-    populateTeam(teamState.color)
-    // console.log('title: ', teamState.title)
-    props.updateSavedTeam(props.yourTeam)
-  }, [props.yourTeam, props.enemyTeam])
+    if (!isEqualState(prevYourTeam.current, props.yourTeam) || !isEqualState(prevEnemyTeam.current, props.enemyTeam)) {
+      console.log('yourTeam changed:', prevYourTeam.current, props.yourTeam);
+      console.log('enemyTeam changed:', prevEnemyTeam.current, props.enemyTeam);
+      prevYourTeam.current = props.yourTeam;
+      prevEnemyTeam.current = props.enemyTeam;
+      populateTeam(teamState.color);
+      props.updateSavedTeam(props.yourTeam, 'TeamDisplay - useEffect');
+    }
+  }, [props.yourTeam, props.enemyTeam, teamState.color]);
 
   const populateTeam = team => {
     
@@ -128,7 +141,7 @@ const TeamDisplay= (props) => {
     if (input===undefined) input = 'untitled'
     let copy = {...teamState.selectedTeam}
     copy.name = input
-    if (teamState.color==='green') props.updateSavedTeam(copy)
+    if (teamState.color==='green') props.updateSavedTeam(copy, 'TeamDisplay.saveTeam')
     // saveTeamsToDatabase(props.savedTeams)
   }
 

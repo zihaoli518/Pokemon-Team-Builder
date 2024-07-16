@@ -82,9 +82,9 @@ export const saveCurrentTeamAsNew = (team) => ({
   payload: {team: team},
 });
 
-export const updateSavedTeam = (team) => ({
+export const updateSavedTeam = (team, triggeredBy) => ({
   type: types.UPDATE_SAVED_TEAM,
-  payload: {team: team},
+  payload: {team: team, triggeredBy: triggeredBy},
 });
 
 export const setYourTeam = (team) => ({

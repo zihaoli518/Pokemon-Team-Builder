@@ -268,6 +268,7 @@ const PokemonSearch = props => {
   }
 
   useEffect(() => {
+    console.log('inside PokemonSearch useEffect!!', once, props.historyCache)
     if (once) addEventListenersOnce();
     populatePokedex(null, props.historyCache);
     changeBackground();

@@ -10,7 +10,7 @@
  */
 
 // importing dependencies 
-import React, { Component } from 'react';
+import React, { useEffect, useState, useCallback, useRef } from 'react';
 import { connect } from 'react-redux';
 
 // importing files 
@@ -21,10 +21,9 @@ import CurrentPokemonDetails from './CurrentPokemonDetails.jsx'
 import EvolutionTree from './EvolutionTree.jsx';
 import ImportExportModal from './modals/ImportExportModal.jsx';
 
-import PlusButton from './small-components/PlusButton.jsx';
+import { useTheme } from '@mui/material/styles';
 
-
-
+import isEqualState from 'lodash.isequal';
 
 // currentPokemon contains all data. moveSet contains all moves(object)
 const mapStateToProps = state => {
@@ -33,13 +32,10 @@ const mapStateToProps = state => {
     moveSet : state.pokemon.currentPokemon.moves,
     abilities: state.pokemon.currentPokemon.abilities,
     competetiveStatus : state.pokemon.currentPokemon.competetiveStatus,
-    // yourTeam : state.pokemon.yourTeam,
-    // enemyTeam: state.pokemon.enemyTeam
   }
 }
 
 const mapDispatchToProps = dispatch => ({
-  // create functions that will dispatch action creators
   addPokemonToYourTeam : (pokemonObj) => dispatch(actions.addPokemonToYourTeam(pokemonObj)),
   addPokemonToEnemeyTeam: (pokemonObj) => dispatch(actions.addPokemonToEnemyTeam(pokemonObj)),
   selectAbility : (ability) => dispatch(actions.selectAbility(ability)),
@@ -49,42 +45,32 @@ const mapDispatchToProps = dispatch => ({
 const types = ['bug', 'dark', 'dragon', 'electric', 'fairy', 'fighting', 'fire', 'flying', 'ghost', 'grass', 'ground', 'ice', 'normal', 'poison', 'psychic', 'rock', 'steel', 'water']
 
 
+const CurrentPokemonDisplay = (props) => {
+  const [state, setState] = useState({ 
+    pokemon: props.currentPokemon, 
+    immunities: [], 
+    weaknesses: [], 
+    resistances: [] 
+  });
 
-class CurrentPokemonDisplay extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {pokemon: this.props.currentPokemon, immunities: [], weaknesses: [], resistances:[]}
-  }
+  const [prevPokemon, setPrevPokemon] = useState({ current: null });
 
-  componentWillMount = () => {
-    this.generateWeakness(this.props.currentPokemon.pokemon);
-    this.playCrySound();
-  }
 
-  componentDidUpdate = (prevState) => {
-    // console.log('inside componentWillUpdate - CurrentPokemonDisplay')
-    // console.log(this.props.currentPokemon)
-    if (prevState.currentPokemon.pokemon !== this.props.currentPokemon.pokemon) {
-      this.playCrySound();
-      this.generateWeakness();
-      if (this.props.currentPokemon.slot.mon===null) this.updateActiveAbilityOnNewSearch();
-    }
-  }
+  const theme = useTheme();
 
-  playCrySound() {
-    const parsedName = this.props.currentPokemon.pokemon.replace('-', '');
+  const playCrySound = useCallback(() => {
+    const parsedName = props.currentPokemon.pokemon.replace('-', '');
     const cryUrl = `https://play.pokemonshowdown.com/audio/cries/${parsedName}.mp3`;
     const cryAudio = new Audio(cryUrl);
     cryAudio.play();
-  }
+  }, [props.currentPokemon.pokemon]);
 
-  generateWeakness(pokemon) {
+  const generateWeakness = useCallback(() => {
     const newImmunitiesArray = [];
     const newWeaknessArray = [];
     const newResistanceArray = [];
     for (let type of types) {
-      // console.log(type, this.props.currentPokemon.weakness[type])
-      switch (this.props.currentPokemon.weakness[type]) {
+      switch (props.currentPokemon.weakness[type]) {
         case 0:
           newImmunitiesArray.push(
             <h5 key={type} className={`type resistance-immune`} id={type}>{type}</h5>
@@ -110,148 +96,139 @@ class CurrentPokemonDisplay extends Component {
             <h5 key={type} className={`type weakness-x4`} id={type}>{type}</h5>
           )
           break;
-
         default:
           break;
       }
     }
-    // console.log('end of generateWeakness()',{immunities: newImmunitiesArray, weaknesses: newWeaknessArray, resistances:newResistanceArray})
-    this.setState((state) => {
-      return {pokemon: pokemon,immunities: newImmunitiesArray, weaknesses: newWeaknessArray, resistances:newResistanceArray}
-    })
-  }
+    setState({ 
+      pokemon: props.currentPokemon.pokemon,
+      immunities: newImmunitiesArray, 
+      weaknesses: newWeaknessArray, 
+      resistances: newResistanceArray
+    });
+  }, [props.currentPokemon]);
 
-
-  addToTeam(pokemon, team) {
-    // e.preventDefault();
+  const addToTeam = useCallback((pokemon, team) => {
     if (team === "friendly") {
-      this.props.addPokemonToYourTeam(pokemon);
+      props.addPokemonToYourTeam(pokemon);
     } else {
-      this.props.addPokemonToEnemeyTeam(pokemon);
+      props.addPokemonToEnemeyTeam(pokemon);
     }
-  }
+  }, [props]);
 
-  updateActiveAbilityOnNewSearch() {
-    const activeAbility = this.props.currentPokemon.activeAbility; 
-    // if (activeAbility.name && activeAbility.name===this.props.currentPokemon.abilities[0].ability.name) return;
-    const firstAbility = this.props.currentPokemon.abilities[0].ability
+  const updateActiveAbilityOnNewSearch = useCallback(() => {
+    const activeAbility = props.currentPokemon.activeAbility; 
+    const firstAbility = props.currentPokemon.abilities[0].ability;
     const url = firstAbility.url;
     fetch(decodeURIComponent(url))
       .then(data => data.json())
       .then(data => {
         let effectStr = data.effect_entries[1].effect; 
-
-        let array = effectStr.split(/\r?\n|\r|\n/g)
-        let newStr = array[0]
-        let newAbilityObject = {name: firstAbility.name, description: newStr}
-        this.props.selectAbility(newAbilityObject);
-
-        // highlight first ability by default;
-
-        this.makeDivActive('ability1', 'active-ability-highlighted')
+        let array = effectStr.split(/\r?\n|\r|\n/g);
+        let newStr = array[0];
+        let newAbilityObject = { name: firstAbility.name, description: newStr };
+        props.selectAbility(newAbilityObject);
+        makeDivActive('ability1', 'active-ability-highlighted');
       })
-  }
+  }, [props]);
 
-  // generalized function that makes a div have an unique classname (for active effects)
-  makeDivActive(div, activeClassName) {
-    // check if another div already has the active class, remove if found 
+  const makeDivActive = useCallback((div, activeClassName) => {
     const previousActive = document.getElementsByClassName(activeClassName);
-    if (previousActive.length!==0) {
+    if (previousActive.length !== 0) {
       if (previousActive[0].classList !== div) {
         previousActive[0].classList.remove(activeClassName);
       }
     } 
     const container = document.getElementsByClassName(div)[0];
-    container.classList.add(activeClassName)
-  }
+    container.classList.add(activeClassName);
+  }, []);
 
 
-  render() {
-    // if (this.props.currentPokemon.pokemon!==undefined) {
-    {
-      console.log("inside current pokemon display", this.props.currentPokemon.pokemon);
+  const prevPokemonRef = useRef(props.currentPokemon);
+
+  useEffect(() => {
+    generateWeakness();
+    playCrySound();
+    if (props.currentPokemon.slot.mon === null && !isEqualState(prevPokemon.current, props.currentPokemon)) {
+      console.log('currentPokemonDisplay bug: ', prevPokemonRef.current, props.currentPokemon )
+      updateActiveAbilityOnNewSearch();
     }
-    // {console.log(this.props.currentPokemon.pokemon)}
-    return (
-      <div className='current-pokemon-container' key={this.props.currentPokemon.slot.mon}>
-        <EvolutionTree />
-        <div className='current-pokemon-outter-flexbox'>
-          <div key={this.props.currentPokemon.pokemon} className="current-pokemon">
-             
-            <div className="top-flexbox">
-              <h3 id={this.props.currentPokemon.pokemon}> {this.props.currentPokemon.pokemon} </h3>
-              <div className="types">
-                <h4 className={"type"} id={this.props.currentPokemon.types[0]}>{this.props.currentPokemon.types[0]}</h4>
-                <h4 className={"type"+" type-"+this.props.currentPokemon.types[1]} id={this.props.currentPokemon.types[1]}>{this.props.currentPokemon.types[1]}</h4>
-              </div>
-              <div className="current-pokemon-spacer" ></div>
-              {/* <div className="levels">
-                <h4>level 100</h4>
-              </div> */}
+    setPrevPokemon({ current: props.currentPokemon });
+  }, [props.currentPokemon]);
+
+
+  return (
+    <div className='current-pokemon-container' 
+      key={props.currentPokemon.slot.mon}
+    >
+      <EvolutionTree />
+      <div className='current-pokemon-outter-flexbox'>
+        <div key={props.currentPokemon.pokemon} 
+          className="current-pokemon"
+          style={{backgroundColor: theme.palette.background.paper}}
+        >
+          <div className="top-flexbox">
+            <h3 id={props.currentPokemon.pokemon}> {props.currentPokemon.pokemon} </h3>
+            <div className="types">
+              <h4 className={"type"} id={props.currentPokemon.types[0]}>{props.currentPokemon.types[0]}</h4>
+              <h4 className={"type"+" type-"+props.currentPokemon.types[1]} id={props.currentPokemon.types[1]}>{props.currentPokemon.types[1]}</h4>
             </div>
-
-            <div className="current-pokemon-flexbox">
-              <div className='current-sprite-main-container'>
-                <PokemonSprite
-                  key={this.props.currentPokemon.slot.mon}
-                  pokemon={this.props.currentPokemon.pokemon}
-                  className="current-sprite-main"
-                />
-              </div>
-
-              <div className="stats">
-                {/* <h5>Base Stats</h5> */}
-                <StatChartRadar name={this.props.currentPokemon.pokemon} pokemonStats={this.props.currentPokemon.stats} currentPokemon={this.props.currentPokemon} id={'current-pokemon-chart'}/>
-              </div>
+            <div className="current-pokemon-spacer" ></div>
+          </div>
+          <div className="current-pokemon-flexbox">
+            <div className='current-sprite-main-container'>
+              <PokemonSprite
+                key={props.currentPokemon.slot.mon}
+                pokemon={props.currentPokemon.pokemon}
+                className="current-sprite-main"
+              />
             </div>
-            <div className={'oval-ground ' + 'type-'+this.props.currentPokemon.types[0]}>
-
-            </div>
-
-            <div className='current-pokemon-weakness-summary'> 
-              <div className='weaknesses'>
-                  <h4>immunity : </h4>
-                  <div className='weaknesses-inner'>
-                    {this.state.immunities}
-                  </div>
-              </div>
-              <div className='weaknesses'>
-                  <h4>weakness : </h4>
-                  <div className='weaknesses-inner'>
-                    {this.state.weaknesses}
-                  </div>
-              </div>
-              <div className='weaknesses'>
-                  <h4>resistance : </h4>
-                  <div className='weaknesses-inner'>
-                    {this.state.resistances}
-                  </div>
-              </div>
+            <div className="stats">
+              <StatChartRadar name={props.currentPokemon.pokemon} pokemonStats={props.currentPokemon.stats} currentPokemon={props.currentPokemon} id={'current-pokemon-chart'}/>
             </div>
           </div>
-          <div className="add-to-team-option-buttons">
-            <div className='f'>
-              <button className='add-to-your-team' onClick={()=>{this.addToTeam({...this.props.currentPokemon}, 'friendly')}}>Add</button>
-              {/* <PlusButton className='add-to-team-button' onClick={()=>{this.addToTeam({...this.props.currentPokemon}, 'friendly')}}/> */}
-              <button className='add-to-calc' onClick={()=>{this.props.addMonToCalc({...this.props.currentPokemon}, 'friendly')}}>Calc</button>
-            </div>
-            <div className='add-to-team-option-spacer'></div>
-            <div className='e'>
-            <button className='add-to-enemy-team' onClick={()=>{this.addToTeam({...this.props.currentPokemon}, 'enemy')}}>Add</button>
-              <button className='add-to-calc' onClick={()=>{this.props.addMonToCalc({...this.props.currentPokemon}, 'enemy')}}>Calc</button>
-            </div>
+          <div className={'oval-ground ' + 'type-'+props.currentPokemon.types[0]}>
           </div>
-          <div className="down-arrow-gifs">
-              <img className='arrow1' src="https://media3.giphy.com/media/deKZM8D0orxwQ18qtB/giphy.gif?cid=ecf05e47wdglkthtva45fblr1v52dyqktaeiws7a2zi294tv&rid=giphy.gif&ct=s" alt="" />
-              <img className='arrow2'src="https://media3.giphy.com/media/deKZM8D0orxwQ18qtB/giphy.gif?cid=ecf05e47wdglkthtva45fblr1v52dyqktaeiws7a2zi294tv&rid=giphy.gif&ct=s" alt="" />
+          <div className='current-pokemon-weakness-summary'> 
+            <div className='weaknesses'>
+              <h4>immunity : </h4>
+              <div className='weaknesses-inner'>
+                {state.immunities}
+              </div>
+            </div>
+            <div className='weaknesses'>
+              <h4>weakness : </h4>
+              <div className='weaknesses-inner'>
+                {state.weaknesses}
+              </div>
+            </div>
+            <div className='weaknesses'>
+              <h4>resistance : </h4>
+              <div className='weaknesses-inner'>
+                {state.resistances}
+              </div>
+            </div>
           </div>
         </div>
-        <CurrentPokemonDetails />
-
+        <div className="add-to-team-option-buttons">
+          <div className='f'>
+            <button className='add-to-your-team' onClick={()=>{addToTeam({...props.currentPokemon}, 'friendly')}}>Add</button>
+            <button className='add-to-calc' onClick={()=>{props.addMonToCalc({...props.currentPokemon}, 'friendly')}}>Calc</button>
+          </div>
+          <div className='add-to-team-option-spacer'></div>
+          <div className='e'>
+            <button className='add-to-enemy-team' onClick={()=>{addToTeam({...props.currentPokemon}, 'enemy')}}>Add</button>
+            <button className='add-to-calc' onClick={()=>{props.addMonToCalc({...props.currentPokemon}, 'enemy')}}>Calc</button>
+          </div>
+        </div>
+        <div className="down-arrow-gifs">
+          <img className='arrow1' src="https://media3.giphy.com/media/deKZM8D0orxwQ18qtB/giphy.gif?cid=ecf05e47wdglkthtva45fblr1v52dyqktaeiws7a2zi294tv&rid=giphy.gif&ct=s" alt="" />
+          <img className='arrow2'src="https://media3.giphy.com/media/deKZM8D0orxwQ18qtB/giphy.gif?cid=ecf05e47wdglkthtva45fblr1v52dyqktaeiws7a2zi294tv&rid=giphy.gif&ct=s" alt="" />
+        </div>
       </div>
-    );
-  }
+      <CurrentPokemonDetails />
+    </div>
+  );
 }
 
-
-export default connect(mapStateToProps, mapDispatchToProps)(CurrentPokemonDisplay)
+export default connect(mapStateToProps, mapDispatchToProps)(CurrentPokemonDisplay);

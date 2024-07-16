@@ -3,7 +3,7 @@
 
 // top nav bar
 .top-nav-bar {
-  height: 10%;
+  height: 10vh;
   width: 100%;
   display: flex;
   justify-content: center;
@@ -32,7 +32,7 @@
 }
 
 .search-bar-container{
-  height: 70%;
+  height: 100%;
   width: 38%;
   min-width: 23%;
   position: relative;
@@ -43,20 +43,23 @@
 
 
 
-.volume-label {
+.volume-container {
+  width: 25%;
   position: relative;
-  margin-left: 24%;
+  margin-left: 20%;
+  display: flex;
+  justify-content: center;
 }
 
 
 
 #volume-slider {
-  width: 7%;
-  min-width: 7%;
+  width: 70%;
+  min-width: 70%;
   height: 50%;
   z-index: 10;
   position: relative;
-  left: 1%;
+  left: 0%;
   cursor: pointer;
 }
 
@@ -107,6 +110,9 @@
   
 }
 
+.dark-mode-switch {
+  margin-left: 5%;
+}
 
 
 // .electabuzzes {

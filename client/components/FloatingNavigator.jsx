@@ -30,15 +30,15 @@ export default function FloatingNavigator() {
   return (
     <ThemeProvider theme={theme}>
       <SpeedDial
-        ariaLabel="SpeedDial basic example"
-        sx={{ position: "relative", bottom: 16, right: 16 }}
-        direction='left'
+        ariaLabel="SpeedDial"
+        sx={{ position: 'absolute', top:'10%', left: '50%', height:'300%'}}
+        direction='down'
         FabProps={{
           sx: {
             bgcolor: theme.palette.primary.main, // Set the background color of the Fab
             '&:hover': {
               bgcolor: 'darkgrey', // Set the hover background color of the Fab
-            }
+            },
           }
         }}
         icon={<SpeedDialIcon />}
@@ -49,6 +49,7 @@ export default function FloatingNavigator() {
             icon={action.icon}
             tooltipTitle={action.name}
             onClick={() => handleNavigation(action.path)}
+            
           />
         ))}
       </SpeedDial>

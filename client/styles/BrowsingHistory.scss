@@ -4,13 +4,14 @@
 
 // browsing history 
 .browsing-history {
-  height: 8%;
+  height: 100%;
   width: 50%;
   background-color: rgba(128, 128, 128, 0.684);
   border-radius: 0.5rem;
   // margin-left: 28%;
   margin-top: 0.5%;
-  margin-bottom: -1.5%;
+  // margin-left: 1%;
+  // margin-bottom: -1.5%;
 
   position: relative;
   display: flex;
@@ -99,5 +100,12 @@
 }
 
 
-
+.navigator-container {
+  height: 100%;
+  width: 10%;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 

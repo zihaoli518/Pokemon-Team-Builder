@@ -32,7 +32,7 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => ({
   toggleMainDivState : (str) => dispatch(actions.toggleMainDivState(str)),
   updateCalculatedStats : (evs, ivs, remainingEv, calcs) => dispatch(actions.updateCalculatedStats(evs, ivs, remainingEv, calcs)),
-  updateSavedTeam: (team) => dispatch(actions.updateSavedTeam(team)),
+  updateSavedTeam: (team, triggeredBy) => dispatch(actions.updateSavedTeam(team, triggeredBy)),
 
 });
 
@@ -83,7 +83,7 @@ const EvContainer = props => {
         // prevent unnecessaery re-renders 
         // if (props.currentPokemon.evs.array !== EVs || props.currentPokemon.ivs.array !== IVs || props.currentPokemon. calculatedStats !==)
         props.updateCalculatedStats(EVs, IVs, remainingEv, results);
-        props.updateSavedTeam(props.yourTeam);
+        props.updateSavedTeam(props.yourTeam, 'EvContainer.mapOnFocusOutFunctios');
 
         // give style to remaining ev if below 0
         const remainingEvDisplay = document.getElementById('remaining-Ev-value'); 
@@ -149,7 +149,7 @@ const EvContainer = props => {
 
     // update state with new values 
     props.updateCalculatedStats(EVs, IVs, remainingEv, results);
-    props.updateSavedTeam(props.yourTeam);
+    props.updateSavedTeam(props.yourTeam, 'EvContainer.handleIVChange');
   };
 
 
