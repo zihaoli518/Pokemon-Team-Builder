@@ -18,6 +18,10 @@ import SavedTeam from './SavedTeam.jsx';
 import * as actions from '../actions/actions';
 import loadingGIF from '../../assets/loading-2.gif';
 
+import AccountTreeRoundedIcon from '@mui/icons-material/AccountTreeRounded';
+import { Typography, Tooltip, Paper } from '@mui/material';
+import { useTheme } from '@mui/material/styles';
+
 
 
 const mapStateToProps = (state) => {
@@ -35,6 +39,7 @@ const mapDispatchToProps = dispatch => ({
 
 
 const EvolutionTree= (props) => {
+  const theme = useTheme();
 
   const [className, setClassName] = useState('evolution-container-inner-active evolution-container-inner');
   const [evolutionTree, setEvolutionTree] = useState([]);
@@ -63,9 +68,9 @@ const EvolutionTree= (props) => {
       firstTextClassName = 'evolution-text-current'
     }
     newTreeArray.push(
-      <div key={Math.random()} className='evolution-row evolution-tier-1'>
+      <div key={Math.random()} className='evolution-row evolution-tier-1' onClick={(e)=>{handleFetch(e, chain.species.name)}}>
         <PokemonSprite key={props.currentPokemon.pokemon} pokemon={chain.species.name} className={firstSpriteClassName}/>
-        <a className={firstTextClassName} onClick={(e)=>{handleFetch(e, chain.species.name)}}>{chain.species.name}</a>
+        <Typography className={firstTextClassName}>{chain.species.name}</Typography>
       </div>
     )
 
@@ -80,10 +85,10 @@ const EvolutionTree= (props) => {
           textClassName = 'evolution-text-current'
         }
         newTreeArray.push(
-          <div key={Math.random()} className={'evolution-row evolution-tier-' + level}>
+          <div key={Math.random()} className={'evolution-row evolution-tier-' + level} onClick={(e)=>{handleFetch(e, innerChain.species.name)}}>
             <img className='arrows' src="https://cdn-icons-png.flaticon.com/512/109/109617.png" alt="" />
             <PokemonSprite key={props.currentPokemon.pokemon} pokemon={innerChain.species.name} className={spriteClassName}/>
-            <a className={textClassName} onClick={(e)=>{handleFetch(e, innerChain.species.name)}}>{innerChain.species.name}</a>
+            <Typography className={textClassName}>{innerChain.species.name}</Typography>
           </div>
         );
         if (innerChain.evolves_to.length) {
@@ -147,36 +152,54 @@ const EvolutionTree= (props) => {
   }, [props.currentPokemon])
 
   return (
-    // <div className='evolution-container' >
-    //   {fullDisplay ?     
-    //     <div className={className} onClick={(e) => {toggleActive(e)}}>
-    //       <h4>evolution tree</h4>
-    //       <div>
-    //         <h4>charizard</h4>
+    //   <div className='evolution-container' key={props.currentPokemon.name}>
+
+    //     <div className={className} >
+    //       <h4>Evolutions</h4>
+    //       <div className='evolution-tree-container'>
+    //         {evolutionTree}
     //       </div>
-    //     </div> :
-    //     <div className={className} onClick={(e) => {toggleActive(e)}}>
-    //       <h4>evolution tree</h4>
-    //       <div>
-    //         <h4>charizard</h4>
-    //       </div>
-    //    </div>
-  
-    //   }
+    //     </div>
+        // {loadingStatus ?
+        //   <img className='between-rerender-loading-gif-evotree' src={loadingGIF} alt="" />
+        //   : null}
     // </div>
-    <div className='evolution-container' key={props.currentPokemon.name}>
-  
-      <div className={className} >
-        <h4>Evolutions</h4>
-        <div className='evolution-tree-container'>
-          {evolutionTree}
-        </div>
-      </div> 
-      {loadingStatus ? 
-        <img className='between-rerender-loading-gif-evotree' src={loadingGIF} alt="" />
-        : null}
-  </div>
- 
+
+    <Paper
+      className='evolution-container' 
+      key={props.currentPokemon.name}
+      elevation={3}
+      sx={{ height: "90%", display: "flex", flexDirection: "column", backgroundColor: theme.palette.primary.dark}}
+    >
+      <Paper
+        elevation={3}
+        sx={{
+          height: "10%",
+          display: "flex",
+          justifyContent: "center",
+          gap: "3%",
+          zIndex: 100,
+          alignItems: "center",
+          borderRadius: "0.6rem",
+          backgroundColor: theme.palette.primary.dark
+        }}
+      >
+        < AccountTreeRoundedIcon />
+        <Typography
+          sx={{ marginLeft: "3%" }}
+        >
+          Evolution Tree 
+        </Typography>
+      </Paper>
+
+      <Paper className='evolution-tree-container'>
+        {evolutionTree}
+      </Paper>
+
+           {loadingStatus ?
+          <img className='between-rerender-loading-gif-evotree' src={loadingGIF} alt="" />
+          : null}
+    </Paper>
   );
 
 }

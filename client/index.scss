@@ -385,8 +385,7 @@ h1 {
 
 .evolution-container {
   height: 100%;
-  width: 15%;
-  z-index: 0;
+  width: 17%;
 }
 
 .evolution-container h4 {
@@ -422,7 +421,7 @@ h1 {
 
 
 .evolution-tree-container {
-  height: 85%;
+  height: 100%;
   width: 100%;
   overflow-y: auto;
   overflow-x: hidden;
@@ -432,10 +431,10 @@ h1 {
 .evolution-row {
   height: 18%;
   width: 80%;
-  font-size: 90%;
   margin-bottom: -15%;
   display: flex;
   justify-content: left;
+  align-items: center;
 }
 
 
@@ -453,10 +452,9 @@ h1 {
   margin-top: 5%;
 }
 
-.evolution-row a:hover {
+.evolution-row :hover {
   color: rgb(111, 167, 180);
   text-decoration: underline;
-  font-size: 95%;
   cursor: pointer;
 }
 
@@ -2088,11 +2086,11 @@ h1 {
 
 .teams .team-members {
   height: 80%;
-  width: 98%;
+  width: 100%;
 
   display: flex;
   flex-direction: row;
-  margin-left: 1%;
+  // margin-left: 1%;
 
 }
 
@@ -2122,7 +2120,7 @@ h1 {
 .team-members {
   display: flex;
   flex-direction: row;
-  margin-left: 7%;
+  // margin-left: 7%;
 
   height: 100%;
   width: 98%;
@@ -2175,52 +2173,41 @@ h1 {
 .team-member-container {
   height: 100%;
   width: 100%;
-  min-height: 105px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+
+  // border: #5d5c5c dotted;
 
   -webkit-animation:fadeIn 0.4s linear;
-  animation:fadeIn 1s linear;
+  animation:fadeIn 0.6s linear;
   -webkit-animation-fill-mode:both;
   animation-fill-mode:both;
 }
 
-.team-member {
+.team-member-sprite-container {
+  height: 85%;
+  width: 100%;
   display: flex;
   justify-content: center;
-  height: 100%;
-  width: 98%;
+  align-items: center;
 
-  margin: 5px;
-}
 
-.team-member .remove-button {
-  position: relative;
-  height: 12%;
-  width: 13%;
-
-  margin-top: -13%;
-  margin-left: -15%;
+  // margin: 1%;
 }
 
 .pokemon-sprite-class-small {
-  // min-height: 70px;
-  // min-width: 70px;
-  // max-height: 110px;
-  // max-width: 110px;
-
-  // position: relative;
-  height: 65%; 
+  height: 100%; 
   width: 100%;
   border-radius: 1rem;
-
-  // top: 50%;
 
   transition: ease-in-out;
 }
 
 .pokemon-sprite-class-small{
   background-color: rgba(92, 143, 134, 0.298);
-  margin-top: -1.5%;
-  padding-bottom: -30px;
+  // margin-top: -1.5%;
+  // padding-bottom: -30px;
   border-radius: 1.5rem;
   box-shadow: 10px 5px 15px -10px rgba(49, 75, 74, 0.705);
 
@@ -2253,10 +2240,11 @@ h1 {
 }
 
 .team-member-container .types-colors {
+  height: 5%;
   display: flex;
   justify-content: center;
   position: relative;
-  top: -35%;
+  // top: -35%;
 }
 
 .team-member-container .types-colors-inner {
@@ -2265,31 +2253,13 @@ h1 {
   margin: 2px;
 }
 
-.teams .save-buttons-container {
-  height: 18%;
-  width: 47%;
-  position: relative;
-  left: 60%;
-  bottom: 126%;
+.team-member-actions {
+  height: 10%;
   display: flex;
   justify-content: center;
 }
 
-.teams button {
-  height: 28px;
-  width: 80px;
-  font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
-  font-size: 1.3rem;
-  background-color: rgba(201, 198, 152, 0.721);
-  color: rgb(41, 42, 42);
-  border-radius: 0.4rem;
-  position: relative;
-}
 
-#main-div > div.teams > div.green > div.save-buttons-container > button.save-team-as-new-button {
-  width: 120px;
-  margin-left: 2%;
-}
 
 .save-buttons-container img:hover {
   transform: scale(1.2);

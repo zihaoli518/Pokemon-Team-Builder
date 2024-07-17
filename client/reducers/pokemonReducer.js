@@ -65,7 +65,7 @@ const initialState = {
   enemyTeam: {
     size: 0,
     key: "team_1_e",
-    name: "enemy team",
+    name: "opponent",
     mon1: null,
     mon2: null,
     mon3: null,
@@ -253,28 +253,30 @@ const pokemonReducer = (state = initialState, action) => {
       }
 
     // add pokemon to enemy team 
-    case types.ADD_POKEMON_TO_ENEMY_TEAM :
-
-      const enemyNewTeam = {...state.enemyTeam};
+    case types.ADD_POKEMON_TO_ENEMY_TEAM:
+      if (state.enemyTeam.size >= 6) {
+        return state; // Return the previous state when team size limit is reached
+      }
+    
+      const enemyNewTeam = { ...state.enemyTeam };
       const currentPokemonE = action.payload;
-
-      if (enemyNewTeam.size>=6) return;
-      
+    
       enemyNewTeam.size++;
-      // adding new pokemon to the first available spot 
-      for (let i=1; i<=6; i++) {
+    
+      // Adding new pokemon to the first available spot
+      for (let i = 1; i <= 6; i++) {
         let currentMonString = 'mon' + i.toString();
-          if (!(enemyNewTeam[currentMonString])) {
-            enemyNewTeam[currentMonString] = currentPokemonE;
-            break;
+        if (!enemyNewTeam[currentMonString]) {
+          enemyNewTeam[currentMonString] = currentPokemonE;
+          break;
         }
       }
-
+    
       return {
-        ... state,
+        ...state,
         enemyTeam: enemyNewTeam,
         teamStatus: true
-      }
+      };
       
     // select pokemon -> and make it the current display pokemon 
     case types.SELECT_TEAM_MEMBER : 
@@ -320,7 +322,8 @@ const pokemonReducer = (state = initialState, action) => {
 
       const newYourTeam = {
         ...action.payload.enemeyTeam,
-        key: state.yourTeam.key
+        key: state.yourTeam.key,
+        name: 'untitled'
       }
 
 
@@ -438,7 +441,7 @@ const pokemonReducer = (state = initialState, action) => {
           yourTeam: emptyTeam
         }
       }
-      emptyTeam.name = 'enemy team';
+      emptyTeam.name = 'opponent';
       return {
         ...state,
         enemyTeam: emptyTeam

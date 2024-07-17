@@ -16,12 +16,29 @@ import { connect } from 'react-redux';
 import PokemonSprite from './PokemonSprite.jsx';
 import * as actions from '../actions/actions';
 
+import { Box, Tooltip, Typography, Divider } from '@mui/material';
+import { useTheme } from '@mui/material/styles';
+
+
+
+import DeleteOutlineRoundedIcon from '@mui/icons-material/DeleteOutlineRounded';
+import CalculateRoundedIcon from '@mui/icons-material/CalculateRounded';
+
+
+const mapStateToProps = (state) => {
+  return {
+    currentPokemon: state.pokemon.currentPokemon,
+  };
+};
 
 const mapDispatchToProps = dispatch => ({
   // create functions that will dispatch action creators
   removeTeamMember : (team, pokemon) => dispatch(actions.removeTeamMember(team, pokemon)),
   selectTeamMember : (pokemonData, team, mon) => dispatch(actions.selectTeamMember(pokemonData, team, mon)),
+  addMonToCalc : (pokemonObj, team) => dispatch(actions.addMonToCalc(pokemonObj, team))
 });
+
+
 
 const TeamMember = props => {
   console.log('inside <TeamMember/>', props)
@@ -42,30 +59,50 @@ const TeamMember = props => {
     
   }
 
+  const theme = useTheme()
+
 
   return (
-    <div className="team-member-container">
-      <div className='team-member'>
+    // <div className="team-member-container">
+    < Box className="team-member-container" >
+      <div className="team-member-sprite-container">
         <PokemonSprite
           pokemon={props.pokemonName}
           className={ClassNamePassed}
-          id={props.selectedTeamName + '_' + props.selectedMon}
-          onClick={()=>{
-            giveSelfActiveClass();
-            console.log('about to send this to props.selectTeammember()', props.pokemonData, props.selectedTeam.key, props.selectedMon)
-            props.selectTeamMember(props.pokemonData, props.selectedTeam.key, props.selectedMon);
-          }}
+          id={props.selectedTeamName + "_" + props.selectedMon}
+          onClick={() => {giveSelfActiveClass();}}
         />
-      <img className="remove-button" onClick={()=>props.removeTeamMember(props.selectedTeamName, props.selectedMon)} src='https://cdn-icons-png.flaticon.com/512/66/66847.png' ></img>
       </div>
-      <div className='types-colors'>
-        <div className='types-colors-inner' id={props.pokemonData.types[0]}></div>
-        {(props.pokemonData.types[1]) ? 
-          <div className='types-colors-inner' id={props.pokemonData.types[1]}></div> 
-          : null}
+      <div className="types-colors">
+        <div
+          className="types-colors-inner"
+          id={props.pokemonData.types[0]}
+        ></div>
+        {props.pokemonData.types[1] ? (
+          <div
+            className="types-colors-inner"
+            id={props.pokemonData.types[1]}
+          ></div>
+        ) : null}
       </div>
-    </div>
+      <Divider variant='middle' sx={{marginTop: '1%', borderColor: theme.palette.background.default}} />
+      <Box className="team-member-actions" gap={'5%'}>
+        <Tooltip
+          title={<Typography sx={{ fontSize: "160%" }}>Calc</Typography>}
+          arrow
+        >
+          <CalculateRoundedIcon onClick={()=>{props.addMonToCalc({...props.currentPokemon}, (props.whichSide ==='green') ? 'friendly': 'enemy')}}/>
+        </Tooltip>
+        <Tooltip
+          title={<Typography sx={{ fontSize: "160%" }}>Delete</Typography>}
+          arrow
+        >
+          <DeleteOutlineRoundedIcon onClick={() => props.removeTeamMember(props.selectedTeamName, props.selectedMon)}/>
+        </Tooltip>
+      </Box>
+    </Box>
+
   );
 }
 
-export default connect(null, mapDispatchToProps)(TeamMember);
+export default connect(mapStateToProps, mapDispatchToProps)(TeamMember);

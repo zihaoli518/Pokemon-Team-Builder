@@ -221,10 +221,7 @@ const CurrentPokemonDisplay = (props) => {
             <button className='add-to-calc' onClick={()=>{props.addMonToCalc({...props.currentPokemon}, 'enemy')}}>Calc</button>
           </div>
         </div>
-        <div className="down-arrow-gifs">
-          <img className='arrow1' src="https://media3.giphy.com/media/deKZM8D0orxwQ18qtB/giphy.gif?cid=ecf05e47wdglkthtva45fblr1v52dyqktaeiws7a2zi294tv&rid=giphy.gif&ct=s" alt="" />
-          <img className='arrow2'src="https://media3.giphy.com/media/deKZM8D0orxwQ18qtB/giphy.gif?cid=ecf05e47wdglkthtva45fblr1v52dyqktaeiws7a2zi294tv&rid=giphy.gif&ct=s" alt="" />
-        </div>
+
       </div>
       <CurrentPokemonDetails />
     </div>
