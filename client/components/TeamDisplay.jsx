@@ -12,6 +12,10 @@
 // importing dependencies 
 import React, { useState, useEffect, useRef } from 'react';
 import { connect } from 'react-redux';
+import Box from '@mui/material/Box';
+import Switch from '@mui/material/Switch';
+import Paper from '@mui/material/Paper';
+
 import PokemonSprite from './PokemonSprite.jsx';
 import TeamMember from './TeamMember.jsx';
 
@@ -20,7 +24,10 @@ import saveIcon from '../../assets/save-icon.png';
 import PlusButton from './small-components/PlusButton.jsx';
 
 import isEqualState from 'lodash.isequal';
-
+import { Typography } from '@mui/material';
+import SaveRoundedIcon from '@mui/icons-material/SaveRounded';
+import ContentCopyRoundedIcon from '@mui/icons-material/ContentCopyRounded';
+import DeleteForeverRoundedIcon from '@mui/icons-material/DeleteForeverRounded';
 
 const mapStateToProps = (state) => {
   return {
@@ -45,7 +52,7 @@ const TeamDisplay= (props) => {
 
   if (!props.yourTeam) return null;
 
-  const [teamState, setTeamState] = useState({color: props.team, selectedTeam: {}, selectedTeamName: props.yourTeam.name, title: props.yourTeam.name, teamToBeDisplayed:[]})
+  const [teamState, setTeamState] = useState({color: props.team, selectedTeam: {}, selectedTeamName: props.yourTeam.name, title: (props.team==='green') ? props.yourTeam.name : 'opponent', teamToBeDisplayed:[]})
   
 
   const prevYourTeam = useRef(props.yourTeam);
@@ -61,6 +68,7 @@ const TeamDisplay= (props) => {
       props.updateSavedTeam(props.yourTeam, 'TeamDisplay - useEffect');
     }
   }, [props.yourTeam, props.enemyTeam, teamState.color]);
+
 
   const populateTeam = team => {
     
@@ -116,10 +124,10 @@ const TeamDisplay= (props) => {
   }
 
   // copy the current team as save as new team - mapped to onclick of copy 
-  const saveTeamAsNew = (e) => {
+  const saveTeamAsNew = (e, teamName) => {
     e.preventDefault();
     // get edited team name from DOM
-    let prevInput = document.querySelector("#main-div > div.teams > div.green > h4").innerHTML;
+    let prevInput = teamName
     let newInput = prevInput;
     if (prevInput===undefined || prevInput==='your team') newInput = 'untitled';
 
@@ -132,11 +140,10 @@ const TeamDisplay= (props) => {
 
   }
 
-  const saveTeam = (e) => {
+  const saveTeam = (e, TeamName) => {
     console.log('inside saveTeam')
     // let input = document.querySelector("#main-div > div.teams > div.green > h4").innerHTML;
-    let input = e.target.textContent;
-    if (!input) input = document.querySelector("#main-div > div.teams > div.green > h4").innerHTML;
+    let input = TeamName
     console.log('in saveTeam, ', input)
     if (input===undefined) input = 'untitled'
     let copy = {...teamState.selectedTeam}
@@ -145,23 +152,29 @@ const TeamDisplay= (props) => {
     // saveTeamsToDatabase(props.savedTeams)
   }
 
-
   return (
-    <div className={props.team}>
-      <h4 className='team-name-text-input' contenteditable="true" onInput={(e) => {saveTeam(e)}}>{teamState.title}</h4>
-      <div className='team-members'>
+
+    <Paper className={props.team} elevation={3} sx={{ height: '90%', display: 'flex', flexDirection: 'column' }}>
+      <Paper elevation={3} sx={{ display: 'flex', justifyContent: 'flex-start', gap: '3%', zIndex: 100, height: '20%', alignItems: 'center', borderRadius: '0.6rem' }}>
+        <Typography contentEditable="true" onInput={(e) => saveTeam(e)} sx={{ marginLeft: '3%' }}>
+          {teamState.title}
+        </Typography>
+        {teamState.color === 'green' && (
+          <>
+            <SaveRoundedIcon onClick={(e) => saveTeam(e, teamState.title)} />
+            <ContentCopyRoundedIcon onClick={(e) => saveTeamAsNew(e, teamState.title)} />
+          </>
+        )}
+        <DeleteForeverRoundedIcon sx={{ marginLeft: 'auto', marginRight: '2%' }} onClick={(e) => { props.clearTeam((teamState.color === 'green') ? 'yourTeam' : 'enemyTeam'); }} />
+      </Paper>
+
+      <div className='team-members' style={{ flexGrow: 1 }}>
         {teamState.teamToBeDisplayed}
       </div>
-      {(teamState.color==='green') ?
-        <div className='save-buttons-container'> 
-          <img className='save-team-icon' src={saveIcon} alt="" onClick={(e) => {saveTeam(e)}} />
-          <img className='copy-team-icon' src="https://cdn-icons-png.flaticon.com/512/1621/1621635.png" alt="" onClick={(e) => {saveTeamAsNew(e)}} />
-          <button className='clear-team-button' id='clear-team-button-f' onClick={(e) => {props.clearTeam('yourTeam'); }}>clear</button>
-        </div>
-        :
-        <button className='clear-team-button' id='clear-team-button-e' onClick={(e) => {props.clearTeam('enemyTeam')}}>clear</button>
-      }
-    </div>
+  </Paper>
+
+
+
   );
 
 }

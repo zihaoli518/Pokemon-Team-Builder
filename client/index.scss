@@ -121,6 +121,9 @@ $water-color
   border-radius: 0.3rem;
 }
 
+svg {
+  cursor: pointer;
+}
 
 button {
   display: inline-flex;
@@ -359,8 +362,8 @@ h1 {
   width: 100%;
   display: flex;
   justify-content: center;
-  transition: 0.5s;
-  animation: rollout 1s;
+  // transition: 0.5s;
+  // animation: rollout 1s;
   z-index: 5;
 }
 
@@ -2013,7 +2016,7 @@ h1 {
 
 // team display 
 .teams {
-  height: 19%;
+  height: 19vh;
   width: 100%;
   margin-top: 2.8%;
   padding-top: 0.4%;
@@ -2048,6 +2051,11 @@ h1 {
   }
 }
 
+.teams svg:hover {
+  scale: 110%;
+}
+
+
 
 .green {
   margin-right: 2%;
@@ -2056,13 +2064,12 @@ h1 {
 
   width: 47%;
   height: 90%;  
-  background-color: rgba($friendlyTeamColor, 0.8);
-  border-radius: 1rem;
+  background-color: rgba($friendlyTeamColor, 0.8) !important;
+  border-radius: 1rem !important;
   box-shadow: 5px 5px 30px -10px rgba(63, 63, 63, 0.88);
 
   animation: teamsMovement 3s infinite;
 }
-
 
 .red {
   margin-left: 2%;
@@ -2071,14 +2078,23 @@ h1 {
 
   width: 47%;
   height: 90%;
-  background-color: rgba($enemyTeamColor, 0.8);
-  border-radius: 1rem;
+  background-color: rgba($enemyTeamColor, 0.8) !important;
+  border-radius: 1rem !important;
   box-shadow: 5px 5px 30px -10px rgba(63, 63, 63, 0.88);
   z-index: 10;
 
   animation: teamsMovement 3s infinite;
-
 } 
+
+.teams .team-members {
+  height: 80%;
+  width: 98%;
+
+  display: flex;
+  flex-direction: row;
+  margin-left: 1%;
+
+}
 
 .team-name-text-input {
   width: 30%;
@@ -2101,14 +2117,6 @@ h1 {
 }
 
 
-.teams .team-members {
-  display: flex;
-  flex-direction: row;
-  margin-left: 1%;
-
-  height: 100%;
-  width: 98%;
-}
 
 // for saved teams (for some reason)
 .team-members {

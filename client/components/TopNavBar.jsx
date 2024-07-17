@@ -20,9 +20,11 @@ import * as actions from '../actions/actions';
 import SignupModal from './modals/SignupModal.jsx';
 import LoginModal from './modals/LoginModal.jsx';
 import PokemonSearch from './PokemonSearch.jsx'
-import { Switch, FormControlLabel, FormLabel } from '@mui/material';
-import { useTheme } from '@mui/material/styles';
 
+import { Switch, FormControlLabel, FormLabel, Typography, Box } from '@mui/material';
+import { useTheme } from '@mui/material/styles';
+import VolumeUpRoundedIcon from '@mui/icons-material/VolumeUpRounded';
+import ContrastRoundedIcon from '@mui/icons-material/ContrastRounded';
 
 
 import '../styles/TopNavBar.scss';
@@ -99,18 +101,15 @@ const TopNavBar = props => {
 
   return (
     <div className="top-nav-bar">
+
       <h1 className="top-title">electabuzzed.xyz</h1>
       {/* <img src="https://cdn.discordapp.com/emojis/933421274091360346.webp?size=96&quality=lossless" alt="" /> */}
       <img className="electabuzz-logo" src={electabuzzGIF} alt="" />
+
       <PokemonSearch />
+
       <div className="volume-container">
-        <FormLabel
-          sx={{
-            color: theme.palette.text.secondary,
-          }}
-        >
-          volume
-        </FormLabel>
+        < VolumeUpRoundedIcon sx={{color: theme.palette.primary.main}}/>
         <input
           type="range"
           min="0"
@@ -124,21 +123,31 @@ const TopNavBar = props => {
         />
       </div>
 
-      <FormControlLabel
-        className='dark-mode-switch'
-        control={
-          <Switch
-            checked={props.themeMode === "modernDark"}
-            onChange={() => {
-              props.handleThemeChange();
-            }}
+      <Box display="flex" alignItems="center" sx={{marginLeft: '2%', width: '7%'}}>
+        <ContrastRoundedIcon sx={{color: theme.palette.primary.main}} />
+        <Box 
+          display="flex" 
+          alignItems="center" 
+          sx={{ marginLeft: '3%' }}
+        >
+          <FormControlLabel
+            className='dark-mode-switch'
+            control={
+              <Switch
+                checked={props.themeMode === "modernDark"}
+                onChange={() => {
+                  props.handleThemeChange();
+                }}
+              />
+            }
+            label={
+              <Typography sx={{ width: '60%' }}>
+                {(props.themeMode === "modernDark") ? "modern" : "pallet town"}
+              </Typography>
+            }
           />
-        }
-        sx={{
-          marginLeft: '3%'
-        }}
-        label={(props.themeMode === "modernDark") ? "modern" : "pallet town"}
-      />
+          </Box>
+        </Box>
 
       <div className="top-nav-bar-buttons">
         {props.isLoggedIn ? (

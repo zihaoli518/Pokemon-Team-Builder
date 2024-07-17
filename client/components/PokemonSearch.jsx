@@ -17,6 +17,10 @@ import Data from './dexData.js';
 // importing other files and components
 import PokemonSprite from './PokemonSprite.jsx';
 import loadingGIF from '../../assets/loading-2.gif';
+
+import SearchRoundedIcon from '@mui/icons-material/SearchRounded';
+import Button from '@mui/material/Button';
+
 // importing style 
 import '../styles/PokemonSearch.scss';
 
@@ -282,12 +286,22 @@ const PokemonSearch = props => {
     
   }, [props.currentPokemon.pokemon])
 
+  
+
   return (
     <div className='search-bar-container' id='search-bar-container' >
       <form onSubmit={(e) => searchEventHandler(e, null, props.historyCache)}>
-        <input type="text" id='pokemon-search-name' autoComplete="off" placeholder="search a mon" onClick={()=>{setModalDisplay(true)}} onKeyUp={()=>{searchAndDisplayDex()}} />
-        <button type='submit'> <span> Search</span> </button>
-      </form> 
+        <input
+          type="text"
+          id='pokemon-search-name'
+          autoComplete="off"
+          placeholder="search a mon"
+          onClick={() => { setModalDisplay(true) }}
+          onKeyUp={() => { searchAndDisplayDex() }}
+        />
+        <Button type='submit' variant="contained"startIcon={<SearchRoundedIcon sx={{ height: '100%', width: '100%'}} />}>
+        </Button>
+      </form>
       <div className={modalClassName} style={modalDisplay ? { display: 'block'} : { display: 'none' }} >
         {/* <div className='pokedex-labels'>
           <h4>pokémon</h4>
