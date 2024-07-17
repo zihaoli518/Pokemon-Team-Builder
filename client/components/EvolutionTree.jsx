@@ -21,6 +21,7 @@ import loadingGIF from '../../assets/loading-2.gif';
 import AccountTreeRoundedIcon from '@mui/icons-material/AccountTreeRounded';
 import { Typography, Tooltip, Paper } from '@mui/material';
 import { useTheme } from '@mui/material/styles';
+import { ClassNames } from '@emotion/react';
 
 
 
@@ -41,19 +42,18 @@ const mapDispatchToProps = dispatch => ({
 const EvolutionTree= (props) => {
   const theme = useTheme();
 
-  const [className, setClassName] = useState('evolution-container-inner-active evolution-container-inner');
+  const [classNameMinMax, setClassNameMinMax] = useState('evolution-container-minimize');
   const [evolutionTree, setEvolutionTree] = useState([]);
   const [loadingStatus, setLoadingStatus] = useState(false);
 
   
-  // const toggleActive = (e) => {
-  //   e.stopPropagation();
-  //   if (className==='evolution-container-inner') {
-  //     setClassName('evolution-container-inner evolution-container-inner-active');
-  //     setFullDisplay(true)
-  //   }
-  //   else setClassName('evolution-container-inner')
-  // }
+  const handleMouseEnter = () => {
+    setClassNameMinMax('evolution-container-maximize');
+  };
+
+  const handleMouseLeave = () => {
+    setClassNameMinMax('evolution-container-minimize');
+  };
 
   const populateEvolutionTree = () => {
     console.log('inside populateEvolutionTree ', props.currentPokemon)
@@ -62,7 +62,7 @@ const EvolutionTree= (props) => {
     let chain = props.currentPokemon.evolution_chain;
     // push first evolution 
     let firstSpriteClassName = 'evolution-sprite';
-    let firstTextClassName = '';
+    let firstTextClassName = 'evolution-inner-text';
     if (chain.species.name===props.currentPokemon.pokemon) {
       firstSpriteClassName += ' evolution-sprite-current';
       firstTextClassName = 'evolution-text-current'
@@ -70,7 +70,7 @@ const EvolutionTree= (props) => {
     newTreeArray.push(
       <div key={Math.random()} className='evolution-row evolution-tier-1' onClick={(e)=>{handleFetch(e, chain.species.name)}}>
         <PokemonSprite key={props.currentPokemon.pokemon} pokemon={chain.species.name} className={firstSpriteClassName}/>
-        <Typography className={firstTextClassName}>{chain.species.name}</Typography>
+        <Typography className={firstTextClassName}>{(classNameMinMax ==='evolution-container-minimize') ? chain.species.name : null}</Typography>
       </div>
     )
 
@@ -79,7 +79,7 @@ const EvolutionTree= (props) => {
       if (!chain.evolves_to.length) return; 
       chain.evolves_to.forEach(innerChain => {
         let spriteClassName = 'evolution-sprite';
-        let textClassName = '';
+        let textClassName = 'evolution-inner-text';
         if (innerChain.species.name===props.currentPokemon.pokemon) {
           spriteClassName += ' evolution-sprite-current';
           textClassName = 'evolution-text-current'
@@ -88,7 +88,7 @@ const EvolutionTree= (props) => {
           <div key={Math.random()} className={'evolution-row evolution-tier-' + level} onClick={(e)=>{handleFetch(e, innerChain.species.name)}}>
             <img className='arrows' src="https://cdn-icons-png.flaticon.com/512/109/109617.png" alt="" />
             <PokemonSprite key={props.currentPokemon.pokemon} pokemon={innerChain.species.name} className={spriteClassName}/>
-            <Typography className={textClassName}>{innerChain.species.name}</Typography>
+            <Typography className={textClassName}>{(classNameMinMax ==='evolution-container-minimize') ? innerChain.species.name: null}</Typography>
           </div>
         );
         if (innerChain.evolves_to.length) {
@@ -152,24 +152,14 @@ const EvolutionTree= (props) => {
   }, [props.currentPokemon])
 
   return (
-    //   <div className='evolution-container' key={props.currentPokemon.name}>
-
-    //     <div className={className} >
-    //       <h4>Evolutions</h4>
-    //       <div className='evolution-tree-container'>
-    //         {evolutionTree}
-    //       </div>
-    //     </div>
-        // {loadingStatus ?
-        //   <img className='between-rerender-loading-gif-evotree' src={loadingGIF} alt="" />
-        //   : null}
-    // </div>
-
     <Paper
-      className='evolution-container' 
+      className={classNameMinMax}
       key={props.currentPokemon.name}
       elevation={3}
       sx={{ height: "90%", display: "flex", flexDirection: "column", backgroundColor: theme.palette.primary.dark}}
+
+      onMouseEnter={handleMouseEnter} 
+      onMouseLeave={handleMouseLeave}
     >
       <Paper
         elevation={3}

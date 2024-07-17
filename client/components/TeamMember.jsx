@@ -70,7 +70,10 @@ const TeamMember = props => {
           pokemon={props.pokemonName}
           className={ClassNamePassed}
           id={props.selectedTeamName + "_" + props.selectedMon}
-          onClick={() => {giveSelfActiveClass();}}
+          onClick={() => {
+            giveSelfActiveClass();
+            props.selectTeamMember(props.pokemonData, props.selectedTeam.key, props.selectedMon);
+          }}
         />
       </div>
       <div className="types-colors">
