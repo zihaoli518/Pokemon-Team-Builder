@@ -58,15 +58,7 @@ body {
   width: 100%;
 }
 
-// main row 
-.main-row-container {
-  height: 58vh;
-  width: 100%;
-  display: flex;
-  justify-content: left;
-  position: relative;
-  top: 4.5%;
-}
+
 
 .navigator-and-history-container {
   height: 8vh;
@@ -78,4 +70,24 @@ body {
   justify-content: center;
   align-items: center;
   position: relative;
+}
+// main row 
+.main-row-container {
+  height: 58vh;
+  width: 100%;
+  display: flex;
+  justify-content: left;
+  position: relative;
+  // top: 4.5%;
+}
+
+.teams {
+  height: 19vh;
+  width: 100%;
+  // margin-top: 2.8%;
+  // padding-top: 0.4%;
+  padding-bottom: 1%;
+  display: flex;
+  justify-content: center;
+  background-color: rgba(154, 154, 154, 0.631);
 }

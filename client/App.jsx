@@ -53,13 +53,13 @@ let modernDarkTheme = createTheme({
     primary: {
       main: '#90afaf',
       contrastText: '#e5eaea',
-      dark: '#263238',
+      dark: '#707f7f',
     },
     secondary: {
       main: '#ffcdd2',
     },
     background: {
-      default: '#334252',
+      default: '#21232d',
       paper: '#26262f',
     },
     info: {
@@ -72,6 +72,9 @@ let modernDarkTheme = createTheme({
       enemy: {
         main: '#FF5733',
       },
+      shadows: {
+        main: 'rgba(41,41,49,0.53)',
+      }
     },
   },
 });

@@ -100,7 +100,7 @@ const TopNavBar = props => {
 
 
   return (
-    <div className="top-nav-bar">
+    <div className="top-nav-bar" style={{backgroundColor: theme.palette.primary.dark}}>
 
       <h1 className="top-title">electabuzzed.xyz</h1>
       {/* <img src="https://cdn.discordapp.com/emojis/933421274091360346.webp?size=96&quality=lossless" alt="" /> */}
@@ -109,7 +109,7 @@ const TopNavBar = props => {
       <PokemonSearch />
 
       <div className="volume-container">
-        < VolumeUpRoundedIcon sx={{color: theme.palette.primary.main}}/>
+        < VolumeUpRoundedIcon sx={{color: theme.palette.secondary.main}}/>
         <input
           type="range"
           min="0"
@@ -124,7 +124,7 @@ const TopNavBar = props => {
       </div>
 
       <Box display="flex" alignItems="center" sx={{marginLeft: '2%', width: '7%'}}>
-        <ContrastRoundedIcon sx={{color: theme.palette.primary.main}} />
+        <ContrastRoundedIcon sx={{color: theme.palette.secondary.main}} />
         <Box 
           display="flex" 
           alignItems="center" 

@@ -179,6 +179,7 @@ const [teamState, setTeamState] = useState({
         }}
       >
         <Typography
+          className='team-name-text-input'
           contentEditable="true"
           onInput={(e) => saveTeam(e, e.target.innerText)}
           sx={{ marginLeft: "3%" }}

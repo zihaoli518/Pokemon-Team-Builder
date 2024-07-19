@@ -21,9 +21,24 @@ import CurrentPokemonDetails from './CurrentPokemonDetails.jsx'
 import EvolutionTree from './EvolutionTree.jsx';
 import ImportExportModal from './modals/ImportExportModal.jsx';
 
+import allMonsDataObj from '../allPokemonData.js';
+
+import { Typography, Tooltip, Paper, Box, Grid, Accordion, AccordionSummary, AccordionDetails, SpeedDial, SpeedDialAction} from '@mui/material';
+import InfoTwoToneIcon from '@mui/icons-material/InfoTwoTone';
+import FormatListNumberedRtlRoundedIcon from '@mui/icons-material/FormatListNumberedRtlRounded';
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import ShareRoundedIcon from '@mui/icons-material/ShareRounded';
+import CalculateRoundedIcon from '@mui/icons-material/CalculateRounded';
+import AddCircleTwoToneIcon from '@mui/icons-material/AddCircleTwoTone';
+import SpeedDialIcon from '@mui/material/SpeedDialIcon';
+
+
 import { useTheme } from '@mui/material/styles';
 
 import isEqualState from 'lodash.isequal';
+import { Troubleshoot } from '@mui/icons-material';
+
+
 
 // currentPokemon contains all data. moveSet contains all moves(object)
 const mapStateToProps = state => {
@@ -50,13 +65,20 @@ const CurrentPokemonDisplay = (props) => {
     pokemon: props.currentPokemon, 
     immunities: [], 
     weaknesses: [], 
-    resistances: [] 
+    resistances: [],
+    immunityStripes: [],
+    weaknessStripes: [],
+    resistanceStripes: [],
   });
 
-  const [prevPokemon, setPrevPokemon] = useState({ current: null });
-
-
   const theme = useTheme();
+  const [prevPokemon, setPrevPokemon] = useState({ current: null });
+  const [expandedAccordion, setExpandedAccordion] = useState('');
+
+  const handleChange = (panel) => (event, isExpanded) => {
+    setExpandedAccordion(isExpanded ? panel : '');
+  };
+
 
   const playCrySound = useCallback(() => {
     const parsedName = props.currentPokemon.pokemon.replace('-', '');
@@ -69,32 +91,66 @@ const CurrentPokemonDisplay = (props) => {
     const newImmunitiesArray = [];
     const newWeaknessArray = [];
     const newResistanceArray = [];
+
+    const newImmunityStripesArray = [];
+    const newWeaknessStripesArray = [];
+    const newResistanceStripesArray = [];
     for (let type of types) {
       switch (props.currentPokemon.weakness[type]) {
         case 0:
           newImmunitiesArray.push(
-            <h5 key={type} className={`type resistance-immune`} id={type}>{type}</h5>
-          )
+            <Typography variant='h7' key={type} className={`type resistance-immune weakness-type-tag`} id={type}>{type}</Typography>
+          );
+          newImmunityStripesArray.push(
+            <div
+              className="types-colors-inner"
+              id={type}
+            ></div>
+          );
           break;
         case 0.25: 
           newResistanceArray.unshift(
-            <h5 key={type} className={`type resistance-x4`} id={type}>{type}</h5>
-          )
+            <Typography variant='h7' key={type} className={`type resistance-x4 weakness-type-tag`} id={type}>{type}</Typography>
+          );
+          newResistanceStripesArray.push(
+            <div
+              className="types-colors-inner"
+              id={type}
+            ></div>
+          );
           break;
         case 0.5: 
           newResistanceArray.push(
-            <h5 key={type} className={`type resistance-x2`} id={type}>{type}</h5>
-          )
+            <Typography variant='h7' key={type} className={`type resistance-x2 weakness-type-tag`} id={type}>{type}</Typography>
+          );
+          newResistanceStripesArray.push(
+            <div
+              className="types-colors-inner"
+              id={type}
+            ></div>
+          );
           break;
         case 2: 
           newWeaknessArray.push(
-            <h5 key={type} className={`type weakness-x2`} id={type}>{type}</h5>
-          )
+            <Typography variant='h7' key={type} className={`type weakness-x2 weakness-type-tag`} id={type}>{type}</Typography>
+          );
+          newWeaknessStripesArray.push(
+            <div
+              className="types-colors-inner"
+              id={type}
+            ></div>
+          );
           break;
         case 4: 
           newWeaknessArray.unshift(
-            <h5 key={type} className={`type weakness-x4`} id={type}>{type}</h5>
-          )
+            <Typography variant='h7' key={type} className={`type weakness-x4 weakness-type-tag`} id={type}>{type}</Typography>
+          );
+          newWeaknessStripesArray.push(
+            <div
+              className="types-colors-inner"
+              id={type}
+            ></div>
+          );
           break;
         default:
           break;
@@ -104,7 +160,10 @@ const CurrentPokemonDisplay = (props) => {
       pokemon: props.currentPokemon.pokemon,
       immunities: newImmunitiesArray, 
       weaknesses: newWeaknessArray, 
-      resistances: newResistanceArray
+      resistances: newResistanceArray,
+      immunityStripes: newImmunityStripesArray,
+      weaknessStripes: newWeaknessStripesArray,
+      resistanceStripes: newResistanceStripesArray,
     });
   }, [props.currentPokemon]);
 
@@ -158,74 +217,464 @@ const CurrentPokemonDisplay = (props) => {
 
 
   return (
-    <div className='current-pokemon-container' 
+    <div
+      className="current-pokemon-container"
       key={props.currentPokemon.slot.mon}
     >
       <EvolutionTree />
-      <div className='current-pokemon-outter-flexbox'>
-        <div key={props.currentPokemon.pokemon} 
+
+      <div className="current-pokemon-outter-flexbox">
+        <Paper
           className="current-pokemon"
-          style={{backgroundColor: theme.palette.background.paper}}
+          key={props.currentPokemon.pokemon}
+          elevation={3}
+          sx={{
+            height: "85%",
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "flex-start",
+            // backgroundColor: theme.palette.primary.dark,
+          }}
         >
-          <div className="top-flexbox">
-            <h3 id={props.currentPokemon.pokemon}> {props.currentPokemon.pokemon} </h3>
+          <Paper
+            elevation={3}
+            sx={{
+              height: "6%",
+              display: "flex",
+              flexDirection: "row",
+              justifyContent: "flex-start",
+              alignItems: "center",
+              // gap: "2%",
+              zIndex: 100,
+              backgroundColor: theme.palette.primary.dark,
+
+              borderRadius: "0.6rem",
+              border: 2,
+              borderColor: theme.palette.secondary.main,
+            }}
+          >
+            <InfoTwoToneIcon id="general-info-icon"sx={{height: '70%', width: 'auto', marginLeft: '3%'}} />
+            <Typography sx={{ marginLeft: "2%" }}>
+               General Info
+            </Typography>
+          </Paper>
+
+          <Box
+            className="top-flexbox"
+            sx={{
+              height: '15%',
+              display: "flex",
+              flexDirection: "row",
+              justifyContent: "flex-start",
+              gap: "5%",
+              alignItems: "center",
+            }}
+          >
+            <Typography
+              sx={{
+                width: "40%",
+                alignSelf: "center",
+                textAlign: "center",
+                fontSize: "70%",
+                marginLeft: "3%",
+              }}
+            >
+              {props.currentPokemon.pokemon}
+            </Typography>
             <div className="types">
-              <h4 className={"type"} id={props.currentPokemon.types[0]}>{props.currentPokemon.types[0]}</h4>
-              <h4 className={"type"+" type-"+props.currentPokemon.types[1]} id={props.currentPokemon.types[1]}>{props.currentPokemon.types[1]}</h4>
+              <h4 className={"type"} id={props.currentPokemon.types[0]}>
+                {props.currentPokemon.types[0]}
+              </h4>
+              <h4
+                className={"type" + " type-" + props.currentPokemon.types[1]}
+                id={props.currentPokemon.types[1]}
+              >
+                {props.currentPokemon.types[1]}
+              </h4>
+              {/* <div className="current-pokemon-spacer"></div> */}
             </div>
-            <div className="current-pokemon-spacer" ></div>
-          </div>
-          <div className="current-pokemon-flexbox">
-            <div className='current-sprite-main-container'>
+            <Box
+              sx={{
+                height: "100%",
+                width: "30%",
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+              }}
+            >
+              <FormatListNumberedRtlRoundedIcon />
+              <Typography>
+                {
+                  allMonsDataObj[
+                    capitalizeAfterSpaceOrHyphen(props.currentPokemon.pokemon)
+                  ].tier
+                }
+              </Typography>
+            </Box>
+          </Box>
+
+          {/* <div className="current-pokemon-flexbox"> */}
+          <Box
+            className="current-pokemon-sprite-chart-row"
+            sx={{
+              height: "40%",
+              width: "100%",
+              display: "flex",
+              justifyContent: "flex-start",
+              alignItems: "center",
+            }}
+          >
+            <Box
+              sx={{
+                width: "40%",
+                height: "100%",
+                display: "flex",
+                marginLeft: "5%",
+                flexDirection: "column",
+                justifyContent: "center",
+              }}
+            >
               <PokemonSprite
                 key={props.currentPokemon.slot.mon}
                 pokemon={props.currentPokemon.pokemon}
                 className="current-sprite-main"
               />
-            </div>
+              <div
+                className={
+                  "oval-ground " + "type-" + props.currentPokemon.types[0]
+                }
+              ></div>
+            </Box>
             <div className="stats">
-              <StatChartRadar name={props.currentPokemon.pokemon} pokemonStats={props.currentPokemon.stats} currentPokemon={props.currentPokemon} id={'current-pokemon-chart'}/>
+              <StatChartRadar
+                name={props.currentPokemon.pokemon}
+                pokemonStats={props.currentPokemon.stats}
+                currentPokemon={props.currentPokemon}
+                id={"current-pokemon-chart"}
+              />
             </div>
-          </div>
-          <div className={'oval-ground ' + 'type-'+props.currentPokemon.types[0]}>
-          </div>
-          <div className='current-pokemon-weakness-summary'> 
-            <div className='weaknesses'>
-              <h4>immunity : </h4>
-              <div className='weaknesses-inner'>
-                {state.immunities}
-              </div>
-            </div>
-            <div className='weaknesses'>
-              <h4>weakness : </h4>
-              <div className='weaknesses-inner'>
-                {state.weaknesses}
-              </div>
-            </div>
-            <div className='weaknesses'>
-              <h4>resistance : </h4>
-              <div className='weaknesses-inner'>
-                {state.resistances}
-              </div>
-            </div>
-          </div>
-        </div>
-        <div className="add-to-team-option-buttons">
-          <div className='f'>
-            <button className='add-to-your-team' onClick={()=>{addToTeam({...props.currentPokemon}, 'friendly')}}>Add</button>
-            <button className='add-to-calc' onClick={()=>{props.addMonToCalc({...props.currentPokemon}, 'friendly')}}>Calc</button>
-          </div>
-          <div className='add-to-team-option-spacer'></div>
-          <div className='e'>
-            <button className='add-to-enemy-team' onClick={()=>{addToTeam({...props.currentPokemon}, 'enemy')}}>Add</button>
-            <button className='add-to-calc' onClick={()=>{props.addMonToCalc({...props.currentPokemon}, 'enemy')}}>Calc</button>
-          </div>
-        </div>
+          </Box>
+
+          <Box className="current-pokemon-weakness-summary" sx={{height: '30%'}}>
+            <Accordion
+              expanded={expandedAccordion === "panel1"}
+              onChange={handleChange("panel1")}
+              className={
+                expandedAccordion !== "panel1"
+                  ? "collapsed-accordion"
+                  : "expanded-accordion"
+              }
+              sx={{
+                height: "33%",
+                width: "100%",
+                display: "flex",
+                flexDirection: "column",
+                marginBottom: "0px !important",
+              }}
+            >
+              <AccordionSummary
+                className="accordion-summary-weakness"
+                expandIcon={<ExpandMoreIcon />}
+                aria-controls="resistances-content"
+                id="resistances-header"
+                sx={{ backgroundColor: theme.palette.custom.shadows.main }}
+              >
+                <Typography
+                  sx={{ fontSize: "25%", width: "27%" }}
+                  variant="h6"
+                  component="h6"
+                >
+                  Immunity
+                </Typography>
+                <Box
+                  className={
+                    expandedAccordion !== "panel1"
+                      ? "types-color-minimized"
+                      : "types-color-hidden"
+                  }
+                  sx={{
+                    width: "70%",
+                    display: "flex",
+                    alignItems: "center",
+                    marginLeft: "5%",
+                    flexWrap: "wrap",
+                    gap: "2%",
+                  }}
+                >
+                  {expandedAccordion !== "panel1"
+                    ? state.immunityStripes
+                    : null}
+                </Box>
+              </AccordionSummary>
+              <AccordionDetails className="accordion-details-weakness">
+                {state.immunities.map((immunity, index) => (
+                  <Box
+                    key={index}
+                    sx={{
+                      margin: "1%",
+                      height: "40%",
+                      width: "17%",
+                      display: "flex",
+                    }}
+                  >
+                    {immunity}
+                  </Box>
+                ))}
+              </AccordionDetails>
+            </Accordion>
+            <Accordion
+              expanded={expandedAccordion === "panel2"}
+              onChange={handleChange("panel2")}
+              className={
+                expandedAccordion !== "panel2"
+                  ? "collapsed-accordion"
+                  : "expanded-accordion"
+              }
+              sx={{
+                height: "33%",
+                width: "100%",
+                display: "flex",
+                flexDirection: "column",
+                marginBottom: "0px !important",
+              }}
+            >
+              <AccordionSummary
+                className="accordion-summary-weakness"
+                expandIcon={<ExpandMoreIcon />}
+                aria-controls="resistances-content"
+                id="resistances-header"
+                sx={{ backgroundColor: theme.palette.custom.shadows.main }}
+              >
+                <Typography
+                  sx={{ fontSize: "25%", width: "27%" }}
+                  variant="h6"
+                  component="h6"
+                >
+                  Weakness
+                </Typography>
+                <Box
+                  className={
+                    expandedAccordion !== "panel2"
+                      ? "types-color-minimized"
+                      : "types-color-hidden"
+                  }
+                  sx={{
+                    width: "70%",
+                    display: "flex",
+                    alignItems: "center",
+                    marginLeft: "5%",
+                    flexWrap: "wrap",
+                    gap: "2%",
+                  }}
+                >
+                  {expandedAccordion !== "panel2"
+                    ? state.weaknessStripes
+                    : null}
+                </Box>
+              </AccordionSummary>
+              <AccordionDetails
+                flexWrap="wrap"
+                className="accordion-details-weakness"
+              >
+                {state.weaknesses.map((weakness, index) => (
+                  <Box
+                    key={index}
+                    sx={{
+                      margin: "1%",
+                      height: "40%",
+                      width: "17%",
+                      display: "flex",
+                    }}
+                  >
+                    {weakness}
+                  </Box>
+                ))}
+              </AccordionDetails>
+            </Accordion>
+
+            <Accordion
+              expanded={expandedAccordion === "panel3"}
+              onChange={handleChange("panel3")}
+              className={
+                expandedAccordion !== "panel3"
+                  ? "collapsed-accordion"
+                  : "expanded-accordion"
+              }
+              sx={{
+                height: "33%",
+                width: "100%",
+                display: "flex",
+                flexDirection: "column",
+                marginBottom: "0px !important",
+              }}
+            >
+              <AccordionSummary
+                className="accordion-summary-weakness"
+                expandIcon={<ExpandMoreIcon />}
+                aria-controls="resistances-content"
+                id="resistances-header"
+                sx={{ backgroundColor: theme.palette.custom.shadows.main }}
+              >
+                <Typography
+                  sx={{ fontSize: "25%", width: "27%" }}
+                  variant="h6"
+                  component="h6"
+                >
+                  Resistance
+                </Typography>
+                <Box
+                  className={
+                    expandedAccordion !== "panel3"
+                      ? "types-color-minimized"
+                      : "types-color-hidden"
+                  }
+                  sx={{
+                    width: "70%",
+                    display: "flex",
+                    alignItems: "center",
+                    marginLeft: "5%",
+                    flexWrap: "wrap",
+                    gap: "2%",
+                  }}
+                >
+                  {expandedAccordion !== "panel3"
+                    ? state.resistanceStripes
+                    : null}
+                </Box>
+              </AccordionSummary>
+              <AccordionDetails
+                flexWrap="wrap"
+                className="accordion-details-weakness"
+              >
+                {state.resistances.map((resistance, index) => (
+                  <Box
+                    key={index}
+                    sx={{
+                      margin: "1%",
+                      height: "40%",
+                      width: "17%",
+                      display: "flex",
+                    }}
+                  >
+                    {resistance}
+                  </Box>
+                ))}
+              </AccordionDetails>
+            </Accordion>
+          </Box>
+
+        </Paper>
+
+
+        <Paper
+        className="add-to-team-option-buttons"
+        key={props.currentPokemon.name}
+        elevation={6}
+        sx={{ height: "15%", width: '100%', display: "flex", flexDirection: 'column'}}
+
+      // onMouseEnter={handleMouseEnter} 
+      // onMouseLeave={handleMouseLeave}
+        >
+      <Paper
+        elevation={3}
+        sx={{
+          height: "20%",
+          display: "flex",
+          justifyContent: "center",
+          gap: "3%",
+          zIndex: 100,
+          alignItems: "center",
+          borderRadius: "0.6rem",
+          backgroundColor: theme.palette.primary.dark
+        }}
+      >
+        < ShareRoundedIcon id='current-mon-options-icon' sx={{height: '80%', width: 'auto'}}/>
+        <Typography
+          sx={{ marginLeft: "3%", lineHeight:'100%', fontSize: '25%'}}
+        >
+          Add / Calc
+        </Typography>
+      </Paper>
+
+
+          <Box sx={{ height: '80%', width: '100%', display: 'flex', justifyContent: 'space-between', gap: '3%'}}>
+            {/* <Backdrop open={open} /> */}
+            <SpeedDial
+              ariaLabel="SpeedDial tooltip example"
+              icon={<SpeedDialIcon sx={{ color: theme.palette.custom.friendly.main }} />}
+              direction='right'
+              // onClose={handleClose}
+              // onOpen={handleOpen}
+              // open={open}
+            >
+
+                <SpeedDialAction
+                  icon={<AddCircleTwoToneIcon />}
+                  tooltipTitle={'add to your team'}
+                  onClick={() => {
+                    addToTeam({ ...props.currentPokemon }, "friendly");
+                  }}
+                />
+
+                <SpeedDialAction
+                  icon={<CalculateRoundedIcon />}
+                  tooltipTitle={'damage calculator'}
+                  tooltipOpen
+                  onClick={() => {
+                    props.addMonToCalc({ ...props.currentPokemon }, "friendly");
+                  }}
+                />    
+            </SpeedDial>
+
+            <SpeedDial
+              ariaLabel="SpeedDial tooltip example"
+              sx={{ color: theme.palette.custom.enemy.main }}
+              icon={<SpeedDialIcon sx={{ color: theme.palette.custom.enemy.main }} />}
+              direction='left'
+
+              // onClose={handleClose}
+              // onOpen={handleOpen}
+              // open={open}
+            >
+
+                <SpeedDialAction
+                  icon={<AddCircleTwoToneIcon />}
+                  tooltipTitle={'add to your team'}
+                  onClick={() => {
+                    addToTeam({ ...props.currentPokemon }, "enemy");
+                  }}
+                  sx={{ color: theme.palette.custom.enemy.main }} 
+                />
+
+                <SpeedDialAction
+                  icon={<CalculateRoundedIcon />}
+                  tooltipTitle={'damage calculator'}
+                  tooltipOpen
+                  onClick={() => {
+                    props.addMonToCalc({ ...props.currentPokemon }, "enemy");
+                  }}
+                  sx={{ color: theme.palette.custom.enemy.main }} 
+                />    
+            </SpeedDial>
+          </Box>
+        
+        </Paper>
 
       </div>
+      
       <CurrentPokemonDetails />
     </div>
   );
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(CurrentPokemonDisplay);
+
+
+
+
+function capitalizeAfterSpaceOrHyphen(str) {
+  return str
+    .split(/([-\s])/g) // Split the string by spaces or hyphens, retaining the separators
+    .map(word => word.charAt(0).toUpperCase() + word.slice(1)) // Capitalize the first letter of each word
+    .join(''); // Join them back together
+}

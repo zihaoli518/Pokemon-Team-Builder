@@ -19,9 +19,9 @@ import * as actions from '../actions/actions';
 import loadingGIF from '../../assets/loading-2.gif';
 
 import AccountTreeRoundedIcon from '@mui/icons-material/AccountTreeRounded';
+import StartTwoToneIcon from '@mui/icons-material/StartTwoTone';
 import { Typography, Tooltip, Paper } from '@mui/material';
 import { useTheme } from '@mui/material/styles';
-import { ClassNames } from '@emotion/react';
 
 
 
@@ -70,7 +70,9 @@ const EvolutionTree= (props) => {
     newTreeArray.push(
       <div key={Math.random()} className='evolution-row evolution-tier-1' onClick={(e)=>{handleFetch(e, chain.species.name)}}>
         <PokemonSprite key={props.currentPokemon.pokemon} pokemon={chain.species.name} className={firstSpriteClassName}/>
-        <Typography className={firstTextClassName}>{(classNameMinMax ==='evolution-container-minimize') ? chain.species.name : null}</Typography>
+        {/* <Typography className={firstTextClassName}>{(classNameMinMax ==='evolution-container-minimize') ? chain.species.name : null}</Typography> */}
+        <Typography className={firstTextClassName}>{chain.species.name}</Typography>
+
       </div>
     )
 
@@ -86,9 +88,12 @@ const EvolutionTree= (props) => {
         }
         newTreeArray.push(
           <div key={Math.random()} className={'evolution-row evolution-tier-' + level} onClick={(e)=>{handleFetch(e, innerChain.species.name)}}>
-            <img className='arrows' src="https://cdn-icons-png.flaticon.com/512/109/109617.png" alt="" />
+            {/* <img className='arrows' src="https://cdn-icons-png.flaticon.com/512/109/109617.png" alt="" /> */}
+            <StartTwoToneIcon sx={{ fontSize: 'small' }} />
             <PokemonSprite key={props.currentPokemon.pokemon} pokemon={innerChain.species.name} className={spriteClassName}/>
-            <Typography className={textClassName}>{(classNameMinMax ==='evolution-container-minimize') ? innerChain.species.name: null}</Typography>
+            {/* <Typography className={textClassName}>{(classNameMinMax ==='evolution-container-minimize') ? innerChain.species.name: null}</Typography> */}
+            <Typography className={textClassName}>{ innerChain.species.name}</Typography>
+
           </div>
         );
         if (innerChain.evolves_to.length) {
@@ -156,7 +161,7 @@ const EvolutionTree= (props) => {
       className={classNameMinMax}
       key={props.currentPokemon.name}
       elevation={3}
-      sx={{ height: "90%", display: "flex", flexDirection: "column", backgroundColor: theme.palette.primary.dark}}
+      sx={{ height: "85%", display: "flex", flexDirection: "column", }}
 
       onMouseEnter={handleMouseEnter} 
       onMouseLeave={handleMouseLeave}
@@ -164,7 +169,7 @@ const EvolutionTree= (props) => {
       <Paper
         elevation={3}
         sx={{
-          height: "10%",
+          height: "8%",
           display: "flex",
           justifyContent: "center",
           gap: "3%",
@@ -174,9 +179,9 @@ const EvolutionTree= (props) => {
           backgroundColor: theme.palette.primary.dark
         }}
       >
-        < AccountTreeRoundedIcon />
+        < AccountTreeRoundedIcon id='evolution-tree-icon' sx={{height: '80%', width: 'auto'}}/>
         <Typography
-          sx={{ marginLeft: "3%" }}
+          sx={{ marginLeft: "3%", lineHeight:'100%', fontSize: '25%'}}
         >
           Evolution Tree 
         </Typography>

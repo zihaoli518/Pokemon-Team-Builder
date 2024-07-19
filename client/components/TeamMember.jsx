@@ -94,7 +94,7 @@ const TeamMember = props => {
           title={<Typography sx={{ fontSize: "160%" }}>Calc</Typography>}
           arrow
         >
-          <CalculateRoundedIcon onClick={()=>{props.addMonToCalc({...props.currentPokemon}, (props.whichSide ==='green') ? 'friendly': 'enemy')}}/>
+          <CalculateRoundedIcon onClick={()=>{props.addMonToCalc(props.pokemonData, (props.whichSide ==='green') ? 'friendly': 'enemy')}}/>
         </Tooltip>
         <Tooltip
           title={<Typography sx={{ fontSize: "160%" }}>Delete</Typography>}
