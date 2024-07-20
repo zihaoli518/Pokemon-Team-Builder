@@ -149,6 +149,7 @@ const pokemonReducer = (state = initialState, action) => {
 
       // reformatting abilities
       copy.abilities = pokemonData.abilities;
+
       for (let i=0; i<copy.abilities.length; i++) {
         copy.abilities[i].ability.url = encodeURIComponent(copy.abilities[i].ability.url)
       }
@@ -194,31 +195,77 @@ const pokemonReducer = (state = initialState, action) => {
       copy.calculatedStats = calculator.calAllStats(copy.ivs.array, statsArray, copy.evs.array, copy.level, natureArray)
       
 
-      // handling importing sets 
-      if (action.payload.mode==='import') {
-        const importedSet = action.payload.importedSet;
+      // handling importing sets or teams 
+      console.log('test 3', action.payload)
+      const importedSetTop = action.payload.importedSet;
+      console.log('test 4', importedSetTop.item,)
+
+      const newMonWithSet = (action.payload.importedSet) ? {
+        ...copy,
+        activeAbility: {name:importedSetTop.ability, description: ''},
+        item: {item: importedSetTop.item, description: allItemsJSON[importedSetTop.item].desc, url: allItemsJSON[importedSetTop.item].spriteUrl}, 
+        evs: {obj: importedSetTop.evs, array:[importedSetTop.evs.hp, importedSetTop.evs.atk, importedSetTop.evs.def, importedSetTop.evs.spa, importedSetTop.evs.spd, importedSetTop.evs.spe]},
+        ivs: {obj: importedSetTop.ivs, array:[importedSetTop.ivs.hp, importedSetTop.ivs.atk, importedSetTop.ivs.def, importedSetTop.ivs.spa, importedSetTop.ivs.spd, importedSetTop.ivs.spe]},
+        nature: importedSetTop.nature.toLowerCase(),
+        gender: importedSetTop.gender.toLowerCase(),
+        level: importedSetTop.level,
+        shiny: importedSetTop.shiny,
+        teraType: importedSetTop.teraType.toLowerCase(),
+        nickName: importedSetTop.name,
+
+        moves: {
+          move_1: allMovesJSON[importedSetTop.moves[0].toLowerCase()],
+          move_2: allMovesJSON[importedSetTop.moves[1].toLowerCase()],
+          move_3: allMovesJSON[importedSetTop.moves[2].toLowerCase()],
+          move_4: allMovesJSON[importedSetTop.moves[3].toLowerCase()],
+        },
+      } : null;
+
+      if (action.payload.mode==='importTeam') {
+        console.log('test 5, ', action.payload.mode)
+        // importedSetTop is an array 
+        // get new team id
+
+        const copyOfYourTeam = {...state.yourTeam};
+        // for (let i=0; i<importedSetTop.length; i++) {
+          const currentNewMon = {
+            ...copy,
+            activeAbility: {name:importedSetTop.ability, description: ''},
+            item: {item: importedSetTop.item, description: allItemsJSON[importedSetTop.item].desc, url: allItemsJSON[importedSetTop.item].spriteUrl}, 
+            evs: {obj: importedSetTop.evs, array:[importedSetTop.evs.hp, importedSetTop.evs.atk, importedSetTop.evs.def, importedSetTop.evs.spa, importedSetTop.evs.spd, importedSetTop.evs.spe]},
+            ivs: {obj: importedSetTop.ivs, array:[importedSetTop.ivs.hp, importedSetTop.ivs.atk, importedSetTop.ivs.def, importedSetTop.ivs.spa, importedSetTop.ivs.spd, importedSetTop.ivs.spe]},
+            nature: importedSetTop.nature.toLowerCase(),
+            gender: importedSetTop.gender.toLowerCase(),
+            level: importedSetTop.level,
+            shiny: importedSetTop.shiny,
+            teraType: importedSetTop.teraType.toLowerCase(),
+            nickName: importedSetTop.name,
+            moves: {
+              move_1: allMovesJSON[importedSetTop.moves[0].toLowerCase()],
+              move_2: allMovesJSON[importedSetTop.moves[1].toLowerCase()],
+              move_3: allMovesJSON[importedSetTop.moves[2].toLowerCase()],
+              move_4: allMovesJSON[importedSetTop.moves[3].toLowerCase()],
+            },
+
+            // slot: {team: null, mon: i+1}
+          };
+          for (let i=1; i<=6; i++) {
+            console.log(i)
+            if (copyOfYourTeam['mon'+i]) continue;
+            copyOfYourTeam['mon'+ i] = currentNewMon;
+          }
+          console.log('test 6 ', )
+        // }
         return {
           ...state,
-          currentPokemon: {
-            ...copy,
-            activeAbility: {name:importedSet.ability, description: ''},
-            item: {item: importedSet.item, description: allItemsJSON[importedSet.item].desc, url: allItemsJSON[importedSet.item].spriteUrl}, 
-            evs: {obj: importedSet.evs, array:[importedSet.evs.hp, importedSet.evs.atk, importedSet.evs.def, importedSet.evs.spa, importedSet.evs.spd, importedSet.evs.spe]},
-            ivs: {obj: importedSet.ivs, array:[importedSet.ivs.hp, importedSet.ivs.atk, importedSet.ivs.def, importedSet.ivs.spa, importedSet.ivs.spd, importedSet.ivs.spe]},
-            nature: importedSet.nature.toLowerCase(),
-            gender: importedSet.gender.toLowerCase(),
-            level: importedSet.level.toLowerCase(),
-            shiny: importedSet.shiny,
-            teraType: importedSet.teraType.toLowerCase(),
-            nickName: importedSet.name,
-
-            moves: {
-              move_1: allMovesJSON[importedSet.moves[0].toLowerCase()],
-              move_2: allMovesJSON[importedSet.moves[1].toLowerCase()],
-              move_3: allMovesJSON[importedSet.moves[2].toLowerCase()],
-              move_4: allMovesJSON[importedSet.moves[3].toLowerCase()],
-            },
-          }
+          yourTeam: copyOfYourTeam
+        }
+      }
+      if (action.payload.mode==='import') {
+        // const importedSetTop = action.payload.importedSetTop;
+        return {
+          ...state,
+          currentPokemon: newMonWithSet,
         }
       }
 
@@ -520,26 +567,26 @@ const pokemonReducer = (state = initialState, action) => {
         }
       }
 
-    case types.UPDATE_POKEMON_SET: 
-      console.log('inside UPDATE_POKEMON_SET', action.payload); 
-      const importedSet = action.payload; 
-      return {
-        ...state,
-        currentPokemon: {
-          ...state.currentPokemon,
-          activeAbility: {name:importedSet.ability, description: ''},
-          item: {item: importedSet.item, description: allItemsJSON[importedSet.item].desc, url: allItemsJSON[importedSet.item].spriteUrl}, 
-          evs: {obj: importedSet.evs, array:[importedSet.evs.hp, importedSet.evs.atk, importedSet.evs.def, importedSet.evs.spa, importedSet.evs.spd, importedSet.evs.spe]},
-          ivs: {obj: importedSet.ivs, array:[importedSet.ivs.hp, importedSet.ivs.atk, importedSet.ivs.def, importedSet.ivs.spa, importedSet.ivs.spd, importedSet.ivs.spe]},
-          nature: importedSet.nature.toLowerCase(),
-          moves: {
-            move_1: {name: importedSet.moves[0], type: allMovesJSON[importedSet.moves[0]].type.toLowerCase()},
-            move_2: {name: importedSet.moves[1], type: allMovesJSON[importedSet.moves[1]].type.toLowerCase()},
-            move_3: {name: importedSet.moves[2], type: allMovesJSON[importedSet.moves[2]].type.toLowerCase()},
-            move_4: {name: importedSet.moves[3], type: allMovesJSON[importedSet.moves[3]].type.toLowerCase()}
-          },
-        }
-      }
+    // case types.UPDATE_POKEMON_SET: 
+    //   console.log('inside UPDATE_POKEMON_SET', action.payload); 
+    //   const importedSet = action.payload; 
+    //   return {
+    //     ...state,
+    //     currentPokemon: {
+    //       ...state.currentPokemon,
+    //       activeAbility: {name:importedSet.ability, description: ''},
+    //       item: {item: importedSet.item, description: allItemsJSON[importedSet.item].desc, url: allItemsJSON[importedSet.item].spriteUrl}, 
+    //       evs: {obj: importedSet.evs, array:[importedSet.evs.hp, importedSet.evs.atk, importedSet.evs.def, importedSet.evs.spa, importedSet.evs.spd, importedSet.evs.spe]},
+    //       ivs: {obj: importedSet.ivs, array:[importedSet.ivs.hp, importedSet.ivs.atk, importedSet.ivs.def, importedSet.ivs.spa, importedSet.ivs.spd, importedSet.ivs.spe]},
+    //       nature: importedSet.nature.toLowerCase(),
+    //       moves: {
+    //         move_1: {name: importedSet.moves[0], type: allMovesJSON[importedSet.moves[0]].type.toLowerCase()},
+    //         move_2: {name: importedSet.moves[1], type: allMovesJSON[importedSet.moves[1]].type.toLowerCase()},
+    //         move_3: {name: importedSet.moves[2], type: allMovesJSON[importedSet.moves[2]].type.toLowerCase()},
+    //         move_4: {name: importedSet.moves[3], type: allMovesJSON[importedSet.moves[3]].type.toLowerCase()}
+    //       },
+    //     }
+    //   }
 
       case types.IMPORT_TEAM: 
       console.log('inside IMPORT_TEAM', action.payload); 

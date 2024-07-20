@@ -67,7 +67,7 @@ function ImportActionFloatingButton(props) {
       .then((response) => {
         const pokemonData = response.pokemonData;
         if (response.importedSet)
-          props.updatePokemonPokeAPI(pokemonData.name, pokemonData, 'import', response.importedSet);
+        props.updatePokemonPokeAPI(pokemonData.name, pokemonData, 'import', response.importedSet);
         setShowModal(false);
       });
   };
@@ -88,7 +88,13 @@ function ImportActionFloatingButton(props) {
       .then((response) => response.json())
       .then((response) => {
         console.log('response from import team: ', response)
-        if (response.importedTeam) props.importTeam(response.importedTeam);
+        if (response.importedTeam) 
+        for (let i=0; i<response.importedTeam.length; i++) {
+          const pokemonData = response.pokemonData[i];
+          console.log('looping to reducer, ', i, pokemonData,)
+          props.updatePokemonPokeAPI(pokemonData.name, pokemonData, 'importTeam', response.importedTeam[i]);
+        }
+        // set warning 
         setShowModal(false);
       });
   };

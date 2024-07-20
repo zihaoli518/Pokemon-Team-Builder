@@ -81,8 +81,9 @@ app.get('/', (req, res) => {
 
 
 // routing fetch requests regarding pokemon data 
-app.post('/api/fetchPokeAPI', fetchMiddlewares.fetchPokeAPI, (req, res) => {
-  console.log('/fetch-pokeAPI complete')
+app.post('/api/fetchPokeAPI', fetchMiddlewares.fetchPokeAPI, (req, res, next,) => {
+  console.log('/fetch-pokeAPI complete');
+  console.log(res.locals.data)
   return res.status(200).send(res.locals.data)
 })
 
@@ -156,13 +157,14 @@ app.get('/api/getTypesImages', showdownMiddlewares.getTypesImages, (req, res) =>
 
 // handle import and export format conversion requests 
 app.post('/api/importMonSet', convertTeamFormatMiddlewares.importMonSet, fetchMiddlewares.fetchPokeAPI, (req, res) => {
-  console.log('/api/importMonSet complete')
+  console.log('/api/importMonSet complete');
+  console.log(res.locals.data)
   return res.status(200).send({pokemonData: res.locals.data, importedSet: res.locals.importedSet})
 })
 
 app.post('/api/importTeam', convertTeamFormatMiddlewares.importTeam, fetchMiddlewares.fetchPokeAPI, (req, res) => {
   console.log('/api/importTeam complete')
-  return res.status(200).send({importedTeam: res.locals.importedTeam})
+  return res.status(200).send({importedTeam: res.locals.importedTeam, pokemonData: res.locals.pokemonData})
 })
 
 app.post('/api/exportMon', convertTeamFormatMiddlewares.exportMon, (req, res) => {
