@@ -253,16 +253,17 @@ const CurrentPokemonDisplay = (props) => {
               borderColor: theme.palette.secondary.main,
             }}
           >
-            <InfoTwoToneIcon id="general-info-icon"sx={{height: '70%', width: 'auto', marginLeft: '3%'}} />
-            <Typography sx={{ marginLeft: "2%" }}>
-               General Info
-            </Typography>
+            <InfoTwoToneIcon
+              id="general-info-icon"
+              sx={{ height: "70%", width: "auto", marginLeft: "3%" }}
+            />
+            <Typography sx={{ marginLeft: "2%" }}>General Info</Typography>
           </Paper>
 
           <Box
             className="top-flexbox"
             sx={{
-              height: '15%',
+              height: "15%",
               display: "flex",
               flexDirection: "row",
               justifyContent: "flex-start",
@@ -355,7 +356,10 @@ const CurrentPokemonDisplay = (props) => {
             </div>
           </Box>
 
-          <Box className="current-pokemon-weakness-summary" sx={{height: '30%'}}>
+          <Box
+            className="current-pokemon-weakness-summary"
+            sx={{ height: "30%" }}
+          >
             <Accordion
               expanded={expandedAccordion === "panel1"}
               onChange={handleChange("panel1")}
@@ -562,106 +566,129 @@ const CurrentPokemonDisplay = (props) => {
               </AccordionDetails>
             </Accordion>
           </Box>
-
         </Paper>
 
 
         <Paper
-        className="add-to-team-option-buttons"
-        key={props.currentPokemon.name}
-        elevation={6}
-        sx={{ height: "15%", width: '100%', display: "flex", flexDirection: 'column'}}
+          className="add-to-team-option-buttons"
+          key={props.currentPokemon.name}
+          elevation={6}
+          sx={{
+            height: "15%",
+            width: "100%",
+            display: "flex",
+            flexDirection: "column",
+          }}
 
-      // onMouseEnter={handleMouseEnter} 
-      // onMouseLeave={handleMouseLeave}
+          // onMouseEnter={handleMouseEnter}
+          // onMouseLeave={handleMouseLeave}
         >
-      <Paper
-        elevation={3}
-        sx={{
-          height: "20%",
-          display: "flex",
-          justifyContent: "center",
-          gap: "3%",
-          zIndex: 100,
-          alignItems: "center",
-          borderRadius: "0.6rem",
-          backgroundColor: theme.palette.primary.dark
-        }}
-      >
-        < ShareRoundedIcon id='current-mon-options-icon' sx={{height: '80%', width: 'auto'}}/>
-        <Typography
-          sx={{ marginLeft: "3%", lineHeight:'100%', fontSize: '25%'}}
-        >
-          Add / Calc
-        </Typography>
-      </Paper>
+          <Paper
+            elevation={3}
+            sx={{
+              height: "20%",
+              display: "flex",
+              justifyContent: "flex-start",
+              gap: "2%",
+              zIndex: 100,
+              alignItems: "center",
+              borderRadius: "0.6rem",
+              backgroundColor: theme.palette.primary.dark,
+            }}
+          >
+            <ShareRoundedIcon
+              id="current-mon-options-icon"
+              sx={{ height: "80%", width: "auto", marginLeft: '3%' }}
+            />
+            <Typography
+              sx={{ marginLeft: "3%", lineHeight: "100%", fontSize: "25%" }}
+            >
+              Add / Calc
+            </Typography>
+          </Paper>
 
-
-          <Box sx={{ height: '80%', width: '100%', display: 'flex', justifyContent: 'space-between', gap: '3%'}}>
+          <Box
+            sx={{
+              height: "80%",
+              width: "100%",
+              display: "flex",
+              justifyContent: "space-between",
+              gap: "3%",
+            }}
+          >
             {/* <Backdrop open={open} /> */}
             <SpeedDial
               ariaLabel="SpeedDial tooltip example"
-              icon={<SpeedDialIcon sx={{ color: theme.palette.custom.friendly.main }} />}
-              direction='right'
+              icon={
+                <SpeedDialIcon
+                  sx={{ color: theme.palette.custom.friendly.main }}
+                />
+              }
+              direction="right"
               // onClose={handleClose}
               // onOpen={handleOpen}
               // open={open}
             >
+              <SpeedDialAction
+                icon={
+                  <AddCircleTwoToneIcon
+                    sx={{ color: theme.palette.custom.friendly.main }}
+                  />
+                }
+                tooltipTitle={"add to your team"}
+                onClick={() => {
+                  addToTeam({ ...props.currentPokemon }, "friendly");
+                }}
+              />
 
-                <SpeedDialAction
-                  icon={<AddCircleTwoToneIcon />}
-                  tooltipTitle={'add to your team'}
-                  onClick={() => {
-                    addToTeam({ ...props.currentPokemon }, "friendly");
-                  }}
-                />
-
-                <SpeedDialAction
-                  icon={<CalculateRoundedIcon />}
-                  tooltipTitle={'damage calculator'}
-                  tooltipOpen
-                  onClick={() => {
-                    props.addMonToCalc({ ...props.currentPokemon }, "friendly");
-                  }}
-                />    
+              <SpeedDialAction
+                icon={
+                  <CalculateRoundedIcon
+                    sx={{ color: theme.palette.custom.friendly.main }}
+                  />
+                }
+                tooltipTitle={"damage calculator (your side)"}
+                onClick={() => {
+                  props.addMonToCalc({ ...props.currentPokemon }, "friendly");
+                }}
+              />
             </SpeedDial>
 
             <SpeedDial
               ariaLabel="SpeedDial tooltip example"
-              sx={{ color: theme.palette.custom.enemy.main }}
-              icon={<SpeedDialIcon sx={{ color: theme.palette.custom.enemy.main }} />}
-              direction='left'
+              icon={
+                <SpeedDialIcon
+                  sx={{ color: theme.palette.custom.enemy.main }}
+                />
+              }
+              direction="left"
 
               // onClose={handleClose}
               // onOpen={handleOpen}
               // open={open}
             >
+              <SpeedDialAction
+                icon={<AddCircleTwoToneIcon />}
+                tooltipTitle={"add to opponent team"}
+                onClick={() => {
+                  addToTeam({ ...props.currentPokemon }, "enemy");
+                }}
+                sx={{ color: theme.palette.custom.enemy.main }}
+              />
 
-                <SpeedDialAction
-                  icon={<AddCircleTwoToneIcon />}
-                  tooltipTitle={'add to your team'}
-                  onClick={() => {
-                    addToTeam({ ...props.currentPokemon }, "enemy");
-                  }}
-                  sx={{ color: theme.palette.custom.enemy.main }} 
-                />
-
-                <SpeedDialAction
-                  icon={<CalculateRoundedIcon />}
-                  tooltipTitle={'damage calculator'}
-                  tooltipOpen
-                  onClick={() => {
-                    props.addMonToCalc({ ...props.currentPokemon }, "enemy");
-                  }}
-                  sx={{ color: theme.palette.custom.enemy.main }} 
-                />    
+              <SpeedDialAction
+                icon={<CalculateRoundedIcon />}
+                tooltipTitle={"damage calculator (opponent side)"}
+                onClick={() => {
+                  props.addMonToCalc({ ...props.currentPokemon }, "enemy");
+                }}
+                sx={{ color: theme.palette.custom.enemy.main }}
+              />
             </SpeedDial>
           </Box>
-        
         </Paper>
-
       </div>
-      
+
       <CurrentPokemonDetails />
     </div>
   );

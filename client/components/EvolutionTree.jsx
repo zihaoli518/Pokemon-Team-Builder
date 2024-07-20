@@ -34,7 +34,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = dispatch => ({
   refreshAndDecodeSavedTeams : (savedTeams) => dispatch(actions.refreshAndDecodeSavedTeams(savedTeams)),
-  updatePokemon: (pokemon, pokemonData, mode) => dispatch(actions.updatePokemonPokeAPI(pokemon, pokemonData, mode)),
+  updatePokemonPokeAPI: (pokemon, pokemonData, mode) => dispatch(actions.updatePokemonPokeAPI(pokemon, pokemonData, mode)),
 });
 
 
@@ -123,7 +123,7 @@ const EvolutionTree= (props) => {
       if (pokemonObj.pokemon===pokemon) {
         console.log('cached!!')
         setLoadingStatus(false);
-        props.updatePokemon(pokemon, pokemonObj, 'cached');
+        props.updatePokemonPokeAPI(pokemon, pokemonObj, 'cached');
         return 
       }
     }
@@ -145,7 +145,7 @@ const EvolutionTree= (props) => {
       .then((response) => response.json())
       .then((pokemonData) => {
         setLoadingStatus(false);
-        props.updatePokemon(pokemon, pokemonData);
+        props.updatePokemonPokeAPI(pokemon, pokemonData);
       })
   }
 

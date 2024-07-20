@@ -194,3 +194,8 @@ export const updatePokemonSet = (importedSet) => ({
   type: types.UPDATE_POKEMON_SET, 
   payload: importedSet
 })
+
+export const importTeam = (importedSet) => ({
+  type: types.IMPORT_TEAM, 
+  payload: importedSet
+})

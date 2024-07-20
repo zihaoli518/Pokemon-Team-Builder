@@ -11,7 +11,7 @@ import GroupWorkIcon from '@mui/icons-material/GroupWork';
 
 
 import AllSavedTeams from './AllSavedTeams.jsx';
-import FloatingNavigator from './FloatingNavigator.jsx';
+import ImportActionFloatingButton from './ImportActionFloatingButton.jsx';
 
 
 
@@ -48,7 +48,7 @@ export default function ControlButtonGroup(props) {
       </Box> */}
 
       <div className="navigator-container">
-        <FloatingNavigator />
+        <ImportActionFloatingButton />
       </div>
     </ThemeProvider>
   );

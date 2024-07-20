@@ -6,33 +6,49 @@ const {Teams} = require('pokemon-showdown');
 const convertTeamFormatMiddlewares = {}; 
 
 // hnadles converting export format to JSON format
-convertTeamFormatMiddlewares.importMon = (req, res, next) => {
-  const exportFormatMon = req.body.team
-  console.log('inside importMon middleware ', exportFormatMon);
+convertTeamFormatMiddlewares.importMonSet= (req, res, next) => {
+  const exportFormatText = req.body.team
+  console.log('inside importSets middleware ', exportFormatText);
 
-  // const testJSON =   [{
-  //   "name": "",
-  //   "species": "Armaldo",
-  //   "gender": "",
-  //   "item": "Leftovers",
-  //   "ability": "Swift Swim",
-  //   "evs": {"hp": 128, "atk": 252, "def": 4, "spa": 0, "spd": 0, "spe": 124},
-  //   "nature": "Adamant",
-  //   "moves": ["X-Scissor", "Stone Edge", "Aqua Tail", "Rapid Spin"]
-  //  }]
+  const convertedArray = Teams.import(exportFormatText);
+  console.log('convertedArray', convertedArray);
 
-  console.log(Teams.import(exportFormatMon));
-
-  const pokemonObj = Teams.import(exportFormatMon)[0];
+  const pokemonObj = convertedArray[0];
   pokemonObj.item = pokemonObj.item.toLowerCase().replace(' ','-');
   pokemonObj.moves = pokemonObj.moves.map(move => move.toLowerCase());
 
   // fetch('')
   req.body.pokemon = pokemonObj.species.toLowerCase();
 
-  res.locals.importedMon = pokemonObj;
+  res.locals.importedSet = pokemonObj;
   return next();
 }
+
+
+convertTeamFormatMiddlewares.importTeam = (req, res, next) => {
+  const exportFormatText = req.body.team;
+  console.log('inside importSets middleware', exportFormatText);
+
+  try {
+    const convertedArray = Teams.import(exportFormatText);
+    // console.log('Converted array:', convertedArray); // Add this line
+
+    const resultArray = [];
+    convertedArray.forEach(mon => {
+      mon.item = mon.item.toLowerCase().replace(' ', '-');
+      mon.moves.map(move => move.toLowerCase());
+      resultArray.push(mon)
+    });
+    console.log('Result array:', resultArray); // Add this line
+
+    res.locals.importedTeam = resultArray;
+    return next();
+  } catch (error) {
+    console.error('Error in importTeam middleware:', error);
+    return res.status(500).json({ error: 'Failed to import team' });
+  }
+};
+
 
 convertTeamFormatMiddlewares.exportMon = (req, res, next) => {
   const reduxPokemonObject = req.body.mon;

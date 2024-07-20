@@ -33,7 +33,7 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => ({
   // create functions that will dispatch action creators
   addPokemon : (pokemon) => dispatch(actions.addPokemon(pokemon)),
-  updatePokemon: (pokemon, pokemonData, mode) => dispatch(actions.updatePokemonPokeAPI(pokemon, pokemonData, mode)),
+  updatePokemonPokeAPI: (pokemon, pokemonData, mode) => dispatch(actions.updatePokemonPokeAPI(pokemon, pokemonData, mode)),
   updateHistoryCache: (type, pokemonObj, array) => dispatch(actions.updateHistoryCache(type, pokemonObj, array)),
 
 });
@@ -71,7 +71,7 @@ const BrowsingHistory = props => {
             key={pokemonObj.pokemon + i}
             pokemon={pokemonObj.pokemon}
             pokedexId={pokemonObj.pokedexId}
-            onClick={() => {props.updatePokemon(pokemonObj.name, pokemonObj, 'cached')}}
+            onClick={() => {props.updatePokemonPokeAPI(pokemonObj.name, pokemonObj, 'cached')}}
             className={"pokemon-sprite-cache"}
             type={"still"}
             // onClick={()=>{props.selectTeamMember(props.pokemonData)}}
@@ -91,7 +91,7 @@ const BrowsingHistory = props => {
     <div className='browsing-history' id='browsing-history' >
       {cacheOfHistoryDisplay}
       <img className='browsing-history-logo' src={historyImg} alt="" />
-      <ImportExportModal />
+      {/* <ImportExportModal /> */}
     </div>
   )
 }

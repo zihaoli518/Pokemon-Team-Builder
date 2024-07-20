@@ -108,7 +108,7 @@ const pokemonReducer = (state = initialState, action) => {
     //     currentPokemon: newCurrentPokemon
     //   }
 
-    // expecting data from pokeAPI fetch
+    // take fetch results from pokeAPI and optionally imported set, and make it the current mon 
     case types.ADD_POKEMON_POKEAPI: 
       console.log('inside ADD_POKEMON_POKEAPI', action.payload);
 
@@ -206,6 +206,12 @@ const pokemonReducer = (state = initialState, action) => {
             evs: {obj: importedSet.evs, array:[importedSet.evs.hp, importedSet.evs.atk, importedSet.evs.def, importedSet.evs.spa, importedSet.evs.spd, importedSet.evs.spe]},
             ivs: {obj: importedSet.ivs, array:[importedSet.ivs.hp, importedSet.ivs.atk, importedSet.ivs.def, importedSet.ivs.spa, importedSet.ivs.spd, importedSet.ivs.spe]},
             nature: importedSet.nature.toLowerCase(),
+            gender: importedSet.gender.toLowerCase(),
+            level: importedSet.level.toLowerCase(),
+            shiny: importedSet.shiny,
+            teraType: importedSet.teraType.toLowerCase(),
+            nickName: importedSet.name,
+
             moves: {
               move_1: allMovesJSON[importedSet.moves[0].toLowerCase()],
               move_2: allMovesJSON[importedSet.moves[1].toLowerCase()],
@@ -534,6 +540,66 @@ const pokemonReducer = (state = initialState, action) => {
           },
         }
       }
+
+      case types.IMPORT_TEAM: 
+      console.log('inside IMPORT_TEAM', action.payload); 
+
+        const copyOfTeam = {...state.yourTeam};
+        const importedTeamArray = action.payload;
+        for (let i = 0; i < importedTeamArray.length; i++) {
+          const currentMonCopy = { ...state.currentPokemon };
+          const importedSet = action.payload[i];
+          console.log('importedSeT' , importedSet)
+          copyOfTeam['mon' + (i + 1)] = {
+            ...currentMonCopy,
+            pokemon: importedSet.species ? importedSet.species.toLowerCase() : null,
+            activeAbility: { name: importedSet.ability ? importedSet.ability : null, description: '' },
+            item: importedSet.item ? {
+              item: importedSet.item,
+              description: allItemsJSON[importedSet.item] ? allItemsJSON[importedSet.item].desc : null,
+              url: allItemsJSON[importedSet.item] ? allItemsJSON[importedSet.item].spriteUrl : null
+            } : null,
+            evs: importedSet.evs ? {
+              obj: importedSet.evs,
+              array: [
+                importedSet.evs.hp !== undefined ? importedSet.evs.hp : 0,
+                importedSet.evs.atk !== undefined ? importedSet.evs.atk : 0,
+                importedSet.evs.def !== undefined ? importedSet.evs.def : 0,
+                importedSet.evs.spa !== undefined ? importedSet.evs.spa : 0,
+                importedSet.evs.spd !== undefined ? importedSet.evs.spd : 0,
+                importedSet.evs.spe !== undefined ? importedSet.evs.spe : 0
+              ]
+            } : null,
+            ivs: importedSet.ivs ? {
+              obj: importedSet.ivs,
+              array: [
+                importedSet.ivs.hp !== undefined ? importedSet.ivs.hp : 0,
+                importedSet.ivs.atk !== undefined ? importedSet.ivs.atk : 0,
+                importedSet.ivs.def !== undefined ? importedSet.ivs.def : 0,
+                importedSet.ivs.spa !== undefined ? importedSet.ivs.spa : 0,
+                importedSet.ivs.spd !== undefined ? importedSet.ivs.spd : 0,
+                importedSet.ivs.spe !== undefined ? importedSet.ivs.spe : 0
+              ]
+            } : null,
+            nature: importedSet.nature ? importedSet.nature.toLowerCase() : null,
+            gender: importedSet.gender ? importedSet.gender.toLowerCase() : null,
+            level: importedSet.level !== undefined ? importedSet.level : null,
+            shiny: importedSet.shiny ,
+            teraType: importedSet.teraType ? importedSet.teraType.toLowerCase() : null,
+            nickName: importedSet.name ? importedSet.name : null,
+            moves: importedSet.moves ? {
+              move_1: allMovesJSON[importedSet.moves[0].toLowerCase()] || null,
+              move_2: allMovesJSON[importedSet.moves[1].toLowerCase()] || null,
+              move_3: allMovesJSON[importedSet.moves[2].toLowerCase()] || null,
+              move_4: allMovesJSON[importedSet.moves[3].toLowerCase()] || null,
+            } : null,
+          }
+        }
+        
+        return {
+          ...state,
+          yourTeam: copyOfTeam
+        }
 
         
          

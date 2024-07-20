@@ -28,7 +28,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => ({
   // create functions that will dispatch action creators
-  updatePokemon: (pokemon, pokemonData, mode, importedSet) => dispatch(actions.updatePokemonPokeAPI(pokemon, pokemonData, mode, importedSet)),
+  updatePokemonPokeAPI: (pokemon, pokemonData, mode, importedSet) => dispatch(actions.updatePokemonPokeAPI(pokemon, pokemonData, mode, importedSet)),
   updatePokemonSet: (importedSet) => dispatch(actions.updatePokemonSet(importedSet))
 });
 
@@ -87,7 +87,7 @@ const ImportExportModal = props => {
         .then((response) => {
           // console.log(response.pokemonData);
           const pokemonData = response.pokemonData
-          props.updatePokemon(pokemonData.name, pokemonData, 'import', response.importedSet);
+          props.updatePokemonPokeAPI(pokemonData.name, pokemonData, 'import', response.importedSet);
           closeModal();
         })
         .then((importedSet) => {

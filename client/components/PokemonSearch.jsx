@@ -37,7 +37,7 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => ({
   // create functions that will dispatch action creators
   addPokemon : (pokemon) => dispatch(actions.addPokemon(pokemon)),
-  updatePokemon: (pokemon, pokemonData, mode) => dispatch(actions.updatePokemonPokeAPI(pokemon, pokemonData, mode)),
+  updatePokemonPokeAPI: (pokemon, pokemonData, mode) => dispatch(actions.updatePokemonPokeAPI(pokemon, pokemonData, mode)),
   updateHistoryCache: (type, pokemonObj, array) => dispatch(actions.updateHistoryCache(type, pokemonObj, array)),
 });
 
@@ -149,7 +149,7 @@ const PokemonSearch = props => {
       if (pokemonObj.pokemon === pokemon) {
         console.log('cached!!');
         setLoadingStatus(false);
-        props.updatePokemon(pokemon, pokemonObj, 'cached');
+        props.updatePokemonPokeAPI(pokemon, pokemonObj, 'cached');
         let newHistoryCache = [...historyCache];
         newHistoryCache.splice(i, 1);
         newHistoryCache.push(pokemonObj);
@@ -203,7 +203,7 @@ const PokemonSearch = props => {
       .then((pokemonData) => {
         console.log('fetchPokeAPI ', pokemonData);
         setLoadingStatus(false);
-        props.updatePokemon(pokemon, pokemonData);
+        props.updatePokemonPokeAPI(pokemon, pokemonData);
         // if (pokemonData.error === 404) {
         //   alert('Pokemon not found! Please check your spelling and try again :)')
         // };

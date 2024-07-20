@@ -190,11 +190,11 @@ const App = (props) => {
           className={props.mainDivClassName}
           id="main-div"
         >
-          {!props.currentPokemon.isActive ? (
+          {/* {!props.currentPokemon.isActive ? (
             <div className="explore-tip">
               <h4>start exploring/team building by looking up a pokemon!</h4>
             </div>
-          ) : null}
+          ) : null} */}
           
           <div className="navigator-and-history-container"> 
             <ControlButtonGroup savedTeamsDisplay={savedTeamsDisplay} setSavedTeamsDisplay={setSavedTeamsDisplay} />

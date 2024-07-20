@@ -155,9 +155,14 @@ app.get('/api/getTypesImages', showdownMiddlewares.getTypesImages, (req, res) =>
 
 
 // handle import and export format conversion requests 
-app.post('/api/importMon', convertTeamFormatMiddlewares.importMon, fetchMiddlewares.fetchPokeAPI, (req, res) => {
-  console.log('/api/importMon complete')
-  return res.status(200).send({pokemonData: res.locals.data, importedSet: res.locals.importedMon})
+app.post('/api/importMonSet', convertTeamFormatMiddlewares.importMonSet, fetchMiddlewares.fetchPokeAPI, (req, res) => {
+  console.log('/api/importMonSet complete')
+  return res.status(200).send({pokemonData: res.locals.data, importedSet: res.locals.importedSet})
+})
+
+app.post('/api/importTeam', convertTeamFormatMiddlewares.importTeam, fetchMiddlewares.fetchPokeAPI, (req, res) => {
+  console.log('/api/importTeam complete')
+  return res.status(200).send({importedTeam: res.locals.importedTeam})
 })
 
 app.post('/api/exportMon', convertTeamFormatMiddlewares.exportMon, (req, res) => {
