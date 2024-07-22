@@ -199,3 +199,9 @@ export const importTeam = (importedSet) => ({
   type: types.IMPORT_TEAM, 
   payload: importedSet
 })
+
+
+export const updateCurrentSet = (category, data) => ({
+  type: types.UPDATE_CURRENT_SET,
+  payload: {category: category, data: data}
+})

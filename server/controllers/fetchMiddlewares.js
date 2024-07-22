@@ -7,89 +7,6 @@ const lina = require('../../assets/lina.json');
 
 const fetchMiddlewares = {}; 
 
-// fetchMiddlewares.fetchPokeAPI = (req, res, next) => {
-//   console.log('in fetchMiddlewares.fetchPokeAPI, ', req.body)
-//   // Function to process a single Pokémon
-//   const fetchSinglePokemon = (pokemonName) => {
-//     pokemonName = pokemonName.toLowerCase().replace(' ', '-');
-//     console.log('fetchSinglePokemon ', pokemonName)
-//     return new Promise((resolve, reject) => {
-//       import('node-fetch')
-//         .then(fetchModule => fetchModule.default)
-//         .then(fetch => {
-//           async function getEvolutionChainUrl(speciesUrl) {
-//             await fetch(speciesUrl)
-//               .then(data => data.json())
-//               .then(data => {
-//                 res.locals.evolutionChainUrl = data.evolution_chain.url;
-//               });
-//           }
-
-//           async function getEvolutionTree(evolutionChainUrl) {
-//             await fetch(evolutionChainUrl)
-//               .then(data => data.json())
-//               .then(data => {
-//                 res.locals.data.evolution_chain = data.chain;
-//                 console.log('about to resolve: ', res.locals.data.species)
-//                 resolve(res.locals.data); // Resolve when done
-//               });
-//           }
-
-//           fetch('https://pokeapi.co/api/v2/pokemon/' + pokemonName.toLowerCase())
-//             .then(data => data.json())
-//             .then(data => {
-//               console.log('poke api success! for: ', pokemonName)
-//               res.locals.data = data;
-//             })
-//             .then(async () => {
-//               await getEvolutionChainUrl(res.locals.data.species.url);
-//             })
-//             .then(async () => {
-//               await getEvolutionTree(res.locals.evolutionChainUrl );
-//             })
-//             .catch(error => {
-//               reject(error);
-//             });
-//         });
-//     });
-//   };
-
-//   // Function to process an array of Pokémon
-//   const fetchMultiplePokemons = async (pokemonNames) => {
-//     try {
-//       const results = await Promise.all(pokemonNames.map(name => fetchSinglePokemon(name)));
-//       res.locals.pokemonData = results;
-//       next();
-//     } catch (error) {
-//       next(error);
-//     }
-//   };
-
-//   // Determine whether to handle a single Pokémon or an array
-//   console.log('checking req!!  ', res.locals.pokemonNameArray)
-//   if (Array.isArray(res.locals.pokemonNameArray)) {
-//     // res.locals.pokemonNameArray.forEach(pokemon => {
-//     //   fetchMultiplePokemons(pokemon);
-//     // })
-//     fetchMultiplePokemons(res.locals.pokemonNameArray)
-//   } else {
-//     // Default behavior for a single Pokémon
-//     fetchSinglePokemon(req.body.pokemon)
-//       .then(data => {
-//         res.locals.data = data;
-//         next();
-//       })
-//       .catch(error => {
-//         next(error);
-//       });
-//   }
-// };
-
-
-
-
-
-
 fetchMiddlewares.fetchPokeAPI = (req, res, next) => {
   console.log('in fetchMiddlewares.fetchPokeAPI, ', req.body)
   // Function to process a single Pokémon
@@ -124,7 +41,7 @@ fetchMiddlewares.fetchPokeAPI = (req, res, next) => {
             .then(async (result) => {
               const evolutionChain = await getEvolutionTree(result.evolutionChainUrl);
               result.data.evolution_chain = evolutionChain;
-              console.log('about to resolve: ', pokemonName,) ;
+              console.log('about to resolve: ', pokemonName,) 
               resolve(result.data); // Resolve with the modified data
             })
             .catch(error => {
@@ -182,8 +99,8 @@ fetchMiddlewares.fetchWeakness = (req, res, next) => {
 }
 
 fetchMiddlewares.testForNewerSprites = (req, res, next) => {
-  // console.log('inside middleware testForNewerSprites')
-  // console.log(req.body.url)
+  console.log('inside middleware testForNewerSprites')
+  console.log(req.body.url)
 
   // input: string, output: boolean, updated url if false 
   async function checkGif (url, pokemon, fetch) {
@@ -217,7 +134,7 @@ fetchMiddlewares.testForNewerSprites = (req, res, next) => {
         // console.log(data.status)
         if (data.status===200) {
           res.locals.url = url; 
-          console.log(res.locals.url)
+          console.log('data.status===200, ', res.locals.url)
           return next();
         }
         // if gif from another source is needed

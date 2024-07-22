@@ -24,6 +24,7 @@ const initialState = {
   currentPokemon: {
     pokemon: null,
     nickName: '',
+    shiny: false,
     pokedexId: 0,
     level: 100,
     types: [],
@@ -128,6 +129,7 @@ const pokemonReducer = (state = initialState, action) => {
       const pokemonData = action.payload.pokemonData
       // initiate re-render by changing state
       copy.isActive = true;
+      copy.shiny = false;
       // fill in types 
       copy.types = [];
       for (let i=0; i<pokemonData.types.length; i++) {
@@ -477,6 +479,15 @@ const pokemonReducer = (state = initialState, action) => {
       return {
         ...state,
         currentPokemon: copyOfPrevMoveSet
+      }
+
+    case types.UPDATE_CURRENT_SET: 
+    console.log('inside UPDATE_CURRENT_SET', action.payload)
+      const updatedNewSetMon = {...state.currentPokemon};
+      updatedNewSetMon[action.payload.category] = action.payload.data
+      return {
+        ...state,
+        currentPokemon: updatedNewSetMon
       }
 
     case types.UPDATE_PREVIOUS_TEAM_KEY: 

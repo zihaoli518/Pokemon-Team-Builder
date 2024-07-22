@@ -69,7 +69,7 @@ const EvolutionTree= (props) => {
     }
     newTreeArray.push(
       <div key={Math.random()} className='evolution-row evolution-tier-1' onClick={(e)=>{handleFetch(e, chain.species.name)}}>
-        <PokemonSprite key={props.currentPokemon.pokemon} pokemon={chain.species.name} className={firstSpriteClassName}/>
+        <PokemonSprite pokemon={chain.species.name} pokedexId={props.currentPokemon.pokedexId} className={firstSpriteClassName}/>
         {/* <Typography className={firstTextClassName}>{(classNameMinMax ==='evolution-container-minimize') ? chain.species.name : null}</Typography> */}
         <Typography className={firstTextClassName}>{chain.species.name}</Typography>
 
@@ -90,7 +90,7 @@ const EvolutionTree= (props) => {
           <div key={Math.random()} className={'evolution-row evolution-tier-' + level} onClick={(e)=>{handleFetch(e, innerChain.species.name)}}>
             {/* <img className='arrows' src="https://cdn-icons-png.flaticon.com/512/109/109617.png" alt="" /> */}
             <StartTwoToneIcon sx={{ fontSize: 'small' }} />
-            <PokemonSprite key={props.currentPokemon.pokemon} pokemon={innerChain.species.name} className={spriteClassName}/>
+            <PokemonSprite pokemon={innerChain.species.name} pokedexId={props.currentPokemon.pokedexId} className={spriteClassName}/>
             {/* <Typography className={textClassName}>{(classNameMinMax ==='evolution-container-minimize') ? innerChain.species.name: null}</Typography> */}
             <Typography className={textClassName}>{ innerChain.species.name}</Typography>
 
@@ -154,7 +154,7 @@ const EvolutionTree= (props) => {
 
     populateEvolutionTree();
 
-  }, [props.currentPokemon])
+  }, [props.currentPokemon.pokemon])
 
   return (
     <Paper

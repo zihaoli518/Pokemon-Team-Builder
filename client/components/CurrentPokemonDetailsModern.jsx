@@ -30,6 +30,9 @@ import PokemonSprite from './PokemonSprite.jsx';
 
 import * as actions from '../actions/actions';
 import Data from './dexData.js';
+import SpriteWrappedTransition from './SpriteWrappedTransition.jsx';
+
+
 const allItemsJSON = Data.allItemsJSON;
 const allMovesJSON = Data.allMovesJSON;
 
@@ -53,6 +56,8 @@ const mapDispatchToProps = dispatch => ({
   updateSavedTeam: (team, triggeredBy) => dispatch(actions.updateSavedTeam(team, triggeredBy)),
   updateActiveMove: (moveId, moveObj) => dispatch(actions.updateActiveMove(moveId, moveObj)),
   selectMoveFromList: (moveId, moveObj) => dispatch(actions.selectMoveFromList(moveId, moveObj)),
+
+  updateCurrentSet: (category, data) => dispatch(actions.updateCurrentSet(category, data)),
 });
 
 
@@ -88,6 +93,7 @@ const CurrentPokemonDetails = props => {
     ability: props.currentPokemon.activeAbility.name,
     item: props.currentPokemon.item.item,
     nickName: props.currentPokemon.nickname,
+    shiny: props.currentPokemon.shiny,
     move_1: props.currentPokemon.moves.move_1.name ? props.currentPokemon.moves.move_1.name : '',
     move_2: props.currentPokemon.moves.move_2.name ? props.currentPokemon.moves.move_1.name : '',
     move_3: props.currentPokemon.moves.move_3.name ? props.currentPokemon.moves.move_1.name : '',
@@ -238,7 +244,7 @@ const CurrentPokemonDetails = props => {
 
   // switches menu, list display, activeSelection from a str like 'items'
   const handleSelectMenu = (menuStr) => {
-    console.log('handleSelectedMenu', menuStr)
+    console.log('handleSelectedMenu', menuStr, props.currentPokemon.shiny)
     if (menuStr==='items') {
       const newMenuComponents = (
         <Box sx={{height:'100%', width: '100%', display: 'flex', justifyContent:'flex-start'}}>
@@ -276,6 +282,11 @@ const CurrentPokemonDetails = props => {
     }
     if (menuStr==='abilities') {
 
+    }
+    
+    if (menuStr==='shiny') {
+      // setCurrentInputText({...currentInputText, shiny: !currentInputText.shiny});
+      props.updateCurrentSet('shiny', !props.currentPokemon.shiny)
     }
 
   }
@@ -361,12 +372,13 @@ const CurrentPokemonDetails = props => {
         onChange={(e) => {setCurrentInputText({...currentInputText, nickName: e.target.value})}}
       />
       <Box sx={{ height: '70%', width: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-        <PokemonSprite
+        <SpriteWrappedTransition
           key={props.currentPokemon.pokemon}
           pokemon={props.currentPokemon.pokemon}
           pokedexId={props.currentPokemon.pokedexId}
           className={"pokemon-sprite-detail"}
           type={"still"}
+          shiny={props.currentPokemon.shiny}
         />
         <Box
         sx={{
@@ -387,7 +399,7 @@ const CurrentPokemonDetails = props => {
               width: '40%',  // Ensures the FormControlLabel takes up 80% of its container's width
               margin: 0,
             }}
-            control={<Switch size='small' sx={{width: '100%'}} defaultChecked />}
+            control={<Switch size='small' sx={{width: '100%'}} checked={props.currentPokemon.shiny} onClick={() => {handleSelectMenu('shiny')}} />}
           />
           <Typography 
             sx={{ width: '30%', fontSize: '20%', }}
@@ -428,8 +440,8 @@ const CurrentPokemonDetails = props => {
     <Box sx={{ height: "50%", width: '100%', display: "flex", justifyContent: 'center', alignItems: 'center', marginTop: '3%' }}>
    
       <Box sx={{ height: "100%", width: '90%', display: "flex", flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}>
+
         <Box sx={{ height: "45%", width: '90%', display: "flex", flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}>
-          {/* <Typography sx={{ marginLeft: "3%", lineHeight:'100%', fontSize: '25%'}}>Abilities</Typography> */}
           <TextField
             label="Ability"
             value={currentInputText.ability}
@@ -438,6 +450,7 @@ const CurrentPokemonDetails = props => {
             onChange={(e) => {setCurrentInputText({...currentInputText, ability: e.target.value})}}
           />
         </Box>
+
         <Box sx={{ height: "45%", width: '90%', display: "flex", flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}>
           <TextField
             label="Item"
@@ -450,7 +463,7 @@ const CurrentPokemonDetails = props => {
             }}
             InputProps={{
               startAdornment: (
-                <InputAdornment position="start" sx={{width: '25%', marginRight: 0}}>
+                <InputAdornment position="start" sx={{width: '25%', marginRight: 0, marginLeft: '5%'}}>
                   <StyledImage src={props.currentPokemon.item.url} />
                 </InputAdornment>
               ),
@@ -459,6 +472,7 @@ const CurrentPokemonDetails = props => {
             onClick={(e) => {handleSelectMenu('items')}}
           />
         </Box>
+
       </Box>
     </Box>
   </Paper>

@@ -19,6 +19,7 @@ import PokemonSprite from './PokemonSprite.jsx';
 import StatChartRadar from './StatChartRadar.jsx';
 import CurrentPokemonDetails from './CurrentPokemonDetails.jsx';
 import CurrentPokemonDetailsModern from './CurrentPokemonDetailsModern.jsx'
+import SpriteWrappedTransition from './SpriteWrappedTransition.jsx';
 
 
 import EvolutionTree from './EvolutionTree.jsx';
@@ -338,10 +339,13 @@ const CurrentPokemonDisplay = (props) => {
                 justifyContent: "center",
               }}
             >
-              <PokemonSprite
-                key={props.currentPokemon.slot.mon}
+            <SpriteWrappedTransition
+                key={props.currentPokemon.pokemon}
                 pokemon={props.currentPokemon.pokemon}
                 className="current-sprite-main"
+                pokedexId={props.currentPokemon.pokedexId}
+                // type= 'still'
+                shiny={props.currentPokemon.shiny}
               />
               <div
                 className={

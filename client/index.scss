@@ -351,7 +351,9 @@ h1 {
 
 
 
-
+.current-sprite-main {
+  z-index: 100;
+}
 
 
 
@@ -741,6 +743,7 @@ h1 {
 
 .current-pokemon-sprite-chart-row img:hover {
   transform: scale(1.3);
+  z-index: 150;
   cursor: pointer;
 }
 
@@ -1966,14 +1969,38 @@ h1 {
 
 
 .pokemon-sprite-detail {
-  height: 80%;
-  width: 40%;
+  height: 102%;
+  width: 38%;
 }
 
 
+// wrapper for fade betweene shiny and normal 
+.sprite-wrapper-outter {
 
+}
 
+.sprite-wrapper-inner {
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  transition: opacity 0.5s ease-in-out,
+}
 
+.sprite-wrapper-inner.opposite-props {
+  opacity: 0; /* Initially hidden */
+}
+
+.sprite-wrapper-inner.same-props {
+  opacity: 1; /* Initially visible */
+}
+
+.sprite-wrapper-inner.fade-in  {
+  opacity: 1;
+}
+
+.sprite-wrapper-inner.fade-out  {
+  opacity: 0;
+}
 
 
 
