@@ -163,7 +163,8 @@ app.post('/api/importMonSet', convertTeamFormatMiddlewares.importMonSet, fetchMi
 })
 
 app.post('/api/importTeam', convertTeamFormatMiddlewares.importTeam, fetchMiddlewares.fetchPokeAPI, (req, res) => {
-  console.log('/api/importTeam complete')
+  console.log('/api/importTeam complete');
+  console.log('importedTeam: ', res.locals.importedTeam[0].species, res.locals.importedTeam[1].species, res.locals.importedTeam[2].species, 'pokemonData: ', res.locals.pokemonData[0].name, res.locals.pokemonData[1].name, res.locals.pokemonData[2].name,)
   return res.status(200).send({importedTeam: res.locals.importedTeam, pokemonData: res.locals.pokemonData})
 })
 

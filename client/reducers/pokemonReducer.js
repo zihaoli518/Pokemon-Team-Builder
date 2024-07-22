@@ -23,6 +23,7 @@ const allMovesJSON = Data.allMovesJSON;
 const initialState = {
   currentPokemon: {
     pokemon: null,
+    nickName: '',
     pokedexId: 0,
     level: 100,
     types: [],
@@ -123,6 +124,7 @@ const pokemonReducer = (state = initialState, action) => {
       // console.log(action.payload)
       const copy = {...state.currentPokemon};
       copy['pokemon'] = action.payload.pokemon;
+      copy.nickName = action.payload.pokemon;
       const pokemonData = action.payload.pokemonData
       // initiate re-render by changing state
       copy.isActive = true;
@@ -163,11 +165,10 @@ const pokemonReducer = (state = initialState, action) => {
         //   if (pokemonData.moves[i].version_group_details[i].version_group.name === 'scarlet-violet') gen9=true;
         // }
         // if (gen9) newMovePool[pokemonData.moves[i].move.name.replace("-", " ")] = true;
-        newMovePool[pokemonData.moves[i].move.name.replace("-", " ")] = true;
-
+        newMovePool[pokemonData.moves[i].move.name.replace(/-/g, " ")] = true;
       }
       // for some reason corviknight is missing defog from api 
-      if (copy.pokemon==='corviknight') newMovePool['defog'] = true;
+      // if (copy.pokemon==='corviknight') newMovePool['defog'] = true;
       copy.movePool = newMovePool;
 
       // add evolution chain 
@@ -198,7 +199,15 @@ const pokemonReducer = (state = initialState, action) => {
       // handling importing sets or teams 
       console.log('test 3', action.payload)
       const importedSetTop = action.payload.importedSet;
-      console.log('test 4', importedSetTop.item,)
+      console.log('test 4', importedSetTop===undefined);
+
+      // helper function to check in case name format different
+      const getFormattedMove = (moveName) => {
+        if (!moveName) return undefined; // Handle undefined move names
+        moveName = moveName.toLowerCase();
+        return allMovesJSON[moveName] || allMovesJSON[moveName.replace('-', ' ')];
+      };
+      
 
       const newMonWithSet = (action.payload.importedSet) ? {
         ...copy,
@@ -214,47 +223,49 @@ const pokemonReducer = (state = initialState, action) => {
         nickName: importedSetTop.name,
 
         moves: {
-          move_1: allMovesJSON[importedSetTop.moves[0].toLowerCase()],
-          move_2: allMovesJSON[importedSetTop.moves[1].toLowerCase()],
-          move_3: allMovesJSON[importedSetTop.moves[2].toLowerCase()],
-          move_4: allMovesJSON[importedSetTop.moves[3].toLowerCase()],
+          move_1: getFormattedMove(importedSetTop.moves[0]),
+          move_2: getFormattedMove(importedSetTop.moves[1]),
+          move_3: getFormattedMove(importedSetTop.moves[2]),
+          move_4: getFormattedMove(importedSetTop.moves[3]),
         },
       } : null;
 
+
+
       if (action.payload.mode==='importTeam') {
-        console.log('test 5, ', action.payload.mode)
-        // importedSetTop is an array 
-        // get new team id
+        
+        console.log('test 5, ', getFormattedMove(importedSetTop.moves[0]))
 
         const copyOfYourTeam = {...state.yourTeam};
         // for (let i=0; i<importedSetTop.length; i++) {
-          const currentNewMon = {
-            ...copy,
-            activeAbility: {name:importedSetTop.ability, description: ''},
-            item: {item: importedSetTop.item, description: allItemsJSON[importedSetTop.item].desc, url: allItemsJSON[importedSetTop.item].spriteUrl}, 
-            evs: {obj: importedSetTop.evs, array:[importedSetTop.evs.hp, importedSetTop.evs.atk, importedSetTop.evs.def, importedSetTop.evs.spa, importedSetTop.evs.spd, importedSetTop.evs.spe]},
-            ivs: {obj: importedSetTop.ivs, array:[importedSetTop.ivs.hp, importedSetTop.ivs.atk, importedSetTop.ivs.def, importedSetTop.ivs.spa, importedSetTop.ivs.spd, importedSetTop.ivs.spe]},
-            nature: importedSetTop.nature.toLowerCase(),
-            gender: importedSetTop.gender.toLowerCase(),
-            level: importedSetTop.level,
-            shiny: importedSetTop.shiny,
-            teraType: importedSetTop.teraType.toLowerCase(),
-            nickName: importedSetTop.name,
-            moves: {
-              move_1: allMovesJSON[importedSetTop.moves[0].toLowerCase()],
-              move_2: allMovesJSON[importedSetTop.moves[1].toLowerCase()],
-              move_3: allMovesJSON[importedSetTop.moves[2].toLowerCase()],
-              move_4: allMovesJSON[importedSetTop.moves[3].toLowerCase()],
-            },
+          // const currentNewMon = {
+          //   ...copy,
+          //   activeAbility: {name:importedSetTop.ability, description: ''},
+          //   item: {item: importedSetTop.item, description: allItemsJSON[importedSetTop.item].desc, url: allItemsJSON[importedSetTop.item].spriteUrl}, 
+          //   evs: {obj: importedSetTop.evs, array:[importedSetTop.evs.hp, importedSetTop.evs.atk, importedSetTop.evs.def, importedSetTop.evs.spa, importedSetTop.evs.spd, importedSetTop.evs.spe]},
+          //   ivs: {obj: importedSetTop.ivs, array:[importedSetTop.ivs.hp, importedSetTop.ivs.atk, importedSetTop.ivs.def, importedSetTop.ivs.spa, importedSetTop.ivs.spd, importedSetTop.ivs.spe]},
+          //   nature: importedSetTop.nature.toLowerCase(),
+          //   gender: importedSetTop.gender.toLowerCase(),
+          //   level: importedSetTop.level,
+          //   shiny: importedSetTop.shiny,
+          //   teraType: importedSetTop.teraType.toLowerCase(),
+          //   nickName: importedSetTop.name,
+          //   moves: {
+          //     move_1: getFormattedMove(importedSetTop.moves[0]),
+          //     move_2: getFormattedMove(importedSetTop.moves[1]),
+          //     move_3: getFormattedMove(importedSetTop.moves[2]),
+          //     move_4: getFormattedMove(importedSetTop.moves[3]),
+          //   },
 
-            // slot: {team: null, mon: i+1}
-          };
+          //   // slot: {team: null, mon: i+1}
+          // };
           for (let i=1; i<=6; i++) {
-            console.log(i)
+            console.log(i, copyOfYourTeam['mon'+i])
             if (copyOfYourTeam['mon'+i]) continue;
-            copyOfYourTeam['mon'+ i] = currentNewMon;
+            copyOfYourTeam['mon'+ i] = newMonWithSet;
+            console.log('test 6 ', )
+            break;
           }
-          console.log('test 6 ', )
         // }
         return {
           ...state,

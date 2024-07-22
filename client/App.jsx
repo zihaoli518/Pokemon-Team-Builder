@@ -77,6 +77,41 @@ let modernDarkTheme = createTheme({
       }
     },
   },
+  components: {
+    MuiTextField: {
+      styleOverrides: {
+        root: {
+          minHeight: 0,
+          width: '100%',
+          height: '100%',
+          marginTop: '5%',
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+          '& .MuiOutlinedInput-root': {
+            height: '100%',
+            width: '100%',
+            fontSize: '30%',
+            padding: 0,
+            '& input': {
+              padding: '2% 2%',
+              height: '100%',
+              boxSizing: 'border-box',
+              marginLeft: '5%'
+            },
+          },
+          '& .MuiInputLabel-root': {
+            fontSize: '32%',
+            '&[data-shrink="false"]': {
+              top: '50%',
+              left: '50%',
+              transform: 'translate(-50%, -50%)',
+            },
+          },
+        },
+      },
+    },
+  },
 });
 
 let palletTownTheme = createTheme({
@@ -204,7 +239,7 @@ const App = (props) => {
           <div className="main-row-container">
             <AllSavedTeams savedTeamsDisplay={savedTeamsDisplay} setSavedTeamsDisplay={setSavedTeamsDisplay} />
             <div className="current-pokemon-display-container">
-              {props.currentPokemon.isActive ? <CurrentPokemonDisplay /> : null}
+              {props.currentPokemon.isActive ? <CurrentPokemonDisplay themeMode={themeMode} /> : null}
             </div>
           </div>
           <div className="teams">

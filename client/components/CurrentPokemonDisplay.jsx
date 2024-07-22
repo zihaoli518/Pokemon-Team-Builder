@@ -17,7 +17,10 @@ import { connect } from 'react-redux';
 import * as actions from '../actions/actions';
 import PokemonSprite from './PokemonSprite.jsx';
 import StatChartRadar from './StatChartRadar.jsx';
-import CurrentPokemonDetails from './CurrentPokemonDetails.jsx'
+import CurrentPokemonDetails from './CurrentPokemonDetails.jsx';
+import CurrentPokemonDetailsModern from './CurrentPokemonDetailsModern.jsx'
+
+
 import EvolutionTree from './EvolutionTree.jsx';
 import ImportExportModal from './modals/ImportExportModal.jsx';
 
@@ -249,8 +252,8 @@ const CurrentPokemonDisplay = (props) => {
               backgroundColor: theme.palette.primary.dark,
 
               borderRadius: "0.6rem",
-              border: 2,
-              borderColor: theme.palette.secondary.main,
+              // border: 2,
+              // borderColor: theme.palette.secondary.main,
             }}
           >
             <InfoTwoToneIcon
@@ -688,8 +691,11 @@ const CurrentPokemonDisplay = (props) => {
           </Box>
         </Paper>
       </div>
-
-      <CurrentPokemonDetails />
+      { (props.themeMode==='pallet town') ?
+          <CurrentPokemonDetails />
+          :
+          < CurrentPokemonDetailsModern /> 
+      }
     </div>
   );
 }

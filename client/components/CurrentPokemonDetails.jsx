@@ -295,6 +295,7 @@ const CurrentPokemonDetails = props => {
       let basepower = currentMove.basePower;
       let accuracy = currentMove.accuracy + '%';
 
+
       let typeImageUrl = `https://play.pokemonshowdown.com/sprites/types/${type}.png`;
       let categoryImageUrl = '';
       switch (category) {
@@ -308,6 +309,7 @@ const CurrentPokemonDetails = props => {
           categoryImageUrl = "https://play.pokemonshowdown.com/sprites/categories/Status.png";
           break;
       }
+      
       currentMove['typeImageUrl'] = typeImageUrl;
       currentMove['categoryImageUrl'] = categoryImageUrl;
       if (basepower===0) basepower = null;
@@ -382,7 +384,7 @@ const CurrentPokemonDetails = props => {
 
   useEffect(() => {
     if (!isEqualState(prevPokemon.current, props.currentPokemon)) {
-      console.log('DIFFERENT MON ', prevPokemon.current, props.currentPokemon )
+      // console.log('DIFFERENT MON ', prevPokemon.current, props.currentPokemon )
       populateAbilities();
       populateItems();
       // populateMoveContainers();

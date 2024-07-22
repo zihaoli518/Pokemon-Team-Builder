@@ -7,44 +7,125 @@ const lina = require('../../assets/lina.json');
 
 const fetchMiddlewares = {}; 
 
+// fetchMiddlewares.fetchPokeAPI = (req, res, next) => {
+//   console.log('in fetchMiddlewares.fetchPokeAPI, ', req.body)
+//   // Function to process a single Pokémon
+//   const fetchSinglePokemon = (pokemonName) => {
+//     pokemonName = pokemonName.toLowerCase().replace(' ', '-');
+//     console.log('fetchSinglePokemon ', pokemonName)
+//     return new Promise((resolve, reject) => {
+//       import('node-fetch')
+//         .then(fetchModule => fetchModule.default)
+//         .then(fetch => {
+//           async function getEvolutionChainUrl(speciesUrl) {
+//             await fetch(speciesUrl)
+//               .then(data => data.json())
+//               .then(data => {
+//                 res.locals.evolutionChainUrl = data.evolution_chain.url;
+//               });
+//           }
+
+//           async function getEvolutionTree(evolutionChainUrl) {
+//             await fetch(evolutionChainUrl)
+//               .then(data => data.json())
+//               .then(data => {
+//                 res.locals.data.evolution_chain = data.chain;
+//                 console.log('about to resolve: ', res.locals.data.species)
+//                 resolve(res.locals.data); // Resolve when done
+//               });
+//           }
+
+//           fetch('https://pokeapi.co/api/v2/pokemon/' + pokemonName.toLowerCase())
+//             .then(data => data.json())
+//             .then(data => {
+//               console.log('poke api success! for: ', pokemonName)
+//               res.locals.data = data;
+//             })
+//             .then(async () => {
+//               await getEvolutionChainUrl(res.locals.data.species.url);
+//             })
+//             .then(async () => {
+//               await getEvolutionTree(res.locals.evolutionChainUrl );
+//             })
+//             .catch(error => {
+//               reject(error);
+//             });
+//         });
+//     });
+//   };
+
+//   // Function to process an array of Pokémon
+//   const fetchMultiplePokemons = async (pokemonNames) => {
+//     try {
+//       const results = await Promise.all(pokemonNames.map(name => fetchSinglePokemon(name)));
+//       res.locals.pokemonData = results;
+//       next();
+//     } catch (error) {
+//       next(error);
+//     }
+//   };
+
+//   // Determine whether to handle a single Pokémon or an array
+//   console.log('checking req!!  ', res.locals.pokemonNameArray)
+//   if (Array.isArray(res.locals.pokemonNameArray)) {
+//     // res.locals.pokemonNameArray.forEach(pokemon => {
+//     //   fetchMultiplePokemons(pokemon);
+//     // })
+//     fetchMultiplePokemons(res.locals.pokemonNameArray)
+//   } else {
+//     // Default behavior for a single Pokémon
+//     fetchSinglePokemon(req.body.pokemon)
+//       .then(data => {
+//         res.locals.data = data;
+//         next();
+//       })
+//       .catch(error => {
+//         next(error);
+//       });
+//   }
+// };
+
+
+
+
+
+
 fetchMiddlewares.fetchPokeAPI = (req, res, next) => {
-  console.log('in fetchMiddlewares.fetchPokeAPI, ', req.body,)
+  console.log('in fetchMiddlewares.fetchPokeAPI, ', req.body)
   // Function to process a single Pokémon
   const fetchSinglePokemon = (pokemonName) => {
     pokemonName = pokemonName.toLowerCase().replace(' ', '-');
-    console.log('fetchSinglePokemon ', pokemonName)
+    console.log('fetchSinglePokemon ', pokemonName);
     return new Promise((resolve, reject) => {
       import('node-fetch')
         .then(fetchModule => fetchModule.default)
         .then(fetch => {
           async function getEvolutionChainUrl(speciesUrl) {
-            await fetch(speciesUrl)
-              .then(data => data.json())
-              .then(data => {
-                res.locals.evolutionChainUrl = data.evolution_chain.url;
-              });
+            const response = await fetch(speciesUrl);
+            const data = await response.json();
+            console.log('getEvolutionChainUrl: ', data.evolution_chain.url);
+            return data.evolution_chain.url;
           }
-
+  
           async function getEvolutionTree(evolutionChainUrl) {
-            await fetch(evolutionChainUrl)
-              .then(data => data.json())
-              .then(data => {
-                res.locals.data.evolution_chain = data.chain;
-                resolve(res.locals.data); // Resolve when done
-              });
+            const response = await fetch(evolutionChainUrl);
+            const data = await response.json();
+            return data.chain;
           }
-
+  
           fetch('https://pokeapi.co/api/v2/pokemon/' + pokemonName.toLowerCase())
             .then(data => data.json())
-            .then(data => {
-              console.log('poke api success! for: ', pokemonName)
-              res.locals.data = data;
+            .then(async (data) => {
+              console.log('received API response: ', pokemonName);
+              const evolutionChainUrl = await getEvolutionChainUrl(data.species.url);
+              console.log('received evoUrl: ', pokemonName, evolutionChainUrl);
+              return { data, evolutionChainUrl }; // Return an object containing both data and evolutionChainUrl
             })
-            .then(async () => {
-              await getEvolutionChainUrl(res.locals.data.species.url);
-            })
-            .then(async () => {
-              await getEvolutionTree(res.locals.evolutionChainUrl);
+            .then(async (result) => {
+              const evolutionChain = await getEvolutionTree(result.evolutionChainUrl);
+              result.data.evolution_chain = evolutionChain;
+              console.log('about to resolve: ', pokemonName,) ;
+              resolve(result.data); // Resolve with the modified data
             })
             .catch(error => {
               reject(error);
@@ -52,12 +133,12 @@ fetchMiddlewares.fetchPokeAPI = (req, res, next) => {
         });
     });
   };
+  
 
   // Function to process an array of Pokémon
   const fetchMultiplePokemons = async (pokemonNames) => {
     try {
       const results = await Promise.all(pokemonNames.map(name => fetchSinglePokemon(name)));
-      console.log('after results in fetchMultiple, ', results)
       res.locals.pokemonData = results;
       next();
     } catch (error) {
@@ -73,7 +154,6 @@ fetchMiddlewares.fetchPokeAPI = (req, res, next) => {
     // })
     fetchMultiplePokemons(res.locals.pokemonNameArray)
   } else {
-    console.log('inside else')
     // Default behavior for a single Pokémon
     fetchSinglePokemon(req.body.pokemon)
       .then(data => {
@@ -85,6 +165,12 @@ fetchMiddlewares.fetchPokeAPI = (req, res, next) => {
       });
   }
 };
+
+
+
+
+
+
 
 
 
