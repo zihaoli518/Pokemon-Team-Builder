@@ -20,73 +20,147 @@ showdownMiddlewares.getAllSpecies = (req, res, next) => {
 }
 
 
-showdownMiddlewares.getAllItems = (req, res, next) => {
-  console.log('inside getAllItems middleware')
+// showdownMiddlewares.getAllItems = (req, res, next) => {
+//   console.log('inside getAllItems middleware')
+//   const arrayOfItems = Dex.items.all();
+
+//   const itemDataObject = {};
+
+//   async function loopThruItems() {
+//     for (let i=0; i<arrayOfItems.length; i++) {
+//       let itemName = arrayOfItems[i].name.toLowerCase();
+//       const parsedItemName = itemName.replace(' ', '-');
+
+//       console.log('validating response for: ', parsedItemName)
+
+//       let urlStr = 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/' + parsedItemName + '.png'
+
+//       const validUrlBoolean = await checkForSprite(urlStr);
+//       console.log(validUrlBoolean)
+//       console.log('..........', i, '/', arrayOfItems.length, '..........')
+//       if (validUrlBoolean) {
+//         console.log('writing JSON data for: ', itemName);
+//         itemDataObject[parsedItemName] = arrayOfItems[i];
+//         itemDataObject[parsedItemName]['nameLowerCase'] = itemName;
+//         if (checkForSprite) itemDataObject[parsedItemName]['spriteUrl'] = urlStr
+//       }
+//     }
+//   } 
+
+//   async function checkForSprite(url) {
+//     let resultBoolean = false;
+//     // dynamically import node-fetch
+//     import('node-fetch')
+//       .then(fetchModule => fetchModule.default)
+//       .then(fetch => {
+//         fetch(url)
+//           // .then(data => data.json())
+//           .then(data => {
+//             console.log('status: ', data.status)
+//             if (data.status===200) {
+//               resultBoolean = true;
+//               return resultBoolean;
+//             }
+//           })
+//       })
+//       .catch(error => {
+//         console.log('fetch error in checkForSprite in getAllItems in showdownMiddlewares')
+//         return next(error)
+//       })
+//   }
+
+//   async function asyncHandler() {
+//     await loopThruItems();
+  
+//     const itemDataJSON = JSON.stringify(itemDataObject);
+   
+//     console.log(typeof(itemDataJSON))
+//     fs.writeFile("items-data.json", itemDataJSON, 'utf8', function (err) {
+//       if (err) {
+//           console.log("An error occured while writing JSON Object to File.");
+//           return console.log(err);
+//       }
+//       console.log("JSON file has been saved.");
+//     });
+  
+//     res.locals.data = itemDataObject;
+//     return next();
+//   }
+
+//   asyncHandler();
+// }
+
+showdownMiddlewares.getAllItems = async (req, res, next) => {
+  console.log('inside getAllItems middleware');
   const arrayOfItems = Dex.items.all();
 
   const itemDataObject = {};
 
   async function loopThruItems() {
-    for (let i=0; i<arrayOfItems.length; i++) {
+    for (let i = 0; i < arrayOfItems.length; i++) {
       let itemName = arrayOfItems[i].name.toLowerCase();
       const parsedItemName = itemName.replace(' ', '-');
-      console.log('validating response for: ', parsedItemName)
 
-      let urlStr = 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/' + parsedItemName + '.png'
+      console.log('validating response for: ', parsedItemName);
+
+      let urlStr = 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/' + parsedItemName + '.png';
 
       const validUrlBoolean = await checkForSprite(urlStr);
-      console.log(validUrlBoolean)
-      console.log('..........', i, '/', arrayOfItems.length, '..........')
-      if (validUrlBoolean) {
-        console.log('writing JSON data for: ', itemName);
-        itemDataObject[parsedItemName] = arrayOfItems[i];
-        itemDataObject[parsedItemName]['nameLowerCase'] = itemName;
-        if (checkForSprite) itemDataObject[parsedItemName]['spriteUrl'] = urlStr
-      }
+      console.log(validUrlBoolean);
+      console.log('..........', i, '/', arrayOfItems.length, '..........');
+      let urlSV = `https://archives.bulbagarden.net/media/upload/4/45/Bag_${convertToCamelCase(parsedItemName)}_SV_Sprite.png`
+      let validUrlBooleanSV = undefined;
+      if (!validUrlBoolean) validUrlBooleanSV = await checkForSprite(urlSV); 
+      if (!validUrlBooleanSV) urlSV = undefined;
+
+      console.log('writing JSON data for: ', itemName);
+      itemDataObject[parsedItemName] = arrayOfItems[i];
+      itemDataObject[parsedItemName]['nameLowerCase'] = itemName;
+      if (validUrlBoolean) itemDataObject[parsedItemName]['spriteUrl'] = urlStr;
+      else itemDataObject[parsedItemName]['spriteUrl'] = urlSV;
+
     }
-  } 
+  }
 
   async function checkForSprite(url) {
-    let resultBoolean = false;
-    // dynamically import node-fetch
-    import('node-fetch')
-      .then(fetchModule => fetchModule.default)
-      .then(fetch => {
-        fetch(url)
-          // .then(data => data.json())
-          .then(data => {
-            console.log('status: ', data.status)
-            if (data.status===200) {
-              resultBoolean = true;
-              return resultBoolean;
-            }
-          })
-      })
-      .catch(error => {
-        return next(error)
-      })
+    try {
+      // Dynamically import node-fetch
+      const fetchModule = await import('node-fetch');
+      const fetch = fetchModule.default;
+      
+      // Perform the fetch call
+      const response = await fetch(url);
+      console.log('status: ', response.status);
+      return response.status === 200;
+    } catch (error) {
+      console.log('fetch error in checkForSprite in getAllItems in showdownMiddlewares', error);
+      return false;
+    }
   }
 
   async function asyncHandler() {
     await loopThruItems();
-  
+
     const itemDataJSON = JSON.stringify(itemDataObject);
-   
-    console.log(typeof(itemDataJSON))
+
+    console.log(typeof(itemDataJSON));
     fs.writeFile("items-data.json", itemDataJSON, 'utf8', function (err) {
       if (err) {
-          console.log("An error occured while writing JSON Object to File.");
-          return console.log(err);
+        console.log("An error occured while writing JSON Object to File.");
+        return console.log(err);
       }
       console.log("JSON file has been saved.");
     });
-  
+
     res.locals.data = itemDataObject;
-    return next();
+    next();
   }
 
-  asyncHandler();
+  await asyncHandler();
 }
+
+
+
 
 showdownMiddlewares.getAllMoves = (req, res, next) => {
   console.log('inside getAllMoves middleware')
@@ -196,6 +270,15 @@ showdownMiddlewares.getTypesImages = (req, res, next) => {
 function capitalizeFirstLetter(str) {
   return str.charAt(0).toUpperCase() + str.slice(1);
 }
+
+function convertToCamelCase(str) {
+  return str
+      .toLowerCase()
+      .split('-')
+      .map((word, index) => index === 0 ? word.charAt(0).toUpperCase() + word.slice(1) : word.charAt(0).toUpperCase() + word.slice(1))
+      .join('_');
+}
+
 
 
 

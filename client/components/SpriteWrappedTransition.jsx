@@ -19,7 +19,7 @@ const SpriteWrapper = styled('div')({
 const SpriteWrappedTransition = (props) => {
   // const normalSpriteUrl = `path/to/normal/${pokemon}.png`; // Update path
   // const shinySpriteUrl = `path/to/shiny/${pokemon}.png`; // Update path
-  console.log('in SpriteWrappedTransition', props)
+  // console.log('in SpriteWrappedTransition', props)
 
   return (
     <SpriteWrapper className='sprite-wrapper-outter'>

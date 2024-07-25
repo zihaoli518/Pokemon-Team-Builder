@@ -121,7 +121,7 @@ const EvolutionTree= (props) => {
     // quickly loop thru the cache array to check if the data is saved, if found do not make api call 
     for (let pokemonObj of props.historyCache) {
       if (pokemonObj.pokemon===pokemon) {
-        console.log('cached!!')
+        // console.log('cached!!')
         setLoadingStatus(false);
         props.updatePokemonPokeAPI(pokemon, pokemonObj, 'cached');
         return 

@@ -143,4 +143,12 @@ const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPl
       minimize: true,
       minimizer: [new TerserPlugin()],
     },
+
+    resolve: {
+      fallback: {
+        crypto: require.resolve('crypto-browserify'),
+        vm: require.resolve('vm-browserify'),
+        stream: require.resolve('stream-browserify'),
+      }
+    },
   };    

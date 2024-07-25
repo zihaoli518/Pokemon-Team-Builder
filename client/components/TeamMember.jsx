@@ -70,6 +70,7 @@ const TeamMember = props => {
           pokemon={props.pokemonName}
           className={ClassNamePassed}
           id={props.selectedTeamName + "_" + props.selectedMon}
+          pokedexId={props.pokedexId}
           onClick={() => {
             giveSelfActiveClass();
             props.selectTeamMember(props.pokemonData, props.selectedTeam.key, props.selectedMon);

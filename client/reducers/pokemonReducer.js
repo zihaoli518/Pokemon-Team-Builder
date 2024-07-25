@@ -32,14 +32,14 @@ const initialState = {
     activeAbility: {name: null, description: null},
     item: {item: "", description: "", url: ""},
     moves: {
-      move_1: {name: null, type: ""},
-      move_2: {name: null, type: ""},
-      move_3: {name: null, type: ""},
-      move_4: {name: null, type: ""},
+      move_1: {name: null, type: "", category: ""},
+      move_2: {name: null, type: "", category: ""},
+      move_3: {name: null, type: "", category: ""},
+      move_4: {name: null, type: "", category: ""},
     },
     activeMove: {
-      moveId: "initial",
-      moveObj: {name: null}
+      moveId: "move_1",
+      moveObj: {name: null, type: "", category: ""}
     },
     evs:{obj: {hp: 0, attack: 0, defense: 0, specialA: 0, specialD: 0, speed: 0}, array: [0,0,0,0,0,0]},
     ivs:{obj: {hp: 31, attack: 31, defense: 31, specialA: 31, specialD: 31, speed: 31}, array: [0,0,0,0,0,0]},
@@ -214,7 +214,7 @@ const pokemonReducer = (state = initialState, action) => {
       const newMonWithSet = (action.payload.importedSet) ? {
         ...copy,
         activeAbility: {name:importedSetTop.ability, description: ''},
-        item: {item: importedSetTop.item, description: allItemsJSON[importedSetTop.item].desc, url: allItemsJSON[importedSetTop.item].spriteUrl}, 
+        item: {item: importedSetTop.item, description: allItemsJSON[importedSetTop.item] ? allItemsJSON[importedSetTop.item].desc : 'description not found' , url: allItemsJSON[importedSetTop.item]?.spriteUrl ?? ''}, 
         evs: {obj: importedSetTop.evs, array:[importedSetTop.evs.hp, importedSetTop.evs.atk, importedSetTop.evs.def, importedSetTop.evs.spa, importedSetTop.evs.spd, importedSetTop.evs.spe]},
         ivs: {obj: importedSetTop.ivs, array:[importedSetTop.ivs.hp, importedSetTop.ivs.atk, importedSetTop.ivs.def, importedSetTop.ivs.spa, importedSetTop.ivs.spd, importedSetTop.ivs.spe]},
         nature: importedSetTop.nature.toLowerCase(),
@@ -461,7 +461,7 @@ const pokemonReducer = (state = initialState, action) => {
 
       const copyOfPrevActiveMove = {...state.currentPokemon};
       let makeActiveMoveObj = action.payload.moveObj;
-      if (!makeActiveMoveObj) makeActiveMoveObj = {name: null}
+      if (!makeActiveMoveObj) makeActiveMoveObj = {name: null, type: '', category: ''}
       copyOfPrevActiveMove.activeMove = {moveId: action.payload.moveId, moveObj: makeActiveMoveObj}
 
       return {
@@ -625,7 +625,7 @@ const pokemonReducer = (state = initialState, action) => {
             activeAbility: { name: importedSet.ability ? importedSet.ability : null, description: '' },
             item: importedSet.item ? {
               item: importedSet.item,
-              description: allItemsJSON[importedSet.item] ? allItemsJSON[importedSet.item].desc : null,
+              description: allItemsJSON[importedSet.item].desc ? allItemsJSON[importedSet.item].desc : null,
               url: allItemsJSON[importedSet.item] ? allItemsJSON[importedSet.item].spriteUrl : null
             } : null,
             evs: importedSet.evs ? {

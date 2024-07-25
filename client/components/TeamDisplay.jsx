@@ -117,7 +117,8 @@ const [teamState, setTeamState] = useState({
               selectedTeam={teamState.selectedTeam}
               selectedMon={selectedMon}
               pokemonData={teamState.selectedTeam[selectedMon]}
-              pokemonName={teamState.selectedTeam[selectedMon]['pokemon']}
+              pokemonName={teamState.selectedTeam[selectedMon].pokemon}
+              pokedexId={teamState.selectedTeam[selectedMon].pokedexId}
               whichSide= {teamState.color}
             />)
       } else {

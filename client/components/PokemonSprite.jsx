@@ -30,7 +30,7 @@ const PokemonSprite = props => {
   const [initialRender, setInitialRender] = useState(true);
   const [isValid, setIsValid] = useState(false); // State to check if animated URL is valid
 
-  console.log('in SPRITE ', props.className, props.type, props.pokedexId)
+  // console.log('in SPRITE ', props.className, props.type, props.pokedexId)
 
   let className = '';
   let onClick = null;
@@ -43,11 +43,11 @@ const PokemonSprite = props => {
   let stillUrl = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${props.pokedexId}.png`;
   if (props.shiny) stillUrl = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/shiny/${props.pokedexId}.png`;
   if (props.pokedexId < 1) {
-    stillUrl = 'https://www.clipartmax.com/png/full/185-1853692_flat-mark-circle-round-question-help-icon-question-mark-in-circle.png';
+    stillUrl = 'https://cdn-icons-png.freepik.com/256/13677/13677827.png?semt=ais_hybrid';
     className = 'pokedex-sprite-placeholder';
   }
 
-  console.log(stillUrl)
+  console.log('IN SPRITE ', props.className, props.pokemon, props.pokedexId, props.type)
 
 
   const previousPropsRef = useRef({
@@ -66,7 +66,7 @@ const PokemonSprite = props => {
         setIsValid(true);
       };
       img.onerror = () => {
-        console.log('img load error!!!', stillUrl)
+        // console.log('img load error!!!', stillUrl)
 
         setUrl(stillUrl);
         setIsValid(false);

@@ -191,7 +191,7 @@ const CalcPokemonDetails = props => {
             <div className="calc-sprite-container">
               <img
                 className="calc-sprite-placeholder"
-                src="https://www.clipartmax.com/png/full/185-1853692_flat-mark-circle-round-question-help-icon-question-mark-in-circle.png"
+                src="https://cdn-icons-png.freepik.com/256/13677/13677827.png?semt=ais_hybrid"
                 alt=""
               />
             </div>
