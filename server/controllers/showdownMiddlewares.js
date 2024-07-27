@@ -194,6 +194,42 @@ showdownMiddlewares.getAllMoves = (req, res, next) => {
   return next()
 }
 
+
+showdownMiddlewares.getAllAbilities = (req, res, next) => {
+  console.log('inside getAllAbilities middleware')
+  const arrayOfAbilities = Dex.abilities.all();
+
+  const abilitiesObject = {};
+  // http://pokeapi.co/api/v2/move/close-combat
+
+  for (let i=0; i<arrayOfAbilities.length; i++) {
+    let abilityName = arrayOfAbilities[i].name.toLowerCase().replace('-', ' ');
+    // const parsedItemName = moveName.replace('-', '-');
+
+    console.log('..........', i, '/', arrayOfAbilities.length, '..........')
+
+    console.log('writing JSON data for: ', abilityName);
+    abilitiesObject[abilityName] = arrayOfAbilities[i];
+    
+  }
+  
+  const abilitiesDataJSON = JSON.stringify(abilitiesObject);
+
+  fs.writeFile("abilities-data.json", abilitiesDataJSON, 'utf8', function (err) {
+    if (err) {
+        console.log("An error occured while writing JSON Object to File.");
+        return console.log(err);
+    }
+    console.log("JSON file has been saved.");
+  });
+
+  res.locals.data = arrayOfMoves
+  return next()
+}
+
+
+
+
 showdownMiddlewares.getAllMons = (req, res, next) => {
   console.log('inside getAllMons middleware');
 

@@ -160,7 +160,16 @@ const CurrentPokemonDetails = props => {
 
 // items
   const populateItems = (searchStr = '') => {
-    const filteredItems = Object.entries(allItemsJSON).filter(([name]) => name.toLowerCase().includes(searchStr.toLowerCase()));
+    console.log('inside populateItems, ', searchStr)
+    searchStr = searchStr.trim();
+    const filteredItems = Object.entries(allItemsJSON).filter(([key, item]) => {
+      const keyMatches = key.toLowerCase().startsWith(searchStr.toLowerCase());
+      const nameMatches = item.name && item.name.toLowerCase().startsWith(searchStr.toLowerCase());
+      const abbreviationMatches = matchesAbbreviation(searchStr, key) || (item.name && matchesAbbreviation(searchStr, item.name));
+      const fullWordMatches = matchesFullWord(searchStr, key) || (item.name && matchesFullWord(searchStr, item.name));
+  
+      return keyMatches || nameMatches || abbreviationMatches || fullWordMatches;
+  });
     const newItemsToBeDisplayed = filteredItems.map(([name, itemData]) => {
       const { spriteUrl, desc, nameLowerCase } = itemData;
       const nameWithDash = nameLowerCase.replace('-', ' ');
@@ -215,7 +224,10 @@ const CurrentPokemonDetails = props => {
   };
 
   const populateMoves = (searchStr = '') => {
-    const filteredMoves = Object.entries(allMovesJSON).filter(([name]) => props.currentPokemon.movePool[name] && name.toLowerCase().includes(searchStr.toLowerCase()));
+    const filteredMoves = Object.entries(allMovesJSON).filter(([name]) => 
+      props.currentPokemon.movePool[name] && 
+      (name.toLowerCase().startsWith(searchStr.toLowerCase()) || matchesFullWord(searchStr, name) || matchesAbbreviation(searchStr, name) )
+    );
     const newMovesToBeDisplayed = filteredMoves.map(([name, moveData]) => {
       const { category, shortDesc, type, basePower, accuracy, pp } = moveData;
       const nameWithDash = name.replace(' ', '-');
@@ -319,25 +331,42 @@ const CurrentPokemonDetails = props => {
 
   const newSelectedMove = (
     <List sx={{ height: '100%', width: '100%', overflow: 'hidden', display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
-    <ListItem
-      sx={{
-        height: '100%',
-        width: '100%',
-        display: 'flex',
-        alignItems: 'center',
-        overflow: 'hidden',
-      }}
-      key={props.currentPokemon.activeMove.name}
-    >
-      <ListItemAvatar sx={{ height: '100%', minWidth: 0, marginRight: 1 }}>
-        <Avatar sx={{ height: '100%', width: 'auto' }} src={props.currentPokemon.item.url ? props.currentPokemon.item.url : 'https://cdn-icons-png.freepik.com/256/13677/13677827.png?semt=ais_hybrid'} />
-      </ListItemAvatar>
-      <ListItemText
-        sx={{ height: '100%', width: '100%', overflow: 'hidden', textOverflow: 'ellipsis' }}
-        primary={props.currentPokemon.activeMove.name ? props.currentPokemon.activeMove.name : null}
-        secondary={props.currentPokemon.activeMove.desc}
-      />
-    </ListItem>
+        <ListItem
+            key={props.currentPokemon.activeMove.moveObj.name}
+            button
+            sx={{ height: '100%', width: '100%', display: 'flex', alignItems: 'center', overflow: 'hidden', padding: '2%' }}
+            >
+            <ListItemText
+              primary={
+                <Grid container alignItems="center">
+                  <Grid item xs={2}>
+                    <Typography variant="body1" sx={{ fontWeight: 'normal' }}>{capitalizeWords(props.currentPokemon.activeMove.moveObj.name)}</Typography>
+                  </Grid>
+                  <Grid item xs={1} sx={{display: 'flex', justifyContent: 'flex-start'}}>
+                    <Avatar src={`https://play.pokemonshowdown.com/sprites/types/${props.currentPokemon.activeMove.moveObj.type}.png`} variant='square' sx={{ width: '90%', height: '40%' }} />
+                  </Grid>
+                  <Grid item xs={1}>
+                    <Avatar src={`https://play.pokemonshowdown.com/sprites/categories/${props.currentPokemon.activeMove.moveObj.category}.png`} variant="square" sx={{ width: '80%', height: '50%' }} />
+                  </Grid>
+                  <Grid item xs={1}>
+                    <Typography variant="body2" sx={{ color: 'text.secondary'}} >{props.currentPokemon.activeMove.moveObj.basePower || '-'}</Typography>
+                  </Grid>
+                  <Grid item xs={1}>
+                    <Typography variant="body2" sx={{ color: 'text.secondary'}} >{(props.currentPokemon.activeMove.moveObj.accuracy && props.currentPokemon.activeMove.moveObj.accuracy !== true) ? props.currentPokemon.activeMove.moveObj.accuracy + '%' : '-'}</Typography>
+                  </Grid>
+                  <Grid item xs={1}>
+                    <Typography variant="body2" sx={{ color: 'text.secondary'}} >{props.currentPokemon.activeMove.moveObj.pp || '-'}</Typography>
+                  </Grid>
+                  <Grid item xs={5}>
+                    <Typography variant="body2" sx={{ color: 'text.secondary', marginTop: '4px' }}>
+                      {props.currentPokemon.activeMove.moveObj.shortDesc}
+                    </Typography>
+                  </Grid>
+
+                </Grid>
+              }
+            />
+          </ListItem>
   </List>
   )
   
@@ -508,7 +537,7 @@ const CurrentPokemonDetails = props => {
               height: "100%",
               display: "flex",
               flexDirection: "column",
-              justifyContent: "center",
+              justifyContent: "flex-start",
             }}
           >
             <Paper
@@ -546,8 +575,8 @@ const CurrentPokemonDetails = props => {
                 value={currentInputText.nickName}
                 variant="outlined"
                 sx={{
-                  width: "70%",
                   height: "30%",
+                  width: "70%",
                   marginLeft: "5%",
                 }}
                 onChange={(e) => {
@@ -608,12 +637,13 @@ const CurrentPokemonDetails = props => {
                     <FormControlLabel
                       sx={{
                         width: "40%", 
+                        height: '100%',
                         margin: 0,
                       }}
                       control={
                         <Switch
                           size="small"
-                          sx={{ width: "100%" }}
+                          sx={{ width: "100%", width: '100%', }}
                           checked={props.currentPokemon.shiny}
                           onClick={() => {
                             handleSelectMenu("shiny");
@@ -621,7 +651,7 @@ const CurrentPokemonDetails = props => {
                         />
                       }
                     />
-                    <Typography sx={{ width: "50%", fontSize: "25%" }}>
+                    <Typography sx={{ heigth: '100%', width: "50%", fontSize: "25%" }}>
                       Shiny
                     </Typography>
                   </Box>
@@ -779,9 +809,6 @@ const CurrentPokemonDetails = props => {
                 flexDirection: "column",
                 justifyContent: "center",
               }}
-              onClick={(e) => {
-                handleSelectMenu("moves");
-              }}
             >
               <Paper
                 elevation={3}
@@ -794,6 +821,10 @@ const CurrentPokemonDetails = props => {
                   alignItems: "center",
                   borderRadius: "0.3rem",
                   backgroundColor: theme.palette.primary.dark,
+                  
+                }}
+                onClick={(e) => {
+                  handleSelectMenu("moves");
                 }}
               >
                 <Typography
@@ -809,12 +840,20 @@ const CurrentPokemonDetails = props => {
                     key={moveId}
                     value={currentInputText[moveId].name ? currentInputText[moveId].name : ''}
                     variant="filled"
+                    autoFocus={(props.currentPokemon.activeMove.moveId===moveId) ? true : false}
+                    onFocus={event => {
+                      event.target.select();
+                    }}
                     sx={{
                       width: "80%",
                       height: "25%",
                       display: 'flex',
                       alignItems: 'center',
                       borderRadius: '0.4rem',
+                      border: (props.currentPokemon.activeMove.moveId===moveId) ? 2 : 0,
+                      borderColor: (props.currentPokemon.activeMove.moveId===moveId) ? theme.palette.secondary.main : null,
+                      backgroundColor: (props.currentPokemon.activeMove.moveId===moveId) ? 'grey' : null,
+
                       '& .MuiFilledInput-root': {
                         height: '100%',
                         width: '100%',
@@ -849,7 +888,7 @@ const CurrentPokemonDetails = props => {
                             height: '100%',
                             marginRight: 0,
                             marginLeft: "1%",
-                          }}
+                          }}  
                         >
                           <StyledImage
                             sx={{height: '40%', width: '60%'}}
@@ -934,3 +973,33 @@ const CurrentPokemonDetails = props => {
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(CurrentPokemonDetails);
+
+
+
+
+// helper function 
+function matchesAbbreviation(searchStr, name) {
+  const searchStrLower = searchStr.toLowerCase();
+  const nameWords = name.toLowerCase().split(/\s+/); // Split by spaces
+
+  let searchIndex = 0;
+
+  for (let word of nameWords) {
+      if (word.startsWith(searchStrLower[searchIndex])) {
+          searchIndex++;
+      }
+      if (searchIndex === searchStrLower.length) {
+          return true;
+      }
+  }
+
+  return false;
+}
+
+
+function matchesFullWord(searchStr, name) {
+  const searchStrLower = searchStr.toLowerCase();
+  const nameWords = name.toLowerCase().split(/\s+/); // Split by spaces
+
+  return nameWords.includes(searchStrLower);
+}

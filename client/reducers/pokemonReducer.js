@@ -32,14 +32,14 @@ const initialState = {
     activeAbility: {name: null, description: null},
     item: {item: "", description: "", url: ""},
     moves: {
-      move_1: {name: null, type: "", category: ""},
-      move_2: {name: null, type: "", category: ""},
-      move_3: {name: null, type: "", category: ""},
-      move_4: {name: null, type: "", category: ""},
+      move_1: {name: "", type: "", category: ""},
+      move_2: {name: "", type: "", category: ""},
+      move_3: {name: "", type: "", category: ""},
+      move_4: {name: "", type: "", category: ""},
     },
     activeMove: {
       moveId: "move_1",
-      moveObj: {name: null, type: "", category: ""}
+      moveObj: {name: "", type: "", category: ""}
     },
     evs:{obj: {hp: 0, attack: 0, defense: 0, specialA: 0, specialD: 0, speed: 0}, array: [0,0,0,0,0,0]},
     ivs:{obj: {hp: 31, attack: 31, defense: 31, specialA: 31, specialD: 31, speed: 31}, array: [0,0,0,0,0,0]},
@@ -180,13 +180,14 @@ const pokemonReducer = (state = initialState, action) => {
       // need to reset slot to avoid unwantingly changing active team 
       copy.slot = {team: null, mon: null};
       // reset selected item
-      copy.item = {};
+      copy.item = {item: "", description: "", url: ""},
+
       // reset moves
       copy.moves = {
-        move_1: {name: null, type: ""},
-        move_2: {name: null, type: ""},
-        move_3: {name: null, type: ""},
-        move_4: {name: null, type: ""},
+        move_1: {name: "", type: "", category: ""},
+        move_2: {name: "", type: "", category: ""},
+        move_3: {name: "", type: "", category: ""},
+        move_4: {name: "", type: "", category: ""},
       };
       // reset evs and evs 
       copy.evs = {obj: {hp: 0, attack: 0, defense: 0, specialA: 0, specialD: 0, Speed: 0}, array: [0,0,0,0,0,0]};
@@ -205,7 +206,7 @@ const pokemonReducer = (state = initialState, action) => {
 
       // helper function to check in case name format different
       const getFormattedMove = (moveName) => {
-        if (!moveName) return undefined; // Handle undefined move names
+        if (!moveName) return {name: "", type: ""}; // Handle undefined move names
         moveName = moveName.toLowerCase();
         return allMovesJSON[moveName] || allMovesJSON[moveName.replace('-', ' ')];
       };
